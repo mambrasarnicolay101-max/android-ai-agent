@@ -23,8 +23,10 @@ try:
     from ai_router import AIRouter
     from catalyst import catalyst
     from temporal_memory import global_memory as memory
+    from pc_executor import PCExecutor
 except ImportError:
     AIRouter = None # Fallback jika module belum siap
+    PCExecutor = None
 
 # --- PROXY CONFIG ---
 CF_GATEWAY = os.environ.get("NOIR_GATEWAY_URL", "https://noir-agent-gateway.si-umkm-ikm-pbd.workers.dev").rstrip("/")
@@ -318,7 +320,10 @@ async def api_status():
             "stats": agent_data.get("stats", {}),
             "last_screenshot": agent_data.get("last_screenshot")
         } if is_online else None,
-        "commands": []
+        "commands": [],
+        "pc_mode": os.environ.get("NOIR_PC_MODE") == "1",
+        "pc_stats": PCExecutor.get_system_stats() if PCExecutor else None,
+        "pc_override": PCExecutor.SOVEREIGN_OVERRIDE if PCExecutor else False
     }
 
 @app.get("/api/summary")
@@ -521,6 +526,67 @@ async def download_apk():
         from fastapi.responses import FileResponse
         return FileResponse(apk_path, media_type="application/vnd.android.package-archive", filename=os.path.basename(apk_path))
     return Response(content="⚠️ Build Artifact Not Ready.", status_code=404)
+
+# =============================================================================
+# PC AUTONOMOUS CONTROL ENDPOINTS (V21.1)
+# =============================================================================
+
+@app.get("/api/pc/stats")
+async def get_pc_stats():
+    if not PCExecutor:
+        return {"success": False, "error": "PC Executor not initialized."}
+    return PCExecutor.get_system_stats()
+
+@app.post("/api/pc/command")
+async def pc_command(request: Request):
+    if not PCExecutor:
+        return {"success": False, "error": "PC Executor not initialized."}
+    data = await request.json()
+    cmd = data.get("cmd")
+    if not cmd:
+        return {"success": False, "error": "No command provided."}
+    return PCExecutor.run_shell(cmd)
+
+@app.get("/api/pc/knowledge")
+async def get_pc_knowledge(category: str = "general"):
+    if not PCExecutor:
+        return {"success": False, "error": "PC Executor not initialized."}
+    return PCExecutor.read_knowledge(category=category)
+
+@app.get("/api/pc/logs")
+async def get_pc_logs():
+    if not PCExecutor:
+        return []
+    return PCExecutor.get_logs()
+
+@app.post("/api/pc/override")
+async def set_pc_override(request: Request):
+    if not PCExecutor:
+        return {"success": False, "error": "PC Executor not initialized."}
+    data = await request.json()
+    state = data.get("state", False)
+    PCExecutor.toggle_override(state)
+    return {"success": True, "override": PCExecutor.SOVEREIGN_OVERRIDE}
+
+# =============================================================================
+# BUILD & UPGRADE ENDPOINTS (V21.1)
+# =============================================================================
+
+@app.post("/api/build/trigger")
+async def trigger_build():
+    try:
+        from build_manager import BuildManager
+        return BuildManager.trigger_apk_build()
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+@app.get("/api/build/status")
+async def get_build_status():
+    try:
+        from build_manager import BuildManager
+        return BuildManager.check_build_status()
+    except Exception as e:
+        return {"success": False, "error": str(e)}
 
 # =============================================================================
 # NEURAL HUB & AI BRAIN ENDPOINTS (V21.0 AEGIS — Multi-Provider)
@@ -847,15 +913,23 @@ async def get_index():
         return HTMLResponse(content=f.read())
 
 if __name__ == "__main__":
-    import uvicorn
-    ports = [80, 8000, 5000, 9090]
-    for port in ports:
-        try:
-            print(f"[START] Noir Sovereign v21.0 AEGIS on Port {port}...")
-            uvicorn.run(app, host="0.0.0.0", port=port)
-            break
-        except Exception as e:
-            print(f"[WARN] Port {port} unavailable: {e}")
+    import uvicorn, argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--port", type=int, help="Port to run the server on")
+    args = parser.parse_args()
+
+    if args.port:
+        print(f"[START] Noir Sovereign v21.1 on Port {args.port}...")
+        uvicorn.run(app, host="0.0.0.0", port=args.port)
+    else:
+        ports = [8765, 80, 8000, 5000]
+        for port in ports:
+            try:
+                print(f"[START] Noir Sovereign v21.1 on Port {port}...")
+                uvicorn.run(app, host="0.0.0.0", port=port)
+                break
+            except Exception as e:
+                print(f"[WARN] Port {port} unavailable: {e}")
             if port == ports[-1]:
                 print("[FATAL] No available ports found.")
 

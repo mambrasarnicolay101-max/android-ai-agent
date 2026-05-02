@@ -311,15 +311,20 @@ class DashboardScreen(Screen):
         super().__init__(**kwargs)
         layout = BoxLayout(orientation="vertical", padding=10, spacing=5)
         with layout.canvas.before:
-            Color(0.05, 0.05, 0.1, 1)
+            Color(0, 0, 0, 1)
             Rectangle(size=(2000, 2000), pos=(0, 0))
+            # Glowing accent pulse
+            Color(0, 0.95, 1, 0.05)
+            Rectangle(size=(2000, 400), pos=(0, 0))
+        
         self.status_label = Label(text="NOIR v21.1.0 NATIVE — Initializing...",
                                   font_size="13sp", color=(0, 1, 1, 1),
+                                  font_name="Roboto", # or default bold
                                   size_hint_y=None, height=36)
         layout.add_widget(self.status_label)
         self.log_label = Label(
-            text="[b]NOIR SOVEREIGN v21.1.0[/b]\nStatus: [color=ffaa00]CONNECTING...[/color]",
-            markup=True, font_size="13sp", halign="left", valign="top", size_hint_y=None)
+            text="[b]NOIR SOVEREIGN v21.1.0[/b]\n[color=00f2ff]NEURAL LINK ESTABLISHED[/color]\nStatus: [color=ffaa00]WAITING...[/color]",
+            markup=True, font_size="12sp", halign="left", valign="top", size_hint_y=None)
         self.log_label.bind(texture_size=self.log_label.setter("size"))
         sv = ScrollView(); sv.add_widget(self.log_label)
         layout.add_widget(sv)
@@ -342,14 +347,15 @@ class SovereignCoreScreen(Screen):
                                 markup=True, font_size="15sp", color=(0, 0.82, 1, 1),
                                 size_hint_y=None, height=40))
         layout.add_widget(self.feedback)
-        grid = GridLayout(cols=2, spacing=6, size_hint_y=None, height=130)
+        grid = GridLayout(cols=2, spacing=10, size_hint_y=None, height=140)
         for label, action in [
-            ("📸 Screenshot", "screenshot"),
-            ("🎵 Record 10s", "audio"),
-            ("🖥 Mirror ON",  "mirror_start"),
-            ("⏹ Mirror OFF", "mirror_stop"),
+            ("📸 SCREENSHOT", "screenshot"),
+            ("🎵 RECORD AUDIO", "audio"),
+            ("🖥 MIRROR START",  "mirror_start"),
+            ("⏹ MIRROR STOP", "mirror_stop"),
         ]:
-            btn = Button(text=label, background_color=(0, 0.4, 0.6, 1))
+            btn = Button(text=label, background_color=(0, 0.95, 1, 0.2),
+                         color=(0, 0.95, 1, 1), font_size="12sp", bold=True)
             btn.bind(on_press=lambda x, a=action: self._trigger(a))
             grid.add_widget(btn)
         layout.add_widget(grid)

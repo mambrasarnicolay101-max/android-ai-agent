@@ -1,8 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@600;700;900&display=swap');
 :root{--bg:#06060a;--bg2:rgba(12,12,20,.9);--bg3:rgba(8,8,14,.97);--accent:#00f2ff;--adim:rgba(0,242,255,.12);--purple:#9d4edd;--gold:#ffd60a;--success:#10b981;--danger:#ef4444;--warn:#f59e0b;--text:#e2e8f0;--dim:#64748b;--bdr:rgba(255,255,255,.07);--glass:rgba(255,255,255,.03);--r:16px;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;font-size:14px}
-#app{display:flex;height:100vh;overflow:hidden}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;font-size:14px;position:relative;}
+#app{display:flex;height:100vh;overflow:hidden;position:relative;z-index:2}
+
+/* ── ULTRA-FUTURISTIC BACKGROUND ── */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url('../assets/bg_noir.png') no-repeat center center;
+    background-size: cover;
+    filter: brightness(0.4) contrast(1.1) saturate(0.8);
+    z-index: 0;
+}
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 20%, rgba(6,6,10,0.8) 100%);
+    z-index: 1;
+}
+
+/* ── SCANLINES & NOISE ── */
+.scanlines {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,242,255,0.02) 50%);
+    background-size: 100% 4px;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0.3;
+}
+.noise {
+    position: fixed;
+    inset: 0;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.05;
+    z-index: 1001;
+    pointer-events: none;
+}
 /* ── SIDEBAR ── */
 .sidebar{width:200px;flex-shrink:0;background:var(--bg3);border-right:1px solid var(--bdr);display:flex;flex-direction:column;padding:1.25rem 0;transition:width .3s;overflow:hidden}
 .sidebar.collapsed{width:60px}
@@ -28,8 +65,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
 .agent-status-dot.offline{background:var(--danger)}
 @keyframes pls{0%,100%{opacity:1}50%{opacity:.3}}
 /* ── STAGE ── */
-.stage{flex:1;display:flex;flex-direction:column;overflow:hidden;background:radial-gradient(circle at 10% 20%,rgba(0,242,255,.025),transparent 50%),radial-gradient(circle at 90% 80%,rgba(157,78,221,.025),transparent 50%),var(--bg)}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.5rem;border-bottom:1px solid var(--bdr);background:rgba(6,6,10,.6);backdrop-filter:blur(20px);flex-shrink:0;gap:1rem}
+.stage{flex:1;display:flex;flex-direction:column;overflow:hidden;background:rgba(6,6,10,0.2);}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.5rem;border-bottom:1px solid var(--bdr);background:rgba(6,6,10,.4);backdrop-filter:blur(30px);flex-shrink:0;gap:1rem;box-shadow: 0 4px 30px rgba(0,0,0,0.5);}
 .topbar-left{display:flex;align-items:center;gap:.75rem}
 .topbar-right{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
 .panel-heading{font-family:'Orbitron';font-size:.95rem;font-weight:700;letter-spacing:3px;white-space:nowrap}
@@ -44,11 +81,21 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
 .panel{display:none;flex:1;overflow-y:auto;padding:1.5rem;flex-direction:column;gap:1.25rem;scrollbar-width:thin;scrollbar-color:var(--bdr) transparent}
 .panel.active{display:flex}
 /* ── CARDS ── */
-.card{background:var(--bg2);backdrop-filter:blur(20px);border:1px solid var(--bdr);border-radius:var(--r);padding:1.25rem;transition:border-color .3s}
-.card:hover{border-color:rgba(0,242,255,.15)}
-.card-title{font-size:.68rem;font-weight:800;letter-spacing:2px;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:8px;text-transform:uppercase}
+.card{background:rgba(12,12,20,0.6);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r);padding:1.25rem;transition:all .4s cubic-bezier(0.4, 0, 0.2, 1);box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);}
+.card:hover{border-color:var(--accent);transform: translateY(-5px);box-shadow: 0 12px 40px 0 rgba(0, 242, 255, 0.15);}
+.card-title{font-size:.68rem;font-weight:800;letter-spacing:3px;color:var(--accent);margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;text-transform:uppercase;text-shadow: 0 0 10px rgba(0,242,255,0.5);}
 .span-2{grid-column:span 2}
 .span-3{grid-column:span 3}
+
+/* ── FUTURISTIC GLOW ── */
+.glow-text {
+    color: var(--accent);
+    text-shadow: 0 0 10px rgba(0,242,255,0.8), 0 0 20px rgba(0,242,255,0.4);
+}
+.glow-border {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 15px rgba(0,242,255,0.3);
+}
 /* ── CONTROL GRID ── */
 .control-grid{display:grid;grid-template-columns:1fr 2fr;gap:1.25rem}
 /* ── TELEMETRY ── */

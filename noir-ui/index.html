@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOIR SOVEREIGN — MISSION CONTROL V21.0 AEGIS</title>
-    <meta name="description" content="Noir Sovereign AI Agent Mission Control — Remote Device Management">
+    <title>NOIR SOVEREIGN — ULTIMATE COMMAND CENTER V21.1</title>
+    <meta name="description" content="Noir Sovereign AI Agent Ultimate Command Center — Autonomous PC Evolution">
     <link rel="stylesheet" href="css/style.css?v=21.0.3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+<div class="scanlines"></div>
+<div class="noise"></div>
 <div id="app">
 
     <!-- ══ SIDEBAR ══ -->
@@ -48,6 +50,9 @@
             </button>
             <button class="nav-item" data-panel="logs" id="nav-logs">
                 <i class="fas fa-terminal"></i><span>LOGS</span>
+            </button>
+            <button class="nav-item" data-panel="pc" id="nav-pc">
+                <i class="fas fa-desktop"></i><span>PC MASTER</span>
             </button>
         </nav>
 
@@ -320,6 +325,60 @@
                 </div>
             </div>
             <div id="log-console" class="log-console"></div>
+        </section>
+
+        <!-- ════ PANEL: PC MASTER ════ -->
+        <section id="panel-pc" class="panel">
+            <div class="control-grid">
+                <!-- PC Telemetry Card -->
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-microchip"></i> PC TELEMETRY</div>
+                    <div class="tele-stack">
+                        <div class="tele-item">
+                            <div class="tele-labels"><span>CPU USAGE</span><span id="pc-cpu-val">--%</span></div>
+                            <div class="bar-track"><div id="pc-cpu-bar" class="bar-fill accent"></div></div>
+                        </div>
+                        <div class="tele-item">
+                            <div class="tele-labels"><span>RAM USED</span><span id="pc-ram-val">-- GB</span></div>
+                            <div class="bar-track"><div id="pc-ram-bar" class="bar-fill purple"></div></div>
+                        </div>
+                        <div class="tele-item">
+                            <div class="tele-labels"><span>DISK SPACE</span><span id="pc-disk-val">--%</span></div>
+                            <div class="bar-track"><div id="pc-disk-bar" class="bar-fill gold"></div></div>
+                        </div>
+                    </div>
+                    <div class="tele-footer">
+                        <span class="mini-chip">MODE: AUTONOMOUS</span>
+                        <span id="pc-uptime" class="mini-chip-dim">ACTIVE: YES</span>
+                        <button id="pc-override-btn" class="micro-btn" onclick="togglePcOverride()" style="margin-left:auto; border-color:var(--danger); color:var(--danger);">
+                            <i class="fas fa-unlock"></i> OVERRIDE: OFF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PC Shell Card -->
+                <div class="card span-2">
+                    <div class="card-title"><i class="fas fa-terminal"></i> PC LOCAL SHELL</div>
+                    <div class="log-console" id="pc-shell-output" style="height:200px; margin-bottom:1rem; background:rgba(0,0,0,0.4);">
+                        <div class="log-entry"><span class="log-ts">[SYSTEM]</span> PC Master Shell ready...</div>
+                    </div>
+                    <div class="shell-row">
+                        <input type="text" id="pc-shell-input" class="shell-input" placeholder="Execute command on PC...">
+                        <button class="cmd-btn primary" onclick="sendPcShell()"><i class="fas fa-terminal"></i> RUN</button>
+                    </div>
+                </div>
+
+                <!-- Autonomous Learning Card -->
+                <div class="card span-3">
+                    <div class="card-title"><i class="fas fa-brain"></i> AUTONOMOUS NEURAL PROGRESS</div>
+                    <div id="pc-learning-list" class="recent-list" style="max-height: 250px; overflow-y: auto;">
+                        <div class="empty-state"><i class="fas fa-book-open"></i><p>Monitoring autonomous learning pathways...</p></div>
+                    </div>
+                    <div class="card-footer" style="margin-top:1rem; border-top:1px solid rgba(255,255,255,0.05); padding-top:0.75rem;">
+                        <button class="micro-btn" onclick="refreshPcKnowledge()"><i class="fas fa-sync"></i> Refresh Knowledge Base</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
     </main>

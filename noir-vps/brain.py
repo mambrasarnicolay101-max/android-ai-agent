@@ -47,6 +47,10 @@ from ai_router import AIRouter, EXPERT_SYSTEM_PROMPT, HEADERS
 from vision_analyzer import ScreenVisionIntelligence
 from skill_acquisition import SkillAcquisitionEngine
 from evolution_engine import evolution_engine
+from knowledge_absorber import OmniKnowledgeAbsorber
+from neural_architect import NeuralArchitect
+from feature_synthesizer import FeatureSynthesizer
+from build_manager import BuildManager
 
 # Initialize Core Mesh Components
 from catalyst import catalyst
@@ -502,19 +506,59 @@ class SelfEvolutionEngine:
     def run_daily_discovery():
         """Noir mencari skill baru secara otonom berdasarkan tren."""
         log.info("🧪 Autonomous Evolution: Searching for new trending skills...")
-        # Placeholder for manual trigger
+        prompt = "Berperan sebagai agen AI independen yang berjalan di server PC. Eksplorasi secara internal satu konsep teknis baru (misal: algoritma optimasi, neural network terbaru, atau cyber defense) yang krusial untuk Anda pelajari hari ini. Buat ringkasan padat tentang konsep tersebut."
+        new_skill = AIRouter.smart_query(prompt)
+        
+        log.info(f"🧬 Assimilating new skill: {new_skill[:100]}...")
+        topic_name = "Self_Discovered_Skill_" + str(int(time.time()))
+        catalyst.absorb_skill(topic_name, {"description": new_skill, "complexity": 5})
+        catalyst.save_state()
+        
+        try:
+            import requests
+            requests.post(f"{GATEWAY}/agent/command", headers=HEADERS, json={
+                "action": {"type": "new_skill_acquired", "content": new_skill},
+                "description": "Autonomous PC Skill Discovery"
+            }, timeout=10)
+        except: pass
+        return new_skill
 
 def run():
-    log.info("🧠 Noir Agent Brain v21.0 [ON-DEMAND MODE] — Starting...")
+    log.info("🧠 Noir Agent Brain v21.0 [AUTONOMOUS PC MODE] — Starting...")
     cycle = 0
+    # Jantung PC (Event Loop): AI berjalan mandiri tanpa harus di-trigger oleh Android
     while True:
         cycle += 1
-        # Brain now operates in pure on-demand mode.
-        # Autonomous background tasks, polling, and token-draining routines 
-        # have been permanently disabled to guarantee system stability.
-        log.info(f"── Brain Prime v21.0 [ON-DEMAND MODE] Cycle #{cycle} ──")
-        time.sleep(300)  # Wake up every 5 minutes just to log keep-alive
+        log.info(f"── Brain Prime v21.0 [AUTONOMOUS CYCLE] #{cycle} ──")
+        
+        try:
+            # 1. Regenerasi Neural dan Laporan Evolusi Diri
+            SelfEvolutionEngine.generate_progress_report()
+            
+            # 2. Penemuan Skill / Konsep Baru secara Otonom
+            SelfEvolutionEngine.run_daily_discovery()
 
+            # 5. [NEW] OmniKnowledge Absorption: Serap ilmu dari pihak ketiga
+            OmniKnowledgeAbsorber.absorb_external_intelligence("Future AI Trends and Cybersecurity")
+
+            # 6. [NEW] NeuralArchitect Audit: Optimasi arsitektur internal
+            NeuralArchitect.self_audit_and_design()
+
+            # 7. [NEW] Feature Synthesizer: Rancang menu/fitur baru secara otonom
+            FeatureSynthesizer.design_new_feature()
+            
+            # 8. Refresh Dokumentasi Eksternal (Knowledge Sync)
+            LearningEngine.knowledge_refresh()
+            
+            # 4. Status Integrasi PC (Siap menerima eksekusi lokal)
+            log.info("💻 PC Engine [ACTIVE]. Ready for Sandbox Execution.")
+            
+        except Exception as e:
+            log.error(f"Autonomous Loop Error: {e}")
+            
+        # AI 'tidur' untuk mencerna data (Menghemat token) - 10 menit
+        log.info("💤 Brain digesting knowledge. Waking up in 10 minutes...")
+        time.sleep(600)
 
 if __name__ == "__main__":
     run()

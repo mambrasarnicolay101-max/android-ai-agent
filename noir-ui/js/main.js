@@ -20,11 +20,12 @@ function switchPanel(panelId) {
     const nav   = document.getElementById(`nav-${panelId}`);
     if (panel) panel.classList.add('active');
     if (nav)   nav.classList.add('active');
-    const titles = { control:'MISSION CONTROL', mirror:'LIVE SCREEN MIRROR', camera:'CAMERA & AUDIO', chat:'AI NEURAL CHAT', media:'LOOT VAULT', evolution:'AUTONOMOUS EVOLUTION', logs:'SYSTEM LOGS' };
+    const titles = { control:'MISSION CONTROL', mirror:'LIVE SCREEN MIRROR', camera:'CAMERA & AUDIO', chat:'AI NEURAL CHAT', media:'LOOT VAULT', evolution:'AUTONOMOUS EVOLUTION', logs:'SYSTEM LOGS', pc:'PC MASTER CONTROL' };
     document.getElementById('panel-title').innerText = titles[panelId] || panelId.toUpperCase();
     if (panelId === 'media') refreshMedia();
     if (panelId === 'evolution') renderEvolutions();
     if (panelId === 'logs') renderLogs();
+    if (panelId === 'pc') refreshPcKnowledge();
     if (panelId === 'mirror' && mirrorActive) startMirror();
     // Clear badge
     const badge = document.getElementById(`${panelId === 'evolution' ? 'evo' : panelId}-badge`);
@@ -60,6 +61,8 @@ async function poll() {
         const d = await r.json();
         updateConn(d.online, ping);
         if (d.agent) updateTelemetry(d.agent, ping);
+        if (d.pc_stats) updatePcTelemetry(d.pc_stats);
+        if (d.pc_override !== undefined) updateOverrideUI(d.pc_override);
         if (d.logs?.length) ingestLogs(d.logs);
         checkEvos(d.commands || []);
         // AI engine chip
@@ -130,6 +133,92 @@ function updateTelemetry(agent, ping) {
         document.getElementById('vision-time').innerText = new Date().toLocaleTimeString();
         document.getElementById('vision-status').innerText = 'LIVE';
         addMediaItem({ type: 'screenshot', key: cleanKey, ts: Date.now() });
+    }
+}
+
+function updatePcTelemetry(stats) {
+    if (!stats) return;
+    const set = (id, v, s='%') => { const e = document.getElementById(id); if (e) e.innerText = v != null ? `${v}${s}` : '--'; };
+    const bar = (id, v) => { const e = document.getElementById(id); if (e) e.style.width = `${Math.min(v||0,100)}%`; };
+
+    set('pc-cpu-val', stats.cpu_percent); bar('pc-cpu-bar', stats.cpu_percent);
+    set('pc-ram-val', stats.ram_used_gb, ' GB'); bar('pc-ram-bar', stats.ram_percent);
+    set('pc-disk-val', stats.disk_percent); bar('pc-disk-bar', stats.disk_percent);
+}
+
+let pcOverrideActive = false;
+async function togglePcOverride() {
+    pcOverrideActive = !pcOverrideActive;
+    try {
+        const r = await fetch('/api/pc/override', {
+            method: 'POST', headers: H,
+            body: JSON.stringify({ state: pcOverrideActive })
+        });
+        const d = await r.json();
+        updateOverrideUI(d.override);
+        addLog('AEGIS', `Sovereign Override: ${d.override ? 'ENABLED - ALL RESTRICTIONS LIFTED' : 'DISABLED - SECURITY ACTIVE'}`);
+    } catch (e) {
+        console.error('Override toggle error:', e);
+    }
+}
+
+function updateOverrideUI(active) {
+    pcOverrideActive = active;
+    const btn = document.getElementById('pc-override-btn');
+    if (btn) {
+        btn.innerHTML = active ? '<i class="fas fa-lock-open"></i> OVERRIDE: ON' : '<i class="fas fa-unlock"></i> OVERRIDE: OFF';
+        btn.style.backgroundColor = active ? 'var(--danger)' : '';
+        btn.style.color = active ? '#fff' : 'var(--danger)';
+    }
+}
+
+async function sendPcShell() {
+    const inp = document.getElementById('pc-shell-input');
+    const out = document.getElementById('pc-shell-output');
+    const cmd = inp.value.trim(); if (!cmd) return;
+    inp.value = '';
+    
+    const entry = document.createElement('div');
+    entry.className = 'log-entry';
+    entry.innerHTML = `<span class="log-ts">[${new Date().toLocaleTimeString()}]</span> <span class="log-lvl INFO">CMD</span> <span class="log-msg">PC Exec: ${cmd}</span>`;
+    out.appendChild(entry);
+    out.scrollTop = out.scrollHeight;
+
+    try {
+        const r = await fetch('/api/pc/command', {
+            method: 'POST', headers: H,
+            body: JSON.stringify({ cmd })
+        });
+        const d = await r.json();
+        const resEntry = document.createElement('div');
+        resEntry.className = 'log-entry';
+        const color = d.success ? 'var(--success)' : 'var(--danger)';
+        resEntry.innerHTML = `<span class="log-ts">[${new Date().toLocaleTimeString()}]</span> <span class="log-lvl INFO">RES</span> <span class="log-msg" style="color:${color}">${d.output || 'No output'}</span>`;
+        out.appendChild(resEntry);
+        out.scrollTop = out.scrollHeight;
+    } catch (e) {
+        addLog('ERROR', `PC Shell failed: ${e.message}`);
+    }
+}
+
+async function refreshPcKnowledge() {
+    const list = document.getElementById('pc-learning-list');
+    try {
+        const r = await fetch('/api/pc/knowledge?category=general', { headers: H });
+        const d = await r.json();
+        if (d.success && d.keys) {
+            list.innerHTML = d.keys.slice(-10).reverse().map(k => `
+                <div class="recent-item">
+                    <i class="fas fa-brain" style="color:var(--accent)"></i>
+                    <div style="display:flex; flex-direction:column;">
+                        <span style="font-weight:700; font-size:0.8rem;">${k}</span>
+                        <span style="font-size:0.7rem; opacity:0.6;">Pathway assimilated into Knowledge Base</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+    } catch (e) {
+        console.error('KB Refresh error:', e);
     }
 }
 

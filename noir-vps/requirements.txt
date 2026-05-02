@@ -25,3 +25,9 @@ uvicorn>=0.22.0
 # Security & Encryption
 pycryptodome>=3.19.0
 httpx>=0.25.0
+
+# Neural & Desktop UI (v21.1)
+torch>=2.1.0
+transformers>=4.35.0
+pywebview>=4.4.0
+psutil>=5.9.0
