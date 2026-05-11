@@ -3,94 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOIR SOVEREIGN: NEURAL MAP v20.0</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>NOIR — 3D Neural Synapse Map</title>
     <style>
-        body { margin: 0; background: #000; overflow: hidden; font-family: 'Inter', sans-serif; }
-        #ui {
-            position: absolute; top: 20px; left: 20px; color: #00d2ff;
-            pointer-events: none; text-transform: uppercase; letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #050508;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            overflow: hidden;
+            color: #00f2ff;
         }
-        .node-info { font-size: 10px; color: rgba(0, 210, 255, 0.7); margin-top: 5px; }
-        canvas { display: block; }
+        #neural-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+        }
+        #hud {
+            position: fixed;
+            top: 16px; left: 16px;
+            background: rgba(5,5,8,0.82);
+            border: 1px solid rgba(0,242,255,0.2);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 0.62rem;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            min-width: 180px;
+        }
+        #hud .hud-title {
+            color: #00f2ff;
+            font-size: 0.68rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(0,242,255,0.15);
+            padding-bottom: 6px;
+            letter-spacing: 2px;
+        }
+        #hud .hud-stat { color: rgba(255,255,255,0.5); margin: 4px 0; }
+        #hud .hud-stat span { color: #00f2ff; }
+        #swarm-feed {
+            position: fixed;
+            bottom: 16px; left: 16px; right: 16px;
+            max-height: 120px;
+            background: rgba(5,5,8,0.85);
+            border: 1px solid rgba(0,242,255,0.15);
+            border-radius: 12px;
+            padding: 10px 14px;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            font-size: 0.62rem;
+        }
+        #swarm-feed .feed-title {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.58rem;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+        .feed-msg {
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.6rem;
+        }
+        .feed-msg .sender { color: #00f2ff; }
+        .feed-msg .target { color: #bf00ff; }
+        .feed-msg .arrow { color: #00ffaa; }
     </style>
 </head>
 <body>
-    <div id="ui">
-        <h1>Neural Map v20.0</h1>
-        <div class="node-info">Status: MESH_SYNCHRONIZED</div>
-        <div class="node-info">Nodes Active: 5 [VPS, MOBILE, PC, GATEWAY, BRAIN]</div>
-    </div>
-    <script>
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, Window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+<canvas id="neural-canvas"></canvas>
 
-        // Starfield
-        const starGeometry = new THREE.BufferGeometry();
-        const starCount = 1500;
-        const posArray = new Float32Array(starCount * 3);
-        for(let i=0; i<starCount*3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 100;
-        }
-        starGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const starMaterial = new THREE.PointsMaterial({ size: 0.05, color: 0xffffff });
-        const stars = new THREE.Points(starGeometry, starMaterial);
-        scene.add(stars);
+<div id="hud">
+    <div class="hud-title">⬡ SYNAPTIC MAP</div>
+    <div class="hud-stat">Nodes: <span id="hud-nodes">—</span></div>
+    <div class="hud-stat">Pillars: <span id="hud-pillars">12</span></div>
+    <div class="hud-stat">Swarm Msgs: <span id="hud-msgs">0</span></div>
+    <div class="hud-stat">Pulse Rate: <span id="hud-pulse">60fps</span></div>
+    <div class="hud-stat">Status: <span style="color:#00ffaa">LIVE</span></div>
+</div>
 
-        // Neural Nodes
-        const nodeGeometry = new THREE.SphereGeometry(0.5, 32, 32);
-        const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x00d2ff, wireframe: true });
-        
-        const nodes = [];
-        const nodePositions = [
-            [0, 0, 0],    // Brain
-            [5, 3, -2],   // Mobile
-            [-5, -2, 4],  // PC
-            [3, -5, -3],  // Gateway
-            [-4, 4, 2]    // Sentinel
-        ];
+<div id="swarm-feed">
+    <div class="feed-title">◈ SWARM BUS — LIVE COMMUNICATION FEED</div>
+    <div id="feed-list"><div class="feed-msg" style="color:rgba(255,255,255,0.2);">Awaiting swarm activity...</div></div>
+</div>
 
-        nodePositions.forEach(pos => {
-            const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
-            node.position.set(...pos);
-            scene.add(node);
-            nodes.push(node);
-        });
+<script>
+// ═══════════════════════════════════════════════════════
+// NOIR SOVEREIGN — 3D SYNAPTIC NEURAL MAP (Self-Contained)
+// Uses HTML5 Canvas with pure WebGL-inspired 2D perspective
+// ═══════════════════════════════════════════════════════
 
-        // Neural Connections
-        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x00d2ff, transparent: true, opacity: 0.3 });
-        nodes.forEach((n1, i) => {
-            nodes.forEach((n2, j) => {
-                if(i < j) {
-                    const geometry = new THREE.BufferGeometry().setFromPoints([n1.position, n2.position]);
-                    const line = new THREE.Line(geometry, lineMaterial);
-                    scene.add(line);
-                }
+const canvas = document.getElementById('neural-canvas');
+const ctx = canvas.getContext('2d');
+
+let W, H, cx, cy;
+let nodes = [];
+let links = [];
+let swarmLinks = [];
+let time = 0;
+let animFrame;
+
+function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    cx = W / 2; cy = H / 2;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// ── Node definitions ──────────────────────────────────
+const NODE_DEFS = [
+    { id: 'brain',             label: 'Brain Engine',     group: 'core',    size: 22, color: '#ffffff' },
+    { id: 'vps',               label: 'Alibaba VPS',      group: 'infra',   size: 16, color: '#00f2ff' },
+    { id: 'gateway',           label: 'Gateway',          group: 'infra',   size: 12, color: '#00f2ff' },
+    { id: 'mobile',            label: 'Redmi Agent',      group: 'device',  size: 12, color: '#f59e0b' },
+    { id: 'neural_coder',      label: 'Neural Coder',     group: 'pilar',   size: 10, color: '#a78bfa' },
+    { id: 'security_sentinel', label: 'Security Sentinel',group: 'pilar',   size: 10, color: '#a78bfa' },
+    { id: 'pentester',         label: 'Pentester',        group: 'pilar',   size: 10, color: '#a78bfa' },
+    { id: 'knowledge_absorber',label: 'Knowledge Abs.',   group: 'pilar',   size: 10, color: '#a78bfa' },
+    { id: 'neural_architect',  label: 'Neural Arch.',     group: 'pilar',   size: 10, color: '#a78bfa' },
+    { id: 'network_sentinel',  label: 'Network Sentinel', group: 'pilar',   size: 10, color: '#a78bfa' },
+    { id: 'auto_healer',       label: 'Auto-Healer',      group: 'pilar',   size: 10, color: '#a78bfa' },
+    { id: 'memory_consol',     label: 'Memory Consol.',   group: 'pilar',   size: 10, color: '#a78bfa' },
+    { id: 'antigravity',       label: 'Antigravity',      group: 'pilar',   size: 10, color: '#00ffaa' },
+    { id: 'strategist',        label: 'Strategist',       group: 'pilar',   size: 10, color: '#a78bfa' },
+    { id: 'qa_validator',      label: 'QA Validator',     group: 'pilar',   size: 10, color: '#a78bfa' },
+    { id: 'ux_weaver',         label: 'UX Weaver',        group: 'pilar',   size: 10, color: '#a78bfa' },
+];
+
+const LINK_DEFS = [
+    { s: 'vps', t: 'brain' },
+    { s: 'gateway', t: 'vps' },
+    { s: 'mobile', t: 'gateway' },
+    { s: 'neural_coder', t: 'brain' },
+    { s: 'security_sentinel', t: 'brain' },
+    { s: 'pentester', t: 'brain' },
+    { s: 'knowledge_absorber', t: 'brain' },
+    { s: 'neural_architect', t: 'brain' },
+    { s: 'network_sentinel', t: 'brain' },
+    { s: 'auto_healer', t: 'brain' },
+    { s: 'memory_consol', t: 'brain' },
+    { s: 'antigravity', t: 'brain' },
+    { s: 'strategist', t: 'brain' },
+    { s: 'qa_validator', t: 'brain' },
+    { s: 'ux_weaver', t: 'brain' },
+    { s: 'strategist', t: 'neural_coder' },
+    { s: 'qa_validator', t: 'neural_coder' },
+];
+
+// ── Position nodes in rings ───────────────────────────
+function initNodes() {
+    const coreN = NODE_DEFS.find(n => n.id === 'brain');
+    coreN.x = cx; coreN.y = cy;
+    coreN.vx = 0; coreN.vy = 0;
+
+    const infraNodes = NODE_DEFS.filter(n => n.group === 'infra');
+    infraNodes.forEach((n, i) => {
+        const ang = (i / infraNodes.length) * Math.PI * 2 + Math.PI * 0.25;
+        const r = Math.min(W, H) * 0.22;
+        n.x = cx + Math.cos(ang) * r;
+        n.y = cy + Math.sin(ang) * r;
+        n.vx = 0; n.vy = 0;
+    });
+
+    const deviceNodes = NODE_DEFS.filter(n => n.group === 'device');
+    deviceNodes.forEach((n, i) => {
+        n.x = cx - W * 0.3;
+        n.y = cy + (i - deviceNodes.length / 2) * 80;
+        n.vx = 0; n.vy = 0;
+    });
+
+    const pilarNodes = NODE_DEFS.filter(n => n.group === 'pilar');
+    pilarNodes.forEach((n, i) => {
+        const ang = (i / pilarNodes.length) * Math.PI * 2 - Math.PI * 0.5;
+        const r = Math.min(W, H) * 0.38;
+        n.x = cx + Math.cos(ang) * r;
+        n.y = cy + Math.sin(ang) * r;
+        n.vx = 0; n.vy = 0;
+    });
+
+    nodes = NODE_DEFS;
+    links = LINK_DEFS.map(l => ({
+        source: nodes.find(n => n.id === l.s),
+        target: nodes.find(n => n.id === l.t),
+    })).filter(l => l.source && l.target);
+
+    document.getElementById('hud-nodes').textContent = nodes.length;
+}
+
+// ── Particle system for link animations ───────────────
+let particles = [];
+function spawnParticle(link, isSwarm = false) {
+    particles.push({
+        link,
+        t: 0,
+        speed: 0.004 + Math.random() * 0.004,
+        isSwarm,
+        alpha: 1,
+    });
+}
+
+setInterval(() => {
+    // Randomly fire particles on structural links
+    if (links.length > 0) {
+        const l = links[Math.floor(Math.random() * links.length)];
+        spawnParticle(l, false);
+    }
+}, 120);
+
+// ── Swarm bus polling ─────────────────────────────────
+let swarmMessages = [];
+async function pollSwarmBus() {
+    try {
+        const r = await fetch('/api/swarm/bus');
+        if (!r.ok) return;
+        const data = await r.json();
+        if (data.messages && data.messages.length > 0) {
+            swarmMessages = data.messages.slice(-20);
+            document.getElementById('hud-msgs').textContent = swarmMessages.length;
+            renderFeed();
+            // Spawn visual swarm particles
+            swarmMessages.forEach(msg => {
+                const src = nodes.find(n => n.id === msg.sender.toLowerCase().replace(/ /g,'_')) || nodes.find(n => n.id === 'brain');
+                const tgt = nodes.find(n => n.id === 'brain');
+                if (src && tgt) spawnParticle({ source: src, target: tgt }, true);
             });
-        });
-
-        camera.position.z = 15;
-
-        function animate() {
-            requestAnimationFrame(animate);
-            stars.rotation.y += 0.001;
-            nodes.forEach(n => {
-                n.rotation.x += 0.01;
-                n.rotation.y += 0.01;
-            });
-            renderer.render(scene, camera);
         }
-        animate();
+    } catch {}
+}
 
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+function renderFeed() {
+    const feedEl = document.getElementById('feed-list');
+    if (swarmMessages.length === 0) return;
+    feedEl.innerHTML = swarmMessages.slice(-8).reverse().map(msg => {
+        const t = new Date(msg.ts * 1000).toLocaleTimeString();
+        return `<div class="feed-msg">
+            <span style="color:rgba(255,255,255,0.25)">[${t}]</span>
+            <span class="sender">${msg.sender}</span>
+            <span class="arrow"> → </span>
+            <span class="target">${msg.target}</span>:
+            <span style="color:rgba(255,255,255,0.4)">${msg.content?.type || 'signal'}</span>
+        </div>`;
+    }).join('');
+}
+
+// ── Draw loop ─────────────────────────────────────────
+function draw() {
+    time += 0.01;
+
+    // Background with fade trail
+    ctx.fillStyle = 'rgba(5, 5, 8, 0.18)';
+    ctx.fillRect(0, 0, W, H);
+
+    // Draw links
+    links.forEach(link => {
+        const sx = link.source.x, sy = link.source.y;
+        const tx = link.target.x, ty = link.target.y;
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(tx, ty);
+        ctx.strokeStyle = 'rgba(0, 242, 255, 0.06)';
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+    });
+
+    // Update & draw particles
+    particles = particles.filter(p => p.t <= 1);
+    particles.forEach(p => {
+        p.t += p.speed;
+        const sx = p.link.source.x, sy = p.link.source.y;
+        const tx = p.link.target.x, ty = p.link.target.y;
+        const px = sx + (tx - sx) * p.t;
+        const py = sy + (ty - sy) * p.t;
+        const alpha = p.t < 0.5 ? p.t * 2 : (1 - p.t) * 2;
+        const color = p.isSwarm ? `rgba(0,255,170,${alpha})` : `rgba(0,242,255,${alpha * 0.7})`;
+        const size = p.isSwarm ? 3 : 2;
+
+        ctx.beginPath();
+        ctx.arc(px, py, size, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        if (p.isSwarm) {
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#00ffaa';
+        }
+        ctx.fill();
+        ctx.shadowBlur = 0;
+    });
+
+    // Draw nodes
+    nodes.forEach(node => {
+        const pulse = Math.sin(time * 2 + node.x * 0.01) * 0.3 + 0.7;
+        const drawR = node.size * pulse;
+
+        // Outer glow
+        const grd = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, drawR * 2.5);
+        grd.addColorStop(0, node.color + '55');
+        grd.addColorStop(1, 'transparent');
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, drawR * 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+
+        // Core
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, drawR, 0, Math.PI * 2);
+        ctx.fillStyle = node.color;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = node.color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Label
+        ctx.font = `${Math.max(8, node.size * 0.7)}px 'Courier New', monospace`;
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.textAlign = 'center';
+        ctx.fillText(node.label, node.x, node.y + drawR + 13);
+    });
+
+    animFrame = requestAnimationFrame(draw);
+}
+
+// ── Bootstrap ─────────────────────────────────────────
+initNodes();
+draw();
+pollSwarmBus();
+setInterval(pollSwarmBus, 5000);
+</script>
 </body>
 </html>

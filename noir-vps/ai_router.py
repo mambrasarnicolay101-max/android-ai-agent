@@ -1,6 +1,16 @@
 import os, json, logging, time, requests, base64
+from dotenv import load_dotenv
+
+# Load Environment Variables
+load_dotenv()
 
 log = logging.getLogger("AIRouter")
+
+SSL_VERIFY = os.environ.get("NOIR_SSL_BYPASS", "0") != "1"
+if not SSL_VERIFY:
+    import urllib3
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    log.warning("SSL VERIFICATION BYPASS ACTIVE (DANGEROUS)")
 
 # Path to API Pool
 POOL_PATH = os.path.join(os.path.dirname(__file__), "..", "knowledge", "api_pool.json")
@@ -37,7 +47,7 @@ def rotate_key(provider: str):
                 pool[provider]["active_index"] = (pool[provider]["active_index"] + 1) % len(keys)
                 with open(POOL_PATH, "w") as f:
                     json.dump(pool, f, indent=4)
-                log.info(f"🔄 Rotated {provider} key to index {pool[provider]['active_index']}")
+                log.info(f"Rotated {provider} key to index {pool[provider]['active_index']}")
                 return True
     except: pass
     return False
@@ -46,10 +56,11 @@ def rotate_key(provider: str):
 GATEWAY = os.environ.get("NOIR_GATEWAY_URL")
 DEVICE_ID = os.environ.get("NOIR_DEVICE_ID", "REDMI_NOTE_14")
 API_KEY = os.environ.get("NOIR_API_KEY")
-TG_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
-TG_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
 
 HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+
+from vector_memory import vector_memory as neural_memory
+from local_brain import local_brain
 
 EXPERT_SYSTEM_PROMPT = """
 You are the NOIR SOVEREIGN BRAIN v16.0 ELITE.
@@ -103,7 +114,9 @@ class AIRouter:
     @staticmethod
     def query_gemini(prompt: str, image_base64: str = None, response_json: bool = False, retry=True) -> str:
         if not RateLimiter.check(): return "[Rate Limit] Wait..."
-        
+
+        # NOTE: RAG context injection hanya dilakukan di smart_query() untuk menghindari
+        # double-injection saat smart_query → query_gemini. (Fix C-02)
         current_key = get_key_from_pool("gemini")
         models = ["gemini-2.0-flash", "gemini-1.5-flash"]
         
@@ -113,22 +126,28 @@ class AIRouter:
                 if image_base64:
                     parts.append({"inline_data": {"mime_type": "image/png", "data": image_base64}})
                 
-                payload = {
-                    "system_instruction": {"parts": [{"text": EXPERT_SYSTEM_PROMPT}]},
-                    "contents": [{"role": "user", "parts": parts}]
-                }
+                if "2.0" in model_name:
+                    payload = {
+                        "system_instruction": {"parts": [{"text": EXPERT_SYSTEM_PROMPT}]},
+                        "contents": [{"role": "user", "parts": parts}]
+                    }
+                    api_ver = "v1beta"
+                else:
+                    # Prepend system prompt for v1
+                    parts[0]["text"] = f"{EXPERT_SYSTEM_PROMPT}\n\n{parts[0]['text']}"
+                    payload = {"contents": [{"role": "user", "parts": parts}]}
+                    api_ver = "v1"
+                
                 if response_json:
                     payload["generationConfig"] = {"responseMimeType": "application/json"}
-                
-                api_ver = "v1beta" if "2.0" in model_name else "v1"
                 url = f"https://generativelanguage.googleapis.com/{api_ver}/models/{model_name}:generateContent?key={current_key}"
                 
-                r = requests.post(url, json=payload, timeout=30)
+                r = requests.post(url, json=payload, timeout=30, verify=SSL_VERIFY)
                 data = r.json()
                 
                 if "error" in data:
                     if data["error"]["code"] == 429 and retry:
-                        log.warning(f"⚠️ Quota exceeded for key index. Rotating...")
+                        log.warning(f"Quota exceeded for key index. Rotating...")
                         if rotate_key("gemini"):
                             return AIRouter.query_gemini(prompt, image_base64, response_json, retry=False)
                     return f"[Gemini Error] {data['error']['message']}"
@@ -138,38 +157,40 @@ class AIRouter:
             except Exception as e:
                 log.error(f"Gemini failed: {e}")
                 
-        # Final Fallback to Local AI
-        log.warning("🔄 All Cloud APIs failed. Switching to LOCAL AI FALLBACK.")
-        try:
-            from local_brain import LocalAI
-            return LocalAI.query(prompt)
-        except:
-            return "🚨 [CRITICAL] All Gemini models and Local AI failed."
+        # Fallback to DeepSeek/Groq
+        log.warning("Gemini failed. Switching to DeepSeek Fallback.")
+        return AIRouter.query_deepseek(prompt)
 
     @staticmethod
     def query_deepseek(prompt: str) -> str:
         key = get_key_from_pool("groq")
-        if not key: return AIRouter.query_gemini(prompt)
+        if not key: return "[Groq] No API Key found."
         try:
             r = requests.post(
                 "https://api.groq.com/openai/v1/chat/completions",
                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
                 json={
-                    "model": "deepseek-r1-distill-llama-70b",
+                    "model": "llama-3.3-70b-versatile",
                     "messages": [{"role": "system", "content": EXPERT_SYSTEM_PROMPT}, {"role": "user", "content": prompt}]
                 },
-                timeout=40
+                timeout=40,
+                verify=SSL_VERIFY
             )
             data = r.json()
-            if "error" in data and data["error"]["code"] == 429:
-                rotate_key("groq")
+            if "error" in data:
+                log.error(f"Groq API Error: {data['error']}")
+                if data["error"].get("code") == 429:
+                    rotate_key("groq")
+                return f"[Groq Error] {data['error'].get('message')}"
             return data["choices"][0]["message"]["content"]
-        except: return AIRouter.query_gemini(prompt)
+        except Exception as e:
+            log.error(f"Groq/DeepSeek failed: {e}")
+            return f"[Groq Error] {e}"
 
     @staticmethod
     def query_qwen(prompt: str) -> str:
         key = get_key_from_pool("openrouter")
-        if not key: return AIRouter.query_gemini(prompt)
+        if not key: return "[OpenRouter] No API Key found."
         try:
             r = requests.post(
                 "https://openrouter.ai/api/v1/chat/completions",
@@ -178,10 +199,13 @@ class AIRouter:
                     "model": "qwen/qwen-2-72b-instruct",
                     "messages": [{"role": "system", "content": EXPERT_SYSTEM_PROMPT}, {"role": "user", "content": prompt}]
                 },
-                timeout=30
+                timeout=30,
+                verify=SSL_VERIFY
             )
             return r.json()["choices"][0]["message"]["content"]
-        except: return AIRouter.query_gemini(prompt)
+        except Exception as e:
+            log.error(f"OpenRouter/Qwen failed: {e}")
+            return f"[OpenRouter Error] {e}"
 
     @staticmethod
     def smart_query(prompt: str):
@@ -189,30 +213,27 @@ class AIRouter:
         StealthTransport.jitter() # Anti-pattern delay
         headers = StealthTransport.get_stealth_headers()
         
+        # Phase 2: Local Brain Intent Check (Token Optimization)
+        local_res = local_brain.process(prompt)
+        if local_res["intent"] != "unknown" and local_res["confidence"] > 0.9:
+            log.info(f"SmartQuery: Local Brain detected intent '{local_res['intent']}'. Skipping Cloud AI.")
+            return local_res["response"]
+
         p_lower = prompt.lower()
         
-        # Phase 3: Check local Neural Knowledge Base first
+        # Phase 3: Check local Neural Memory first (Sovereign RAG)
         try:
-            from knowledge_base import NeuralKnowledgeBase
-            local_context = NeuralKnowledgeBase.query(prompt)
+            local_context = neural_memory.query(prompt)
             if local_context:
-                prompt = f"LOCAL CONTEXT:\n{local_context}\n\nUSER QUESTION: {prompt}"
-                log.info("🧠 SmartQuery: Injected local RAG context.")
-        except: pass
+                context_str = "\n".join([f"- {c}" for c in local_context])
+                prompt = f"LOCAL CONTEXT (Noir Memory):\n{context_str}\n\nUSER QUESTION: {prompt}"
+                log.info("SmartQuery: Injected local RAG context from Neural Memory.")
+        except Exception as e:
+            log.warning(f"Neural Memory Query failed: {e}")
 
         if any(x in p_lower for x in ["code", "python", "script"]): return AIRouter.query_qwen(prompt)
         if any(x in p_lower for x in ["mengapa", "analisis", "why"]): return AIRouter.query_deepseek(prompt)
         return AIRouter.query_gemini(prompt)
-
-    @staticmethod
-    def send_telegram(msg: str, important: bool = False):
-        if not important: return
-        if not TG_TOKEN or not TG_ID: return
-        try:
-            requests.post(f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage", data={
-                "chat_id": TG_ID, "text": f"🧠 [NOIR BRAIN]\n{msg}"
-            }, timeout=10)
-        except: pass
 
     @staticmethod
     def web_search(query: str) -> str:

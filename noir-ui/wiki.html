@@ -1,0 +1,851 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOVEREIGN AEGIS — KNOWLEDGE WIKI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0c;
+            --card: #121215;
+            --accent: #a855f7;
+            --accent-glow: rgba(168, 85, 247, 0.4);
+            --text: #e2e8f0;
+            --dim: #94a3b8;
+            --border: #1f2937;
+            --success: #22c55e;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        * { box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        body::-webkit-scrollbar { width: 6px; }
+        body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+        .header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .header h1 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 2.2rem;
+            letter-spacing: -1.5px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .header h1 i { color: var(--accent); filter: drop-shadow(0 0 8px var(--accent-glow)); }
+        .header p {
+            color: var(--dim);
+            margin: 0.75rem 0 0 0;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        .stats-strip {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); }
+        .stat-value { font-size: 1.1rem; font-weight: 700; color: var(--accent); font-family: var(--font-mono); }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 2rem;
+        }
+        .entry {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .entry:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0,0,0,0.5);
+        }
+        .entry-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .status-badge {
+            font-size: 0.6rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .timestamp {
+            font-size: 0.75rem;
+            color: var(--dim);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .desc {
+            font-size: 0.92rem;
+            color: var(--dim);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        .code-block {
+            background: #000;
+            padding: 1.25rem;
+            border-radius: 10px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            overflow-x: auto;
+            border: 1px solid #1a1a1a;
+            position: relative;
+        }
+        .code-block::before {
+            content: "MUTATION_DATA";
+            position: absolute;
+            top: 0; right: 1rem;
+            font-size: 0.6rem;
+            color: #333;
+            font-weight: 800;
+        }
+        pre { margin: 0; color: #a5b4fc; }
+        .no-data {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 6rem 2rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px dashed var(--border);
+            border-radius: 20px;
+            color: var(--dim);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            color: var(--accent);
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-book-atlas"></i> SOVEREIGN WIKI</h1>
+        <p>Repository otonom yang mencatat setiap evolusi, mitigasi keamanan, dan kecerdasan baru yang diserap oleh AI.</p>
+        <div class="stats-strip">
+            <div class="stat-item">
+                <span class="stat-label">Total Lessons</span>
+                <span class="stat-value">35</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Last Evolution</span>
+                <span class="stat-value">2026-05-12 00:18</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Stability</span>
+                <span class="stat-value" style="color:var(--success)">OPTIMAL</span>
+            </div>
+        </div>
+    </div>
+    <div class="grid">
+        
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:18</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 97.2% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 97.2% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:18:24 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:18</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 98.7% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 98.7% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:18:22 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:18</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:18:21 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:17</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 99.3% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 99.3% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:17:58 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:17</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 95.9% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 95.9% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:17:58 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:17</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 94.6% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 94.6% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:17:44 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:17</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:17:25 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:17</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 95.7% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 95.7% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:17:20 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:17</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:17:17 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:17</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 98.5% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 98.5% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:17:01 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:16</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:16:54 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:16</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 97.9% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 97.9% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:16:50 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:16</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 90.8% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 90.8% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:16:50 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:16</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:16:38 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:16</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:16:38 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:16</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:16:35 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:16</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 94.9% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 94.9% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:16:22 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:16</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:16:15 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:16</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 92.9% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 92.9% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:16:03 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:15</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:15:57 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:15</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:15:55 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:15</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 92.5% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 92.5% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:15:52 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:15</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 94.2% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 94.2% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:15:41 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:15</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 97.9% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 97.9% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:15:40 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:15</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:15:29 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:15</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:15:24 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:15</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:15:24 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:15</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:15:08 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:14</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 97.9% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 97.9% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:14:03 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:13</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:13:36 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:13</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:13:36 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:13</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 94.9% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 94.9% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:13:21 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:13</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 94.6% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 94.6% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:13:21 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:13</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:13:05 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-title">
+                        Security Reflex: CPU_ANOMALY
+                        <span class="status-badge">APPLIED</span>
+                    </div>
+                    <div class="timestamp"><i class="far fa-calendar-alt"></i> 2026-05-12 00:13</div>
+                    <div class="desc">Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.</div>
+                    <div class="code-block">
+                        <pre>{
+  "reflex_action": {
+    "alert": "CPU_ANOMALY",
+    "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+    "timestamp": "Tue May 12 00:13:05 2026"
+  }
+}</pre>
+                    </div>
+                    <div class="tag">#SOVEREIGN_EVOLUTION</div>
+                </div>
+                
+    </div>
+</body>
+</html>

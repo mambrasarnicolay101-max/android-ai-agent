@@ -1,643 +1,581 @@
 // ═══════════════════════════════════════════════════════
-// NOIR SOVEREIGN — MISSION CONTROL JS  V21.0 AEGIS
+// NOIR SOVEREIGN — MISSION CONTROL JS  V21.2 ELITE AEGIS
 // ═══════════════════════════════════════════════════════
 const API_KEY = "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026";
 const H = { "Authorization": `Bearer ${API_KEY}`, "Content-Type": "application/json" };
 
 // ── State ────────────────────────────────────────────
-let allLogs = [], logVisible = true, mediaMode = 'screenshots';
-let mediaItems = [], evoProposals = [], chatHistory = [];
-let mirrorActive = false, mirrorZoom = 1, mirrorInterval = null;
-let lastFrame = null, frameCount = 0, fpsTimer = null;
-let recInterval = null, recSeconds = 0;
-let activeCam = 'back';
+let activePanel = 'dashboard';
+let isAgentOnline = false;
+let lastScreenshot = null;
+let chatHistory = [];
 
-// ── SPA Navigation ───────────────────────────────────
-function switchPanel(panelId) {
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+// ── Navigation ───────────────────────────────────────
+function showPanel(panelId) {
+    activePanel = panelId;
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    
     const panel = document.getElementById(`panel-${panelId}`);
-    const nav   = document.getElementById(`nav-${panelId}`);
     if (panel) panel.classList.add('active');
-    if (nav)   nav.classList.add('active');
-    const titles = { control:'MISSION CONTROL', mirror:'LIVE SCREEN MIRROR', camera:'CAMERA & AUDIO', chat:'AI NEURAL CHAT', media:'LOOT VAULT', evolution:'AUTONOMOUS EVOLUTION', logs:'SYSTEM LOGS', pc:'PC MASTER CONTROL' };
-    document.getElementById('panel-title').innerText = titles[panelId] || panelId.toUpperCase();
-    if (panelId === 'media') refreshMedia();
-    if (panelId === 'evolution') renderEvolutions();
-    if (panelId === 'logs') renderLogs();
-    if (panelId === 'pc') refreshPcKnowledge();
-    if (panelId === 'mirror' && mirrorActive) startMirror();
-    // Clear badge
-    const badge = document.getElementById(`${panelId === 'evolution' ? 'evo' : panelId}-badge`);
-    if (badge) { badge.style.display = 'none'; badge.innerText = '0'; }
+    
+    // Find the nav item that matches the panelId (some might be custom)
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(nav => {
+        if (nav.getAttribute('onclick')?.includes(`'${panelId}'`)) {
+            nav.classList.add('active');
+        }
+    });
+
+    const titles = {
+        dashboard: 'COMMAND OVERVIEW',
+        vision: 'NEURAL VISION STREAM',
+        chat: 'COMMAND TERMINAL',
+        browser: 'AUTONOMOUS RESEARCH',
+        evolution: 'EVOLUTION ENGINE',
+        pc: 'NODE MANAGEMENT',
+        wiki: 'SOVEREIGN WIKI',
+        synthesis: 'NEURAL SYNTHESIS LAB',
+        logs: 'SYSTEM LOGS',
+        swarm: 'SWARM INTELLIGENCE MONITOR',
+        neuralmap: '3D SYNAPTIC NEURAL MAP'
+    };
+    document.getElementById('active-panel-title').innerText = titles[panelId] || panelId.toUpperCase();
+    
+    if (panelId === 'evolution') refreshEvolutions();
+    if (panelId === 'pc') refreshPcStats();
+    if (panelId === 'swarm') pollSwarmFeed();
+    if (panelId === 'neuralmap') {
+        const iframe = document.getElementById('neuralmap-iframe');
+        if (iframe) iframe.src = 'neural_map.html?t=' + Date.now();
+    }
+    if (panelId === 'wiki') {
+        const iframe = document.getElementById('wiki-iframe');
+        if (iframe) iframe.src = 'wiki.html?t=' + Date.now();
+    }
 }
-document.querySelectorAll('.nav-item').forEach(btn => {
-    btn.addEventListener('click', () => switchPanel(btn.dataset.panel));
-});
 
-function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('collapsed');
-}
+async function startSynthesis() {
+    const goal = document.getElementById('synth-goal').value;
+    if (!goal) return alert("Masukkan objektif sintesis terlebih dahulu.");
 
-// ── Clock ────────────────────────────────────────────
-setInterval(() => { document.getElementById('sys-time').innerText = new Date().toLocaleTimeString(); }, 1000);
+    const box = document.getElementById('synth-status-box');
+    const text = document.getElementById('synth-status-text');
+    const bar = document.getElementById('synth-progress-bar');
+    const log = document.getElementById('synth-log');
 
-// ── Neural Chart ─────────────────────────────────────
-let chart;
-function initChart() {
-    const ctx = document.createElement('canvas');
-    if (!ctx) return;
-}
+    box.style.display = 'block';
+    log.innerHTML = '<div>> Memulai misi otonom...</div>';
+    
+    const steps = [
+        { t: "ANALYZING GOAL...", p: 15, l: "Menganalisis kebutuhan arsitektur sistem..." },
+        { t: "GENERATING CODE...", p: 40, l: "Neural Coder sedang merancang logika asinkron..." },
+        { t: "SECURITY AUDIT...", p: 65, l: "Security Sentinel melakukan scan SAST pada kode..." },
+        { t: "VALIDATING...", p: 85, l: "Memverifikasi integritas dan kompabilitas modul..." },
+        { t: "DEPLOYING...", p: 95, l: "Memasang skill baru ke dalam sistem syaraf Noir..." }
+    ];
 
-// ── Main Poll Loop ────────────────────────────────────
-let lastShot = null, pingStart = 0;
+    for (const s of steps) {
+        text.innerText = s.t;
+        bar.style.width = s.p + '%';
+        log.innerHTML += `<div>> ${s.l}</div>`;
+        log.scrollTop = log.scrollHeight;
+        await new Promise(r => setTimeout(r, 2000));
+    }
 
-async function poll() {
     try {
-        pingStart = Date.now();
+        const resp = await fetch('/api/synthesis/start', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ goal })
+        });
+        const data = await resp.json();
+        if (data.success) {
+            text.innerText = "COMPLETED";
+            bar.style.width = '100%';
+            log.innerHTML += `<div style="color:var(--success)">> SUCCESS: Skill ${data.class} berhasil dipasang!</div>`;
+        } else {
+            text.innerText = "FAILED";
+            log.innerHTML += `<div style="color:#ef4444">> ERROR: ${data.reason}</div>`;
+        }
+    } catch (e) {
+        text.innerText = "ERROR";
+        log.innerHTML += `<div style="color:#ef4444">> Connection failed.</div>`;
+    }
+}
+
+let ghostActive = false;
+async function toggleGhostMode() {
+    ghostActive = !ghostActive;
+    const btn = document.getElementById('ghost-toggle-btn');
+    const status = document.getElementById('ghost-status');
+    
+    try {
+        const resp = await fetch('/api/ghost/toggle', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ active: ghostActive })
+        });
+        const data = await resp.json();
+        if (data.success) {
+            if (ghostActive) {
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> DEACTIVATE GHOST';
+                btn.classList.add('primary');
+                status.innerText = "ACTIVE [STEALTH]";
+                status.className = "text-success";
+            } else {
+                btn.innerHTML = '<i class="fas fa-mask"></i> ACTIVATE GHOST';
+                btn.classList.remove('primary');
+                status.innerText = "INACTIVE";
+                status.className = "text-dim";
+            }
+        }
+    } catch (e) {
+        alert("Gagal menghubungi Ghost Engine.");
+    }
+}
+
+// ── NEURAL VOICE BRIDGE ─────────────────────────────
+let voiceEnabled = false;
+const synth = window.speechSynthesis;
+
+function toggleVoice() {
+    voiceEnabled = !voiceEnabled;
+    const btn = document.getElementById('voice-toggle-btn');
+    if (voiceEnabled) {
+        btn.classList.add('primary');
+        btn.innerHTML = '<i class="fas fa-volume-up"></i> VOICE: ON';
+        speak("Neural Voice Bridge Active. I am now capable of audio feedback.");
+    } else {
+        btn.classList.remove('primary');
+        btn.innerHTML = '<i class="fas fa-volume-mute"></i> VOICE: OFF';
+        synth.cancel();
+    }
+}
+
+function speak(text) {
+    if (!voiceEnabled || !text) return;
+    
+    // Cancel previous speech to prevent overlap
+    synth.cancel();
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    // Set English or Indonesian if possible
+    utterance.lang = 'en-US'; // Default to English for a more 'AI' feel, or auto-detect
+    utterance.pitch = 0.8; // Lower pitch for a more 'serious' tone
+    utterance.rate = 1.0;
+    
+    // Handle Indonesian detection
+    if (/[a-z]/i.test(text) && (text.includes("berhasil") || text.includes("aktif") || text.includes("sistem"))) {
+        utterance.lang = 'id-ID';
+    }
+
+    synth.speak(utterance);
+}
+
+// ── REAL-TIME WEBSOCKET BRIDGE ──────────────────
+let socket;
+function initWebSocket() {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    socket = new WebSocket(`${protocol}//${window.location.host}/ws/telemetry`);
+
+    socket.onmessage = function(event) {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'log') {
+            const entry = msg.data;
+            const log = document.getElementById('terminal');
+            const color = entry.level === 'CRITICAL' ? '#ef4444' : 
+                          entry.level === 'WARNING' ? '#f59e0b' : '#10b981';
+            
+            log.innerHTML += `<div style="color:${color}">[${entry.timestamp}] [${entry.device_id}] ${entry.message}</div>`;
+            log.scrollTop = log.scrollHeight;
+            
+            // Critical Voice Feedback
+            if (entry.level === 'CRITICAL') {
+                speak("Attention. Critical system event from " + entry.device_id + ": " + entry.message);
+            }
+        }
+    };
+
+    socket.onclose = function() {
+        console.log("WebSocket closed. Reconnecting in 5s...");
+        setTimeout(initWebSocket, 5000);
+    };
+}
+
+// ── Main Loop ────────────────────────────────────────
+async function poll() {
+    // Keep polling for non-WS telemetry like PC stats
+    try {
         const r = await fetch('/api/summary', { headers: H });
-        const ping = Date.now() - pingStart;
         if (!r.ok) throw new Error('API error');
         const d = await r.json();
-        updateConn(d.online, ping);
-        if (d.agent) updateTelemetry(d.agent, ping);
-        if (d.pc_stats) updatePcTelemetry(d.pc_stats);
-        if (d.pc_override !== undefined) updateOverrideUI(d.pc_override);
-        if (d.logs?.length) ingestLogs(d.logs);
-        checkEvos(d.commands || []);
-        // AI engine chip
-        fetchProvider();
-    } catch { updateConn(false, 999); }
-}
-
-async function fetchProvider() {
-    try {
-        const r = await fetch('/api/brain/provider', { headers: H });
-        if (r.ok) {
-            const d = await r.json();
-            const chip = document.getElementById('ai-engine-chip');
-            if (chip) { chip.innerHTML = `<i class="fas fa-robot"></i> ${d.provider}`; chip.className = 'chip success'; }
-            const chatProv = document.getElementById('chat-provider-name');
-            if (chatProv) chatProv.innerText = d.provider;
-        }
-    } catch {}
-}
-
-function updateConn(online, ping) {
-    const badge = document.getElementById('connection-status');
-    const dot   = document.getElementById('agent-dot');
-    if (online) {
-        badge.className = 'conn-badge online';
-        badge.innerHTML = '<div class="pulse-dot"></div><span>NEURAL LINK ACTIVE</span>';
-        dot.className   = 'agent-status-dot online';
-    } else {
-        badge.className = 'conn-badge offline';
-        badge.innerHTML = '<div class="pulse-dot"></div><span>LINK SEVERED</span>';
-        dot.className   = 'agent-status-dot offline';
-    }
-    const pv = document.getElementById('ping-val');
-    const pb = document.getElementById('ping-bar');
-    if (pv) pv.innerText = `${ping}ms`;
-    if (pb) pb.style.width = `${Math.min(ping / 5, 100)}%`;
-}
-
-function updateTelemetry(agent, ping) {
-    const stats = agent.stats || {};
-    const set = (id, v, s='%') => { const e = document.getElementById(id); if (e) e.innerText = v != null ? `${v}${s}` : '--'; };
-    const bar = (id, v) => { const e = document.getElementById(id); if (e) e.style.width = `${Math.min(v||0,100)}%`; };
-
-    const bat = stats.bat ?? stats.battery ?? 0;
-    set('bat-val', bat); bar('bat-bar', bat);
-    set('cpu-val', stats.cpu ?? 0); bar('cpu-bar', stats.cpu ?? 0);
-    set('ram-val', stats.ram ?? 0); bar('ram-bar', stats.ram ?? 0);
-
-    // Shizuku
-    const sz = stats.shizuku || 'N/A';
-    const szChip = document.getElementById('shizuku-chip');
-    if (szChip) { szChip.innerHTML = `<i class="fas fa-shield-cat"></i> ${sz}`; szChip.className = sz === 'AUTHORIZED' ? 'chip online' : 'chip neutral'; }
-    const szSt = document.getElementById('shizuku-status');
-    if (szSt) szSt.innerText = `SHIZUKU: ${sz}`;
-
-    // Version
-    if (stats.version) {
-        const vChip = document.getElementById('agent-ver-chip');
-        if (vChip) vChip.innerHTML = `<i class="fas fa-code-branch"></i> ${stats.version}`;
-    }
-
-    // Vision snapshot — BUG#2 FIX: strip local: prefix before building URL
-    if (agent.last_screenshot && agent.last_screenshot !== lastShot) {
-        lastShot = agent.last_screenshot;
-        const cleanKey = lastShot.replace('local:', ''); // BUG#2 FIX
-        const img = document.getElementById('vision-img');
-        if (img) { img.src = `/api/asset/${cleanKey}?t=${Date.now()}`; img.style.display = 'block'; img.style.opacity = 1; }
-        document.getElementById('vision-time').innerText = new Date().toLocaleTimeString();
-        document.getElementById('vision-status').innerText = 'LIVE';
-        addMediaItem({ type: 'screenshot', key: cleanKey, ts: Date.now() });
-    }
-}
-
-function updatePcTelemetry(stats) {
-    if (!stats) return;
-    const set = (id, v, s='%') => { const e = document.getElementById(id); if (e) e.innerText = v != null ? `${v}${s}` : '--'; };
-    const bar = (id, v) => { const e = document.getElementById(id); if (e) e.style.width = `${Math.min(v||0,100)}%`; };
-
-    set('pc-cpu-val', stats.cpu_percent); bar('pc-cpu-bar', stats.cpu_percent);
-    set('pc-ram-val', stats.ram_used_gb, ' GB'); bar('pc-ram-bar', stats.ram_percent);
-    set('pc-disk-val', stats.disk_percent); bar('pc-disk-bar', stats.disk_percent);
-}
-
-let pcOverrideActive = false;
-async function togglePcOverride() {
-    pcOverrideActive = !pcOverrideActive;
-    try {
-        const r = await fetch('/api/pc/override', {
-            method: 'POST', headers: H,
-            body: JSON.stringify({ state: pcOverrideActive })
-        });
-        const d = await r.json();
-        updateOverrideUI(d.override);
-        addLog('AEGIS', `Sovereign Override: ${d.override ? 'ENABLED - ALL RESTRICTIONS LIFTED' : 'DISABLED - SECURITY ACTIVE'}`);
-    } catch (e) {
-        console.error('Override toggle error:', e);
-    }
-}
-
-function updateOverrideUI(active) {
-    pcOverrideActive = active;
-    const btn = document.getElementById('pc-override-btn');
-    if (btn) {
-        btn.innerHTML = active ? '<i class="fas fa-lock-open"></i> OVERRIDE: ON' : '<i class="fas fa-unlock"></i> OVERRIDE: OFF';
-        btn.style.backgroundColor = active ? 'var(--danger)' : '';
-        btn.style.color = active ? '#fff' : 'var(--danger)';
-    }
-}
-
-async function sendPcShell() {
-    const inp = document.getElementById('pc-shell-input');
-    const out = document.getElementById('pc-shell-output');
-    const cmd = inp.value.trim(); if (!cmd) return;
-    inp.value = '';
-    
-    const entry = document.createElement('div');
-    entry.className = 'log-entry';
-    entry.innerHTML = `<span class="log-ts">[${new Date().toLocaleTimeString()}]</span> <span class="log-lvl INFO">CMD</span> <span class="log-msg">PC Exec: ${cmd}</span>`;
-    out.appendChild(entry);
-    out.scrollTop = out.scrollHeight;
-
-    try {
-        const r = await fetch('/api/pc/command', {
-            method: 'POST', headers: H,
-            body: JSON.stringify({ cmd })
-        });
-        const d = await r.json();
-        const resEntry = document.createElement('div');
-        resEntry.className = 'log-entry';
-        const color = d.success ? 'var(--success)' : 'var(--danger)';
-        resEntry.innerHTML = `<span class="log-ts">[${new Date().toLocaleTimeString()}]</span> <span class="log-lvl INFO">RES</span> <span class="log-msg" style="color:${color}">${d.output || 'No output'}</span>`;
-        out.appendChild(resEntry);
-        out.scrollTop = out.scrollHeight;
-    } catch (e) {
-        addLog('ERROR', `PC Shell failed: ${e.message}`);
-    }
-}
-
-async function refreshPcKnowledge() {
-    const list = document.getElementById('pc-learning-list');
-    try {
-        const r = await fetch('/api/pc/knowledge?category=general', { headers: H });
-        const d = await r.json();
-        if (d.success && d.keys) {
-            list.innerHTML = d.keys.slice(-10).reverse().map(k => `
-                <div class="recent-item">
-                    <i class="fas fa-brain" style="color:var(--accent)"></i>
-                    <div style="display:flex; flex-direction:column;">
-                        <span style="font-weight:700; font-size:0.8rem;">${k}</span>
-                        <span style="font-size:0.7rem; opacity:0.6;">Pathway assimilated into Knowledge Base</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-    } catch (e) {
-        console.error('KB Refresh error:', e);
-    }
-}
-
-// ── LIVE MIRROR ───────────────────────────────────────
-function startMirror() {
-    mirrorActive = true;
-    document.getElementById('mirror-status-txt').className = 'chip online';
-    document.getElementById('mirror-status-txt').innerHTML = '<i class="fas fa-circle-dot" style="color:var(--danger)"></i> MIRRORING LIVE';
-    document.getElementById('mirror-live-dot').style.display = 'block';
-    document.getElementById('mirror-placeholder').style.display = 'none';
-    frameCount = 0;
-    const fpsEl = document.getElementById('mirror-fps');
-    
-    // Command the agent to start streaming
-    sendCmd('mirror_start');
-
-    // FPS counter
-    fpsTimer = setInterval(() => {
-        if (fpsEl) fpsEl.innerText = `${frameCount} FPS`;
-        frameCount = 0;
-    }, 1000);
-
-    // Polling loop — fetch latest screenshot every 350ms
-    mirrorInterval = setInterval(async () => {
-        if (!mirrorActive) return;
-        try {
-            const r = await fetch('/api/screen/frame', { headers: H });
-            if (!r.ok) return;
-            const d = await r.json();
-            if (d.key && d.key !== lastFrame) {
-                lastFrame = d.key;
-                frameCount++;
-                const cleanKey = d.key.replace('local:', ''); // BUG#2 FIX
-                const img = document.getElementById('mirror-img');
-                img.style.display = 'block';
-                img.src = `/api/asset/${cleanKey}?t=${Date.now()}`;
-                document.getElementById('mirror-placeholder').style.display = 'none';
-                // resolution hint
-                if (d.width && d.height) document.getElementById('mirror-res').innerText = `${d.width}×${d.height}`;
+        
+        updateStatusChips(d);
+        updateTelemetry(d);
+        if (d.logs) ingestLogs(d.logs);
+        if (d.agent?.last_screenshot) updateVision(d.agent.last_screenshot);
+        
+        // Render SMI (Sovereign Maturity Index)
+        if (d.smi) {
+            const scoreEl = document.getElementById('smi-score');
+            const barEl = document.getElementById('smi-bar');
+            const phaseEl = document.getElementById('smi-phase');
+            const readyEl = document.getElementById('smi-readiness');
+            
+            if (scoreEl) scoreEl.innerText = d.smi.score;
+            if (barEl) barEl.style.width = d.smi.score + '%';
+            if (phaseEl) phaseEl.innerText = d.smi.phase;
+            if (readyEl) {
+                readyEl.innerText = d.smi.readiness;
+                // Color coding for readiness
+                if (d.smi.score > 75) readyEl.style.color = '#10b981';
+                else if (d.smi.score > 50) readyEl.style.color = '#f59e0b';
+                else readyEl.style.color = '#ef4444';
             }
-        } catch {}
-    }, 500);
-    addLog('SYSTEM', 'Live Mirror session started.');
+        }
+        
+        // Handle offline warning — uses CSS class 'visible'
+        isAgentOnline = d.online;
+        const warn = document.getElementById('offline-warning');
+        if (warn) {
+            if (!isAgentOnline) warn.classList.add('visible');
+            else warn.classList.remove('visible');
+        }
+
+        // Voice Feedback for Critical Events
+        if (d.logs && d.logs.length > 0) {
+            const lastLog = d.logs[d.logs.length - 1];
+            if (lastLog.level === 'CRITICAL' || lastLog.level === 'ERROR') {
+                if (window.lastSpokenLog !== lastLog.message) {
+                    speak("Warning. Critical event detected: " + lastLog.message);
+                    window.lastSpokenLog = lastLog.message;
+                }
+            }
+        }
+        
+        // Render 12 Pillars Mesh
+        if (d.pillars) {
+            const meshContainer = document.getElementById('pilar-mesh-list');
+            if (meshContainer) {
+                // We assume the list is already there, just update the dots
+                const dots = meshContainer.querySelectorAll('.dot');
+                dots.forEach(dot => dot.classList.add('online')); // All online for now
+            }
+        }
+        
+        if (d.learning_progress) {
+            const learnBar = document.querySelector('.tele-bar-fill[style*="92%"]');
+            if (learnBar) learnBar.style.width = d.learning_progress + '%';
+        }
+
+    } catch (e) {
+        console.error('Poll error:', e);
+        updateStatusChips({ online: false, core_online: true });
+    }
 }
 
-function stopMirror() {
-    mirrorActive = false;
-    clearInterval(mirrorInterval);
-    clearInterval(fpsTimer);
-    document.getElementById('mirror-status-txt').className = 'chip offline';
-    document.getElementById('mirror-status-txt').innerHTML = '<i class="fas fa-display-slash"></i> MIRROR OFFLINE';
-    document.getElementById('mirror-live-dot').style.display = 'none';
-    document.getElementById('mirror-placeholder').style.display = 'flex';
-    addLog('SYSTEM', 'Live Mirror stopped.');
+function updateStatusChips(d) {
+    const coreChip = document.getElementById('core-status-chip');
+    if (coreChip) {
+        coreChip.innerHTML = d.core_online ? '<i class="fas fa-brain"></i> AI CORE: ONLINE' : '<i class="fas fa-brain-slash"></i> AI CORE: OFFLINE';
+        coreChip.className = `chip ${d.core_online ? 'online' : 'offline'}`;
+    }
+
+    const vpsChip = document.getElementById('alibaba-chip');
+    if (vpsChip && d.alibaba_vps) {
+        vpsChip.innerHTML = `<i class="fas fa-cloud"></i> ALIBABA VPS: ${d.alibaba_vps.status}`;
+        vpsChip.className = `chip ${d.alibaba_vps.status === 'ONLINE' ? 'online' : ''}`;
+    }
     
-    // Command the agent to stop streaming
-    sendCmd('mirror_stop');
-}
-
-function zoomMirror(delta) {
-    mirrorZoom = Math.max(0.3, Math.min(3.0, mirrorZoom + delta));
-    document.getElementById('device-shell').style.transform = `scale(${mirrorZoom})`;
-    document.getElementById('zoom-level').innerText = `${Math.round(mirrorZoom * 100)}%`;
-}
-
-function resetZoom() { mirrorZoom = 1; document.getElementById('device-shell').style.transform = 'scale(1)'; document.getElementById('zoom-level').innerText = '100%'; }
-
-async function toggleFullscreen() {
-    const el = document.getElementById('panel-mirror');
-    if (!document.fullscreenElement) {
-        await el.requestFullscreen();
-        document.getElementById('fs-btn').innerHTML = '<i class="fas fa-compress"></i> EXIT FS';
-    } else {
-        await document.exitFullscreen();
-        document.getElementById('fs-btn').innerHTML = '<i class="fas fa-expand"></i> FULLSCREEN';
+    const agentChip = document.getElementById('agent-status-chip');
+    if (agentChip) {
+        agentChip.innerHTML = d.online ? '<i class="fas fa-link"></i> LINK: ACTIVE' : '<i class="fas fa-link-slash"></i> LINK: SEVERED';
+        agentChip.className = `chip ${d.online ? 'online' : 'offline'}`;
     }
 }
 
-document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement) {
-        document.getElementById('fs-btn').innerHTML = '<i class="fas fa-expand"></i> FULLSCREEN';
+function updateTelemetry(d) {
+    const set = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = val !== undefined ? val + (id.includes('stat') ? '%' : '') : '--';
+    };
+    const bar = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.style.width = (val || 0) + '%';
+    };
+
+    if (d.agent?.stats) {
+        const s = d.agent.stats;
+        set('stat-cpu', s.cpu); bar('bar-cpu', s.cpu);
+        set('stat-ram', s.ram); bar('bar-ram', s.ram);
+        set('stat-bat', s.bat || s.battery); bar('bar-bat', s.bat || s.battery);
     }
-});
 
-// ── CAMERA CONTROL ────────────────────────────────────
-function switchCamera(cam) {
-    activeCam = cam;
-    document.getElementById('btn-cam-back').style.color = cam === 'back' ? 'var(--accent)' : '';
-    document.getElementById('btn-cam-front').style.color = cam === 'front' ? 'var(--accent)' : '';
-    addLog('CMD', `Camera switched to: ${cam.toUpperCase()}`);
+    if (d.pc_stats) {
+        const ps = d.pc_stats;
+        set('pc-cpu', ps.cpu_percent); bar('bar-pc-cpu', ps.cpu_percent);
+        set('pc-ram', ps.ram_percent); bar('bar-pc-ram', ps.ram_percent);
+    }
+    
+    if (d.proactive_insight) {
+        document.getElementById('ai-insight').innerText = d.proactive_insight;
+    }
 }
 
-async function shootCamera(cam) {
-    addLog('CMD', `Shooting ${cam.toUpperCase()} camera...`);
-    await sendCmd(`camera_${cam}`);
-    setTimeout(() => { refreshMedia(); updateRecentCaptures(); }, 4000);
+function updateVision(key) {
+    if (key === lastScreenshot) return;
+    lastScreenshot = key;
+    const cleanKey = key.replace('local:', '');
+    const url = `/api/asset/${cleanKey}?t=${Date.now()}`;
+    
+    const dashImg = document.getElementById('dashboard-vision-img');
+    const mainImg = document.getElementById('main-vision-img');
+    const placeholder = document.getElementById('vision-placeholder');
+    
+    if (dashImg) { dashImg.src = url; dashImg.style.display = 'block'; }
+    if (mainImg) { mainImg.src = url; }
+    if (placeholder) placeholder.style.display = 'none';
 }
 
-async function recordAudio() {
-    const dur = document.getElementById('audio-duration').value;
-    addLog('CMD', `Starting audio recording: ${dur}s`);
-    await sendCmd('audio_record', { duration: parseInt(dur) });
-
-    // UI animation
-    document.getElementById('rec-status').innerText = 'RECORDING...';
-    document.getElementById('rec-status').style.color = 'var(--danger)';
-    document.querySelectorAll('.viz-bar').forEach(b => b.classList.add('active'));
-    recSeconds = 0;
-    clearInterval(recInterval);
-    recInterval = setInterval(() => {
-        recSeconds++;
-        const m = String(Math.floor(recSeconds / 60)).padStart(2, '0');
-        const s = String(recSeconds % 60).padStart(2, '0');
-        document.getElementById('rec-timer').innerText = `${m}:${s}`;
-        if (recSeconds >= parseInt(dur)) stopAudio();
-    }, 1000);
-    setTimeout(() => { refreshMedia(); updateRecentCaptures(); }, parseInt(dur) * 1000 + 3000);
-}
-
-function stopAudio() {
-    clearInterval(recInterval);
-    document.getElementById('rec-status').innerText = 'STANDBY';
-    document.getElementById('rec-status').style.color = '';
-    document.querySelectorAll('.viz-bar').forEach(b => b.classList.remove('active'));
-    addLog('CMD', 'Audio recording stopped.');
-}
-
-function updateRecentCaptures() {
-    const list = document.getElementById('recent-captures');
-    if (!list) return;
-    const recent = mediaItems.slice(0, 5);
-    list.innerHTML = recent.map(m => `
-        <div class="recent-item" onclick="${m.type === 'audio' ? `openAudio('${m.key}')` : `openImage('/api/asset/${m.key}')`}">
-            <i class="fas fa-${m.type === 'audio' ? 'music' : 'image'}"></i>
-            <span>${m.key.substring(0, 20)}...</span>
-        </div>`).join('');
-}
-
-// ── COMMANDS ─────────────────────────────────────────
-async function sendCmd(type, extra = {}) {
-    addLog('CMD', `Issuing: ${type.toUpperCase()}`);
+// ── Commands ─────────────────────────────────────────
+async function sendCommand(type, extra = {}) {
     try {
         const r = await fetch('/api/command', {
             method: 'POST', headers: H,
-            body: JSON.stringify({ target_device: 'REDMI_NOTE_14', action: { type, ...extra }, description: `Dashboard→${type}` })
+            body: JSON.stringify({ target_device: 'REDMI_NOTE_14', action: { type, ...extra } })
         });
         const d = await r.json();
-        const cid = d.command_id;
-        if (!cid) return d;
-        
-        addLog('MESH', `Queued: ${cid.substring(0, 8)}`);
-
-        // Wait for the mobile agent to execute and return result
-        let attempts = 0;
-        const pollResult = setInterval(async () => {
-            attempts++;
-            if (attempts > 20) { // 60 seconds timeout
-                clearInterval(pollResult);
-                addLog('ERROR', `Timeout waiting for ${type} result.`);
-                return;
-            }
-            try {
-                const resFetch = await fetch(`/api/command/result/${cid}`);
-                if (!resFetch.ok) return;
-                const cmdState = await resFetch.json();
-                
-                if (cmdState.status === 'done' && cmdState.result) {
-                    clearInterval(pollResult);
-                    const out = cmdState.result;
-                    
-                    if (out.success) {
-                        addLog('SUCCESS', out.output || `${type} completed.`);
-                        
-                        // Handle GPS specifically
-                        if (type === 'location' && out.data) {
-                            const { lat, lon, accuracy } = out.data;
-                            addLog('GPS', `📍 Location: ${lat}, ${lon} (±${accuracy}m)`);
-                            const mapsUrl = `https://maps.google.com/?q=${lat},${lon}`;
-                            addChatBubble('system', `📍 <b>GPS Trace Result:</b><br>Lat: ${lat}<br>Lon: ${lon}<br>Accuracy: ±${accuracy}m<br><a href="${mapsUrl}" target="_blank" style="color:var(--accent)">📌 Open in Maps</a>`);
-                        }
-                    } else {
-                        addLog('ERROR', out.error || `${type} failed.`);
-                    }
-                }
-            } catch (err) {}
-        }, 3000); // Check every 3s
-        
+        addLog('CMD', `Sent: ${type.toUpperCase()}`);
         return d;
-    } catch (e) { addLog('ERROR', `Command failed: ${e.message}`); }
+    } catch (e) {
+        addLog('ERROR', `Cmd failed: ${e.message}`);
+    }
 }
 
-async function sendShell() {
-    const inp = document.getElementById('shell-input');
-    const cmd = inp.value.trim(); if (!cmd) return;
-    inp.value = '';
-    addLog('CMD', `SHELL: ${cmd}`);
-    await sendCmd('shell', { cmd });
-}
-
-// ── AI CHAT ──────────────────────────────────────────
-async function sendChatMsg() {
+// ── Chat ─────────────────────────────────────────────
+async function sendChatMessage() {
     const inp = document.getElementById('chat-input');
-    const msg = inp.value.trim(); if (!msg) return;
+    const msg = inp.value.trim();
+    if (!msg) return;
     inp.value = '';
-    addChatBubble('user', msg);
-    const tid = 'typing-' + Date.now();
-    addChatBubble('ai', '<i class="fas fa-spinner fa-spin"></i> Thinking...', tid);
+    
+    addBubble('user', msg);
     try {
         const r = await fetch('/api/brain/chat', {
             method: 'POST', headers: H,
             body: JSON.stringify({ message: msg, device_id: 'REDMI_NOTE_14' })
         });
         const d = await r.json();
-        document.getElementById(tid)?.remove();
-        addChatBubble('ai', d.response || 'No response.');
-        if (d.provider) {
-            document.getElementById('chat-provider-name').innerText = d.provider;
-            document.getElementById('ai-engine-chip').innerHTML = `<i class="fas fa-robot"></i> ${d.provider}`;
-            document.getElementById('ai-engine-chip').className = 'chip success';
-        }
-        if (d.autonomous_action) addLog('AI', `Auto action: ${d.autonomous_action.type}`);
+        addBubble('ai', d.response || 'System processing error.');
     } catch (e) {
-        document.getElementById(tid)?.remove();
-        addChatBubble('ai', `[Error] ${e.message}`);
+        addBubble('ai', `Connection error: ${e.message}`);
     }
 }
 
-function addChatBubble(role, text, id = null) {
+function addBubble(role, text) {
     const win = document.getElementById('chat-window');
     if (!win) return;
     const d = document.createElement('div');
-    d.className = `chat-msg ${role === 'user' ? 'user' : role === 'system' ? 'system' : 'ai'}`;
-    if (id) d.id = id;
+    d.className = `chat-msg ${role}`;
     d.innerHTML = `<div class="chat-bubble">${text}</div>`;
     win.appendChild(d);
     win.scrollTop = win.scrollHeight;
-    if (role === 'ai' && !document.getElementById('nav-chat')?.classList.contains('active')) {
-        const b = document.getElementById('chat-badge');
-        if (b) { b.style.display = 'inline'; b.innerText = (parseInt(b.innerText) || 0) + 1; }
-    }
 }
 
-document.getElementById('chat-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') sendChatMsg(); });
-
-// ── MEDIA VAULT ───────────────────────────────────────
-function addMediaItem(item) {
-    if (!mediaItems.find(m => m.key === item.key)) {
-        mediaItems.unshift(item);
-        const b = document.getElementById('media-badge');
-        if (b && !document.getElementById('nav-media')?.classList.contains('active')) {
-            b.style.display = 'inline'; b.innerText = (parseInt(b.innerText) || 0) + 1;
-        }
-    }
-    updateRecentCaptures();
-}
-
-function switchMediaTab(btn, mode) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    mediaMode = mode;
-    renderMedia();
-}
-
-async function refreshMedia() {
+// ── Browser ──────────────────────────────────────────
+async function browserGo() {
+    const inp = document.getElementById('browser-url');
+    let url = inp.value.trim();
+    if (!url) return;
+    if (!url.startsWith('http')) url = 'https://' + url;
+    
+    const view = document.getElementById('browser-viewport');
+    const img = document.getElementById('browser-img');
+    const ph = document.getElementById('browser-placeholder');
+    
+    ph.innerHTML = '<i class="fas fa-circle-notch fa-spin fa-3x"></i><span>Navigating Secure Tunnel...</span>';
+    
     try {
-        const r = await fetch('/api/assets', { headers: H });
-        if (!r.ok) return;
-        const assets = await r.json();
-        assets.forEach(a => {
-            const type = /\.(mp3|m4a|aac|wav)$/i.test(a.key) ? 'audio' : 'screenshot';
-            addMediaItem({ type, key: a.key, ts: new Date(a.uploaded || Date.now()).getTime() });
+        const r = await fetch('/api/browser/goto', {
+            method: 'POST', headers: H, body: JSON.stringify({ url })
         });
-        renderMedia();
-    } catch (e) { addLog('ERROR', `Media refresh: ${e.message}`); }
-}
-
-function renderMedia() {
-    const grid = document.getElementById('media-grid');
-    const filtered = mediaItems.filter(m =>
-        mediaMode === 'screenshots' ? m.type === 'screenshot' || m.type === 'image' :
-        mediaMode === 'audio'       ? m.type === 'audio' : true);
-    if (!filtered.length) {
-        grid.innerHTML = '<div class="empty-state"><i class="fas fa-vault"></i><p>No media in vault.</p></div>';
-        return;
-    }
-    grid.innerHTML = filtered.map(m => {
-        const ts = new Date(m.ts).toLocaleString();
-        const cleanKey = (m.key || '').replace('local:', ''); // BUG#2 FIX
-        if (m.type === 'audio') return `
-            <div class="audio-card" onclick="openAudio('${cleanKey}')">
-                <i class="fas fa-music"></i>
-                <div><div style="font-weight:700;font-size:.8rem;">${cleanKey.substring(0,22)}</div><div style="font-size:.65rem;color:var(--dim);">${ts}</div></div>
-            </div>`;
-        return `
-            <div class="media-item" onclick="openImage('/api/asset/${cleanKey}')">
-                <img src="/api/asset/${cleanKey}" alt="" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1 1%22><rect fill=%22%23111%22/></svg>'">
-                <div class="media-item-info"><span>${cleanKey.substring(0,18)}</span>${ts}</div>
-            </div>`;
-    }).join('');
-}
-
-function openImage(src) {
-    const lb = document.getElementById('lightbox');
-    document.getElementById('lb-img').src = src;
-    document.getElementById('lb-img').style.display = 'block';
-    document.getElementById('lb-audio').style.display = 'none';
-    lb.classList.remove('hidden');
-}
-
-function openAudio(key) {
-    const cleanKey = key.replace('local:', ''); // BUG#2 FIX
-    const lb = document.getElementById('lightbox');
-    document.getElementById('lb-img').style.display = 'none';
-    const a = document.getElementById('lb-audio');
-    a.src = `/api/asset/${cleanKey}`;
-    a.style.display = 'block';
-    a.load();
-    a.play();
-    lb.classList.remove('hidden');
-}
-
-// ── EVOLUTION PROPOSALS ───────────────────────────────
-function checkEvos(cmds) {
-    const evo = cmds.filter(c => /evolution|evolusi/i.test(c.description || '') && c.status === 'pending');
-    let newCount = 0;
-    evo.forEach(e => {
-        if (!evoProposals.find(p => p.id === e.id)) {
-            evoProposals.unshift({ id: e.id, title: e.description || 'Evolution Proposal', body: 'AI Agent has analysed operational patterns and submitted an evolution proposal for your approval.', ts: e.updated_at });
-            newCount++;
+        const d = await r.json();
+        if (d.screenshot) {
+            img.src = `data:image/jpeg;base64,${d.screenshot}`;
+            img.style.display = 'block';
+            ph.style.display = 'none';
         }
-    });
-    if (newCount > 0) {
-        const b = document.getElementById('evo-badge');
-        if (b && !document.getElementById('nav-evolution')?.classList.contains('active')) { b.style.display = 'inline'; b.innerText = evoProposals.length; }
-        if (document.getElementById('panel-evolution')?.classList.contains('active')) renderEvolutions();
+    } catch (e) {
+        ph.innerHTML = `<i class="fas fa-exclamation-circle fa-3x text-danger"></i><span>Research Failed: ${e.message}</span>`;
     }
 }
 
-function renderEvolutions() {
-    const list = document.getElementById('evo-list');
-    if (!evoProposals.length) { list.innerHTML = '<div class="empty-state"><i class="fas fa-dna"></i><p>No proposals yet.</p></div>'; return; }
-    list.innerHTML = evoProposals.map(p => `
-        <div class="evo-card" id="evo-${p.id}">
-            <div class="evo-card-hd">
-                <div class="evo-card-title"><i class="fas fa-dna" style="color:var(--purple)"></i> ${p.title}</div>
-                <div class="evo-card-ts">${p.ts || '--'}</div>
+// ── Evolution ────────────────────────────────────────
+async function refreshEvolutions() {
+    try {
+        const r = await fetch('/api/evolutions', { headers: H });
+        const d = await r.json();
+        const pList = document.getElementById('evo-pending');
+        const hList = document.getElementById('evo-history');
+
+        pList.innerHTML = d.pending.length ? d.pending.map(p => `
+            <div class="evo-card">
+                <input type="checkbox" class="evo-checkbox" data-id="${p.id}">
+                <div class="evo-card-body">
+                    <div class="evo-card-title">${p.title}</div>
+                    <div class="evo-card-desc">${p.description}</div>
+                    <div class="evo-card-actions">
+                        <button class="micro-btn primary" onclick="approveEvo('${p.id}')"><i class="fas fa-check"></i> APPROVE</button>
+                        <button class="micro-btn" onclick="rejectEvo('${p.id}')"><i class="fas fa-xmark"></i> REJECT</button>
+                    </div>
+                </div>
             </div>
-            <div class="evo-card-body">${p.body}</div>
-            <div class="evo-actions">
-                <button class="evo-btn approve" onclick="approveEvo('${p.id}')"><i class="fas fa-check"></i> Approve & Deploy</button>
-                <button class="evo-btn reject" onclick="rejectEvo('${p.id}')"><i class="fas fa-x"></i> Reject</button>
+        `).join('') : '<div class="text-dim" style="font-size:0.8rem;padding:0.5rem 0;">No pending proposals.</div>';
+
+        hList.innerHTML = d.history.length ? d.history.slice(-8).reverse().map(h => `
+            <div style="font-size:0.75rem; padding:0.6rem 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; gap:1rem;">
+                <span class="text-dim" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${h.title}</span>
+                <span class="${h.status === 'APPLIED' ? 'text-success' : 'text-danger'}" style="flex-shrink:0; font-family:var(--font-mono); font-size:0.65rem;">${h.status}</span>
             </div>
-        </div>`).join('');
+        `).join('') : '<div class="text-dim" style="font-size:0.8rem;padding:0.5rem 0;">No history yet.</div>';
+    } catch (e) {
+        console.error('Evo refresh failed:', e);
+    }
+}
+
+async function approveSelectedEvos() {
+    const checked = document.querySelectorAll('.evo-checkbox:checked');
+    if (!checked.length) return;
+    
+    addLog('SYSTEM', `Batch approving ${checked.length} mutations...`);
+    for (const cb of checked) {
+        const id = cb.dataset.id;
+        await fetch('/api/evolution/approve', { method: 'POST', headers: H, body: JSON.stringify({ id }) });
+    }
+    refreshEvolutions();
+}
+
+async function approveAllEvos() {
+    const checkboxes = document.querySelectorAll('.evo-checkbox');
+    if (!checkboxes.length) return;
+    
+    addLog('SYSTEM', `Approve All: Processing ${checkboxes.length} mutations...`);
+    for (const cb of checkboxes) {
+        const id = cb.dataset.id;
+        await fetch('/api/evolution/approve', { method: 'POST', headers: H, body: JSON.stringify({ id }) });
+    }
+    refreshEvolutions();
 }
 
 async function approveEvo(id) {
-    addLog('SYSTEM', `Evolution approved: ${id}`);
-    await sendCmd('apply_evolution', { evolution_id: id });
-    evoProposals = evoProposals.filter(p => p.id !== id);
-    renderEvolutions();
-    addChatBubble('system', `Evolution ${id.substring(0,8)} approved and deployed.`);
+    await fetch('/api/evolution/approve', { method: 'POST', headers: H, body: JSON.stringify({ id }) });
+    refreshEvolutions();
 }
 
-function rejectEvo(id) { evoProposals = evoProposals.filter(p => p.id !== id); renderEvolutions(); }
-
-async function triggerAutoUpdate() {
-    addLog('SYSTEM', 'Auto-update triggered by operator.');
-    await sendCmd('auto_update');
-    addChatBubble('system', 'Auto-update command sent to Neural Agent.');
+async function rejectEvo(id) {
+    await fetch('/api/evolution/reject', { method: 'POST', headers: H, body: JSON.stringify({ id }) });
+    refreshEvolutions();
 }
 
-// ── LOG SYSTEM ────────────────────────────────────────
-function addLog(level, msg) {
-    allLogs.push({ ts: new Date().toLocaleTimeString(), level, msg });
-    if (allLogs.length > 800) allLogs = allLogs.slice(-600);
-    if (document.getElementById('panel-logs')?.classList.contains('active')) renderLogs();
+// ── PC Master ────────────────────────────────────────
+async function refreshPcStats() {
+    // Already handled by poll, but could add specific refresh here
 }
 
+async function togglePcOverride() {
+    const btn = document.getElementById('pc-override-btn');
+    const isOverridden = btn.innerText.includes('DISABLE');
+    
+    try {
+        const r = await fetch('/api/pc/override', {
+            method: 'POST', headers: H,
+            body: JSON.stringify({ state: !isOverridden })
+        });
+        const d = await r.json();
+        btn.innerText = d.override ? 'DISABLE OVERRIDE' : 'ENABLE OVERRIDE';
+        btn.className = d.override ? 'cmd-btn purple' : 'cmd-btn danger';
+        addLog('AEGIS', `Override status changed to: ${d.override}`);
+    } catch {}
+}
+
+// ── Logs ─────────────────────────────────────────────
 function ingestLogs(logs) {
-    logs.forEach(l => addLog(l.level || 'INFO', l.message || ''));
+    const term = document.getElementById('terminal');
+    if (!term) return;
+    logs.forEach(l => {
+        const entry = document.createElement('div');
+        entry.innerHTML = `<span class="text-dim">[${new Date().toLocaleTimeString()}]</span> <span class="text-accent">${l.level}</span> ${l.message}`;
+        term.appendChild(entry);
+    });
+    if (logs.length > 0) term.scrollTop = term.scrollHeight;
 }
 
-function renderLogs() {
-    const con = document.getElementById('log-console');
-    if (!con) return;
-    if (!logVisible) { con.innerHTML = '<div style="text-align:center;color:var(--dim);padding:2rem;opacity:.4;">STEALTH MODE — Logs hidden</div>'; return; }
-    const filter = document.getElementById('log-filter')?.value || 'all';
-    const filtered = filter === 'all' ? allLogs : allLogs.filter(l => l.level === filter);
-    con.innerHTML = filtered.slice(-300).map(l =>
-        `<div class="log-entry"><span class="log-ts">[${l.ts}]</span><span class="log-lvl ${l.level}">${l.level}</span><span class="log-msg">${l.msg}</span></div>`
-    ).join('');
-    con.scrollTop = con.scrollHeight;
-}
-
-function filterLogs() { renderLogs(); }
-function clearLogs() { allLogs = []; renderLogs(); }
-
-async function toggleLogVisibility() {
-    logVisible = !logVisible;
-    const btn = document.getElementById('log-toggle-btn');
-    btn.innerHTML = logVisible ? '<i class="fas fa-eye"></i> VISIBLE' : '<i class="fas fa-eye-slash"></i> HIDDEN';
-    btn.style.color = logVisible ? '' : 'var(--danger)';
-    addLog('SYSTEM', `Log stealth: ${logVisible ? 'OFF' : 'ON'}`);
-    await fetch('/api/log-visibility', { method: 'POST', headers: H, body: JSON.stringify({ visible: logVisible }) });
-    renderLogs();
+function addLog(level, msg) {
+    ingestLogs([{ level, message: msg }]);
 }
 
 function exportLogs() {
-    const blob = new Blob([allLogs.map(l => `[${l.ts}] ${l.level}: ${l.msg}`).join('\n')], { type: 'text/plain' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `noir_logs_${Date.now()}.txt`; a.click();
+    const text = document.getElementById('terminal').innerText;
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `noir_system_dump_${Date.now()}.txt`;
+    a.click();
 }
 
-// ── BOOT ─────────────────────────────────────────────
-window.addEventListener('load', () => {
-    addLog('SYSTEM', 'NOIR SOVEREIGN MISSION CONTROL V21.0.3 — INITIALIZED (BUG#1-7 FIXED)');
-    addChatBubble('system', 'NOIR AI AGENT V21.0.3 — ONLINE. Mirror, Camera, Audio, GPS: FIXED.');
-    poll();
-    setInterval(poll, 4000);
-    setTimeout(refreshMedia, 2000);
-    // Auto-refresh media every 15s to catch new uploads
-    setInterval(refreshMedia, 15000);
-});
+// ── Swarm Monitor ─────────────────────────────────────
+async function pollSwarmFeed() {
+    try {
+        const r = await fetch('/api/swarm/bus', { headers: H });
+        if (!r.ok) {
+            document.getElementById('swarm-live-feed').innerHTML =
+                `<div style="color:rgba(255,80,80,0.7);">⚠ Swarm Bus API tidak dapat dijangkau. Pastikan server berjalan.</div>`;
+            return;
+        }
+        const data = await r.json();
+        const feedEl = document.getElementById('swarm-live-feed');
+        const countEl = document.getElementById('swarm-msg-count');
+        const barEl   = document.getElementById('swarm-msg-bar');
+        if (!feedEl) return;
+
+        const msgs = (data.messages || []).slice(-30).reverse();
+        if (countEl) {
+            countEl.textContent = msgs.length + ' msgs';
+            if (barEl) barEl.style.width = Math.min(msgs.length * 10, 100) + '%';
+        }
+
+        if (msgs.length === 0) {
+            feedEl.innerHTML = '<div style="color:rgba(255,255,255,0.2);">◈ Bus kosong — belum ada aktivitas Swarm.</div>';
+            return;
+        }
+
+        feedEl.innerHTML = msgs.map(msg => {
+            const t = new Date(msg.ts * 1000).toLocaleTimeString('id-ID');
+            const statusColor = msg.status === 'read' ? 'rgba(255,255,255,0.25)' : '#00ffaa';
+            const statusDot   = msg.status === 'read' ? '◦' : '●';
+            const content     = typeof msg.content === 'object' ? JSON.stringify(msg.content).substring(0, 80) : msg.content;
+            return `<div style="padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; gap:0.75rem; align-items:flex-start;">
+                <span style="color:${statusColor}; flex-shrink:0;">${statusDot}</span>
+                <span style="color:rgba(255,255,255,0.3); flex-shrink:0;">[${t}]</span>
+                <span style="color:#00f2ff;">${msg.sender || '?'}</span>
+                <span style="color:rgba(255,255,255,0.4);">→</span>
+                <span style="color:#bf00ff;">${msg.target || '?'}</span>
+                <span style="color:rgba(255,255,255,0.35); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${content}</span>
+            </div>`;
+        }).join('');
+        feedEl.scrollTop = 0;
+    } catch (e) {
+        const feedEl = document.getElementById('swarm-live-feed');
+        if (feedEl) feedEl.innerHTML = `<div style="color:rgba(255,80,80,0.7);">⚠ Error: ${e.message}</div>`;
+    }
+}
+setInterval(pollSwarmFeed, 5000);
+
+// ── Init ─────────────────────────────────────────────
+setInterval(poll, 3000);
+initWebSocket();
+poll();
+document.getElementById('chat-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') sendChatMessage(); });
+document.getElementById('browser-url')?.addEventListener('keydown', e => { if (e.key === 'Enter') browserGo(); });

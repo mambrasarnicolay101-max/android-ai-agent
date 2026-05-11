@@ -8,12 +8,16 @@ preferensi user, dan keberhasilan tugas masa lalu.
 
 import os, json, time, logging
 from datetime import datetime
+from pathlib import Path
 
 log = logging.getLogger("SovereignMemory")
 
 class TemporalMemory:
-    def __init__(self, memory_file="knowledge/temporal_memory.json"):
-        self.memory_file = memory_file
+    def __init__(self, memory_file=None):
+        if memory_file is None:
+            self.memory_file = str(Path(__file__).resolve().parent.parent / "knowledge" / "temporal_memory.json")
+        else:
+            self.memory_file = memory_file
         # Ensure knowledge dir exists
         os.makedirs(os.path.dirname(self.memory_file), exist_ok=True)
         self.memory = self._load_memory()

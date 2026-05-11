@@ -27,11 +27,10 @@ KNOWLEDGE_DIR.mkdir(exist_ok=True)
 SANDBOX_DIR.mkdir(exist_ok=True)
 
 # ─── GLOBAL SOVEREIGN STATE ─────────────────────────────────────────────────
-SOVEREIGN_OVERRIDE = False  # Jika TRUE, semua batasan keamanan dimatikan sementara
+# (Moved into PCExecutor class for consistency)
 
 def toggle_override(state: bool):
-    global SOVEREIGN_OVERRIDE
-    SOVEREIGN_OVERRIDE = state
+    PCExecutor.SOVEREIGN_OVERRIDE = state
     log.info(f"Sovereign Override: {'ENABLED (UNRESTRICTED)' if state else 'DISABLED (PROTECTED)'}")
 
 # ─── BLACKLIST PERINTAH BERBAHAYA ───────────────────────────────────────────
@@ -44,7 +43,7 @@ SHELL_BLACKLIST = [
 
 def _is_safe_shell(cmd: str) -> tuple[bool, str]:
     """Periksa keamanan perintah shell sebelum dieksekusi."""
-    if SOVEREIGN_OVERRIDE:
+    if PCExecutor.SOVEREIGN_OVERRIDE:
         return True, "Sovereign Override Active"
     lower = cmd.lower().strip()
     for blocked in SHELL_BLACKLIST:
@@ -54,7 +53,7 @@ def _is_safe_shell(cmd: str) -> tuple[bool, str]:
 
 def _is_safe_code(code: str) -> tuple[bool, str]:
     """Periksa keamanan kode Python sebelum dieksekusi."""
-    if SOVEREIGN_OVERRIDE:
+    if PCExecutor.SOVEREIGN_OVERRIDE:
         return True, "Sovereign Override Active"
     dangerous = ["__import__('os').system", "shutil.rmtree", "os.remove", 
                  "open('/etc", "open('C:\\\\Windows", "subprocess.Popen"]
@@ -70,6 +69,7 @@ class PCExecutor:
     Engine eksekusi mandiri AI Agent di PC.
     Semua hasil eksekusi disimpan ke log dan Knowledge Base.
     """
+    SOVEREIGN_OVERRIDE = False  # Jika TRUE, semua batasan keamanan dimatikan sementara
     _results_log = []
     _lock = threading.Lock()
 

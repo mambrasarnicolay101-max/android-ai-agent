@@ -1,0 +1,38 @@
+[
+  {
+    "belief": "[OpenRouter Error] 'choices'",
+    "domain": "general",
+    "confidence": 0.5,
+    "formed_at": "2026-05-07T23:29:13"
+  },
+  {
+    "belief": "[Groq Error] Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kpdp84ghf969zae65e202685` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99898, Requested 4251. Please try again in 59m44.736s. Need more",
+    "domain": "general",
+    "confidence": 0.5,
+    "formed_at": "2026-05-08T03:29:26"
+  },
+  {
+    "belief": "[Groq Error] Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kpdp84ghf969zae65e202685` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99985, Requested 3052. Please try again in 43m43.968s. Need more",
+    "domain": "general",
+    "confidence": 0.5,
+    "formed_at": "2026-05-08T07:30:44"
+  },
+  {
+    "belief": "[Groq Error] Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kpdp84ghf969zae65e202685` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99988, Requested 1466. Please try again in 20m56.256s. Need more",
+    "domain": "general",
+    "confidence": 0.5,
+    "formed_at": "2026-05-08T11:31:44"
+  },
+  {
+    "belief": "[Groq Error] Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kpdp84ghf969zae65e202685` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99994, Requested 2838. Please try again in 40m46.848s. Need more",
+    "domain": "general",
+    "confidence": 0.5,
+    "formed_at": "2026-05-08T15:32:19"
+  },
+  {
+    "belief": "[Groq Error] Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kpdp84ghf969zae65e202685` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99993, Requested 1637. Please try again in 23m28.32s. Need more ",
+    "domain": "general",
+    "confidence": 0.5,
+    "formed_at": "2026-05-08T19:32:49"
+  }
+]

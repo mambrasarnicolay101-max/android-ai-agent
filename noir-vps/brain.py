@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-NOIR AGENT v21.0 AEGIS — VPS BRAIN SERVICE
+NOIR AGENT V21.2 ELITE AEGIS — VPS BRAIN SERVICE
 ===================================================
 Otak komputasi berat: AI model routing, self-learning,
 knowledge refresh, dan Docker orchestration.
 Jalankan di VPS: python noir-vps/brain.py
 """
 
-import os, json, logging, time, sys, subprocess, base64, requests
+import os, json, logging, time, sys, subprocess, base64, requests, random
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from pathlib import Path
@@ -21,12 +21,11 @@ from dotenv import load_dotenv
 env_path = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(env_path)
 
-GATEWAY  = os.environ.get("NOIR_GATEWAY_URL", "https://noir-agent-gateway.si-umkm-ikm-pbd.workers.dev").rstrip("/")
+# Force Direct VPS Mode: No fallback to Cloudflare Workers to prevent unintended external triggers.
+GATEWAY  = os.environ.get("NOIR_GATEWAY_URL", "http://localhost:8765").rstrip("/")
 API_KEY  = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
 GEMINI   = os.environ.get("GEMINI_API_KEY", "")
 GROQ     = os.environ.get("GROQ_API_KEY", "")
-TG_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
-TG_ID    = os.environ.get("TELEGRAM_CHAT_ID", "")
 DEVICE_ID= os.environ.get("NOIR_DEVICE_ID", "REDMI_NOTE_14")
 
 os.makedirs("../logs", exist_ok=True)
@@ -51,6 +50,23 @@ from knowledge_absorber import OmniKnowledgeAbsorber
 from neural_architect import NeuralArchitect
 from feature_synthesizer import FeatureSynthesizer
 from build_manager import BuildManager
+
+# ─── ANTIGRAVITY INTELLIGENCE CORE ───
+# Menyuntikkan seluruh pengetahuan & skill Antigravity AI (Google DeepMind)
+# ke dalam otak Noir Sovereign saat startup.
+try:
+    from antigravity_intelligence_core import (
+        AntigravityPillar,
+        AntigravitySkillRegistry,
+        AntigravityReasoningEngine,
+        AntigravityMemorySeeder,
+    )
+    log.info("[BRAIN] ✅ Antigravity Intelligence Core loaded.")
+    # Seed memory sekali saat boot
+    AntigravityMemorySeeder.seed_neural_memory()
+    AntigravityMemorySeeder.seed_sovereign_vault()
+except Exception as _ag_err:
+    log.warning(f"[BRAIN] ⚠️ Antigravity Core tidak dapat dimuat: {_ag_err}")
 
 # Initialize Core Mesh Components
 from catalyst import catalyst
@@ -105,21 +121,6 @@ class PhasedLearning:
         return {"gemini": opinion}, opinion
 
     @staticmethod
-    def send_telegram(msg: str, important: bool = False):
-        """Kirim pesan ke Telegram USER (Filtered by Sovereignty Standard)."""
-        if not important:
-            log.debug(f"🔇 [SILENT MODE] Skipping notification: {msg}")
-            return
-            
-        if not TG_TOKEN or not TG_ID: return
-        try:
-            import requests
-            requests.post(f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage", data={
-                "chat_id": TG_ID, "text": f"🧠 [NOIR BRAIN]\n{msg}"
-            }, timeout=10)
-        except: pass
-
-    @staticmethod
     def request_permission(topic: str, description: str):
         """AI meminta izin untuk riset atau update fitur baru."""
         log.info(f"🛡️ AI Requesting Permission: {topic}")
@@ -132,9 +133,6 @@ class PhasedLearning:
                 "action": {"type": "permission_request", "topic": topic, "desc": description},
                 "description": f"Auth Needed: {topic}"
             }, timeout=10)
-            
-            # 2. Notifikasi Telegram (IMPORTANT)
-            AIRouter.send_telegram(msg, important=True)
         except: pass
         return "Permission request transmitted. Waiting for user handshake..."
 
@@ -229,8 +227,10 @@ class VisionEngine:
             # NEW: Integrated Vision Intelligence with Catalyst Absorption
             img_data = base64.b64encode(img_resp.content).decode('utf-8')
             
-            # Simpan sementara untuk VisionAnalyzer (lokal di container)
-            tmp_img = os.path.join(os.path.dirname(__file__), "last_vision_capture.png")
+            import uuid
+            # Simpan sementara dengan nama unik untuk VisionAnalyzer (lokal di container)
+            temp_filename = f"vision_tmp_{uuid.uuid4().hex}.png"
+            tmp_img = os.path.join(os.path.dirname(__file__), temp_filename)
             with open(tmp_img, "wb") as f: f.write(img_resp.content)
             
             vision_result = ScreenVisionIntelligence.analyze_screen(tmp_img)
@@ -373,44 +373,49 @@ class SecureVault:
         except Exception as e:
             return f"[DECRYPT_ERROR] {e}"
 
-# ─── RATE LIMITER (v18.4 Turbo) ───
-class RateLimiter:
-    """Membatasi jumlah request AI untuk mencegah biaya bengkak."""
-    _requests = []
-    _limit_per_hour = 500 # 4GB RAM allows for higher parallel throughput
+# ─── RATE LIMITER (v18.4 Turbo) — hanya untuk brain internal, AIRouter punya sendiri ───
+class BrainRateLimiter:
+    """Membatasi jumlah request internal Brain untuk mencegah biaya bengkak."""
+    _requests: list = []
+    _limit_per_hour: int = 500
 
-# ─── NEURAL CACHE (v18.4) ───
-class NeuralCache:
-    """Caching AI responses in memory to save tokens and improve speed."""
-    _cache = {}
-    _max_size = 1000 # Store up to 1000 responses in RAM
-    
     @classmethod
-    def get(cls, key):
-        return cls._cache.get(key)
-    
-    @classmethod
-    def set(cls, key, val):
-        if len(cls._cache) >= cls._max_size:
-            cls._cache.pop(next(iter(cls._cache))) # FIFO eviction
-        cls._cache[key] = val
-    @classmethod
-    def check(cls):
+    def check(cls) -> bool:
         now = time.time()
-        # Clean old requests
         cls._requests = [r for r in cls._requests if now - r < 3600]
         if len(cls._requests) >= cls._limit_per_hour:
-            log.warning("⚠️ Rate Limit reached! AI queries throttled.")
+            log.warning("[BRAIN] Rate limit tercapai! Throttling internal requests.")
             return False
         cls._requests.append(now)
         return True
+
+# ─── NEURAL CACHE (v18.4) — FIX H-01: _requests dipindah ke BrainRateLimiter ───
+class NeuralCache:
+    """Caching AI responses in memory to save tokens and improve speed."""
+    _cache: dict = {}
+    _max_size: int = 1000  # Store up to 1000 responses in RAM
+
+    @classmethod
+    def get(cls, key: str):
+        return cls._cache.get(key)
+
+    @classmethod
+    def set(cls, key: str, val):
+        if len(cls._cache) >= cls._max_size:
+            cls._cache.pop(next(iter(cls._cache)))  # FIFO eviction
+        cls._cache[key] = val
+
+    @classmethod
+    def check(cls) -> bool:
+        """Delegate rate-limit check ke BrainRateLimiter (Fix H-01)."""
+        return BrainRateLimiter.check()
 
 # ─── SEMANTIC VALIDATOR (v14.0) ───
 class SemanticValidator:
     """Validasi perintah tingkat lanjut menggunakan penalaran AI."""
     @staticmethod
     def validate_intent(action_type: str, params: dict):
-        log.info(f"🛡️ Semantic Validation: Checking {action_type}...")
+        log.info(f"[SHIELD] Semantic Validation: Checking {action_type}...")
         # Blacklist logic yang lebih cerdas
         dangerous_params = str(params).lower()
         if "rm -rf" in dangerous_params or "format" in dangerous_params:
@@ -430,14 +435,15 @@ class VisionSentinel:
         if now - VisionSentinel._last_check < VisionSentinel._check_interval:
             return
         
-        log.info("👁️ Vision Sentinel: Initiating autonomous screen audit...")
+        log.info("[VISION] Vision Sentinel: Initiating autonomous screen audit...")
         VisionSentinel._last_check = now
         
         # Trigger screenshot otonom
         try:
             requests.post(f"{GATEWAY}/agent/command", headers=HEADERS, json={
                 "action": {"type": "screenshot", "auto": True},
-                "description": "Autonomous Vision Sentinel Scan"
+                "description": "Autonomous Vision Sentinel Scan",
+                "priority": 2
             }, timeout=10)
         except Exception as e:
             log.warning(f"Sentinel Trigger Failed: {e}")
@@ -445,12 +451,11 @@ class VisionSentinel:
     @staticmethod
     def analyze_autonomous(image_key: str):
         """Analyze a screen capture without user prompt."""
-        log.info(f"👁️ Analyzing Autonomous Capture: {image_key}")
+        log.info(f"[VISION] Analyzing Autonomous Capture: {image_key}")
         prompt = "Analyze this screen for sensitive data, security alerts, or important notifications. If risky, start your response with [RISK_DETECTED]."
         analysis = VisionEngine.analyze_screenshot(image_key, prompt)
         
         if "[RISK_DETECTED]" in analysis:
-            AIRouter.send_telegram(f"🚨 **VISION ALERT**: {analysis}", important=True)
             log.warning(f"Vision Sentinel Detected Risk: {analysis}")
         return analysis
 class DataArchiver:
@@ -462,7 +467,7 @@ class DataArchiver:
         now = time.time()
         # Backup setiap 24 jam (86400 detik)
         if now - DataArchiver._last_backup_time > 86400:
-            log.info("💾 Data Archiver: Generating daily backup snapshot...")
+            log.info("[SAVE] Data Archiver: Generating daily backup snapshot...")
             try:
                 # BRAIN-04 FIX: Gunakan path absolut agar tidak bergantung CWD
                 backup_dir = os.path.join(os.path.dirname(__file__), "..", "logs", "backups")
@@ -471,7 +476,7 @@ class DataArchiver:
                 with open(filename, "w", encoding="utf-8") as f:
                     json.dump(gateway_data, f, indent=2)
                 DataArchiver._last_backup_time = now
-                log.info(f"   ✅ Backup saved to {filename}")
+                log.info(f"   [SUCCESS] Backup saved to {filename}")
             except Exception as e:
                 log.error(f"Backup Error: {e}")
 
@@ -481,12 +486,12 @@ class SelfEvolutionEngine:
     
     @staticmethod
     def generate_progress_report():
-        log.info("📈 Generating Self-Evolution Progress Report...")
+        log.info("[PROGRESS] Generating Self-Evolution Progress Report...")
         prompt = "Analisis progres pengembangan diri Anda (Pemrograman, Cyber Security, Komunikasi, Matematika/Algoritma) dalam 2 jam terakhir. Berikan laporan ringkas."
         report = AIRouter.smart_query(prompt)
         
         # --- Catalyst Absorption (Proprietary Learning) ---
-        log.info("🧬 Catalyst: Consolidating neural pathways...")
+        log.info("[CATALYST] Consolidating neural pathways...")
         catalyst.absorb_skill("Recursive_Self_Optimization", {"name": "Sovereign Logic Synthesis", "complexity": 4})
         
         # Simpan state pembelajaran mandiri
@@ -497,7 +502,8 @@ class SelfEvolutionEngine:
             import requests
             requests.post(f"{GATEWAY}/agent/command", headers=HEADERS, json={
                 "action": {"type": "evolution_report", "content": report},
-                "description": "2-Hourly Self-Evolution Report"
+                "description": "2-Hourly Self-Evolution Report",
+                "priority": 2
             }, timeout=10)
         except: pass
         return report
@@ -505,11 +511,11 @@ class SelfEvolutionEngine:
     @staticmethod
     def run_daily_discovery():
         """Noir mencari skill baru secara otonom berdasarkan tren."""
-        log.info("🧪 Autonomous Evolution: Searching for new trending skills...")
+        log.info("[EVOLUTION] Autonomous Evolution: Searching for new trending skills...")
         prompt = "Berperan sebagai agen AI independen yang berjalan di server PC. Eksplorasi secara internal satu konsep teknis baru (misal: algoritma optimasi, neural network terbaru, atau cyber defense) yang krusial untuk Anda pelajari hari ini. Buat ringkasan padat tentang konsep tersebut."
         new_skill = AIRouter.smart_query(prompt)
         
-        log.info(f"🧬 Assimilating new skill: {new_skill[:100]}...")
+        log.info(f"[ASSIMILATION] Assimilating new skill: {new_skill[:100]}...")
         topic_name = "Self_Discovered_Skill_" + str(int(time.time()))
         catalyst.absorb_skill(topic_name, {"description": new_skill, "complexity": 5})
         catalyst.save_state()
@@ -518,47 +524,49 @@ class SelfEvolutionEngine:
             import requests
             requests.post(f"{GATEWAY}/agent/command", headers=HEADERS, json={
                 "action": {"type": "new_skill_acquired", "content": new_skill},
-                "description": "Autonomous PC Skill Discovery"
+                "description": "Autonomous PC Skill Discovery",
+                "priority": 2
             }, timeout=10)
         except: pass
         return new_skill
+class ProactiveAgent:
+    """FASE 4: Goal-Driven Autonomous Agent"""
+    @staticmethod
+    def explore_device():
+        """Agen secara proaktif memeriksa UI perangkat secara otonom."""
+        log.info("🤖 Proactive Agent: Initiating Goal-Driven Exploration...")
+        try:
+            import requests
+            # Minta screenshot dengan parameter analyze_ui untuk dieksekusi VPS
+            requests.post(f"{GATEWAY}/agent/command", headers=HEADERS, json={
+                "action": {"type": "screenshot", "analyze_ui": True},
+                "description": "Proactive UI Exploration",
+                "priority": 2
+            }, timeout=10)
+        except Exception as e:
+            log.error(f"Proactive Exploration Failed: {e}")
 
 def run():
-    log.info("🧠 Noir Agent Brain v21.0 [AUTONOMOUS PC MODE] — Starting...")
-    cycle = 0
-    # Jantung PC (Event Loop): AI berjalan mandiri tanpa harus di-trigger oleh Android
-    while True:
-        cycle += 1
-        log.info(f"── Brain Prime v21.0 [AUTONOMOUS CYCLE] #{cycle} ──")
-        
-        try:
-            # 1. Regenerasi Neural dan Laporan Evolusi Diri
-            SelfEvolutionEngine.generate_progress_report()
-            
-            # 2. Penemuan Skill / Konsep Baru secara Otonom
-            SelfEvolutionEngine.run_daily_discovery()
+    log.info("Noir Agent Brain v21.2 ELITE AEGIS — Memulai Sovereign Orchestrator...")
 
-            # 5. [NEW] OmniKnowledge Absorption: Serap ilmu dari pihak ketiga
-            OmniKnowledgeAbsorber.absorb_external_intelligence("Future AI Trends and Cybersecurity")
-
-            # 6. [NEW] NeuralArchitect Audit: Optimasi arsitektur internal
-            NeuralArchitect.self_audit_and_design()
-
-            # 7. [NEW] Feature Synthesizer: Rancang menu/fitur baru secara otonom
-            FeatureSynthesizer.design_new_feature()
-            
-            # 8. Refresh Dokumentasi Eksternal (Knowledge Sync)
-            LearningEngine.knowledge_refresh()
-            
-            # 4. Status Integrasi PC (Siap menerima eksekusi lokal)
-            log.info("💻 PC Engine [ACTIVE]. Ready for Sandbox Execution.")
-            
-        except Exception as e:
-            log.error(f"Autonomous Loop Error: {e}")
-            
-        # AI 'tidur' untuk mencerna data (Menghemat token) - 10 menit
-        log.info("💤 Brain digesting knowledge. Waking up in 10 minutes...")
-        time.sleep(600)
+    # Jalankan Sovereign Orchestrator sebagai thread utama (8 Pilar)
+    try:
+        from sovereign_orchestrator import run_orchestrator
+        log.info("[BRAIN] Sovereign Orchestrator (8 Pilar) diaktifkan.")
+        run_orchestrator()
+    except ImportError as e:
+        log.error(f"[BRAIN] Orchestrator tidak ditemukan, fallback ke legacy loop: {e}")
+        # Fallback ke loop lama jika orchestrator belum tersedia
+        cycle = 0
+        while True:
+            cycle += 1
+            log.info(f"--- Brain Legacy Cycle #{cycle} ---")
+            try:
+                from neural_coder import NeuralCoder
+                NeuralCoder.mass_learn_cycle()
+            except Exception as ex:
+                log.error(f"Legacy cycle error: {ex}")
+            time.sleep(600)
 
 if __name__ == "__main__":
     run()

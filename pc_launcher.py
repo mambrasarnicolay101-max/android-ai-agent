@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-NOIR SOVEREIGN PC LAUNCHER v1.0 [DESKTOP APP MODE]
+NOIR SOVEREIGN PC LAUNCHER v21.2 [ELITE AEGIS MODE]
 ===================================================
 Membungkus Dashboard Web menjadi Aplikasi Desktop Windows
 menggunakan PyWebView — tanpa memerlukan browser terpisah.

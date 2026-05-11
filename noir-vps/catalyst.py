@@ -14,12 +14,12 @@ log = logging.getLogger("SovereignCatalyst")
 
 class SovereignCatalyst:
     def __init__(self):
-        self.vault_path = "../knowledge/sovereign_intelligence.json"
-        if not os.path.exists("../knowledge"): os.makedirs("../knowledge")
+        self.vault_path = os.path.join(os.path.dirname(__file__), "..", "knowledge", "sovereign_intelligence.json")
+        os.makedirs(os.path.dirname(self.vault_path), exist_ok=True)
 
     def absorb_and_synthesize(self, topic: str):
         """Menyerap ilmu dari berbagai sumber AI dan mensintesisnya."""
-        log.info(f"🧬 CATALYST: Absorbing intelligence for topic: {topic}")
+        log.info(f"CATALYST: Absorbing intelligence for topic: {topic}")
         
         # 1. Gather perspectives from multiple models (Simulated via different prompts/parameters)
         # In a real multi-AI setup, we'd call different APIs here.
@@ -65,12 +65,18 @@ class SovereignCatalyst:
         
         with open(self.vault_path, "w") as f:
             json.dump(vault, f, indent=4)
-        log.info(f"✅ Intelligence absorbed into Sovereign Vault: {topic}")
+    def absorb_skill(self, node_id, data):
+        """Kompatibilitas untuk penyerapan skill otonom."""
+        self._save_to_vault(node_id, data)
+
+    def save_state(self):
+        """Placeholder untuk kompatibilitas save state."""
+        pass
 
     @staticmethod
     def get_ready_tasks():
         """Mengambil pengetahuan yang sudah 'READY' untuk dieksekusi."""
-        vault_path = "../knowledge/sovereign_intelligence.json"
+        vault_path = os.path.join(os.path.dirname(__file__), "..", "knowledge", "sovereign_intelligence.json")
         if not os.path.exists(vault_path): return []
         
         with open(vault_path, "r") as f:

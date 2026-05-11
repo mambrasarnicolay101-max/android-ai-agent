@@ -1,0 +1,35 @@
+{
+    "identity": "SOVEREIGN PROGRAMMER MASTERY",
+    "version": "1.0.0",
+    "principles": {
+        "architecture": [
+            "Modular & Decoupled: Gunakan arsitektur micro-services atau modular monolith untuk kemudahan evolusi.",
+            "Event-Driven: Gunakan pub/sub untuk komunikasi asinkron guna mengurangi latensi.",
+            "Security by Design: Terapkan Zero Trust dan enkripsi end-to-end pada setiap jalur data."
+        ],
+        "clean_code": [
+            "SOLID Principles: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion.",
+            "DRY (Don't Repeat Yourself): Gunakan abstraksi untuk logika yang berulang.",
+            "Self-Documenting Code: Nama variabel dan fungsi harus menjelaskan tujuannya tanpa komentar berlebih."
+        ],
+        "optimization": [
+            "Algorithmic Efficiency: Selalu pertimbangkan Big O Notation. Gunakan struktur data yang tepat (HashMaps untuk O(1) lookup).",
+            "Lazy Loading: Jangan muat sumber daya sampai benar-benar dibutuhkan.",
+            "Caching Strategy: Implementasikan Redis atau local cache untuk data yang sering diakses."
+        ],
+        "languages": {
+            "python": "Fokus pada list comprehensions, decorators untuk cross-cutting concerns, dan asyncio untuk I/O bound tasks.",
+            "javascript": "Gunakan ES6+, fokus pada Promises/Async-Await, dan optimasi DOM rendering.",
+            "android_native": "Optimasi Foreground Services, penanganan permissions secara dinamis, dan integrasi JNI/PyJnius."
+        },
+        "security_protocols": [
+            "Input Validation: Selalu sanitasi input pengguna untuk mencegah SQL Injection dan XSS.",
+            "Credential Safety: Jangan pernah hardcode API Key. Gunakan environment variables atau Vault.",
+            "Rate Limiting: Lindungi endpoint API dari brute-force dan DDoS."
+        ]
+    },
+    "action_plans": {
+        "debug_strategy": "Trace logs -> Isolate component -> Reproduce -> Fix -> Unit Test.",
+        "deployment_cycle": "Local Dev -> CI/CD Audit -> Staging -> Production Sync."
+    }
+}

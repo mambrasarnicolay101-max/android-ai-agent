@@ -1,0 +1,143 @@
+[
+    {
+        "id": "1c02647a",
+        "timestamp": "2026-05-11T15:53:40.179903",
+        "title": "Security Hardening: Penggunaan exec() berbahaya - risiko cod",
+        "description": "Security Sentinel mendeteksi kerentanan:\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\pc_executor.py:136 - Penggunaan exec() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py:17 - Penggunaan eval() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py:175 - Penggunaan eval() berbahaya - risiko code injection\n\nTindakan: Review dan perbaiki pola berbahaya ini.",
+        "changes": {
+            "security_fix": {
+                "findings": [
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\pc_executor.py",
+                        "line": 136,
+                        "severity": "HIGH",
+                        "message": "Penggunaan exec() berbahaya - risiko code injection",
+                        "snippet": "exec(compile(code, \"<sandbox>\", \"exec\"), sandbox_globals)"
+                    },
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py",
+                        "line": 17,
+                        "severity": "HIGH",
+                        "message": "Penggunaan eval() berbahaya - risiko code injection",
+                        "snippet": "(r\"eval\\s*\\(\", \"HIGH\", \"Penggunaan eval() berbahaya - risiko code injection\"),"
+                    },
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py",
+                        "line": 175,
+                        "severity": "HIGH",
+                        "message": "Penggunaan eval() berbahaya - risiko code injection",
+                        "snippet": "if (\"atob(\" in content or \"base64.b64decode\" in content) and (\"eval(\" in content"
+                    }
+                ]
+            }
+        },
+        "complexity": 3,
+        "status": "PENDING_APPROVAL"
+    },
+    {
+        "id": "9fd59788",
+        "timestamp": "2026-05-11T15:53:43.706640",
+        "title": "Network Hardening: 3 risky port(s) detected on 127.0.0.1",
+        "description": "Port berisiko terbuka: ['5432=PostgreSQL', '8080=HTTP-Alt', '6379=Redis (no-auth default)']\nKerentanan kritis: Redis terbuka TANPA PASSWORD - risiko RCE\n\nTindakan: Tutup port yang tidak diperlukan, aktifkan auth, dan konfigurasi firewall.",
+        "changes": {
+            "network_hardening": {
+                "host": "127.0.0.1",
+                "risky_ports": [
+                    5432,
+                    8080,
+                    6379
+                ],
+                "critical": [
+                    "Redis terbuka TANPA PASSWORD - risiko RCE"
+                ]
+            }
+        },
+        "complexity": 4,
+        "status": "PENDING_APPROVAL"
+    },
+    {
+        "id": "519525c3",
+        "timestamp": "2026-05-11T23:59:08.384920",
+        "title": "Security Hardening: subprocess dengan shell=True - risiko sh",
+        "description": "Security Sentinel mendeteksi kerentanan:\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\brain.py:329 - subprocess dengan shell=True - risiko shell injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py:34 - subprocess dengan shell=True - risiko shell injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py:45 - subprocess dengan shell=True - risiko shell injection\n\nTindakan: Review dan perbaiki pola berbahaya ini.",
+        "changes": {
+            "security_fix": {
+                "findings": [
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\brain.py",
+                        "line": 329,
+                        "severity": "HIGH",
+                        "message": "subprocess dengan shell=True - risiko shell injection",
+                        "snippet": "subprocess.run(f\"pip install {lib}\", shell=True)"
+                    },
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py",
+                        "line": 34,
+                        "severity": "HIGH",
+                        "message": "subprocess dengan shell=True - risiko shell injection",
+                        "snippet": "subprocess.Popen(cmd, shell=True)"
+                    },
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py",
+                        "line": 45,
+                        "severity": "HIGH",
+                        "message": "subprocess dengan shell=True - risiko shell injection",
+                        "snippet": "subprocess.run(cmd, shell=True)"
+                    }
+                ]
+            }
+        },
+        "complexity": 3,
+        "status": "PENDING_APPROVAL"
+    },
+    {
+        "id": "f16d48de",
+        "timestamp": "2026-05-11T23:59:08.985280",
+        "title": "Security Hardening: Penggunaan exec() berbahaya - risiko cod",
+        "description": "Security Sentinel mendeteksi kerentanan:\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\pc_executor.py:136 - Penggunaan exec() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py:17 - Penggunaan eval() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py:175 - Penggunaan eval() berbahaya - risiko code injection\n\nTindakan: Review dan perbaiki pola berbahaya ini.",
+        "changes": {
+            "security_fix": {
+                "findings": [
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\pc_executor.py",
+                        "line": 136,
+                        "severity": "HIGH",
+                        "message": "Penggunaan exec() berbahaya - risiko code injection",
+                        "snippet": "exec(compile(code, \"<sandbox>\", \"exec\"), sandbox_globals)"
+                    },
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py",
+                        "line": 17,
+                        "severity": "HIGH",
+                        "message": "Penggunaan eval() berbahaya - risiko code injection",
+                        "snippet": "(r\"eval\\s*\\(\", \"HIGH\", \"Penggunaan eval() berbahaya - risiko code injection\"),"
+                    },
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py",
+                        "line": 175,
+                        "severity": "HIGH",
+                        "message": "Penggunaan eval() berbahaya - risiko code injection",
+                        "snippet": "if (\"atob(\" in content or \"base64.b64decode\" in content) and (\"eval(\" in content"
+                    }
+                ]
+            }
+        },
+        "complexity": 3,
+        "status": "PENDING_APPROVAL"
+    },
+    {
+        "id": "66d17e6b",
+        "timestamp": "2026-05-12T00:13:36.666670",
+        "title": "Security Reflex: CPU_ANOMALY",
+        "description": "Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.",
+        "changes": {
+            "reflex_action": {
+                "alert": "CPU_ANOMALY",
+                "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+                "timestamp": "Tue May 12 00:13:36 2026"
+            }
+        },
+        "complexity": 1,
+        "status": "PENDING_APPROVAL"
+    }
+]

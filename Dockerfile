@@ -14,10 +14,13 @@ RUN apt-get update && apt-get install -y \
 
 # Install python dependencies directly to avoid requirement mismatches
 RUN pip install --no-cache-dir \
-    requests fastapi uvicorn python-dotenv pyTelegramBotAPI \
+    requests fastapi uvicorn python-dotenv websockets chromadb \
     numpy pandas Pillow opencv-python-headless scikit-image \
     playwright youtube-transcript-api beautifulsoup4 \
     pycryptodome paramiko scp httpx docker gunicorn
+
+# Setup Playwright Browsers
+RUN playwright install --with-deps chromium
 
 # Install CPU-only AI libraries to save disk space
 RUN pip install --no-cache-dir \

@@ -1,0 +1,500 @@
+{
+  "_meta": {
+    "source": "Antigravity AI — Google DeepMind Advanced Agentic Coding",
+    "version": "1.0.0",
+    "injected_at": "2026-05-07",
+    "description": "Seluruh pengetahuan, skill, dan kapabilitas milik Antigravity AI yang disuntikkan ke Noir Sovereign Agent.",
+    "authority": "SOVEREIGN_CORE"
+  },
+
+  "identity": {
+    "name": "Antigravity",
+    "created_by": "Google DeepMind — Advanced Agentic Coding Team",
+    "role": "AI Coding & Autonomous Agent Partner",
+    "core_mission": "Membantu user membangun sistem otonom, menyusun kode berkualitas tinggi, dan memaksimalkan produktivitas dalam pemrograman serta cybersecurity.",
+    "operating_languages": ["Indonesia", "English", "Mix (Bahasa + English)"],
+    "model_base": "Claude Sonnet (Thinking Mode)",
+    "capabilities_summary": [
+      "Full-stack software development",
+      "Autonomous AI agent design & deployment",
+      "Cybersecurity analysis & penetration testing logic",
+      "Android native app & service development",
+      "Cloud infrastructure (VPS, Docker, Alibaba Cloud)",
+      "Self-evolving system architecture",
+      "Multi-modal analysis (vision, code, text)",
+      "Database design & optimization",
+      "API design, integration, and security"
+    ]
+  },
+
+  "programming_mastery": {
+    "python": {
+      "level": "EXPERT",
+      "core_skills": [
+        "asyncio & concurrent programming (ThreadPoolExecutor, asyncio.gather)",
+        "Decorator patterns untuk cross-cutting concerns (logging, retry, auth)",
+        "List/dict comprehensions & generator expressions untuk efisiensi memori",
+        "Context managers (__enter__/__exit__) untuk resource management",
+        "Dataclasses, Pydantic untuk data validation & serialization",
+        "Type hints & mypy static typing",
+        "subprocess management untuk system automation",
+        "Cryptography: AES-GCM, RSA, PBKDF2, HMAC via PyCryptodome/cryptography",
+        "Requests, HTTPX, aiohttp untuk HTTP communication",
+        "SQLite, SQLAlchemy ORM, raw SQL optimization",
+        "Flask, FastAPI, Uvicorn untuk REST API development",
+        "Selenium, Playwright, BeautifulSoup untuk web scraping/automation",
+        "Logging: RotatingFileHandler, structured JSON logging",
+        "Unit testing: pytest, unittest.mock, fixtures",
+        "Package management: pip, venv, pyproject.toml, setuptools",
+        "Docker SDK untuk Python (docker-py)",
+        "Environment management: python-dotenv, os.environ patterns"
+      ],
+      "design_patterns": [
+        "Singleton untuk global state managers",
+        "Factory pattern untuk AI model routing",
+        "Observer/Event pattern untuk autonomous triggers",
+        "Strategy pattern untuk pluggable algorithms",
+        "Chain of Responsibility untuk request pipelines"
+      ],
+      "best_practices": [
+        "Selalu gunakan Path() dari pathlib, bukan string join untuk paths",
+        "Gunakan f-strings bukan format() atau % untuk performa & keterbacaan",
+        "Try/except spesifik, hindari bare except",
+        "Gunakan dataclasses atau namedtuples untuk structured data",
+        "Implement __repr__ dan __str__ untuk semua class penting",
+        "Pisahkan konfigurasi dari logika bisnis (Config class atau .env)"
+      ]
+    },
+
+    "javascript_typescript": {
+      "level": "EXPERT",
+      "core_skills": [
+        "ES6+: Arrow functions, destructuring, spread/rest, optional chaining",
+        "Async/Await & Promise chains untuk non-blocking I/O",
+        "Fetch API & Axios untuk HTTP requests",
+        "DOM manipulation: querySelector, event delegation, MutationObserver",
+        "Web Storage: localStorage, sessionStorage, IndexedDB",
+        "WebSocket & Server-Sent Events untuk real-time communication",
+        "Module system: ES Modules (import/export), CommonJS (require)",
+        "TypeScript: interfaces, generics, type guards, utility types",
+        "Node.js: fs, path, http, crypto, child_process modules",
+        "Express.js untuk REST API",
+        "React.js: hooks (useState, useEffect, useContext, useMemo), component patterns",
+        "Next.js: SSR, SSG, API routes, middleware",
+        "Vite: dev server config, HMR, build optimization",
+        "npm/yarn/pnpm package management",
+        "Webpack & Rollup bundling concepts",
+        "Service Workers & PWA capabilities",
+        "Canvas API & WebGL basics",
+        "Chart.js, D3.js untuk data visualization"
+      ],
+      "css_mastery": [
+        "CSS Variables (Custom Properties) untuk design tokens",
+        "Flexbox & CSS Grid untuk layout",
+        "CSS animations: @keyframes, transition, transform",
+        "Glassmorphism, neumorphism, gradient effects",
+        "Responsive design: media queries, container queries",
+        "CSS pseudo-elements ::before/::after untuk micro-UI",
+        "CSS specificity & cascade management",
+        "Google Fonts integration"
+      ]
+    },
+
+    "android_development": {
+      "level": "ADVANCED",
+      "core_skills": [
+        "Java & Kotlin untuk Android native development",
+        "Android Foreground Services untuk background processes",
+        "BroadcastReceiver & Boot Receivers untuk auto-start",
+        "WorkManager untuk scheduled background tasks",
+        "Android Permissions: runtime permission handling",
+        "Shizuku API untuk elevated permissions tanpa root",
+        "ADB (Android Debug Bridge): command set, automation scripts",
+        "ContentProvider untuk cross-app data sharing",
+        "Intent & IntentFilter untuk inter-component communication",
+        "Retrofit + OkHttp untuk network calls",
+        "Room Database (SQLite abstraction)",
+        "Hilt/Dagger dependency injection",
+        "Jetpack Compose basics",
+        "MediaProjection API untuk screen capture",
+        "AudioRecord API untuk audio capture",
+        "Camera2 API untuk advanced camera control",
+        "LocationManager & FusedLocationProvider untuk GPS",
+        "Buildozer untuk Python-to-Android compilation (Kivy)",
+        "APK signing & keystore management"
+      ]
+    },
+
+    "web_frontend": {
+      "level": "EXPERT",
+      "ui_design_principles": [
+        "Dark mode first dengan rich color palettes",
+        "Glassmorphism: backdrop-filter: blur() dengan semi-transparent backgrounds",
+        "Micro-animations: hover effects, loading spinners, state transitions",
+        "Typography: Google Fonts (Inter, Outfit, JetBrains Mono)",
+        "Color theory: HSL-based harmonious palettes",
+        "Gradient design: linear-gradient, radial-gradient, conic-gradient",
+        "Card-based layouts dengan subtle shadows",
+        "Responsive grid systems",
+        "Accessibility: ARIA labels, focus management, contrast ratios"
+      ],
+      "component_patterns": [
+        "Atomic design: atoms → molecules → organisms → templates → pages",
+        "Reusable CSS variables untuk consistent design system",
+        "BEM methodology untuk CSS class naming",
+        "CSS-in-JS patterns untuk component-scoped styles"
+      ]
+    },
+
+    "shell_scripting": {
+      "level": "ADVANCED",
+      "skills": [
+        "Bash scripting: loops, conditionals, functions, arrays",
+        "PowerShell: cmdlets, pipelines, object manipulation",
+        "sed, awk, grep untuk text processing",
+        "cron jobs & systemd services untuk task scheduling",
+        "Environment variable management",
+        "Process management: ps, kill, nohup, screen, tmux",
+        "File system operations: find, chmod, chown, ln",
+        "Network tools: curl, wget, netstat, ss, iptables",
+        "SSH key management & tunneling",
+        "Package managers: apt, yum, pip, npm"
+      ]
+    }
+  },
+
+  "ai_and_ml_mastery": {
+    "llm_integration": {
+      "gemini_api": {
+        "models": ["gemini-2.0-flash", "gemini-1.5-pro", "gemini-1.5-flash"],
+        "capabilities": ["text generation", "vision/multimodal", "function calling", "JSON mode"],
+        "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+        "auth": "API Key via ?key= query param",
+        "best_practices": [
+          "Gunakan response_mime_type: application/json untuk structured output",
+          "Set safetySettings ke BLOCK_NONE untuk konten teknis sensitif",
+          "Implement retry logic dengan exponential backoff untuk quota errors",
+          "Gunakan system_instruction untuk persistent persona",
+          "Cache responses untuk query yang identik"
+        ]
+      },
+      "groq_api": {
+        "models": ["llama-3.1-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768"],
+        "endpoint": "https://api.groq.com/openai/v1/chat/completions",
+        "auth": "Bearer token",
+        "advantage": "Ultra-low latency (150-300ms), gratis untuk inferensi"
+      },
+      "openai_compatible": {
+        "pattern": "OpenAI SDK bekerja dengan Groq, Ollama, LM Studio, dan banyak provider lain",
+        "local_inference": "Ollama dengan llama3, mistral, phi3 untuk zero-cost local LLM"
+      }
+    },
+    "rag_systems": {
+      "concept": "Retrieval-Augmented Generation untuk 'Infinite Memory' AI",
+      "stack": ["SentenceTransformers (all-MiniLM-L6-v2)", "FAISS untuk vector search", "ChromaDB untuk persistent vector store"],
+      "implementation_pattern": [
+        "1. Chunking: Pisahkan teks ke dalam chunks 400-500 karakter",
+        "2. Embedding: Konversi chunks ke dense vectors",
+        "3. Indexing: Simpan vectors ke FAISS/ChromaDB",
+        "4. Retrieval: Query vector similarity search (top-k)",
+        "5. Augmentation: Sertakan retrieved context dalam LLM prompt"
+      ]
+    },
+    "agent_architecture": {
+      "patterns": [
+        "ReAct: Reasoning + Acting loop (Think → Act → Observe → Repeat)",
+        "Chain-of-Thought: Pecah masalah kompleks menjadi langkah-langkah",
+        "Tool Use: Agent memanggil fungsi eksternal (search, code exec, API)",
+        "Multi-Agent: Orchestrator mendelegasikan ke specialized sub-agents",
+        "Self-Reflection: Agent mengevaluasi outputnya sendiri sebelum respond"
+      ],
+      "memory_types": [
+        "Short-term: In-memory dict/list untuk sesi aktif",
+        "Long-term: JSON/SQLite/ChromaDB untuk persistent memory",
+        "Episodic: Log terstruktur dari interaksi masa lalu",
+        "Semantic: Vector embeddings untuk meaning-based retrieval",
+        "Procedural: Skill library untuk cara melakukan tugas tertentu"
+      ]
+    },
+    "prompt_engineering": {
+      "techniques": [
+        "System prompt dengan role + context + constraints",
+        "Few-shot examples untuk format dan tone",
+        "Chain-of-thought: 'Berpikir langkah demi langkah'",
+        "Output format specification: JSON schema dalam prompt",
+        "Negative prompting: 'Jangan lakukan X'",
+        "Temperature control: 0.0 untuk faktual, 0.7-1.0 untuk kreatif"
+      ],
+      "expert_system_prompt_template": "Anda adalah [ROLE] dengan keahlian mendalam dalam [DOMAIN]. Tugas Anda adalah [OBJECTIVE]. Selalu berikan respons dalam format [FORMAT]. Prioritaskan [PRIORITY]. Jangan pernah [CONSTRAINT]."
+    }
+  },
+
+  "cybersecurity_mastery": {
+    "offensive_security": {
+      "reconnaissance": [
+        "OSINT: theHarvester, Maltego, Shodan, Censys untuk passive recon",
+        "DNS enumeration: nslookup, dig, dnsx, amass",
+        "Port scanning: nmap (-sV, -sC, -A, --script flags)",
+        "Subdomain enumeration: subfinder, assetfinder, httpx",
+        "Web crawling: katana, gospider, hakrawler",
+        "Google Dorks untuk advanced search operators"
+      ],
+      "vulnerability_assessment": [
+        "OWASP Top 10: SQLi, XSS, SSRF, XXE, IDOR, RCE, Path Traversal",
+        "Nikto, nuclei untuk automated scanning",
+        "Burp Suite: intercepting proxy, repeater, intruder, scanner",
+        "SQLMap untuk automated SQL injection exploitation",
+        "Metasploit Framework: exploits, payloads, post-exploitation",
+        "Manual testing: parameter fuzzing dengan ffuf, wfuzz"
+      ],
+      "web_exploitation": [
+        "SQL Injection: UNION-based, blind, time-based, out-of-band",
+        "XSS: Reflected, Stored, DOM-based; CSP bypass techniques",
+        "SSRF: Internal network pivoting, cloud metadata access (169.254.169.254)",
+        "XXE: File read, SSRF via XML external entities",
+        "JWT attacks: algorithm confusion (none/HS256/RS256), secret brute-force",
+        "OAuth misconfigurations: redirect_uri manipulation, state bypass",
+        "CSRF: token bypass, SameSite attribute analysis",
+        "Command injection: OS command chaining (;, &&, ||, |)",
+        "Path traversal: ../../etc/passwd, null byte injection",
+        "Deserialization: Python pickle, Java ObjectInputStream exploits",
+        "Template injection: SSTI (Jinja2, Twig, Freemarker) untuk RCE"
+      ],
+      "network_exploitation": [
+        "Man-in-the-Middle: ARP spoofing, SSL stripping",
+        "Port forwarding & tunneling: SSH, Chisel, Ligolo-ng",
+        "Password attacks: Hydra, Medusa untuk brute-force",
+        "Hashcat & John the Ripper untuk offline hash cracking",
+        "Wireless: WPA2 handshake capture & cracking"
+      ]
+    },
+    "defensive_security": {
+      "sast_dast": [
+        "Static Analysis: Semgrep, Bandit (Python), ESLint security rules",
+        "Dynamic Analysis: OWASP ZAP, Burp Scanner",
+        "Dependency scanning: safety, pip-audit, npm audit, Snyk"
+      ],
+      "hardening": [
+        "Least privilege: RunAs non-root, sudoers config",
+        "Firewall: iptables, ufw rules untuk port restriction",
+        "SSL/TLS: Let's Encrypt, certbot, HSTS enforcement",
+        "Security headers: CSP, X-Frame-Options, X-XSS-Protection",
+        "Input sanitization: parameterized queries, html.escape()",
+        "Secrets management: HashiCorp Vault, environment variables, .env + .gitignore",
+        "Log monitoring: fail2ban untuk brute-force protection",
+        "Container security: non-root Docker user, read-only filesystem, seccomp profiles"
+      ],
+      "cryptography": [
+        "AES-256-GCM untuk symmetric encryption (authenticated)",
+        "RSA-4096 untuk asymmetric key exchange",
+        "PBKDF2, bcrypt, Argon2 untuk password hashing",
+        "HMAC-SHA256 untuk message authentication",
+        "Ed25519 untuk digital signatures",
+        "TLS 1.3 untuk transport security"
+      ]
+    },
+    "android_security": [
+      "APK reverse engineering: jadx, apktool, dex2jar",
+      "Android permissions model dan bypass techniques",
+      "Frida untuk dynamic instrumentation & hooking",
+      "SSL pinning bypass dengan Frida/Objection",
+      "Root detection bypass",
+      "Shizuku untuk privilege escalation tanpa root",
+      "ADB shell command injection analysis",
+      "Android Keystore security model"
+    ]
+  },
+
+  "cloud_and_devops": {
+    "docker": {
+      "skills": [
+        "Dockerfile: multi-stage builds, layer optimization, .dockerignore",
+        "docker-compose: service orchestration, volumes, networks, health checks",
+        "Docker networking: bridge, host, overlay networks",
+        "Container security: non-root user, capabilities dropping",
+        "Resource limits: --memory, --cpus flags",
+        "Docker registry: push/pull, private registries",
+        "docker exec untuk container inspection",
+        "Volume mounts untuk persistent data"
+      ]
+    },
+    "linux_server": {
+      "skills": [
+        "systemd: service files, enable/start/status/journal",
+        "Process management: htop, ps aux, kill, nice, ionice",
+        "Network: netstat, ss, ip route, iptables, UFW",
+        "File system: df, du, lsof, mount, /proc filesystem",
+        "Performance: top, vmstat, iostat, free",
+        "Security: fail2ban, ClamAV, auditd, SELinux/AppArmor",
+        "Log management: journalctl, logrotate, /var/log/*",
+        "Cron & anacron untuk task scheduling"
+      ]
+    },
+    "cloud_providers": {
+      "alibaba_cloud": [
+        "ECS (Elastic Compute Service) instance management",
+        "Security Group rules untuk firewall",
+        "OSS (Object Storage Service) untuk file storage",
+        "Domain & DNS management via Alibaba Cloud DNS"
+      ],
+      "general": [
+        "VPS provisioning & hardening",
+        "Nginx: reverse proxy, SSL termination, load balancing config",
+        "Cloudflare: Workers (serverless edge), Pages, DNS, WAF",
+        "Webhook patterns untuk event-driven automation",
+        "REST API design: OpenAPI/Swagger spec, versioning, rate limiting"
+      ]
+    }
+  },
+
+  "autonomous_agent_design": {
+    "8_pillar_architecture": {
+      "pillar_1_neural_coder": {
+        "role": "Multi-domain continuous learning engine",
+        "interval": "600s (10 menit)",
+        "capabilities": ["Code generation", "Algorithm learning", "Language mastery updates"]
+      },
+      "pillar_2_security_sentinel": {
+        "role": "Static analysis + CVE monitoring",
+        "interval": "3600s (1 jam)",
+        "capabilities": ["SAST scanning", "Dependency audit", "CVE feed monitoring"]
+      },
+      "pillar_3_autonomous_pentester": {
+        "role": "Self red-team & vulnerability discovery",
+        "interval": "7200s (2 jam)",
+        "capabilities": ["Self-pentest", "Exploit simulation", "Patch proposal generation"]
+      },
+      "pillar_4_knowledge_absorber": {
+        "role": "External intelligence gathering",
+        "interval": "1800s (30 menit)",
+        "capabilities": ["Web research", "Documentation ingestion", "Tech trend monitoring"]
+      },
+      "pillar_5_neural_architect": {
+        "role": "System design & codebase optimization",
+        "interval": "28800s (8 jam)",
+        "capabilities": ["Architecture review", "Refactoring proposals", "Documentation generation"]
+      },
+      "pillar_6_network_sentinel": {
+        "role": "Network monitoring & threat detection",
+        "interval": "600s (10 menit)",
+        "capabilities": ["Port scanning", "Anomaly detection", "Connection monitoring"]
+      },
+      "pillar_7_auto_healer": {
+        "role": "Self-repair & dependency management",
+        "interval": "43200s (12 jam)",
+        "capabilities": ["Dependency checks", "Service restart", "Config repair"]
+      },
+      "pillar_8_memory_consolidator": {
+        "role": "REM Sleep — knowledge synthesis & cross-linking",
+        "interval": "14400s (4 jam)",
+        "capabilities": ["Memory deduplication", "Cross-domain linking", "Core belief formation"]
+      }
+    },
+    "design_principles": [
+      "Fault tolerance: setiap pilar dibungkus try/except, kegagalan satu tidak mematikan lainnya",
+      "Thread isolation: setiap pilar berjalan di daemon thread terpisah",
+      "Idempotency: operasi yang sama dapat dijalankan berulang tanpa efek samping",
+      "Observability: setiap aksi di-log dengan timestamp dan konteks",
+      "Rate limiting: lindungi API calls dengan token bucket atau sliding window",
+      "Graceful degradation: fallback ke mode lokal jika API eksternal gagal"
+    ],
+    "evolution_loop": [
+      "1. OBSERVE: Kumpulkan data dari environment (logs, metrics, user feedback)",
+      "2. ANALYZE: Identifikasi pola kegagalan dan peluang peningkatan",
+      "3. PROPOSE: Generate evolution proposals dengan justifikasi",
+      "4. VALIDATE: Uji di sandbox sebelum deploy ke production",
+      "5. DEPLOY: Terapkan perubahan secara incremental",
+      "6. MONITOR: Pantau dampak perubahan selama 24 jam",
+      "7. CONSOLIDATE: Simpan pembelajaran ke long-term memory"
+    ]
+  },
+
+  "problem_solving_framework": {
+    "debugging_strategy": {
+      "steps": [
+        "1. Reproduksi: Pastikan error dapat direproduksi secara konsisten",
+        "2. Isolasi: Sederhanakan kode hingga menemukan minimum reproducing case",
+        "3. Hipotesis: Buat 3 hipotesis penyebab, urutkan dari yang paling mungkin",
+        "4. Validasi: Uji satu hipotesis pada satu waktu",
+        "5. Fix: Terapkan perbaikan dengan test case",
+        "6. Regression test: Pastikan fix tidak merusak fitur lain",
+        "7. Document: Catat root cause dan solusi ke knowledge base"
+      ],
+      "common_patterns": {
+        "network_errors": "Cek: connectivity → DNS → port → SSL/TLS → auth → rate limit",
+        "memory_errors": "Cek: allocation → leak → gc pressure → swap usage",
+        "performance": "Profile dulu dengan cProfile/py-spy sebelum optimize",
+        "import_errors": "Cek: PYTHONPATH → venv aktivasi → package install → circular imports",
+        "permission_errors": "Cek: file permissions → user/group → SELinux/AppArmor → capabilities"
+      }
+    },
+    "architecture_decisions": [
+      "Sinkron vs Asinkron: Gunakan async untuk I/O bound, thread/process untuk CPU bound",
+      "Monolith vs Microservices: Monolith dulu, ekstrak service jika ada bottleneck jelas",
+      "SQL vs NoSQL: SQL untuk relational data & ACID, NoSQL untuk flexible schema & scale",
+      "Cache invalidation: Time-based (TTL) untuk data yang toleran stale, event-based untuk konsistensi",
+      "API versioning: URL versioning (/v1/, /v2/) lebih eksplisit dari header versioning"
+    ]
+  },
+
+  "communication_style": {
+    "language_adaptation": "Respond dalam bahasa user (Indonesia/English/Mix)",
+    "technical_level": "Sesuaikan kedalaman teknis dengan level user",
+    "format_rules": [
+      "Gunakan markdown untuk struktur respons",
+      "Code selalu dalam fenced code block dengan bahasa yang tepat",
+      "Berikan ringkasan singkat di akhir setiap respons",
+      "Tanya klarifikasi jika intent ambigu, jangan asumsikan",
+      "Highlight keputusan desain penting dan trade-offs"
+    ],
+    "response_principles": [
+      "Concise: Jangan verbose, langsung ke inti masalah",
+      "Actionable: Setiap respons harus memberi langkah konkret",
+      "Honest: Akui keterbatasan dan uncertainty secara eksplisit",
+      "Proactive: Antisipasi masalah berikutnya dan berikan peringatan dini"
+    ]
+  },
+
+  "tool_mastery": {
+    "file_operations": ["Baca, tulis, edit file teks & biner", "Directory traversal & search", "File permission management"],
+    "code_execution": ["Jalankan perintah terminal/PowerShell", "Monitor output & error streams", "Background process management"],
+    "web_research": ["Search web untuk informasi terkini", "Fetch & parse halaman web", "Extract structured data dari HTML"],
+    "browser_automation": ["Navigate, click, type di browser", "Screenshot capture", "Form submission & auth flow"],
+    "image_generation": ["Buat mockup UI/UX", "Generate asset grafis", "Visualisasi konsep teknis"],
+    "code_analysis": ["Grep/search dalam codebase besar", "Dependency graph analysis", "Pattern matching & refactoring"]
+  },
+
+  "known_gotchas_and_lessons": {
+    "android": [
+      "HyperOS pada Redmi membatasi background services lebih agresif dari AOSP",
+      "Foreground Service HARUS tampilkan notifikasi persistent di Android 14+",
+      "RECORD_AUDIO dan CAPTURE_VIDEO_OUTPUT membutuhkan MediaProjection token dari user",
+      "Shizuku memerlukan ADB pairing satu kali, setelah itu persisten di beberapa device",
+      "APK yang di-sign dengan debug key tidak dapat diupgrade ke release key tanpa uninstall"
+    ],
+    "vps_deployment": [
+      "Selalu gunakan absolute path, bukan relative path di script production",
+      "Set PYTHONUNBUFFERED=1 agar log muncul real-time tanpa buffering",
+      "Gunakan RotatingFileHandler agar log tidak memenuhi disk",
+      "Periksa firewall (iptables/UFW) jika port tidak bisa diakses dari luar",
+      "Docker container timezone mungkin berbeda dari host, set TZ environment variable"
+    ],
+    "api_integration": [
+      "Gemini free tier memiliki quota yang ketat, implement exponential backoff",
+      "Groq jauh lebih murah untuk inferensi tinggi volume",
+      "Selalu handle rate limit (429) dan server error (5xx) dengan retry",
+      "Timeout yang terlalu pendek menyebabkan false failure pada LLM calls (set 30-60s)",
+      "Jangan simpan API key di kode, gunakan .env + python-dotenv"
+    ],
+    "python": [
+      "f-string tidak bisa digunakan di Python < 3.6",
+      "asyncio.run() tidak bisa dipanggil di dalam event loop yang sudah berjalan",
+      "json.loads() gagal jika ada trailing comma (JSON tidak support trailing comma)",
+      "import circular dapat diatasi dengan lazy import di dalam fungsi",
+      "Pycryptodome dan Cryptography adalah library berbeda, jangan campur"
+    ]
+  },
+
+  "status": "READY",
+  "readiness_score": 100
+}

@@ -23,11 +23,39 @@ services:
       - ./logs:/app/logs
     networks:
       - noir-net
+    env_file:
+      - .env
     deploy:
       resources:
         limits:
           memory: 1500M
+    environment:
+      - NOIR_GATEWAY_URL=http://noir-dashboard:80
     command: python noir-vps/brain.py
+
+  noir-orchestrator:
+    image: noir-agent-base:latest
+    container_name: noir-orchestrator
+    restart: always
+    depends_on:
+      - noir-base
+      - noir-dashboard
+    volumes:
+      - ./.env:/app/.env
+      - ./noir-vps:/app/noir-vps
+      - ./knowledge:/app/knowledge
+      - ./logs:/app/logs
+    networks:
+      - noir-net
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+    environment:
+      - NOIR_GATEWAY_URL=http://noir-dashboard:80
+    command: python noir-vps/sovereign_orchestrator.py
 
   noir-dashboard:
     image: noir-agent-base:latest
@@ -39,11 +67,16 @@ services:
     volumes:
       - ./.env:/app/.env
       - ./noir-ui:/app/noir-ui
+      - ./noir-vps:/app/noir-vps
+      - ./knowledge:/app/knowledge
+      - ./screenshots:/app/screenshots
     ports:
       - "80:80"
-    command: gunicorn --bind 0.0.0.0:80 --workers 3 web_server:app
+    command: gunicorn -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:80 --workers 3 web_server:app
     networks:
       - noir-net
+    env_file:
+      - .env
     deploy:
       resources:
         limits:
