@@ -23,7 +23,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [LAUNCHER] %(message
 BASE_DIR = Path(__file__).resolve().parent
 
 # ─── KONFIGURASI LAUNCHER ────────────────────────────────────────────────────
-SERVER_HOST   = "127.0.0.1"
+SERVER_HOST   = "os.environ.get("NOIR_VPS_IP", "8.215.23.17")
 SERVER_PORT   = 8765          # Port khusus mode Desktop agar tidak bentrok
 
 # Ambil Gateway dari ENV jika ada (untuk koneksi ke VPS Remote)
@@ -44,7 +44,7 @@ def _start_server():
         log.error(f"web_server.py tidak ditemukan di: {server_path}")
         sys.exit(1)
 
-    if "localhost" in SERVER_URL or "127.0.0.1" in SERVER_URL:
+    if "os.environ.get("NOIR_VPS_IP", "8.215.23.17") in SERVER_URL or "os.environ.get("NOIR_VPS_IP", "8.215.23.17") in SERVER_URL:
         log.info(f"Starting Local Web Server at {SERVER_URL}...")
         env = os.environ.copy()
         env["NOIR_PC_MODE"]   = "1"          # Flag mode Desktop
@@ -75,7 +75,7 @@ def _wait_for_server(timeout: int = 15) -> bool:
 # ─── STEP 2: START BRAIN/AUTONOMOUS LOOP DI BACKGROUND ──────────────────────
 def _start_brain():
     """Jalankan otak AI (brain.py) dalam background thread terpisah."""
-    if not ("localhost" in SERVER_URL or "127.0.0.1" in SERVER_URL):
+    if not ("os.environ.get("NOIR_VPS_IP", "8.215.23.17") in SERVER_URL or "os.environ.get("NOIR_VPS_IP", "8.215.23.17") in SERVER_URL):
         log.info("Brain already running on VPS. Skipping local start.")
         return
 

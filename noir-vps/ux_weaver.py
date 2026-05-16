@@ -1,6 +1,6 @@
 import logging
 import os
-from ai_router import AIRouter
+from ai_router import OmniRouter
 
 log = logging.getLogger("UX_Weaver")
 
@@ -12,7 +12,7 @@ class UXWeaver:
     
     @staticmethod
     def design_ui_component(requirement: str):
-        log.info(f"🎨 Designing UI component for: {requirement}")
+        log.info(f" Designing UI component for: {requirement}")
         
         prompt = f"""
         Anda adalah Noir UX Weaver (Pilar 12).
@@ -23,8 +23,8 @@ class UXWeaver:
         Output: Code snippet HTML/CSS.
         """
         
-        design = AIRouter.query_gemini(prompt)
-        log.info("✅ UI Design synthesized.")
+        design = OmniRouter.query_gemini(prompt)
+        log.info(" UI Design synthesized.")
         return design
 
 if __name__ == "__main__":

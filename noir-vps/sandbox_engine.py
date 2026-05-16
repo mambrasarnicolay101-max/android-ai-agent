@@ -12,7 +12,7 @@ class SandboxEngine:
     @staticmethod
     def execute_python(code: str, timeout=5):
         """Menjalankan kode Python di sandbox dan mengembalikan output/error."""
-        log.info("🧪 [Sandbox] Menjalankan verifikasi kode...")
+        log.info(" [Sandbox] Menjalankan verifikasi kode...")
         
         # Buat file sementara untuk kode
         with tempfile.NamedTemporaryFile(suffix=".py", delete=False, mode='w', encoding='utf-8') as tmp:
@@ -31,17 +31,17 @@ class SandboxEngine:
             success = result.returncode == 0
             output = result.stdout if success else result.stderr
             
-            log.info(f"🧪 [Sandbox] Hasil Eksekusi: {'BERHASIL' if success else 'GAGAL'}")
+            log.info(f" [Sandbox] Hasil Eksekusi: {'BERHASIL' if success else 'GAGAL'}")
             return {
                 "success": success,
                 "output": output.strip(),
                 "exit_code": result.returncode
             }
         except subprocess.TimeoutExpired:
-            log.warning("🧪 [Sandbox] Eksekusi dihentikan: Timeout")
+            log.warning(" [Sandbox] Eksekusi dihentikan: Timeout")
             return {"success": False, "error": "Timeout (Potensi Infinite Loop)"}
         except Exception as e:
-            log.error(f"🧪 [Sandbox] Error Fatal: {e}")
+            log.error(f" [Sandbox] Error Fatal: {e}")
             return {"success": False, "error": str(e)}
         finally:
             if os.path.exists(tmp_path):

@@ -26,14 +26,14 @@ SANDBOX_DIR   = BASE_DIR / "noir-vps" / ".sandbox"
 KNOWLEDGE_DIR.mkdir(exist_ok=True)
 SANDBOX_DIR.mkdir(exist_ok=True)
 
-# ─── GLOBAL SOVEREIGN STATE ─────────────────────────────────────────────────
+#  GLOBAL SOVEREIGN STATE 
 # (Moved into PCExecutor class for consistency)
 
 def toggle_override(state: bool):
     PCExecutor.SOVEREIGN_OVERRIDE = state
     log.info(f"Sovereign Override: {'ENABLED (UNRESTRICTED)' if state else 'DISABLED (PROTECTED)'}")
 
-# ─── BLACKLIST PERINTAH BERBAHAYA ───────────────────────────────────────────
+#  BLACKLIST PERINTAH BERBAHAYA 
 SHELL_BLACKLIST = [
     "rm -rf", "rmdir /s", "format c:", "del /f /s /q",
     "shutdown", "reboot", "> /dev/sda", "dd if=",
@@ -62,7 +62,7 @@ def _is_safe_code(code: str) -> tuple[bool, str]:
             return False, f"Operasi berbahaya terdeteksi dalam kode: '{d}'"
     return True, "OK"
 
-# ─── KELAS UTAMA PC EXECUTOR ─────────────────────────────────────────────────
+#  KELAS UTAMA PC EXECUTOR 
 
 class PCExecutor:
     """
@@ -73,7 +73,7 @@ class PCExecutor:
     _results_log = []
     _lock = threading.Lock()
 
-    # ── 1. Eksekutor Shell (Dengan Filter Keamanan) ──────────────────────────
+    #  1. Eksekutor Shell (Dengan Filter Keamanan) 
     @staticmethod
     def run_shell(cmd: str, timeout: int = 30) -> dict:
         """Jalankan perintah shell secara aman."""
@@ -105,7 +105,7 @@ class PCExecutor:
         PCExecutor._log_result("shell", result)
         return result
 
-    # ── 2. Eksekutor Python Sandbox ───────────────────────────────────────────
+    #  2. Eksekutor Python Sandbox 
     @staticmethod
     def run_python(code: str, timeout: int = 30) -> dict:
         """Jalankan kode Python dalam sandbox terisolasi."""
@@ -115,6 +115,15 @@ class PCExecutor:
 
         log.info(f"PC Python Sandbox: Running {len(code)} chars of code...")
         
+        # [PHASE 3A] Polymorphic Payload Mutation
+        try:
+            from polymorphic_engine import PolymorphicEngine
+            mutated_code = PolymorphicEngine.mutate(code)
+            code = mutated_code
+            log.info("PC Python Sandbox: Payload Mutated Successfully.")
+        except Exception as e:
+            log.error(f"PC Python Sandbox: Polymorphic Engine failed: {e}")
+
         stdout_capture = io.StringIO()
         sandbox_globals = {
             "__builtins__": {
@@ -146,7 +155,7 @@ class PCExecutor:
         PCExecutor._log_result("python_sandbox", result)
         return result
 
-    # ── 3. Penulis & Pembaca Knowledge Base ───────────────────────────────────
+    #  3. Penulis & Pembaca Knowledge Base 
     @staticmethod
     def write_knowledge(key: str, data: any, category: str = "general") -> dict:
         """Simpan pengetahuan baru ke file JSON terstruktur."""
@@ -186,7 +195,7 @@ class PCExecutor:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    # ── 4. Pemantau Sumber Daya PC ────────────────────────────────────────────
+    #  4. Pemantau Sumber Daya PC 
     @staticmethod
     def get_system_stats() -> dict:
         """Ambil status hardware PC secara real-time."""
@@ -207,7 +216,7 @@ class PCExecutor:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    # ── 5. Logger Internal ────────────────────────────────────────────────────
+    #  5. Logger Internal 
     @staticmethod
     def _log_result(task_type: str, result: dict):
         with PCExecutor._lock:
@@ -224,7 +233,7 @@ class PCExecutor:
             return PCExecutor._results_log[-limit:]
 
 
-# ─── SELF-TEST ───────────────────────────────────────────────────────────────
+#  SELF-TEST 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     print("=== PC Executor Self-Test ===")

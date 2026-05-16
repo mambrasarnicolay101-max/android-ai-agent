@@ -1,7 +1,7 @@
 import paramiko
 import os
 
-VPS_IP = '8.215.23.17'
+VPS_IP = '"+os.environ.get("NOIR_VPS_IP", "8.215.23.17")+"'
 VPS_USER = 'root'
 VPS_PASS = 'N!colay_No1r.Ai@Agent#Secure'
 

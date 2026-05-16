@@ -1,5 +1,5 @@
 import os, logging, json
-from ai_router import AIRouter
+from ai_router import OmniRouter
 from evolution_engine import evolution_engine
 
 log = logging.getLogger("FeatureSynthesizer")
@@ -13,7 +13,7 @@ class FeatureSynthesizer:
 
     @staticmethod
     def design_new_feature(user_request=None):
-        log.info("🎨 FeatureSynthesizer: Designing new feature/menu expansion...")
+        log.info(" FeatureSynthesizer: Designing new feature/menu expansion...")
         
         # Konteks UI saat ini
         ui_context = """
@@ -34,7 +34,7 @@ class FeatureSynthesizer:
         Format the response as an Evolution Proposal.
         """
         
-        proposal_raw = AIRouter.query_gemini(prompt)
+        proposal_raw = OmniRouter.query_gemini(prompt)
         
         # Kirim ke Evolution Engine agar muncul di Dashboard untuk disetujui User
         evolution_engine.propose_evolution(
@@ -44,7 +44,7 @@ class FeatureSynthesizer:
             complexity=8
         )
         
-        log.info("✅ New feature design submitted to Evolution Engine.")
+        log.info(" New feature design submitted to Evolution Engine.")
         return True
 
 if __name__ == "__main__":

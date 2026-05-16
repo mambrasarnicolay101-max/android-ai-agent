@@ -1,460 +1,838 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOIR SOVEREIGN — MISSION CONTROL V21.3 ELITE</title>
-    <meta name="description" content="Noir Sovereign Command Center - AI Agent Mission Control">
-    <link rel="stylesheet" href="css/style.css?v=21.3.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@600;700;900&display=swap" rel="stylesheet">
+    <title>Noir Sovereign | v29.0 God-Eye View</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #020204;
+            --bg-glass: rgba(10, 10, 20, 0.85);
+            --accent-purple: #bc13fe;
+            --accent-cyan: #00f2ff;
+            --accent-crimson: #ff2a6d;
+            --accent-green: #05ffa1;
+            --accent-gold: #ffd700;
+            --text-dim: #9090a0;
+            --text-bright: #ffffff;
+            --sidebar-width: 280px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-deep); color: var(--text-bright);
+            font-family: 'Outfit', sans-serif; height: 100vh; overflow: hidden; display: flex;
+            background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 2px, 3px 100%;
+        }
+
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: linear-gradient(rgba(188, 19, 254, 0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(188, 19, 254, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width); background: rgba(5, 5, 10, 0.95);
+            border-right: 1px solid rgba(188, 19, 254, 0.2); padding: 30px 20px;
+            display: flex; flex-direction: column; z-index: 10;
+        }
+
+        .brand {
+            font-weight: 800; font-size: 1.6rem; margin-bottom: 30px; text-align: center;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .nav-section-title {
+            font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase;
+            letter-spacing: 2px; margin: 15px 0 10px 10px; font-weight: 800;
+        }
+
+        .nav-item {
+            padding: 12px 15px; margin-bottom: 5px; border-radius: 10px;
+            cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 12px;
+            color: var(--text-dim); font-weight: 600; font-size: 0.9rem;
+        }
+        .nav-item:hover, .nav-item.active { background: rgba(188, 19, 254, 0.1); color: var(--text-bright); }
+        .nav-item.active { border-left: 3px solid var(--accent-purple); box-shadow: 0 0 15px rgba(188, 19, 254, 0.3); }
+
+        /* MAIN */
+        .main-container { flex: 1; display: flex; flex-direction: column; position: relative; }
+        .top-bar {
+            height: 70px; padding: 0 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+        }
+        .content-area { flex: 1; padding: 40px; overflow-y: auto; display: none; }
+        .content-area.active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .grid-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .grid-span-2 { grid-column: span 2; }
+        .grid-span-3 { grid-column: span 3; }
+
+        .card {
+            background: var(--bg-glass); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px; padding: 25px; backdrop-filter: blur(20px);
+            position: relative; overflow: hidden; transition: 0.4s;
+        }
+        .card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+            transform: translateY(-5px);
+        }
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            animation: h-scan 4s infinite linear;
+        }
+        @keyframes h-scan { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .card-title { font-size: 0.8rem; font-weight: 800; color: var(--accent-purple); text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; }
+
+        .stat-value { font-size: 2rem; font-weight: 800; }
+        .stat-label { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; }
+
+        .terminal-box {
+            background: rgba(0,0,0,0.6); border-radius: 8px; padding: 15px; height: 250px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: white; padding: 10px 15px; border-radius: 8px; cursor: pointer;
+            font-family: 'Outfit'; font-weight: 600; transition: 0.3s; font-size: 0.8rem;
+        }
+        .btn:hover { background: rgba(255,255,255,0.1); border-color: var(--accent-cyan); }
+        .btn-purple { border-color: var(--accent-purple); background: rgba(188, 19, 254, 0.1); }
+        .btn-purple:hover { background: var(--accent-purple); box-shadow: 0 0 15px var(--accent-purple); }
+        .btn-crimson { border-color: var(--accent-crimson); background: rgba(255, 42, 109, 0.1); }
+        .btn-crimson:hover { background: var(--accent-crimson); box-shadow: 0 0 15px var(--accent-crimson); }
+        .btn-green { border-color: var(--accent-green); background: rgba(5, 255, 161, 0.1); }
+        .btn-green:hover { background: var(--accent-green); box-shadow: 0 0 15px var(--accent-green); }
+
+        /* COMBAT ARENA */
+        .combat-arena-container {
+            width: 100%; height: 350px; background: rgba(0,0,0,0.8); border-radius: 12px;
+            position: relative; overflow: hidden; border: 1px solid rgba(188, 19, 254, 0.3);
+            margin-top: 15px; box-shadow: inset 0 0 50px rgba(188, 19, 254, 0.1);
+        }
+        #combat-canvas { width: 100%; height: 100%; }
+        .arena-overlay {
+            position: absolute; top: 10px; left: 10px; font-family: 'JetBrains Mono';
+            font-size: 0.65rem; color: var(--accent-cyan); pointer-events: none;
+            background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 4px;
+            border-left: 2px solid var(--accent-cyan);
+        }
+        .arena-status {
+            position: absolute; bottom: 10px; right: 10px; font-family: 'JetBrains Mono';
+            font-size: 0.7rem; color: var(--accent-crimson); text-transform: uppercase;
+            letter-spacing: 2px; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+
+        /* NEURAL MESH ENHANCEMENTS */
+        .mesh-node {
+            display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+            margin-right: 5px; background: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan);
+        }
+        .mesh-node.offline { background: var(--accent-crimson); box-shadow: 0 0 8px var(--accent-crimson); }
+
+        /* RADAR MAP */
+        .radar-container {
+            width: 100%; height: 300px; border-radius: 10px; border: 1px solid rgba(0, 242, 255, 0.2);
+            position: relative; overflow: hidden; background: radial-gradient(circle, rgba(0,242,255,0.05) 0%, transparent 70%);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .radar-sweep {
+            position: absolute; width: 50%; height: 50%; top: 0; left: 50%; transform-origin: bottom left;
+            background: linear-gradient(90deg, transparent, rgba(0,242,255,0.4));
+            animation: sweep 4s linear infinite; border-bottom: 2px solid var(--accent-cyan);
+        }
+        @keyframes sweep { to { transform: rotate(360deg); } }
+
+        /* CODE DIFF */
+        .code-diff { font-family: 'JetBrains Mono'; font-size: 0.85rem; background: #000; padding: 15px; border-radius: 8px; white-space: pre; overflow-x: auto; }
+        .diff-add { color: var(--accent-green); }
+        .diff-sub { color: var(--accent-crimson); }
+
+        /* SWARM BOARD */
+        .swarm-item {
+            background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent-cyan);
+            padding: 15px; margin-bottom: 10px; border-radius: 0 8px 8px 0;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        #loader {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: var(--bg-deep); z-index: 9999; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; transition: 0.5s;
+        }
+    </style>
 </head>
 <body>
+    <div id="loader">
+        <h1 style="color: var(--accent-purple); font-family: 'JetBrains Mono';">SOVEREIGN V29.0</h1>
+        <p style="color: var(--text-dim); margin-top: 10px;">Establishing God-Eye View...</p>
+    </div>
 
-<div class="app-container">
+    <div class="bg-grid"></div>
 
-    <!-- ── SIDEBAR ── -->
     <aside class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo-mark"><i class="fas fa-biohazard"></i></div>
-            <div class="logo-name">NOIR SOVEREIGN</div>
-        </div>
-
-        <nav class="sidebar-nav">
-            <div class="nav-group">
-                <div class="nav-label">Core Systems</div>
-                <div class="nav-item active" onclick="showPanel('dashboard')"><i class="fas fa-layer-group"></i> Dashboard</div>
-                <div class="nav-item" onclick="showPanel('vision')"><i class="fas fa-eye"></i> Neural Vision</div>
-                <div class="nav-item" onclick="showPanel('chat')"><i class="fas fa-comment-code"></i> Command Terminal</div>
-            </div>
-
-            <div class="nav-group">
-                <div class="nav-label">Intelligence</div>
-                <div class="nav-item" onclick="showPanel('browser')"><i class="fas fa-globe-americas"></i> Autonomous Research</div>
-                <div class="nav-item" onclick="showPanel('evolution')"><i class="fas fa-dna"></i> Evolution Engine</div>
-                <div class="nav-item" onclick="showPanel('swarm')"><i class="fas fa-project-diagram"></i> Swarm Monitor</div>
-                <div class="nav-item" onclick="showPanel('neuralmap')"><i class="fas fa-atom"></i> 3D Neural Map</div>
-            </div>
-
-            <div class="nav-group">
-                <div class="nav-label">Infrastructure</div>
-                <div class="nav-item" onclick="showPanel('pc')"><i class="fas fa-server"></i> Node Management</div>
-                <div class="nav-item" onclick="showPanel('wiki')"><i class="fas fa-book-atlas"></i> Sovereign Wiki</div>
-                <div class="nav-item" onclick="showPanel('synthesis')"><i class="fas fa-flask"></i> Synthesis Lab</div>
-                <div class="nav-item" onclick="showPanel('logs')"><i class="fas fa-microchip"></i> System Logs</div>
-            </div>
-        </nav>
-
-        <div class="sidebar-footer">
-            <button id="voice-toggle-btn" class="micro-btn w-full mb-1" onclick="toggleVoice()" style="width:100%; justify-content:center; gap:0.5rem; margin-bottom: 1rem;">
-                <i class="fas fa-volume-mute"></i> VOICE: OFF
-            </button>
-            <div class="text-dim" style="font-size:0.58rem; letter-spacing:1px; margin-bottom:0.2rem;">SOVEREIGN AEGIS MESH</div>
-            <div class="text-accent" style="font-size:0.65rem; font-weight:800;">V21.3 ELITE [SINGULARITY]</div>
-        </div>
+        <div class="brand">NOIR SOVEREIGN</div>
+        
+        <div class="nav-section-title">Core Operations</div>
+        <div class="nav-item active" onclick="switchTab('tab-overview', this)">🌐 OVERVIEW</div>
+        <div class="nav-item" onclick="switchTab('tab-evolution', this)">🧬 EVOLUTION</div>
+        
+        <div class="nav-section-title">God-Eye Modules</div>
+        <div class="nav-item" onclick="switchTab('tab-radar', this)">🌍 THREAT RADAR</div>
+        <div class="nav-item" onclick="switchTab('tab-bridge', this)">📱 DEVICE BRIDGE</div>
+        <div class="nav-item" onclick="switchTab('tab-sandbox', this)">⚖️ CODE SANDBOX</div>
+        <div class="nav-item" onclick="switchTab('tab-swarm', this)">🕷️ SWARM ORCHESTRATOR</div>
+        <div class="nav-item" onclick="switchTab('tab-memory', this)">🧠 VECTOR MEMORY</div>
+        <div class="nav-item" onclick="switchTab('tab-hardware', this)">🔌 HARDWARE LAB</div>
     </aside>
 
-    <!-- ── MAIN STAGE ── -->
-    <div class="stage">
-
-        <!-- TOPBAR -->
-        <header class="topbar">
-            <div class="topbar-left">
-                <div id="active-panel-title" class="panel-heading">COMMAND OVERVIEW</div>
-            </div>
-            <div class="topbar-right">
-                <div id="core-status-chip"  class="chip online"><i class="fas fa-brain"></i> AI CORE: ONLINE</div>
-                <div id="alibaba-chip"       class="chip"><i class="fas fa-cloud"></i> VPS: --</div>
-                <div id="agent-status-chip"  class="chip offline"><i class="fas fa-link-slash"></i> LINK: SEVERED</div>
-                <button class="micro-btn" onclick="location.reload()" title="Refresh"><i class="fas fa-sync"></i></button>
-            </div>
+    <main class="main-container">
+        <header class="top-bar">
+            <div><span style="color: var(--accent-green);">●</span> SYSTEM MESH ACTIVE | ALIBABA CLOUD</div>
+            <div id="clock" style="font-family: 'JetBrains Mono'; color: var(--accent-purple);">00:00:00</div>
         </header>
 
-        <!-- ── PANEL CONTAINER ── -->
-        <div class="panel-container">
-
-            <!-- ════ PANEL: DASHBOARD ════ -->
-            <section id="panel-dashboard" class="panel active">
-
-                <!-- Offline Warning -->
-                <div id="offline-warning" class="offline-warning">
-                    <i class="fas fa-exclamation-triangle fa-lg text-danger pulse"></i>
-                    <div style="flex:1; min-width:0;">
-                        <div class="text-danger" style="font-weight:800; font-size:0.85rem; margin-bottom:0.25rem;">MOBILE LINK SEVERED</div>
-                        <div class="text-dim" style="font-size:0.75rem;">Physical device disconnected — <b>AI Core remains operational on Alibaba VPS</b>. Mobile-only commands (Camera, GPS) are suspended.</div>
-                    </div>
-                    <button class="cmd-btn danger" onclick="sendCommand('reconnect')" style="flex-shrink:0;"><i class="fas fa-plug"></i> HANDSHAKE</button>
+        <!-- 1. OVERVIEW -->
+        <section id="tab-overview" class="content-area active">
+            <div class="grid-layout">
+                <div class="card">
+                    <div class="card-title">Maturity Index</div>
+                    <div class="stat-value" id="smi-score" style="color: var(--accent-cyan);">--</div>
+                    <div class="stat-label" id="smi-phase">--</div>
                 </div>
-
-                <!-- Telemetry Grid -->
-                <div class="dashboard-grid">
-
-                    <!-- Mobile Telemetry -->
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-mobile-screen-button"></i> Mobile Agent Telemetry</div>
-                        <div class="tele-grid">
-                            <div class="tele-item">
-                                <div class="tele-labels"><span>CPU Matrix</span><span id="stat-cpu" class="text-accent">--%</span></div>
-                                <div class="tele-bar-bg"><div id="bar-cpu" class="tele-bar-fill"></div></div>
-                            </div>
-                            <div class="tele-item">
-                                <div class="tele-labels"><span>Memory Node</span><span id="stat-ram" class="text-accent">--%</span></div>
-                                <div class="tele-bar-bg"><div id="bar-ram" class="tele-bar-fill"></div></div>
-                            </div>
-                            <div class="tele-item">
-                                <div class="tele-labels"><span>Power Cell</span><span id="stat-bat" class="text-accent">--%</span></div>
-                                <div class="tele-bar-bg"><div id="bar-bat" class="tele-bar-fill"></div></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sovereign Maturity Index (SMI) -->
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-chart-line text-accent"></i> Sovereign Maturity Index (SMI)</div>
-                        <div class="tele-grid">
-                            <div class="tele-item">
-                                <div class="tele-labels"><span>Neural Maturity Score</span><span id="smi-score" class="text-accent">0.0</span></div>
-                                <div class="tele-bar-bg" style="height:6px;"><div id="smi-bar" class="tele-bar-fill" style="width:0%; background:var(--accent-glow);"></div></div>
-                            </div>
-                        </div>
-                        <div class="flex-between mt-2" style="font-size:0.75rem;">
-                            <span class="text-dim">Current Phase:</span>
-                            <span id="smi-phase" class="text-accent" style="font-weight:800;">EVALUATING...</span>
-                        </div>
-                        <div class="text-dim mt-1" style="font-size:0.65rem;">
-                            <i class="fas fa-info-circle"></i> Readiness for complex execution: <span id="smi-readiness">LOW</span>
-                        </div>
-                    </div>
-
-                    <!-- VPS Telemetry -->
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-server"></i> VPS Node Telemetry</div>
-                        <div class="tele-grid">
-                            <div class="tele-item">
-                                <div class="tele-labels"><span>Node Load</span><span id="pc-cpu" class="text-accent">--%</span></div>
-                                <div class="tele-bar-bg"><div id="bar-pc-cpu" class="tele-bar-fill"></div></div>
-                            </div>
-                            <div class="tele-item">
-                                <div class="tele-labels"><span>Node Memory</span><span id="pc-ram" class="text-accent">--%</span></div>
-                                <div class="tele-bar-bg"><div id="bar-pc-ram" class="tele-bar-fill"></div></div>
-                            </div>
-                        </div>
-                        <div class="pt-1 mt-2">
-                            <div class="text-dim" style="font-size:0.72rem;">Location: <span class="text-accent">Alibaba Cloud Intelligence</span></div>
-                            <div class="text-dim" style="font-size:0.72rem; margin-top:0.3rem;">Sovereign Mesh: <span class="text-success" id="ork-status">12 PILARS ACTIVE</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Optical Feed (mini) -->
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-eye"></i> Optical Feed</div>
-                        <div class="vision-img-con">
-                            <img id="dashboard-vision-img" src="" alt="" style="display:none;">
-                            <div id="vision-placeholder" class="vision-placeholder">
-                                <i class="fas fa-ghost fa-2x"></i>
-                                <span>SIGNAL SEVERED</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Proactive Intelligence -->
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-brain"></i> Proactive Intelligence</div>
-                        <div style="font-size:0.82rem; line-height:1.7;">
-                            <div class="flex-between mb-1" style="border-bottom:1px solid var(--border); padding-bottom:0.75rem;">
-                                <span class="text-dim" style="font-size:0.72rem;">Cognitive Engine</span>
-                                <span id="ai-provider" class="text-accent" style="font-weight:800; font-size:0.72rem; font-family:var(--font-mono);">NeuralRouter V6</span>
-                            </div>
-                            <div id="ai-insight" class="text-dim" style="font-style:italic; border-left:2px solid var(--purple); padding-left:0.75rem; font-size:0.8rem; line-height:1.65;">
-                                Analyzing temporal patterns and system telemetry...
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="card">
+                    <div class="card-title">Global Threats Mitigated</div>
+                    <div class="stat-value" id="sec-threats" style="color: var(--accent-crimson);">--</div>
+                    <div class="stat-label">Since Last Reboot</div>
                 </div>
-            </section>
-
-            <!-- ════ PANEL: VISION ════ -->
-            <section id="panel-vision" class="panel">
-                <div class="card" style="max-width:480px; margin:0 auto;">
-                    <div class="card-title"><i class="fas fa-expand"></i> Neural Mirror Feed</div>
-                    <div class="vision-img-con" style="max-width:300px;">
-                        <img id="main-vision-img" src="" alt="Full Vision Stream">
-                        <div class="vision-placeholder">
-                            <i class="fas fa-ghost fa-2x"></i>
-                            <span>NO STREAM</span>
-                        </div>
-                    </div>
-                    <div class="flex-row mt-2" style="justify-content:center; flex-wrap:wrap; gap:0.75rem;">
-                        <button class="cmd-btn primary" onclick="sendCommand('screenshot')"><i class="fas fa-camera"></i> CAPTURE</button>
-                        <button class="cmd-btn" onclick="sendCommand('mirror_start')"><i class="fas fa-play"></i> STREAM</button>
-                        <button class="cmd-btn danger" onclick="sendCommand('mirror_stop')"><i class="fas fa-stop"></i> STOP</button>
-                        <!-- Phase 3 On-Device Vision Trigger -->
-                        <button class="cmd-btn primary" style="background:var(--purple); color:#fff; border-color:var(--purple);" onclick="sendCommand('local_vision')"><i class="fas fa-brain"></i> LOCAL VISION (AI)</button>
-                        <!-- Phase 2 Self Update Trigger -->
-                        <button class="cmd-btn primary" style="background:#059669; color:#fff; border-color:#059669;" onclick="sendCommand('self_update')"><i class="fas fa-download"></i> SELF UPDATE</button>
-                    </div>
+                <div class="card">
+                    <div class="card-title">Core Integrity</div>
+                    <div class="stat-value" id="heal-integrity" style="color: var(--accent-green);">--</div>
+                    <div class="stat-label" id="heal-status">--</div>
                 </div>
-            </section>
-
-            <!-- ════ PANEL: CHAT ════ -->
-            <section id="panel-chat" class="panel">
-                <div class="card chat-panel-wrap">
-                    <div class="card-title"><i class="fas fa-terminal"></i> Command Terminal [root@sovereign]</div>
-                    <div id="chat-window" class="chat-window"></div>
-                    <div class="chat-input-bar">
-                        <input id="chat-input" type="text" class="shell-input" placeholder="Execute command or query AI brain...">
-                        <button class="cmd-btn primary" onclick="sendChatMessage()"><i class="fas fa-bolt"></i> EXECUTE</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ════ PANEL: BROWSER ════ -->
-            <section id="panel-browser" class="panel">
-                <div class="card browser-panel-wrap">
-                    <div class="card-title"><i class="fas fa-globe"></i> Sovereign Autonomous Browser</div>
-                    <div class="chat-input-bar mb-1">
-                        <input id="browser-url" type="text" class="shell-input" placeholder="Enter URL or research query...">
-                        <button class="cmd-btn primary" onclick="browserGo()"><i class="fas fa-search"></i> RESEARCH</button>
-                    </div>
-                    <div class="browser-viewport" id="browser-viewport">
-                        <div id="browser-placeholder" class="vision-placeholder" style="position:absolute;inset:0;opacity:0.2;">
-                            <i class="fas fa-globe-americas fa-3x"></i>
-                            <span>READY FOR AUTONOMOUS DEEP-SEARCH</span>
+                
+                <!-- NEW OMEGA MESH CARD -->
+                <div class="card grid-span-3" style="border-color: rgba(188, 19, 254, 0.5); background: linear-gradient(180deg, rgba(188,19,254,0.05) 0%, rgba(0,0,0,0) 100%);">
+                    <div class="card-title" style="color: var(--text-bright);"><span style="color: var(--accent-purple);">Ω</span> OMEGA MESH PROTOCOLS</div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; text-align: center;">
+                        <div style="padding: 15px; background: rgba(0,0,0,0.4); border-radius: 8px; border-bottom: 2px solid var(--accent-cyan);">
+                            <div class="stat-label">OSINT Phishing</div>
+                            <div id="omega-osint" style="font-weight: bold; font-size: 0.9rem; color: var(--accent-cyan); margin-top: 5px;">--</div>
                         </div>
-                        <img id="browser-img" src="" alt="Browser View" style="width:100%;height:100%;object-fit:contain;display:none;">
-                    </div>
-                </div>
-            </section>
-
-            <!-- ════ PANEL: EVOLUTION ════ -->
-            <section id="panel-evolution" class="panel">
-                <div class="evolution-grid">
-                    <div class="card">
-                        <div class="card-title flex-between" style="margin-bottom:1rem;">
-                            <span><i class="fas fa-dna text-purple"></i> Pending Mutations</span>
-                            <div class="flex-row" style="gap:0.4rem;">
-                                <button class="micro-btn" onclick="approveSelectedEvos()"><i class="fas fa-check-double"></i> Selected</button>
-                                <button class="micro-btn primary" onclick="approveAllEvos()"><i class="fas fa-bolt"></i> All</button>
-                            </div>
+                        <div style="padding: 15px; background: rgba(0,0,0,0.4); border-radius: 8px; border-bottom: 2px solid var(--accent-purple);">
+                            <div class="stat-label">DNS Tunnel (Port 53)</div>
+                            <div id="omega-dns" style="font-weight: bold; font-size: 0.9rem; color: var(--accent-purple); margin-top: 5px;">--</div>
                         </div>
-                        <div id="evo-pending" class="evo-list">
-                            <div class="text-dim" style="font-size:0.8rem; padding:1rem 0;">Loading proposals...</div>
+                        <div style="padding: 15px; background: rgba(0,0,0,0.4); border-radius: 8px; border-bottom: 2px solid var(--accent-green);">
+                            <div class="stat-label">Polymorphic Mutator</div>
+                            <div id="omega-poly" style="font-weight: bold; font-size: 0.9rem; color: var(--accent-green); margin-top: 5px;">--</div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-history text-dim"></i> Mutation History</div>
-                        <div id="evo-history" class="evo-list">
-                            <div class="text-dim" style="font-size:0.8rem; padding:1rem 0;">No history yet.</div>
+                        <div style="padding: 15px; background: rgba(0,0,0,0.4); border-radius: 8px; border-bottom: 2px solid var(--accent-crimson);">
+                            <div class="stat-label">Wardriving Radar</div>
+                            <div id="omega-wardrive" style="font-weight: bold; font-size: 0.9rem; color: var(--accent-crimson); margin-top: 5px;">--</div>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <!-- ════ PANEL: NODE MANAGEMENT ════ -->
-            <section id="panel-pc" class="panel">
-                <div class="pc-grid">
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-server"></i> Alibaba VPS Node</div>
-                        <div class="tele-grid">
-                            <div class="tele-item">
-                                <div class="tele-labels"><span>Node Load</span><span class="text-accent">--</span></div>
-                                <div class="tele-bar-bg"><div class="tele-bar-fill" style="width:42%"></div></div>
+                <div class="card grid-span-3">
+                    <div class="card-title">Global Activity Stream</div>
+                    <div class="terminal-box" id="activity-stream">Connecting...</div>
+                </div>
+
+                <!-- SOVEREIGN ULTIMATE UPGRADE CENTER -->
+                <div class="card grid-span-3" style="border: 1px solid var(--accent-gold); background: linear-gradient(135deg, rgba(255,215,0,0.05) 0%, transparent 100%);">
+                    <div class="card-title" style="color: var(--accent-gold); display: flex; justify-content: space-between;">
+                        <span>🚀 SOVEREIGN ULTIMATE: UPGRADE CENTER</span>
+                        <span id="ultimate-phase" style="font-size: 0.7rem;">PHASE: --</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px; align-items: center;">
+                        <div>
+                            <div class="stat-label">Evolution Progress</div>
+                            <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; margin: 10px 0; overflow: hidden;">
+                                <div id="ultimate-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent-gold), var(--accent-purple)); transition: 1s;"></div>
                             </div>
+                            <span id="ultimate-progress-text" style="font-size: 0.8rem; color: var(--text-dim);">0% of 30+ Recommendations Applied</span>
                         </div>
-                        <div class="pt-1 mt-2">
-                            <div class="text-dim" style="font-size:0.75rem; margin-bottom:0.4rem;">Status: <span class="text-success">ONLINE (PRIMARY)</span></div>
-                            <div class="text-dim" style="font-size:0.75rem; margin-bottom:0.4rem;">Shadow Node: <span id="shadow-status" class="text-dim">NOT LINKED</span></div>
-                            <div class="text-dim" style="font-size:0.75rem; margin-bottom:0.4rem;">Region: <span class="text-accent">Asia Pacific (Alibaba Cloud)</span></div>
-                            <div class="text-dim" style="font-size:0.75rem;">Orchestrator: <span class="text-success">9 Pilar — ACTIVE</span></div>
+                        <div style="text-align: center; border-left: 1px solid rgba(255,255,255,0.05);">
+                            <div class="stat-label">Active Sub-Agents</div>
+                            <div class="stat-value" id="ultimate-subagents" style="color: var(--accent-cyan); font-size: 1.5rem;">--</div>
                         </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-dna text-purple"></i> 12 Pilar Maestro Mesh</div>
-                        <div id="pilar-mesh-list" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.6rem; font-size:0.65rem; font-family:var(--font-mono);">
-                            <div class="pilar-status"><span class="text-dim">Neural Coder</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Security Sentinel</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Pentester</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Knowledge Abs.</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Neural Arch.</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Network Sentinel</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Auto-Healer</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Memory Cons.</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Antigravity</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Strategist</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">QA Validator</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">UX Weaver</span><span class="dot online"></span></div>
+                        <div style="text-align: center; border-left: 1px solid rgba(255,255,255,0.05);">
+                            <div class="stat-label">Relational Links</div>
+                            <div class="stat-value" id="ultimate-links" style="color: var(--accent-purple); font-size: 1.5rem;">--</div>
                         </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-graduation-cap text-accent"></i> Massive Learning Progress</div>
-                        <div class="tele-grid">
-                            <div class="tele-item">
-                                <div class="tele-labels"><span>Cross-Domain Mastery</span><span class="text-accent">92%</span></div>
-                                <div class="tele-bar-bg"><div class="tele-bar-fill" style="width:92%; background:var(--accent-glow);"></div></div>
-                            </div>
-                            <div id="learning-topics" class="text-dim mt-1" style="font-size:0.65rem; font-style:italic;">
-                                Current Focus: Rust Ownership & System Design
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-ghost"></i> Ghost Mode (Stealth)</div>
-                        <div class="text-dim mb-2" style="font-size:0.8rem; line-height:1.6;">
-                            Menyamarkan jejak jaringan & identitas AI saat melakukan riset eksternal. Status: <span id="ghost-status" class="text-dim" style="font-weight:700;">INACTIVE</span>
-                        </div>
-                        <button id="ghost-toggle-btn" class="cmd-btn" onclick="toggleGhostMode()" style="background:#1a1a1a; border-color:#333;">
-                            <i class="fas fa-mask"></i> ACTIVATE GHOST
-                        </button>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-sync fa-spin-slow"></i> Optimization Core</div>
-                        <div class="text-dim mb-2" style="font-size:0.8rem; line-height:1.6;">
-                            Recursive Self-Optimization: <span class="text-success">ACTIVE</span><br>
-                            Last GC: <span class="text-accent">Just now</span><br>
-                            System Load Efficiency: <span class="text-success">98.5%</span>
-                        </div>
-                        <p class="text-dim" style="font-size: 0.6rem;">AI mengaudit kinerjanya sendiri setiap 12 jam untuk efisiensi maksimal.</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-user-shield"></i> Sovereign Override</div>
-                        <div class="text-dim mb-2" style="font-size:0.8rem; line-height:1.6;">
-                            Activate manual override to suspend autonomous operations and take direct control of the node engine.
-                        </div>
-                        <button id="pc-override-btn" class="cmd-btn danger" onclick="togglePcOverride()">
-                            <i class="fas fa-lock-open"></i> ENABLE OVERRIDE
-                        </button>
                     </div>
                 </div>
-            </section>
 
-            <!-- ════ PANEL: LOGS ════ -->
-            <section id="panel-logs" class="panel">
-                <div class="card log-panel-wrap">
-                    <div class="card-title flex-between" style="margin-bottom:1rem;">
-                        <span><i class="fas fa-terminal"></i> Neural Stream Logs</span>
-                        <div class="flex-row">
-                            <button class="micro-btn" onclick="document.getElementById('terminal').innerHTML=''"><i class="fas fa-trash"></i> CLEAR</button>
-                            <button class="micro-btn" onclick="exportLogs()"><i class="fas fa-download"></i> EXPORT</button>
-                        </div>
+                <!-- BATTLE INTELLIGENCE SECTION (ENHANCED) -->
+                <div class="card grid-span-3">
+                    <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>⚔️ SINGULARITY BATTLE ARENA: REAL-TIME CONFLICT ENGINE</span>
+                        <div style="font-size: 0.6rem; background: rgba(255, 42, 109, 0.2); color: var(--accent-crimson); padding: 3px 8px; border-radius: 10px; border: 1px solid var(--accent-crimson);">PEAK INTENSITY ACTIVE</div>
                     </div>
-                    <div id="terminal"></div>
-                </div>
-            </section>
-
-            <!-- ════ PANEL: WIKI ════ -->
-            <section id="panel-wiki" class="panel">
-                <div class="card" style="height: calc(100vh - 180px); padding: 0; overflow: hidden;">
-                    <iframe src="wiki.html" style="width: 100%; height: 100%; border: none;" id="wiki-iframe"></iframe>
-                </div>
-            </section>
-
-            <!-- ════ PANEL: SYNTHESIS ════ -->
-            <section id="panel-synthesis" class="panel">
-                <div class="card" style="max-width: 800px; margin: 0 auto; background: linear-gradient(145deg, #121215 0%, #0a0a0c 100%); border: 1px solid #1f2937;">
-                    <div class="card-title"><i class="fas fa-flask text-purple"></i> NEURAL SYNTHESIS LABORATORY</div>
-                    <p class="text-dim" style="font-size: 0.9rem; margin-bottom: 1.5rem;">Instruksikan AI untuk membangun kapabilitas (skill) baru secara otonom. Proses meliputi perancangan kode, audit keamanan, dan pemasangan otomatis.</p>
                     
-                    <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px; border: 1px solid #1a1a1a;">
-                        <label class="text-dim" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.75rem;">Misi Pengembangan Baru:</label>
-                        <textarea id="synth-goal" placeholder="Misal: Buat tool untuk memantau performa CPU dan log ke file setiap 5 menit..." style="width: 100%; height: 120px; background: #000; border: 1px solid #333; color: #fff; padding: 1rem; border-radius: 8px; font-family: inherit; font-size: 0.95rem; resize: none; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='#333'"></textarea>
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+                        <div>
+                            <div style="margin-bottom: 20px; padding: 15px; background: rgba(255, 42, 109, 0.05); border-radius: 12px; border: 1px solid rgba(255, 42, 109, 0.2);">
+                                <div class="stat-label">Attacker Success Rate</div>
+                                <div class="stat-value" id="battle-attacker-rate" style="color: var(--accent-crimson); font-size: 1.8rem;">--</div>
+                                <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; margin-top: 10px;">
+                                    <div id="battle-attacker-bar" style="width: 0%; height: 100%; background: var(--accent-crimson); transition: 0.5s;"></div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 20px; padding: 15px; background: rgba(5, 255, 161, 0.05); border-radius: 12px; border: 1px solid rgba(5, 255, 161, 0.2);">
+                                <div class="stat-label">Defender Mitigation Rate</div>
+                                <div class="stat-value" id="battle-defender-rate" style="color: var(--accent-green); font-size: 1.8rem;">--</div>
+                                <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; margin-top: 10px;">
+                                    <div id="battle-defender-bar" style="width: 0%; height: 100%; background: var(--accent-green); transition: 0.5s;"></div>
+                                </div>
+                            </div>
+                            <div style="padding: 15px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                                <div class="stat-label">Total Engagements</div>
+                                <div class="stat-value" id="battle-total" style="font-size: 1.5rem; color: var(--accent-gold);">--</div>
+                                <div id="battle-last-ts" style="font-size: 0.6rem; color: var(--text-dim); margin-top: 5px;">LAST: N/A</div>
+                            </div>
+                        </div>
                         
-                        <div class="flex-between mt-1">
-                            <span class="text-dim" style="font-size: 0.7rem;"><i class="fas fa-shield-alt"></i> Auto-Security Audit Enabled</span>
-                            <button onclick="startSynthesis()" class="btn-primary" style="padding: 0.8rem 2rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;"><i class="fas fa-atom fa-spin-slow"></i> MULAI SINTESIS</button>
-                        </div>
-                    </div>
-
-                    <div id="synth-status-box" class="mt-2" style="display: none; padding: 1.5rem; background: rgba(168, 85, 247, 0.05); border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.2);">
-                        <div class="flex-between">
-                            <span class="text-dim" style="font-size: 0.8rem;">Status Sintesis:</span>
-                            <span id="synth-status-text" class="text-purple" style="font-weight: 700; font-family: var(--font-mono);">INITIALIZING...</span>
-                        </div>
-                        <div style="height: 6px; background: #000; border-radius: 10px; margin-top: 1rem; overflow: hidden; border: 1px solid #1a1a1a;">
-                            <div id="synth-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent) 0%, #d8b4fe 100%); transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--accent-glow);"></div>
-                        </div>
-                        <div id="synth-log" style="font-family: var(--font-mono); font-size: 0.75rem; color: #a5b4fc; margin-top: 1.5rem; padding: 1rem; background: #000; border-radius: 8px; border: 1px solid #1a1a1a; max-height: 200px; overflow-y: auto; line-height: 1.5;">
-                            <div style="color: #444;">> Menunggu input objektif...</div>
+                        <div class="combat-arena-container">
+                            <div class="arena-overlay">NEURAL_WARFARE_SIMULATOR::CORE_v4.2</div>
+                            <canvas id="combat-canvas"></canvas>
+                            <div class="arena-status">LIVE TRANSMISSION</div>
                         </div>
                     </div>
                 </div>
-            </section>
-            <!-- ════ PANEL: SWARM MONITOR ════ -->
-            <section id="panel-swarm" class="panel">
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); gap:1.5rem; align-items:start;">
 
-                    <!-- Swarm Bus Live Feed -->
-                    <div class="card" style="grid-column: 1 / -1;">
-                        <div class="card-title"><i class="fas fa-project-diagram text-accent"></i> Swarm Intelligence Bus — Live Communication Feed</div>
-                        <div id="swarm-live-feed" style="font-family:var(--font-mono); font-size:0.72rem; max-height:280px; overflow-y:auto; background:rgba(0,0,0,0.3); border-radius:10px; padding:1rem; border:1px solid var(--border); line-height:1.9;">
-                            <div style="color:rgba(255,255,255,0.2);">◈ Awaiting swarm bus activity...</div>
+                <!-- GRAND SINGULARITY STATUS -->
+                <div class="card">
+                    <div class="card-title">🌌 GRAND SINGULARITY</div>
+                    <div class="stat-label">Evolution Cycle</div>
+                    <div class="stat-value" id="singularity-status" style="font-size: 1.2rem; color: var(--accent-purple); margin-top: 5px;">ACTIVE</div>
+                    <div style="margin-top: 15px;">
+                        <div class="stat-label" style="font-size: 0.6rem;">Next Consolidation</div>
+                        <div id="singularity-next" style="font-family: 'JetBrains Mono'; font-size: 0.8rem;">Awaiting Pulse...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. EVOLUTION (Restored & Enhanced) -->
+        <section id="tab-evolution" class="content-area">
+            <div class="grid-layout">
+                <div class="card grid-span-2">
+                    <div class="card-title">Autonomous Mutation History</div>
+                    <div class="terminal-box" id="evolution-history" style="height: 400px;">
+                        Awaiting mutation logs...
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Pending Approvals</div>
+                    <div id="evolution-pending-list" style="max-height: 400px; overflow-y: auto;">
+                        <p style="color: var(--text-dim); font-size: 0.8rem;">No pending mutations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. THREAT RADAR -->
+        <section id="tab-radar" class="content-area">
+            <div class="grid-layout">
+                <div class="card grid-span-2">
+                    <div class="card-title">Active Threat Intelligence</div>
+                    <div class="radar-container">
+                        <div class="radar-sweep"></div>
+                        <!-- Mock targets -->
+                        <div style="position: absolute; top: 30%; left: 60%; width: 6px; height: 6px; background: red; border-radius: 50%; box-shadow: 0 0 10px red;"></div>
+                        <div style="position: absolute; top: 70%; left: 40%; width: 6px; height: 6px; background: red; border-radius: 50%; box-shadow: 0 0 10px red;"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Incoming Hostiles</div>
+                    <div class="terminal-box" id="radar-ips" style="height: 300px;">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. DEVICE BRIDGE -->
+        <section id="tab-bridge" class="content-area">
+            <div class="grid-layout">
+                <div class="card grid-span-2">
+                    <div class="card-title">Redmi Note 14 | Remote Mirror</div>
+                    <div style="height: 400px; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-direction: column; background: #000;">
+                        <span style="font-size: 3rem;">📱</span>
+                        <p style="color: var(--text-dim); margin-top: 10px;">Live mirroring stream offline. Awaiting frame sync...</p>
+                        <button class="btn btn-purple" style="margin-top: 20px;" onclick="triggerAction('REQUEST_SCREENSHOT')">PULL FRAME</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Hardware Telemetry</div>
+                    <div style="margin-bottom: 20px;">
+                        <div class="stat-label">CPU Thermal</div>
+                        <div class="stat-value" id="dev-temp" style="font-size: 1.5rem; color: var(--accent-gold);">--</div>
+                    </div>
+                    <div style="margin-bottom: 30px;">
+                        <div class="stat-label">Power Core</div>
+                        <div class="stat-value" id="dev-batt" style="font-size: 1.5rem; color: var(--accent-green);">--</div>
+                    </div>
+                    <div class="card-title">Overrides</div>
+                    <button class="btn btn-crimson" style="width: 100%; margin-bottom: 10px;" onclick="triggerAction('GHOST_MODE_TOGGLE')">TOGGLE GHOST MODE</button>
+                    <button class="btn" style="width: 100%;" onclick="triggerAction('MIC_OVERRIDE')">SENSOR OVERRIDE</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. CODE SANDBOX -->
+        <section id="tab-sandbox" class="content-area">
+            <div class="grid-layout">
+                <div class="card grid-span-2">
+                    <div class="card-title">Pending Neural Patch Review</div>
+                    <div class="code-diff" id="sandbox-diff">
+                        Awaiting new patches from P1...
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Mutation Governance</div>
+                    <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;">P1 Neural Coder requires authorization to inject the above heuristic patch into the global mesh.</p>
+                    <div class="stat-value" id="pending-patches" style="color: var(--accent-purple); margin-bottom: 20px;">0</div>
+                    <div class="stat-label" style="margin-bottom: 30px;">Pending Patches</div>
+                    
+                    <button class="btn btn-green" style="width: 100%; background: rgba(5, 255, 161, 0.2); border-color: var(--accent-green); color: white; margin-bottom: 10px;" onclick="triggerAction('APPROVE_PATCH')">AUTHORIZE PATCH</button>
+                    <button class="btn btn-crimson" style="width: 100%;" onclick="triggerAction('REJECT_PATCH')">REJECT & DISCARD</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. SWARM ORCHESTRATOR -->
+        <section id="tab-swarm" class="content-area">
+            <div class="grid-layout">
+                <div class="card grid-span-3">
+                    <div class="card-title">8-Pillar Swarm Status</div>
+                    <div id="swarm-board" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. VECTOR MEMORY -->
+        <section id="tab-memory" class="content-area">
+            <div class="grid-layout">
+                <div class="card grid-span-3">
+                    <div class="card-title">ChromaDB Neural Explorer</div>
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <input type="text" placeholder="Query Sovereign's memory (e.g. 'latest bypass logic')..." style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); color: white;">
+                        <button class="btn btn-purple">QUERY DB</button>
+                    </div>
+                    <div class="grid-layout">
+                        <div>
+                            <div class="stat-label">Total Vectors</div>
+                            <div class="stat-value" id="mem-total" style="color: var(--accent-cyan);">--</div>
                         </div>
-                        <div class="flex-between mt-1">
-                            <span class="text-dim" style="font-size:0.65rem;">Auto-refresh every 5s</span>
-                            <button class="micro-btn" onclick="pollSwarmFeed()"><i class="fas fa-sync"></i> Refresh</button>
+                        <div class="grid-span-2">
+                            <div class="stat-label">Recent Queries</div>
+                            <ul id="mem-queries" style="color: var(--text-dim); font-size: 0.85rem; line-height: 1.8; margin-top: 10px;"></ul>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
 
-                    <!-- 12-Pilar Communication Matrix -->
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-network-wired text-purple"></i> 12-Pilar Mesh Matrix</div>
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; font-size:0.65rem; font-family:var(--font-mono);">
-                            <div class="pilar-status"><span class="text-dim">Neural Coder</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Security Sentinel</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Pentester</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Knowledge Abs.</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Neural Arch.</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Network Sentinel</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Auto-Healer</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Memory Cons.</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Antigravity</span><span class="dot online" style="background:#00ffaa; box-shadow:0 0 10px #00ffaa;"></span></div>
-                            <div class="pilar-status"><span class="text-dim">Strategist</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">QA Validator</span><span class="dot online"></span></div>
-                            <div class="pilar-status"><span class="text-dim">UX Weaver</span><span class="dot online"></span></div>
-                        </div>
-                        <div class="text-dim mt-2" style="font-size:0.62rem; border-top:1px solid var(--border); padding-top:0.75rem;">
-                            <i class="fas fa-info-circle"></i> Semua pilar terhubung melalui Shared Blackboard Protocol. Pesan dikonsumsi dalam &lt;100ms.
-                        </div>
+        <!-- EVOLUTION (Legacy, kept for structure) -->
+        </section>
+
+        <!-- 7. HARDWARE LAB (BADUSB) -->
+        <section id="tab-hardware" class="content-area">
+            <div class="grid-layout">
+                <div class="card grid-span-2">
+                    <div class="card-title">🔌 HID Injection (BadUSB) Control</div>
+                    <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;">
+                        Redmi Note 14 terdeteksi sebagai USB Keyboard/Mouse. Pilih skenario untuk menyuntikkan perintah langsung ke PC target.
+                    </p>
+                    <div style="margin-bottom: 20px;">
+                        <label class="stat-label">Pilih Skenario Serangan:</label>
+                        <select id="badusb-scenario-list" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.5); color: white; border: 1px solid rgba(255,255,255,0.1); margin-top: 10px;">
+                            <option value="">-- Memuat Skenario... --</option>
+                        </select>
                     </div>
+                    <button class="btn btn-crimson" style="width: 100%;" onclick="launchBadUSB()">LAUNCH HID ATTACK</button>
+                </div>
+                <div class="card">
+                    <div class="card-title">Ducky Script Preview</div>
+                    <div class="terminal-box" id="badusb-preview" style="height: 200px; font-size: 0.75rem;">
+                        Pilih skenario untuk melihat urutan perintah...
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                    <!-- Swarm Stats -->
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-chart-bar text-accent"></i> Swarm Statistics</div>
-                        <div class="tele-grid">
-                            <div class="tele-item">
-                                <div class="tele-labels"><span>Message Throughput</span><span class="text-accent" id="swarm-msg-count">0 msgs</span></div>
-                                <div class="tele-bar-bg"><div id="swarm-msg-bar" class="tele-bar-fill" style="width:0%"></div></div>
+    </main>
+
+    <script>
+        function switchTab(id, el) {
+            document.querySelectorAll('.content-area').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            el.classList.add('active');
+        }
+
+        async function triggerAction(actionName) {
+            alert(`[SIMULATION] Command '${actionName}' sent to Sovereign Core via Neural Link.`);
+            fetch('/api/command', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ action: { type: "SYSTEM", val: actionName } })
+            });
+        }
+
+        async function updateDashboard() {
+            try {
+                const res = await fetch('/api/summary?v=' + Date.now());
+                const data = await res.json();
+
+                // Hide loader
+                const loader = document.getElementById('loader');
+                if (loader.style.display !== 'none') {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 500);
+                }
+
+                // Populate Overview
+                if (data.smi) {
+                    document.getElementById('smi-score').innerText = data.smi.score;
+                    document.getElementById('smi-phase').innerText = data.smi.phase;
+                }
+                if (data.security) document.getElementById('sec-threats').innerText = data.security.threats_blocked;
+                if (data.healing) {
+                    document.getElementById('heal-integrity').innerText = data.healing.integrity + '%';
+                    document.getElementById('heal-status').innerText = data.healing.status;
+                }
+                
+                // Populate Logs
+                if (data.logs) {
+                    const stream = document.getElementById('activity-stream');
+                    stream.innerHTML = '';
+                    data.logs.slice(-10).reverse().forEach(log => {
+                        let color = '#fff';
+                        if (log.message.includes('SUCCESS')) color = '#ff2a6d';
+                        else if (log.message.includes('neutra')) color = '#05ffa1';
+                        stream.innerHTML += `<div style="padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: #9090a0;">[${new Date().toLocaleTimeString()}]</span> <span style="color: ${color}">${log.message}</span></div>`;
+                    });
+                }
+
+                // Populate Radar
+                if (data.security && data.security.active_ips) {
+                    const r = document.getElementById('radar-ips');
+                    r.innerHTML = '';
+                    data.security.active_ips.forEach(ip => {
+                        r.innerHTML += `<div style="color: ${ip.includes('BLOCKED') ? '#05ffa1' : '#ff2a6d'}; margin-bottom: 8px;">[WARN] ${ip}</div>`;
+                    });
+                }
+
+                // Populate Device Bridge
+                if (data.agent && data.agent.stats) {
+                    document.getElementById('dev-temp').innerText = data.agent.stats.cpu_temp + '°C';
+                    document.getElementById('dev-batt').innerText = data.agent.stats.battery_level + '%';
+                }
+
+                // Populate Sandbox
+                if (data.sandbox) {
+                    document.getElementById('pending-patches').innerText = data.sandbox.pending_patches;
+                    let diffHtml = data.sandbox.latest_diff.replace(/\\n/g, '<br>');
+                    diffHtml = diffHtml.replace(/\+ /g, '<span class="diff-add">+ ');
+                    diffHtml = diffHtml.replace(/\- /g, '</span><span class="diff-sub">- ');
+                    diffHtml += '</span>';
+                    document.getElementById('sandbox-diff').innerHTML = diffHtml;
+                }
+
+                // Populate Swarm
+                if (data.swarm) {
+                    const b = document.getElementById('swarm-board');
+                    b.innerHTML = '';
+                    data.swarm.forEach(s => {
+                        b.innerHTML += `
+                            <div class="swarm-item">
+                                <span style="font-weight: bold;">${s.name}</span>
+                                <span style="color: var(--accent-cyan); font-size: 0.8rem;">${s.status}</span>
                             </div>
-                            <div class="tele-item">
-                                <div class="tele-labels"><span>Collective Intelligence</span><span class="text-accent">92%</span></div>
-                                <div class="tele-bar-bg"><div class="tele-bar-fill" style="width:92%"></div></div>
-                            </div>
-                        </div>
-                        <div class="text-dim mt-2" style="font-size:0.65rem;">
-                            Protocol: <span class="text-accent">Shared Blackboard v1.0</span><br>
-                            Bus File: <span class="text-accent">knowledge/swarm_bus.json</span><br>
-                            Capacity: <span class="text-accent">50 messages (rolling)</span>
-                        </div>
-                    </div>
+                        `;
+                    });
+                }
 
-                </div>
-            </section>
+                // Populate Memory
+                if (data.memory) {
+                    document.getElementById('mem-total').innerText = data.memory.total_vectors;
+                    const q = document.getElementById('mem-queries');
+                    q.innerHTML = '';
+                    data.memory.recent_queries.forEach(query => q.innerHTML += `<li>${query}</li>`);
+                }
 
-            <!-- ════ PANEL: 3D NEURAL MAP ════ -->
-            <section id="panel-neuralmap" class="panel">
-                <div class="card" style="height:calc(100vh - 180px); padding:0; overflow:hidden; border-color:rgba(0,242,255,0.2);">
-                    <iframe id="neuralmap-iframe" src="neural_map.html" style="width:100%; height:100%; border:none; border-radius:18px;"></iframe>
-                </div>
-            </section>
+                // Populate Omega Mesh
+                if (data.omega_mesh) {
+                    document.getElementById('omega-osint').innerText = data.omega_mesh.osint_engine;
+                    document.getElementById('omega-dns').innerText = data.omega_mesh.dns_tunnel;
+                    document.getElementById('omega-poly').innerText = data.omega_mesh.polymorphic_engine;
+                    document.getElementById('omega-wardrive').innerText = data.omega_mesh.wardriving;
+                }
 
-    </div><!-- /stage -->
-</div><!-- /app-container -->
+                // Populate Evolution
+                if(data.evolution){
+                    const hist = document.getElementById('evolution-history');
+                    hist.innerHTML = '';
+                    (data.evolution.history || []).reverse().forEach(ev => {
+                        hist.innerHTML += `<div style="margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <span style="color: var(--accent-purple);">[${ev.applied_at || ev.timestamp}]</span> <b>${ev.title}</b><br>
+                            <span style="color: var(--text-dim); font-size: 0.75rem;">${ev.description}</span>
+                        </div>`;
+                    });
 
-<script src="js/main.js?v=21.3.0"></script>
+                    const pend = document.getElementById('evolution-pending-list');
+                    pend.innerHTML = '';
+                    if (!data.evolution.pending || data.evolution.pending.length === 0) {
+                        pend.innerHTML = '<p style="color: var(--text-dim); font-size: 0.8rem;">No pending mutations.</p>';
+                    } else {
+                        data.evolution.pending.forEach(ev => {
+                            pend.innerHTML += `
+                                <div class="swarm-item" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+                                    <div style="font-weight: bold;">${ev.title}</div>
+                                    <div style="font-size: 0.7rem; color: var(--text-dim);">${ev.description.substring(0, 100)}...</div>
+                                    <div style="display: flex; gap: 5px; width: 100%;">
+                                        <button class="btn btn-purple" style="flex: 1; padding: 5px;" onclick="approveEvolution('${ev.id}')">APPROVE</button>
+                                        <button class="btn btn-crimson" style="flex: 1; padding: 5px;" onclick="rejectEvolution('${ev.id}')">REJECT</button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                }
+
+                // Populate Ultimate Center
+                if (data.ultimate) {
+                    document.getElementById('ultimate-phase').innerText = 'PHASE: ' + data.ultimate.phase;
+                    document.getElementById('ultimate-progress-bar').style.width = data.ultimate.progress + '%';
+                    document.getElementById('ultimate-progress-text').innerText = data.ultimate.progress + '% of 30+ Recommendations Applied';
+                    document.getElementById('ultimate-subagents').innerText = data.ultimate.active_sub_agents;
+                    document.getElementById('ultimate-links').innerText = data.ultimate.linked_memories;
+                }
+
+                // Fetch Battle Stats
+                const battleRes = await fetch('/api/battle/stats');
+                const battleData = await battleRes.json();
+                if (battleData.success) {
+                    const attackerRate = (battleData.data.attacker_success_rate * 100).toFixed(1);
+                    const defenderRate = (battleData.data.defender_mitigation_rate * 100).toFixed(1);
+                    
+                    document.getElementById('battle-attacker-rate').innerText = attackerRate + '%';
+                    document.getElementById('battle-defender-rate').innerText = defenderRate + '%';
+                    document.getElementById('battle-total').innerText = battleData.data.total_engagements;
+                    
+                    document.getElementById('battle-attacker-bar').style.width = attackerRate + '%';
+                    document.getElementById('battle-defender-bar').style.width = defenderRate + '%';
+
+                    // Trigger combat animation if engagement count changed
+                    if (battleData.data.total_engagements > lastEngagements) {
+                        arena.fireBeam(Math.random() > 0.3); // Simulate a beam fire
+                        lastEngagements = battleData.data.total_engagements;
+                        document.getElementById('battle-last-ts').innerText = 'LAST ACTION: ' + new Date().toLocaleTimeString();
+                    }
+                }
+
+            } catch (e) { console.error("Sync Error", e); }
+        }
+
+        let badusbScenarios = {};
+        async function loadBadUSBScenarios() {
+            try {
+                const res = await fetch('/api/badusb/scenarios');
+                const data = await res.json();
+                if (data.success) {
+                    badusbScenarios = data.scenarios;
+                    const list = document.getElementById('badusb-scenario-list');
+                    list.innerHTML = '<option value="">-- Pilih Skenario --</option>';
+                    Object.keys(badusbScenarios).forEach(name => {
+                        list.innerHTML += `<option value="${name}">${name}</option>`;
+                    });
+                }
+            } catch (e) { console.error("BadUSB Load Error", e); }
+        }
+
+        document.getElementById('badusb-scenario-list').addEventListener('change', (e) => {
+            const name = e.target.value;
+            const preview = document.getElementById('badusb-preview');
+            if (name && badusbScenarios[name]) {
+                preview.innerHTML = badusbScenarios[name].join('<br>');
+            } else {
+                preview.innerHTML = 'Pilih skenario untuk melihat urutan perintah...';
+            }
+        });
+
+        async function approveEvolution(id) {
+            const res = await fetch('/api/evolution/approve', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id })
+            });
+            const data = await res.json();
+            if (data.success) updateDashboard();
+        }
+
+        async function rejectEvolution(id) {
+            const res = await fetch('/api/evolution/reject', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id })
+            });
+            const data = await res.json();
+            if (data.success) updateDashboard();
+        }
+
+        async function launchBadUSB() {
+            const scenario = document.getElementById('badusb-scenario-list').value;
+            if (!scenario) return alert("Pilih skenario terlebih dahulu.");
+            
+            if (!confirm(`Konfirmasi peluncuran serangan Hardware ${scenario}?`)) return;
+
+            try {
+                const res = await fetch('/api/badusb/trigger', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ scenario, device_id: 'REDMI_NOTE_14' })
+                });
+                const data = await res.json();
+                alert(data.success ? data.message : "Gagal: " + data.error);
+            } catch (e) { alert("Koneksi gagal."); }
+        }
+
+        // --- COMBAT ARENA VIZ ENGINE ---
+        class CombatArena {
+            constructor() {
+                this.canvas = document.getElementById('combat-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.nodes = [];
+                this.beams = [];
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.initNodes();
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+            }
+
+            initNodes() {
+                // RED NODES (Attacker)
+                for (let i = 0; i < 5; i++) {
+                    this.nodes.push({
+                        x: 50 + Math.random() * 100,
+                        y: 50 + Math.random() * (this.canvas.height - 100),
+                        type: 'attacker',
+                        glow: 0,
+                        id: 'RED_' + i
+                    });
+                }
+                // BLUE NODES (Defender)
+                for (let i = 0; i < 5; i++) {
+                    this.nodes.push({
+                        x: this.canvas.width - (50 + Math.random() * 100),
+                        y: 50 + Math.random() * (this.canvas.height - 100),
+                        type: 'defender',
+                        glow: 0,
+                        id: 'BLUE_' + i
+                    });
+                }
+            }
+
+            fireBeam(success) {
+                const attacker = this.nodes[Math.floor(Math.random() * 5)];
+                const defender = this.nodes[5 + Math.floor(Math.random() * 5)];
+                this.beams.push({
+                    from: attacker,
+                    to: defender,
+                    progress: 0,
+                    success: success,
+                    life: 1.0
+                });
+                attacker.glow = 1.0;
+                defender.glow = 1.0;
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw Grid
+                this.ctx.strokeStyle = 'rgba(188, 19, 254, 0.05)';
+                this.ctx.lineWidth = 1;
+                for(let x=0; x<this.canvas.width; x+=30) {
+                    this.ctx.beginPath(); this.ctx.moveTo(x, 0); this.ctx.lineTo(x, this.canvas.height); this.ctx.stroke();
+                }
+                for(let y=0; y<this.canvas.height; y+=30) {
+                    this.ctx.beginPath(); this.ctx.moveTo(0, y); this.ctx.lineTo(this.canvas.width, y); this.ctx.stroke();
+                }
+
+                // Draw Nodes
+                this.nodes.forEach(node => {
+                    const color = node.type === 'attacker' ? '#ff2a6d' : '#00f2ff';
+                    this.ctx.shadowBlur = node.glow * 20;
+                    this.ctx.shadowColor = color;
+                    this.ctx.fillStyle = color;
+                    this.ctx.beginPath();
+                    this.ctx.arc(node.x, node.y, 4, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    node.glow *= 0.95;
+                });
+
+                // Draw Beams
+                this.beams.forEach((beam, index) => {
+                    this.ctx.shadowBlur = 10;
+                    this.ctx.shadowColor = beam.success ? '#ff2a6d' : '#05ffa1';
+                    this.ctx.strokeStyle = this.ctx.shadowColor;
+                    this.ctx.lineWidth = 2 * beam.life;
+                    this.ctx.globalAlpha = beam.life;
+                    
+                    const dx = beam.to.x - beam.from.x;
+                    const dy = beam.to.y - beam.from.y;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(beam.from.x, beam.from.y);
+                    this.ctx.lineTo(beam.from.x + dx * beam.progress, beam.from.y + dy * beam.progress);
+                    this.ctx.stroke();
+                    
+                    beam.progress += 0.1;
+                    if(beam.progress >= 1.0) {
+                        beam.progress = 1.0;
+                        beam.life -= 0.05;
+                    }
+                    if(beam.life <= 0) this.beams.splice(index, 1);
+                });
+                this.ctx.globalAlpha = 1.0;
+                this.ctx.shadowBlur = 0;
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        const arena = new CombatArena();
+        let lastEngagements = 0;
+
+        setInterval(updateDashboard, 5000);
+        updateDashboard();
+        loadBadUSBScenarios();
+        setInterval(() => document.getElementById('clock').innerText = new Date().toLocaleTimeString(), 1000);
+    </script>
 </body>
 </html>

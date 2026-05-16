@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [REFLEX] %(message)s
 
 class NeuralReflex:
     """
-    Neural Reflex System v1.0 — NOIR SOVEREIGN
+    Neural Reflex System v1.0  NOIR SOVEREIGN
     ==========================================
     Sistem deteksi anomali real-time untuk menjaga kedaulatan sistem.
     Memantau CPU, Jaringan, dan Integritas File secara aktif dan mengambil
@@ -55,7 +55,7 @@ class NeuralReflex:
                     self.file_states[f] = current_mtime
 
     def trigger_reflex(self, alert_type, message):
-        log.warning(f"⚠️ [REFLEX DIPICU] {alert_type}: {message}")
+        log.warning(f" [REFLEX DIPICU] {alert_type}: {message}")
         
         # 1. Catat ke Sovereign Wiki melalui Evolution Engine
         try:
@@ -75,13 +75,13 @@ class NeuralReflex:
 
         # 2. Kirim notifikasi ke Dashboard jika Gateway tersedia
         try:
-            gateway = os.environ.get("NOIR_GATEWAY_URL", "http://localhost:8765").rstrip("/")
+            gateway = os.environ.get("NOIR_GATEWAY_URL", "http://"+os.environ.get("NOIR_VPS_IP", "8.215.23.17")).rstrip("/")
             api_key = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
             import requests
             headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
             requests.post(f"{gateway}/api/learning/update", 
                           headers=headers,
-                          json={"status": f"高 [REFLEX] {alert_type} terdeteksi! Mengaktifkan mode pertahanan."},
+                          json={"status": f" [REFLEX] {alert_type} terdeteksi! Mengaktifkan mode pertahanan."},
                           timeout=5)
         except:
             pass

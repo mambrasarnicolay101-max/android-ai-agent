@@ -9,12 +9,12 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [MESH] %(message)s")
 
 class SovereignMesh:
     """
-    Sovereign Mesh v1.0 — Multi-Node Synchronization
+    Sovereign Mesh v1.0  Multi-Node Synchronization
     ===============================================
     Sinkronisasi pengetahuan, skill, dan security patches antar node (VPS, Mobile, PC).
     Memastikan "Kekebalan Kolektif" di seluruh ekosistem Noir Sovereign.
     """
-    GATEWAY = os.environ.get("NOIR_GATEWAY_URL", "http://localhost:8765").rstrip("/")
+    GATEWAY = os.environ.get("NOIR_GATEWAY_URL", "http://"+os.environ.get("NOIR_VPS_IP", "8.215.23.17")).rstrip("/")
     API_KEY = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
 

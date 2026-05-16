@@ -14,7 +14,7 @@ from urllib3.util.retry import Retry
 
 # --- CONFIG (Unified Standard v17.5 OMEGA-MESH) ---
 # Forced to Direct VPS to reduce network contention
-_BASE_GATEWAY = os.environ.get("NOIR_GATEWAY_URL", "http://8.215.23.17")
+_BASE_GATEWAY = os.environ.get("NOIR_GATEWAY_URL", "http://"+os.environ.get("NOIR_VPS_IP", "8.215.23.17"))
 VPS_IP = os.environ.get("NOIR_VPS_IP", "8.215.23.17")
 FALLBACKS = [
     _BASE_GATEWAY,
@@ -181,3 +181,4 @@ def run_robust_shell(cmd, timeout=15):
 
 if __name__ == '__main__':
     run_service()
+

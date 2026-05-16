@@ -9,6 +9,6 @@ class SovereignWatchdog:
     Memastikan proses Noir tetap berjalan dan sehat.
     """
     def run_diagnostics(self):
-        log.info("🔍 Watchdog: Performing system health check...")
+        log.info(" Watchdog: Performing system health check...")
         # Placeholder for real diagnostics
         return True

@@ -34,20 +34,20 @@ class SecureVault:
         except Exception as e:
             return f"[DECRYPT_ERROR] {e}"
 
-# ─── RATE LIMITER (v14.0) ───
+#  RATE LIMITER (v14.0) 
 
 class SovereignUpdater:
     """Agen dapat memperbarui kodenya sendiri secara otonom."""
     @staticmethod
     def check_for_updates():
-        log.info("🆙 Sovereign Updater: Checking for system patches...")
+        log.info(" Sovereign Updater: Checking for system patches...")
         # Simulasikan deteksi patch baru
         # Dalam skenario nyata, ini akan mengecek remote manifest
         new_version = "14.0.8"
         current_version = "14.0.7"
         
         if new_version > current_version:
-            log.info(f"✨ New Patch Available: {new_version}")
+            log.info(f" New Patch Available: {new_version}")
             evolution_engine.propose_evolution(
                 title=f"System Update v{new_version}",
                 description="Update sistem otonom untuk peningkatan stabilitas AI Core.",
@@ -59,7 +59,7 @@ class SovereignUpdater:
 
     @staticmethod
     def execute_upgrade():
-        log.info("🚀 Sovereign Updater: Executing System Upgrade...")
+        log.info(" Sovereign Updater: Executing System Upgrade...")
         try:
             # Jalankan manager.py deploy secara lokal jika di VPS
             # Atau kirim sinyal ke Gateway untuk mentrigger deploy
@@ -69,4 +69,4 @@ class SovereignUpdater:
         except Exception as e:
             return f"Upgrade Gagal: {e}"
 
-# ─── SELF-EVOLUTION ENGINE (v10.0) ───
+#  SELF-EVOLUTION ENGINE (v10.0) 

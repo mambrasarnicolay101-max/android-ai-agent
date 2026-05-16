@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOIR SOVEREIGN — MISSION CONTROL V21.4 SOVEREIGN</title>
+    <meta name="description" content="Noir Sovereign Command Center - AI Agent Mission Control">
+    <link rel="stylesheet" href="css/style.css?v=21.4.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-mark"><i class="fas fa-biohazard"></i></div>
+            <div class="logo-name">NOIR SOVEREIGN</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <div class="nav-label">Core Systems</div>
+                <div class="nav-item active" onclick="showPanel('dashboard')"><i class="fas fa-layer-group"></i> Dashboard</div>
+                <div class="nav-item" onclick="showPanel('vision')"><i class="fas fa-eye"></i> Neural Vision</div>
+                <div class="nav-item" onclick="showPanel('chat')"><i class="fas fa-comment-code"></i> Command Terminal</div>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-label">Intelligence</div>
+                <div class="nav-item" onclick="showPanel('browser')"><i class="fas fa-globe-americas"></i> Autonomous Research</div>
+                <div class="nav-item" onclick="showPanel('evolution')"><i class="fas fa-dna"></i> Evolution Engine</div>
+                <div class="nav-item" onclick="showPanel('swarm')"><i class="fas fa-project-diagram"></i> Swarm Monitor</div>
+                <div class="nav-item" onclick="showPanel('neuralmap')"><i class="fas fa-atom"></i> 3D Neural Map</div>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-label">Infrastructure</div>
+                <div class="nav-item" onclick="showPanel('pc')"><i class="fas fa-server"></i> Node Management</div>
+                <div class="nav-item" onclick="showPanel('loot')"><i class="fas fa-photo-film"></i> Media Loot Vault</div>
+                <div class="nav-item" onclick="showPanel('wiki')"><i class="fas fa-book-atlas"></i> Sovereign Wiki</div>
+                <div class="nav-item" onclick="showPanel('synthesis')"><i class="fas fa-flask"></i> Synthesis Lab</div>
+                <div class="nav-item" onclick="showPanel('logs')"><i class="fas fa-microchip"></i> System Logs</div>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="voice-toggle-btn" class="micro-btn w-full mb-1" onclick="toggleVoice()" style="width:100%; justify-content:center; gap:0.5rem; margin-bottom: 1rem;">
+                <i class="fas fa-volume-mute"></i> VOICE: OFF
+            </button>
+            <div class="text-dim" style="font-size:0.58rem; letter-spacing:1px; margin-bottom:0.2rem;">SOVEREIGN AEGIS MESH</div>
+            <div class="text-accent" style="font-size:0.65rem; font-weight:800;">V21.3 ELITE [SINGULARITY]</div>
+        </div>
+    </aside>
+
+    <!-- ── MAIN STAGE ── -->
+    <div class="stage">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <div id="active-panel-title" class="panel-heading">COMMAND OVERVIEW</div>
+            </div>
+            <div class="topbar-right">
+                <div id="core-status-chip"  class="chip online"><i class="fas fa-brain"></i> AI CORE: ONLINE</div>
+                <div id="alibaba-chip"       class="chip"><i class="fas fa-cloud"></i> VPS: --</div>
+                <div id="agent-status-chip"  class="chip offline"><i class="fas fa-link-slash"></i> LINK: SEVERED</div>
+                <button class="micro-btn" onclick="location.reload()" title="Refresh"><i class="fas fa-sync"></i></button>
+            </div>
+        </header>
+
+        <!-- ── PANEL CONTAINER ── -->
+        <div class="panel-container">
+
+            <!-- ════ PANEL: DASHBOARD ════ -->
+            <section id="panel-dashboard" class="panel active">
+
+                <!-- Offline Warning -->
+                <div id="offline-warning" class="offline-warning">
+                    <i class="fas fa-exclamation-triangle fa-lg text-danger pulse"></i>
+                    <div style="flex:1; min-width:0;">
+                        <div class="text-danger" style="font-weight:800; font-size:0.85rem; margin-bottom:0.25rem;">MOBILE LINK SEVERED</div>
+                        <div class="text-dim" style="font-size:0.75rem;">Physical device disconnected — <b>AI Core remains operational on Alibaba VPS</b>. Mobile-only commands (Camera, GPS) are suspended.</div>
+                    </div>
+                    <button class="cmd-btn danger" onclick="sendCommand('reconnect')" style="flex-shrink:0;"><i class="fas fa-plug"></i> HANDSHAKE</button>
+                </div>
+
+                <!-- Telemetry Grid -->
+                <div class="dashboard-grid">
+
+                    <!-- Mobile Telemetry -->
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-mobile-screen-button"></i> Mobile Agent Telemetry</div>
+                        <div class="tele-grid">
+                            <div class="tele-item">
+                                <div class="tele-labels"><span>CPU Matrix</span><span id="stat-cpu" class="text-accent">--%</span></div>
+                                <div class="tele-bar-bg"><div id="bar-cpu" class="tele-bar-fill"></div></div>
+                            </div>
+                            <div class="tele-item">
+                                <div class="tele-labels"><span>Memory Node</span><span id="stat-ram" class="text-accent">--%</span></div>
+                                <div class="tele-bar-bg"><div id="bar-ram" class="tele-bar-fill"></div></div>
+                            </div>
+                            <div class="tele-item">
+                                <div class="tele-labels"><span>Power Cell</span><span id="stat-bat" class="text-accent">--%</span></div>
+                                <div class="tele-bar-bg"><div id="bar-bat" class="tele-bar-fill"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sovereign Maturity Index (SMI) -->
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-chart-line text-accent"></i> Sovereign Maturity Index (SMI)</div>
+                        <div class="tele-grid">
+                            <div class="tele-item">
+                                <div class="tele-labels"><span>Neural Maturity Score</span><span id="smi-score" class="text-accent">0.0</span></div>
+                                <div class="tele-bar-bg" style="height:6px;"><div id="smi-bar" class="tele-bar-fill" style="width:0%; background:var(--accent-glow);"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex-between mt-2" style="font-size:0.75rem;">
+                            <span class="text-dim">Current Phase:</span>
+                            <span id="smi-phase" class="text-accent" style="font-weight:800;">EVALUATING...</span>
+                        </div>
+                        <div class="text-dim mt-1" style="font-size:0.65rem;">
+                            <i class="fas fa-info-circle"></i> Readiness for complex execution: <span id="smi-readiness">LOW</span>
+                        </div>
+                    </div>
+
+                    <!-- VPS Telemetry -->
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-server"></i> VPS Node Telemetry</div>
+                        <div class="tele-grid">
+                            <div class="tele-item">
+                                <div class="tele-labels"><span>Node Load</span><span id="pc-cpu" class="text-accent">--%</span></div>
+                                <div class="tele-bar-bg"><div id="bar-pc-cpu" class="tele-bar-fill"></div></div>
+                            </div>
+                            <div class="tele-item">
+                                <div class="tele-labels"><span>Node Memory</span><span id="pc-ram" class="text-accent">--%</span></div>
+                                <div class="tele-bar-bg"><div id="bar-pc-ram" class="tele-bar-fill"></div></div>
+                            </div>
+                        </div>
+                        <div class="pt-1 mt-2">
+                            <div class="text-dim" style="font-size:0.72rem;">Location: <span class="text-accent">Alibaba Cloud Intelligence</span></div>
+                            <div class="text-dim" style="font-size:0.72rem; margin-top:0.3rem;">Sovereign Mesh: <span class="text-success" id="ork-status">12 PILARS ACTIVE</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Optical Feed (mini) -->
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-eye"></i> Optical Feed</div>
+                        <div class="vision-img-con">
+                            <img id="dashboard-vision-img" src="" alt="" style="display:none;">
+                            <div id="vision-placeholder" class="vision-placeholder">
+                                <i class="fas fa-ghost fa-2x"></i>
+                                <span>SIGNAL SEVERED</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Proactive Intelligence -->
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-brain"></i> Proactive Intelligence</div>
+                        <div style="font-size:0.82rem; line-height:1.7;">
+                            <div class="flex-between mb-1" style="border-bottom:1px solid var(--border); padding-bottom:0.75rem;">
+                                <span class="text-dim" style="font-size:0.72rem;">Cognitive Engine</span>
+                                <span id="ai-provider" class="text-accent" style="font-weight:800; font-size:0.72rem; font-family:var(--font-mono);">NeuralRouter V6</span>
+                            </div>
+                            <div id="ai-insight" class="text-dim" style="font-style:italic; border-left:2px solid var(--purple); padding-left:0.75rem; font-size:0.8rem; line-height:1.65;">
+                                Analyzing temporal patterns and system telemetry...
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ════ PANEL: VISION ════ -->
+            <section id="panel-vision" class="panel">
+                <div class="card" style="max-width:480px; margin:0 auto;">
+                    <div class="card-title flex-between">
+                        <span><i class="fas fa-expand"></i> Neural Mirror Feed</span>
+                        <div class="status-dot online pulse" id="stream-status"></div>
+                    </div>
+                    <div class="vision-img-con" style="max-width:320px; position:relative; cursor:crosshair;">
+                        <img id="main-vision-img" src="" alt="Full Vision Stream" onclick="remoteClick(event)">
+                        <div class="vision-placeholder" id="main-vision-placeholder">
+                            <i class="fas fa-ghost fa-2x"></i>
+                            <span>NO STREAM</span>
+                        </div>
+                        <div id="click-feedback" style="position:absolute; width:20px; height:20px; border:2px solid red; border-radius:50%; display:none; pointer-events:none;"></div>
+                    </div>
+                    
+                    <!-- Remote Control HUD -->
+                    <div class="remote-hud mt-2">
+                        <div class="flex-row mb-1" style="justify-content:center; gap:0.5rem;">
+                            <button class="micro-btn" onclick="remoteKey(4)"><i class="fas fa-chevron-left"></i> BACK</button>
+                            <button class="micro-btn" onclick="remoteKey(3)"><i class="fas fa-home"></i> HOME</button>
+                            <button class="micro-btn" onclick="remoteKey(187)"><i class="fas fa-bars"></i> RECENT</button>
+                        </div>
+                        <div class="flex-row mb-1" style="gap:0.5rem;">
+                            <input id="remote-text-input" type="text" class="shell-input" placeholder="Type text to send..." style="flex:1;">
+                            <button class="cmd-btn" onclick="remoteSendText()"><i class="fas fa-keyboard"></i> SEND</button>
+                        </div>
+                    </div>
+
+                    <div class="flex-row mt-1" style="justify-content:center; flex-wrap:wrap; gap:0.75rem;">
+                        <button class="cmd-btn primary" onclick="sendCommand('screenshot')"><i class="fas fa-camera"></i> CAPTURE</button>
+                        <button class="cmd-btn" onclick="sendCommand('live_audio')"><i class="fas fa-microphone"></i> AUDIO</button>
+                        <button class="cmd-btn" onclick="startStream()"><i class="fas fa-play"></i> STREAM</button>
+                        <button class="cmd-btn danger" onclick="stopStream()"><i class="fas fa-stop"></i> STOP</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════ PANEL: CHAT ════ -->
+            <section id="panel-chat" class="panel">
+                <div class="card chat-panel-wrap">
+                    <div class="card-title"><i class="fas fa-terminal"></i> Command Terminal [root@sovereign]</div>
+                    <div id="chat-window" class="chat-window"></div>
+                    <div class="chat-input-bar">
+                        <input id="chat-input" type="text" class="shell-input" placeholder="Execute command or query AI brain...">
+                        <button class="cmd-btn primary" onclick="sendChatMessage()"><i class="fas fa-bolt"></i> EXECUTE</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════ PANEL: BROWSER ════ -->
+            <section id="panel-browser" class="panel">
+                <div class="card browser-panel-wrap">
+                    <div class="card-title"><i class="fas fa-globe"></i> Sovereign Autonomous Browser</div>
+                    <div class="chat-input-bar mb-1">
+                        <input id="browser-url" type="text" class="shell-input" placeholder="Enter URL or research query...">
+                        <button class="cmd-btn primary" onclick="browserGo()"><i class="fas fa-search"></i> RESEARCH</button>
+                    </div>
+                    <div class="browser-viewport" id="browser-viewport">
+                        <div id="browser-placeholder" class="vision-placeholder" style="position:absolute;inset:0;opacity:0.2;">
+                            <i class="fas fa-globe-americas fa-3x"></i>
+                            <span>READY FOR AUTONOMOUS DEEP-SEARCH</span>
+                        </div>
+                        <img id="browser-img" src="" alt="Browser View" style="width:100%;height:100%;object-fit:contain;display:none;">
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════ PANEL: EVOLUTION ════ -->
+            <section id="panel-evolution" class="panel">
+                <div class="evolution-grid">
+                    <div class="card">
+                        <div class="card-title flex-between" style="margin-bottom:1rem;">
+                            <span><i class="fas fa-dna text-purple"></i> Pending Mutations</span>
+                            <div class="flex-row" style="gap:0.4rem;">
+                                <button class="micro-btn" onclick="approveSelectedEvos()"><i class="fas fa-check-double"></i> Selected</button>
+                                <button class="micro-btn primary" onclick="approveAllEvos()"><i class="fas fa-bolt"></i> All</button>
+                            </div>
+                        </div>
+                        <div id="evo-pending" class="evo-list">
+                            <div class="text-dim" style="font-size:0.8rem; padding:1rem 0;">Loading proposals...</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-history text-dim"></i> Mutation History</div>
+                        <div id="evo-history" class="evo-list">
+                            <div class="text-dim" style="font-size:0.8rem; padding:1rem 0;">No history yet.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════ PANEL: NODE MANAGEMENT ════ -->
+            <section id="panel-pc" class="panel">
+                <div class="pc-grid">
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-server"></i> Alibaba VPS Node</div>
+                        <div class="tele-grid">
+                            <div class="tele-item">
+                                <div class="tele-labels"><span>Node Load</span><span class="text-accent">--</span></div>
+                                <div class="tele-bar-bg"><div class="tele-bar-fill" style="width:42%"></div></div>
+                            </div>
+                        </div>
+                        <div class="pt-1 mt-2">
+                            <div class="text-dim" style="font-size:0.75rem; margin-bottom:0.4rem;">Status: <span class="text-success">ONLINE (PRIMARY)</span></div>
+                            <div class="text-dim" style="font-size:0.75rem; margin-bottom:0.4rem;">Shadow Node: <span id="shadow-status" class="text-dim">NOT LINKED</span></div>
+                            <div class="text-dim" style="font-size:0.75rem; margin-bottom:0.4rem;">Region: <span class="text-accent">Asia Pacific (Alibaba Cloud)</span></div>
+                            <div class="text-dim" style="font-size:0.75rem;">Orchestrator: <span class="text-success">9 Pilar — ACTIVE</span></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-dna text-purple"></i> 12 Pilar Maestro Mesh</div>
+                        <div id="pilar-mesh-list" style="display:grid; grid-template-columns: 1fr 1fr; gap:0.6rem; font-size:0.65rem; font-family:var(--font-mono);">
+                            <div class="pilar-status"><span class="text-dim">Neural Coder</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Security Sentinel</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Pentester</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Knowledge Abs.</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Neural Arch.</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Network Sentinel</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Auto-Healer</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Memory Cons.</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Antigravity</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Strategist</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">QA Validator</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">UX Weaver</span><span class="dot online"></span></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-graduation-cap text-accent"></i> Massive Learning Progress</div>
+                        <div class="tele-grid">
+                            <div class="tele-item">
+                                <div class="tele-labels"><span>Cross-Domain Mastery</span><span class="text-accent">92%</span></div>
+                                <div class="tele-bar-bg"><div class="tele-bar-fill" style="width:92%; background:var(--accent-glow);"></div></div>
+                            </div>
+                            <div id="learning-topics" class="text-dim mt-1" style="font-size:0.65rem; font-style:italic;">
+                                Current Focus: Rust Ownership & System Design
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-ghost"></i> Ghost Mode (Stealth)</div>
+                        <div class="text-dim mb-2" style="font-size:0.8rem; line-height:1.6;">
+                            Menyamarkan jejak jaringan & identitas AI saat melakukan riset eksternal. Status: <span id="ghost-status" class="text-dim" style="font-weight:700;">INACTIVE</span>
+                        </div>
+                        <button id="ghost-toggle-btn" class="cmd-btn" onclick="toggleGhostMode()" style="background:#1a1a1a; border-color:#333;">
+                            <i class="fas fa-mask"></i> ACTIVATE GHOST
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-sync fa-spin-slow"></i> Optimization Core</div>
+                        <div class="text-dim mb-2" style="font-size:0.8rem; line-height:1.6;">
+                            Recursive Self-Optimization: <span class="text-success">ACTIVE</span><br>
+                            Last GC: <span class="text-accent">Just now</span><br>
+                            System Load Efficiency: <span class="text-success">98.5%</span>
+                        </div>
+                        <p class="text-dim" style="font-size: 0.6rem;">AI mengaudit kinerjanya sendiri setiap 12 jam untuk efisiensi maksimal.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-user-shield"></i> Sovereign Override</div>
+                        <div class="text-dim mb-2" style="font-size:0.8rem; line-height:1.6;">
+                            Activate manual override to suspend autonomous operations and take direct control of the node engine.
+                        </div>
+                        <button id="pc-override-btn" class="cmd-btn danger" onclick="togglePcOverride()">
+                            <i class="fas fa-lock-open"></i> ENABLE OVERRIDE
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════ PANEL: MEDIA LOOT VAULT ════ -->
+            <section id="panel-loot" class="panel">
+                <div class="card" style="margin-bottom:1rem;">
+                    <div class="card-title flex-between" style="margin-bottom:1rem;">
+                        <span><i class="fas fa-photo-film text-accent"></i> Media Loot Vault — Captured Intelligence</span>
+                        <div class="flex-row" style="gap:0.5rem;">
+                            <select id="loot-filter" class="shell-input" style="padding:0.35rem 0.6rem; font-size:0.75rem; width:auto;" onchange="refreshLoot()">
+                                <option value="all">All Media</option>
+                                <option value="image">Screenshots</option>
+                                <option value="audio">Audio</option>
+                            </select>
+                            <button class="cmd-btn" onclick="refreshLoot()"><i class="fas fa-sync"></i> Refresh</button>
+                            <button class="cmd-btn danger" onclick="clearAllLoot()"><i class="fas fa-trash"></i> Purge All</button>
+                        </div>
+                    </div>
+                    <div class="flex-row" style="gap:1rem; margin-bottom:1rem; font-size:0.75rem; flex-wrap:wrap;">
+                        <span class="text-dim">Total: <span id="loot-count" class="text-accent">0</span> files</span>
+                        <span class="text-dim">Images: <span id="loot-img-count" class="text-success">0</span></span>
+                        <span class="text-dim">Audio: <span id="loot-audio-count" class="text-purple">0</span></span>
+                    </div>
+                    <div id="loot-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:1rem;">
+                        <div class="text-dim" style="font-size:0.8rem; grid-column:1/-1; padding:2rem; text-align:center;">
+                            <i class="fas fa-inbox fa-2x" style="opacity:0.3; display:block; margin-bottom:0.5rem;"></i>
+                            Vault is empty. Capture screenshots or audio from the device.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════ PANEL: LOGS ════ -->
+            <section id="panel-logs" class="panel">
+                <div class="card log-panel-wrap">
+                    <div class="card-title flex-between" style="margin-bottom:1rem;">
+                        <span><i class="fas fa-terminal"></i> Neural Stream Logs</span>
+                        <div class="flex-row">
+                            <button class="micro-btn" onclick="document.getElementById('terminal').innerHTML=''"><i class="fas fa-trash"></i> CLEAR</button>
+                            <button class="micro-btn" onclick="exportLogs()"><i class="fas fa-download"></i> EXPORT</button>
+                        </div>
+                    </div>
+                    <div id="terminal"></div>
+                </div>
+            </section>
+
+            <!-- ════ PANEL: WIKI ════ -->
+            <section id="panel-wiki" class="panel">
+                <div class="card" style="height: calc(100vh - 180px); padding: 0; overflow: hidden;">
+                    <iframe src="wiki.html" style="width: 100%; height: 100%; border: none;" id="wiki-iframe"></iframe>
+                </div>
+            </section>
+
+            <!-- ════ PANEL: SYNTHESIS ════ -->
+            <section id="panel-synthesis" class="panel">
+                <div class="card" style="max-width: 800px; margin: 0 auto; background: linear-gradient(145deg, #121215 0%, #0a0a0c 100%); border: 1px solid #1f2937;">
+                    <div class="card-title"><i class="fas fa-flask text-purple"></i> NEURAL SYNTHESIS LABORATORY</div>
+                    <p class="text-dim" style="font-size: 0.9rem; margin-bottom: 1.5rem;">Instruksikan AI untuk membangun kapabilitas (skill) baru secara otonom. Proses meliputi perancangan kode, audit keamanan, dan pemasangan otomatis.</p>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px; border: 1px solid #1a1a1a;">
+                        <label class="text-dim" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.75rem;">Misi Pengembangan Baru:</label>
+                        <textarea id="synth-goal" placeholder="Misal: Buat tool untuk memantau performa CPU dan log ke file setiap 5 menit..." style="width: 100%; height: 120px; background: #000; border: 1px solid #333; color: #fff; padding: 1rem; border-radius: 8px; font-family: inherit; font-size: 0.95rem; resize: none; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='#333'"></textarea>
+                        
+                        <div class="flex-between mt-1">
+                            <span class="text-dim" style="font-size: 0.7rem;"><i class="fas fa-shield-alt"></i> Auto-Security Audit Enabled</span>
+                            <button onclick="startSynthesis()" class="btn-primary" style="padding: 0.8rem 2rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;"><i class="fas fa-atom fa-spin-slow"></i> MULAI SINTESIS</button>
+                        </div>
+                    </div>
+
+                    <div id="synth-status-box" class="mt-2" style="display: none; padding: 1.5rem; background: rgba(168, 85, 247, 0.05); border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.2);">
+                        <div class="flex-between">
+                            <span class="text-dim" style="font-size: 0.8rem;">Status Sintesis:</span>
+                            <span id="synth-status-text" class="text-purple" style="font-weight: 700; font-family: var(--font-mono);">INITIALIZING...</span>
+                        </div>
+                        <div style="height: 6px; background: #000; border-radius: 10px; margin-top: 1rem; overflow: hidden; border: 1px solid #1a1a1a;">
+                            <div id="synth-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent) 0%, #d8b4fe 100%); transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--accent-glow);"></div>
+                        </div>
+                        <div id="synth-log" style="font-family: var(--font-mono); font-size: 0.75rem; color: #a5b4fc; margin-top: 1.5rem; padding: 1rem; background: #000; border-radius: 8px; border: 1px solid #1a1a1a; max-height: 200px; overflow-y: auto; line-height: 1.5;">
+                            <div style="color: #444;">> Menunggu input objektif...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ════ PANEL: SWARM MONITOR ════ -->
+            <section id="panel-swarm" class="panel">
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); gap:1.5rem; align-items:start;">
+
+                    <!-- Swarm Bus Live Feed -->
+                    <div class="card" style="grid-column: 1 / -1;">
+                        <div class="card-title"><i class="fas fa-project-diagram text-accent"></i> Swarm Intelligence Bus — Live Communication Feed</div>
+                        <div id="swarm-live-feed" style="font-family:var(--font-mono); font-size:0.72rem; max-height:280px; overflow-y:auto; background:rgba(0,0,0,0.3); border-radius:10px; padding:1rem; border:1px solid var(--border); line-height:1.9;">
+                            <div style="color:rgba(255,255,255,0.2);">◈ Awaiting swarm bus activity...</div>
+                        </div>
+                        <div class="flex-between mt-1">
+                            <span class="text-dim" style="font-size:0.65rem;">Auto-refresh every 5s</span>
+                            <button class="micro-btn" onclick="pollSwarmFeed()"><i class="fas fa-sync"></i> Refresh</button>
+                        </div>
+                    </div>
+
+                    <!-- 12-Pilar Communication Matrix -->
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-network-wired text-purple"></i> 12-Pilar Mesh Matrix</div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; font-size:0.65rem; font-family:var(--font-mono);">
+                            <div class="pilar-status"><span class="text-dim">Neural Coder</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Security Sentinel</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Pentester</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Knowledge Abs.</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Neural Arch.</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Network Sentinel</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Auto-Healer</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Memory Cons.</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Antigravity</span><span class="dot online" style="background:#00ffaa; box-shadow:0 0 10px #00ffaa;"></span></div>
+                            <div class="pilar-status"><span class="text-dim">Strategist</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">QA Validator</span><span class="dot online"></span></div>
+                            <div class="pilar-status"><span class="text-dim">UX Weaver</span><span class="dot online"></span></div>
+                        </div>
+                        <div class="text-dim mt-2" style="font-size:0.62rem; border-top:1px solid var(--border); padding-top:0.75rem;">
+                            <i class="fas fa-info-circle"></i> Semua pilar terhubung melalui Shared Blackboard Protocol. Pesan dikonsumsi dalam &lt;100ms.
+                        </div>
+                    </div>
+
+                    <!-- Swarm Stats -->
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-chart-bar text-accent"></i> Swarm Statistics</div>
+                        <div class="tele-grid">
+                            <div class="tele-item">
+                                <div class="tele-labels"><span>Message Throughput</span><span class="text-accent" id="swarm-msg-count">0 msgs</span></div>
+                                <div class="tele-bar-bg"><div id="swarm-msg-bar" class="tele-bar-fill" style="width:0%"></div></div>
+                            </div>
+                            <div class="tele-item">
+                                <div class="tele-labels"><span>Collective Intelligence</span><span class="text-accent">92%</span></div>
+                                <div class="tele-bar-bg"><div class="tele-bar-fill" style="width:92%"></div></div>
+                            </div>
+                        </div>
+                        <div class="text-dim mt-2" style="font-size:0.65rem;">
+                            Protocol: <span class="text-accent">Shared Blackboard v1.0</span><br>
+                            Bus File: <span class="text-accent">knowledge/swarm_bus.json</span><br>
+                            Capacity: <span class="text-accent">50 messages (rolling)</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ════ PANEL: 3D NEURAL MAP ════ -->
+            <section id="panel-neuralmap" class="panel">
+                <div class="card" style="height:calc(100vh - 180px); padding:0; overflow:hidden; border-color:rgba(0,242,255,0.2);">
+                    <iframe id="neuralmap-iframe" src="neural_map.html" style="width:100%; height:100%; border:none; border-radius:18px;"></iframe>
+                </div>
+            </section>
+
+    </div><!-- /stage -->
+</div><!-- /app-container -->
+
+<script src="js/main.js?v=21.4.0"></script>
+</body>
+</html>

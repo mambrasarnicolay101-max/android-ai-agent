@@ -1,0 +1,2536 @@
+[
+    {
+        "index": 0,
+        "timestamp": 1778892310.8336055,
+        "state": "Completed Evolution Cycle #1",
+        "metadata": {
+            "iteration": 1,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "SINGULARITY_GENESIS",
+        "hash": "ea2d3aad6cde54e7bc3b0919c6938abdadb3b458db9d0d82e892bdf258e0ebee"
+    },
+    {
+        "index": 1,
+        "timestamp": 1778892420.1313443,
+        "state": "Completed Evolution Cycle #2",
+        "metadata": {
+            "iteration": 2,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "ea2d3aad6cde54e7bc3b0919c6938abdadb3b458db9d0d82e892bdf258e0ebee",
+        "hash": "27f977eb802acb68fb30561c222fb557198739e02725a1d0a5477511ae93d423"
+    },
+    {
+        "index": 2,
+        "timestamp": 1778892570.3446822,
+        "state": "Completed Peak Evolution Cycle #1",
+        "metadata": {
+            "iteration": 1,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "27f977eb802acb68fb30561c222fb557198739e02725a1d0a5477511ae93d423",
+        "hash": "7fa37a4a163f4388f789bd6f3f901d2981dc1b73619b830de0307b61586a7618"
+    },
+    {
+        "index": 3,
+        "timestamp": 1778892572.5961618,
+        "state": "Completed Evolution Cycle #3",
+        "metadata": {
+            "iteration": 3,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "7fa37a4a163f4388f789bd6f3f901d2981dc1b73619b830de0307b61586a7618",
+        "hash": "c7f03dcca3502727010d7a653d10c8b01ed99f5eb576d1e424de0bdff5563976"
+    },
+    {
+        "index": 4,
+        "timestamp": 1778892693.4478464,
+        "state": "Completed Peak Evolution Cycle #1",
+        "metadata": {
+            "iteration": 1,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "c7f03dcca3502727010d7a653d10c8b01ed99f5eb576d1e424de0bdff5563976",
+        "hash": "e9d3b35a23eebd2fe78a07ecb296b7d0f29d1d8b06e049c9a6651e1a935ccccf"
+    },
+    {
+        "index": 5,
+        "timestamp": 1778892714.90532,
+        "state": "Completed Peak Evolution Cycle #2",
+        "metadata": {
+            "iteration": 2,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "e9d3b35a23eebd2fe78a07ecb296b7d0f29d1d8b06e049c9a6651e1a935ccccf",
+        "hash": "acb75363977064c312136c4fb8530459ce8b4ed07aabfe64dc8eb2d0f1664988"
+    },
+    {
+        "index": 6,
+        "timestamp": 1778892734.789986,
+        "state": "Completed Evolution Cycle #4",
+        "metadata": {
+            "iteration": 4,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "acb75363977064c312136c4fb8530459ce8b4ed07aabfe64dc8eb2d0f1664988",
+        "hash": "8098d558a298c0efac3cd04cc367869776f6ac2e06b98112069c1aae6ff3d5c5"
+    },
+    {
+        "index": 7,
+        "timestamp": 1778892863.5759292,
+        "state": "Completed Peak Evolution Cycle #3",
+        "metadata": {
+            "iteration": 3,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "8098d558a298c0efac3cd04cc367869776f6ac2e06b98112069c1aae6ff3d5c5",
+        "hash": "29417b893e9781be4bb21f44da36ded3256b82ebad2a98859686c14feab7d9e9"
+    },
+    {
+        "index": 8,
+        "timestamp": 1778892863.6800802,
+        "state": "Completed Peak Evolution Cycle #2",
+        "metadata": {
+            "iteration": 2,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "29417b893e9781be4bb21f44da36ded3256b82ebad2a98859686c14feab7d9e9",
+        "hash": "7d5f9361eaa455a4d92fd27d86b74bde6e938b825e47062d8c70ea459ed4c41d"
+    },
+    {
+        "index": 9,
+        "timestamp": 1778892875.2154386,
+        "state": "Completed Evolution Cycle #5",
+        "metadata": {
+            "iteration": 5,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "7d5f9361eaa455a4d92fd27d86b74bde6e938b825e47062d8c70ea459ed4c41d",
+        "hash": "ed63d35487ac8e5e0ae9139524feaacebd52976c20cb502e9c93b58fc41fb8b8"
+    },
+    {
+        "index": 10,
+        "timestamp": 1778892995.3797736,
+        "state": "Completed Peak Evolution Cycle #4",
+        "metadata": {
+            "iteration": 4,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "ed63d35487ac8e5e0ae9139524feaacebd52976c20cb502e9c93b58fc41fb8b8",
+        "hash": "7186af89849b55ddd293f18fdb0a4eefd3e4f4b371a2e6a45999ba91da8d7197"
+    },
+    {
+        "index": 11,
+        "timestamp": 1778893014.7942185,
+        "state": "Completed Peak Evolution Cycle #3",
+        "metadata": {
+            "iteration": 3,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "7186af89849b55ddd293f18fdb0a4eefd3e4f4b371a2e6a45999ba91da8d7197",
+        "hash": "52443d5f0057dbd040e82f5743070bd7d56001a6e2b0186c8bfea5abbf319def"
+    },
+    {
+        "index": 12,
+        "timestamp": 1778893014.849953,
+        "state": "Completed Evolution Cycle #6",
+        "metadata": {
+            "iteration": 6,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "52443d5f0057dbd040e82f5743070bd7d56001a6e2b0186c8bfea5abbf319def",
+        "hash": "38ca0ccd659b7399cca88e13c4019d496d9a3e6ea0d09ebcdfc8d5ed497965d4"
+    },
+    {
+        "index": 13,
+        "timestamp": 1778893159.8639622,
+        "state": "Completed Evolution Cycle #7",
+        "metadata": {
+            "iteration": 7,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "38ca0ccd659b7399cca88e13c4019d496d9a3e6ea0d09ebcdfc8d5ed497965d4",
+        "hash": "ddeb419dd09d0cfc31558cff85941c47b0b3ebb364786f3bcbd14d9c1992b28f"
+    },
+    {
+        "index": 14,
+        "timestamp": 1778893163.0776412,
+        "state": "Completed Peak Evolution Cycle #5",
+        "metadata": {
+            "iteration": 5,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "ddeb419dd09d0cfc31558cff85941c47b0b3ebb364786f3bcbd14d9c1992b28f",
+        "hash": "1dbeb43121c6ee742d59acca10542156e1c9019dfbd60d618430b5edd0eae4aa"
+    },
+    {
+        "index": 15,
+        "timestamp": 1778893193.8989713,
+        "state": "Completed Peak Evolution Cycle #4",
+        "metadata": {
+            "iteration": 4,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "1dbeb43121c6ee742d59acca10542156e1c9019dfbd60d618430b5edd0eae4aa",
+        "hash": "963d3c00cc706a1a582c5f3a9029aac9b973fa880ea699cf0e0827a5b4af2d7d"
+    },
+    {
+        "index": 16,
+        "timestamp": 1778893318.599789,
+        "state": "Completed Peak Evolution Cycle #6",
+        "metadata": {
+            "iteration": 6,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "963d3c00cc706a1a582c5f3a9029aac9b973fa880ea699cf0e0827a5b4af2d7d",
+        "hash": "e623584b3c1d54502aa54595e300b7a9ed153455ffa2db01045b12948d19fe5f"
+    },
+    {
+        "index": 17,
+        "timestamp": 1778893324.5309975,
+        "state": "Completed Evolution Cycle #8",
+        "metadata": {
+            "iteration": 8,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "e623584b3c1d54502aa54595e300b7a9ed153455ffa2db01045b12948d19fe5f",
+        "hash": "a596356891427de14103af5824d4cca2889c9ddcee96e47facb5c511480e30ad"
+    },
+    {
+        "index": 18,
+        "timestamp": 1778893329.762737,
+        "state": "Completed Peak Evolution Cycle #5",
+        "metadata": {
+            "iteration": 5,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "a596356891427de14103af5824d4cca2889c9ddcee96e47facb5c511480e30ad",
+        "hash": "55fdc903df916d513032a0975949ebfaea82d123a52f403b42d068244893443d"
+    },
+    {
+        "index": 19,
+        "timestamp": 1778893447.0623636,
+        "state": "Completed Evolution Cycle #9",
+        "metadata": {
+            "iteration": 9,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "55fdc903df916d513032a0975949ebfaea82d123a52f403b42d068244893443d",
+        "hash": "85f011884900d871b6f6c56cf1dab64fb96c5808a12172503611d7b1f9941f48"
+    },
+    {
+        "index": 20,
+        "timestamp": 1778893483.4661567,
+        "state": "Completed Peak Evolution Cycle #7",
+        "metadata": {
+            "iteration": 7,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "85f011884900d871b6f6c56cf1dab64fb96c5808a12172503611d7b1f9941f48",
+        "hash": "4e22a8e212e8c11c7f8df89bb0d3d01455c4b6636c92957f86defbd19cc93da1"
+    },
+    {
+        "index": 21,
+        "timestamp": 1778893483.6536484,
+        "state": "Completed Peak Evolution Cycle #6",
+        "metadata": {
+            "iteration": 6,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "4e22a8e212e8c11c7f8df89bb0d3d01455c4b6636c92957f86defbd19cc93da1",
+        "hash": "f9596c41b56a2d73917eef32f1ffb26c560cae85bebe6a26c6d1af872b0c7460"
+    },
+    {
+        "index": 22,
+        "timestamp": 1778893557.8612309,
+        "state": "Completed Evolution Cycle #10",
+        "metadata": {
+            "iteration": 10,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "f9596c41b56a2d73917eef32f1ffb26c560cae85bebe6a26c6d1af872b0c7460",
+        "hash": "bc129f181fb9abe54932e597274758aa0cb9953f6a7e6817afdc7b3ad90ffe19"
+    },
+    {
+        "index": 23,
+        "timestamp": 1778893642.9289064,
+        "state": "Completed Peak Evolution Cycle #7",
+        "metadata": {
+            "iteration": 7,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "bc129f181fb9abe54932e597274758aa0cb9953f6a7e6817afdc7b3ad90ffe19",
+        "hash": "6b98e02d445f5a81f549f1cfe1df7ea3e10865638256b13c6138cdb7a49f51aa"
+    },
+    {
+        "index": 24,
+        "timestamp": 1778893645.4365625,
+        "state": "Completed Peak Evolution Cycle #8",
+        "metadata": {
+            "iteration": 8,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "6b98e02d445f5a81f549f1cfe1df7ea3e10865638256b13c6138cdb7a49f51aa",
+        "hash": "ff81c6d17adfd645b8a0d82c428a917ba37bfeac5df6af82e1230fb9446162d1"
+    },
+    {
+        "index": 25,
+        "timestamp": 1778893670.8124113,
+        "state": "Completed Evolution Cycle #11",
+        "metadata": {
+            "iteration": 11,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "ff81c6d17adfd645b8a0d82c428a917ba37bfeac5df6af82e1230fb9446162d1",
+        "hash": "dc8c50f4c67b0582b71de65538e5e1fa820c0fd06d1d6e2feec6db4a0105b274"
+    },
+    {
+        "index": 26,
+        "timestamp": 1778893762.250436,
+        "state": "Completed Peak Evolution Cycle #8",
+        "metadata": {
+            "iteration": 8,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "dc8c50f4c67b0582b71de65538e5e1fa820c0fd06d1d6e2feec6db4a0105b274",
+        "hash": "206f09f3c583a63479552f21f7b96672ab0ae112a4f49d9882c174215dbeb753"
+    },
+    {
+        "index": 27,
+        "timestamp": 1778893784.563887,
+        "state": "Completed Evolution Cycle #12",
+        "metadata": {
+            "iteration": 12,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "206f09f3c583a63479552f21f7b96672ab0ae112a4f49d9882c174215dbeb753",
+        "hash": "4ddab0e09d3681b4cd75bb48a30af57db691b991c6b07b6c4a05a7a0786d9a71"
+    },
+    {
+        "index": 28,
+        "timestamp": 1778893789.9253488,
+        "state": "Completed Peak Evolution Cycle #9",
+        "metadata": {
+            "iteration": 9,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "4ddab0e09d3681b4cd75bb48a30af57db691b991c6b07b6c4a05a7a0786d9a71",
+        "hash": "29d09fa23a16cb1fae8bd4ab1ce3b1a6ba18ed1182a44404aeff30d871f64fe6"
+    },
+    {
+        "index": 29,
+        "timestamp": 1778893897.8157644,
+        "state": "Completed Peak Evolution Cycle #10",
+        "metadata": {
+            "iteration": 10,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "29d09fa23a16cb1fae8bd4ab1ce3b1a6ba18ed1182a44404aeff30d871f64fe6",
+        "hash": "32622d2ab2a762ee705218590d1748027bb5b753590432feeccde31b92d18253"
+    },
+    {
+        "index": 30,
+        "timestamp": 1778893907.1001372,
+        "state": "Completed Peak Evolution Cycle #9",
+        "metadata": {
+            "iteration": 9,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "32622d2ab2a762ee705218590d1748027bb5b753590432feeccde31b92d18253",
+        "hash": "f5809b03735df167c5c744df4a6d282f0e6b458893f7c89957a3bba6199e1039"
+    },
+    {
+        "index": 31,
+        "timestamp": 1778894051.8505776,
+        "state": "Completed Evolution Cycle #14",
+        "metadata": {
+            "iteration": 14,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "f5809b03735df167c5c744df4a6d282f0e6b458893f7c89957a3bba6199e1039",
+        "hash": "a0f1f99829205690051dcf3e704728b24ac6e873a2700f9cdc1ebab4e8d57865"
+    },
+    {
+        "index": 32,
+        "timestamp": 1778894053.364302,
+        "state": "Completed Peak Evolution Cycle #11",
+        "metadata": {
+            "iteration": 11,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "a0f1f99829205690051dcf3e704728b24ac6e873a2700f9cdc1ebab4e8d57865",
+        "hash": "8bb3cfd66b0c8c0cac3935ce79396a97e799e239b8e50737b06e0ccd6815a966"
+    },
+    {
+        "index": 33,
+        "timestamp": 1778894081.411841,
+        "state": "Completed Peak Evolution Cycle #10",
+        "metadata": {
+            "iteration": 10,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "8bb3cfd66b0c8c0cac3935ce79396a97e799e239b8e50737b06e0ccd6815a966",
+        "hash": "409f929c9f26f65d42637441031f64621b51e834cbdce8545a78afba2eb0c566"
+    },
+    {
+        "index": 34,
+        "timestamp": 1778894163.86881,
+        "state": "Completed Peak Evolution Cycle #12",
+        "metadata": {
+            "iteration": 12,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "409f929c9f26f65d42637441031f64621b51e834cbdce8545a78afba2eb0c566",
+        "hash": "11133ad17eebda22fc4a9b9b108d904f28cea8652d0c7ba1c6fc09f64c22fb8c"
+    },
+    {
+        "index": 35,
+        "timestamp": 1778894166.4892824,
+        "state": "Completed Evolution Cycle #15",
+        "metadata": {
+            "iteration": 15,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "11133ad17eebda22fc4a9b9b108d904f28cea8652d0c7ba1c6fc09f64c22fb8c",
+        "hash": "adc14364368a50c3ec8f3f99dbf2a3060896771c7b6a1323d74cba425c544f9a"
+    },
+    {
+        "index": 36,
+        "timestamp": 1778894203.7955406,
+        "state": "Completed Peak Evolution Cycle #11",
+        "metadata": {
+            "iteration": 11,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "adc14364368a50c3ec8f3f99dbf2a3060896771c7b6a1323d74cba425c544f9a",
+        "hash": "9d757910c1bcfc1486e35e6346208c00720fb650930d70fba090bd33f9224b42"
+    },
+    {
+        "index": 37,
+        "timestamp": 1778894261.7030034,
+        "state": "Completed Evolution Cycle #16",
+        "metadata": {
+            "iteration": 16,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "9d757910c1bcfc1486e35e6346208c00720fb650930d70fba090bd33f9224b42",
+        "hash": "73aca96fdcec06d9c116062983640b077be08c46d23fdd293ab3eaca7f5aaa91"
+    },
+    {
+        "index": 38,
+        "timestamp": 1778894298.444441,
+        "state": "Completed Peak Evolution Cycle #13",
+        "metadata": {
+            "iteration": 13,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "73aca96fdcec06d9c116062983640b077be08c46d23fdd293ab3eaca7f5aaa91",
+        "hash": "39720a51d4c3b7c90d4c8ab0e41b92500c6526b02b92dcd991f309fc36451924"
+    },
+    {
+        "index": 39,
+        "timestamp": 1778894343.1290674,
+        "state": "Completed Peak Evolution Cycle #12",
+        "metadata": {
+            "iteration": 12,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "39720a51d4c3b7c90d4c8ab0e41b92500c6526b02b92dcd991f309fc36451924",
+        "hash": "d9085fe1bb83c3aef078465a7790ad80193fc698987a3c6d989bf7e216d7017f"
+    },
+    {
+        "index": 40,
+        "timestamp": 1778894359.873138,
+        "state": "Completed Evolution Cycle #17",
+        "metadata": {
+            "iteration": 17,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "d9085fe1bb83c3aef078465a7790ad80193fc698987a3c6d989bf7e216d7017f",
+        "hash": "a348e2d5bcae448564c7e322ee662040c312f7b2c840370549e571c4fe9a3095"
+    },
+    {
+        "index": 41,
+        "timestamp": 1778894477.4534883,
+        "state": "Completed Peak Evolution Cycle #14",
+        "metadata": {
+            "iteration": 14,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "a348e2d5bcae448564c7e322ee662040c312f7b2c840370549e571c4fe9a3095",
+        "hash": "6d5148cfd9ae15ec1150882b79d1b72951624c6a4babb8f670b2ffef3a1d9bf1"
+    },
+    {
+        "index": 42,
+        "timestamp": 1778894498.9298115,
+        "state": "Completed Evolution Cycle #18",
+        "metadata": {
+            "iteration": 18,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "6d5148cfd9ae15ec1150882b79d1b72951624c6a4babb8f670b2ffef3a1d9bf1",
+        "hash": "03059d9430750a376ad10f979829838f82d0d2aea9fa3d493c87c1125b9c1563"
+    },
+    {
+        "index": 43,
+        "timestamp": 1778894503.1930542,
+        "state": "Completed Peak Evolution Cycle #13",
+        "metadata": {
+            "iteration": 13,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "03059d9430750a376ad10f979829838f82d0d2aea9fa3d493c87c1125b9c1563",
+        "hash": "03c5edb6404e67048028f2c1fd89172b649e43784cd6c2eeabab2652d887a73a"
+    },
+    {
+        "index": 44,
+        "timestamp": 1778894614.8144248,
+        "state": "Completed Peak Evolution Cycle #15",
+        "metadata": {
+            "iteration": 15,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "03c5edb6404e67048028f2c1fd89172b649e43784cd6c2eeabab2652d887a73a",
+        "hash": "5450a2a828b70e133406b545cb1e3acf1acf4228ea88cf40c7d328c1bfb8b116"
+    },
+    {
+        "index": 45,
+        "timestamp": 1778894630.1102893,
+        "state": "Completed Evolution Cycle #19",
+        "metadata": {
+            "iteration": 19,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "5450a2a828b70e133406b545cb1e3acf1acf4228ea88cf40c7d328c1bfb8b116",
+        "hash": "865db5a63ccebc050931a3d323f354d509957c4d191ef8a4b6333a922ad16b4b"
+    },
+    {
+        "index": 46,
+        "timestamp": 1778894636.0427392,
+        "state": "Completed Peak Evolution Cycle #14",
+        "metadata": {
+            "iteration": 14,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "865db5a63ccebc050931a3d323f354d509957c4d191ef8a4b6333a922ad16b4b",
+        "hash": "081686c04d16e354044940f8cdbd25844b968c59dded8ef9e9c282bf3cb66535"
+    },
+    {
+        "index": 47,
+        "timestamp": 1778894724.7458048,
+        "state": "Completed Peak Evolution Cycle #16",
+        "metadata": {
+            "iteration": 16,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "081686c04d16e354044940f8cdbd25844b968c59dded8ef9e9c282bf3cb66535",
+        "hash": "493785ac4a290065cff9dd3bc124ebe9d072704bf9f71eabfbdb5f313aab3da8"
+    },
+    {
+        "index": 48,
+        "timestamp": 1778894772.3123481,
+        "state": "Completed Evolution Cycle #20",
+        "metadata": {
+            "iteration": 20,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "493785ac4a290065cff9dd3bc124ebe9d072704bf9f71eabfbdb5f313aab3da8",
+        "hash": "8d573aef46489ec9bfda731e350788990b0755fccf988dc758e5d13581a36ff0"
+    },
+    {
+        "index": 49,
+        "timestamp": 1778894782.5519912,
+        "state": "Completed Peak Evolution Cycle #15",
+        "metadata": {
+            "iteration": 15,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "8d573aef46489ec9bfda731e350788990b0755fccf988dc758e5d13581a36ff0",
+        "hash": "a197712884799b4e1075fef5acfc7df7c0a389a8d5c266a9d83b2425edad3272"
+    },
+    {
+        "index": 50,
+        "timestamp": 1778894858.5926917,
+        "state": "Completed Peak Evolution Cycle #17",
+        "metadata": {
+            "iteration": 17,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "a197712884799b4e1075fef5acfc7df7c0a389a8d5c266a9d83b2425edad3272",
+        "hash": "58791ea67af83cc22b516fded0b03f8fceef980172bcd2bd7d4034431289481d"
+    },
+    {
+        "index": 51,
+        "timestamp": 1778894907.9692059,
+        "state": "Completed Evolution Cycle #21",
+        "metadata": {
+            "iteration": 21,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "58791ea67af83cc22b516fded0b03f8fceef980172bcd2bd7d4034431289481d",
+        "hash": "70d26179e23dff96b192f7005fe3cce321c7bb9037d2c1e8a74fe1b5461da050"
+    },
+    {
+        "index": 52,
+        "timestamp": 1778894920.2031484,
+        "state": "Completed Peak Evolution Cycle #16",
+        "metadata": {
+            "iteration": 16,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "70d26179e23dff96b192f7005fe3cce321c7bb9037d2c1e8a74fe1b5461da050",
+        "hash": "60abe34cd0c23902dfdf3118d0a2203b87f1602571cdbddfc09fcadce11b83d5"
+    },
+    {
+        "index": 53,
+        "timestamp": 1778894999.529869,
+        "state": "Completed Peak Evolution Cycle #18",
+        "metadata": {
+            "iteration": 18,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "60abe34cd0c23902dfdf3118d0a2203b87f1602571cdbddfc09fcadce11b83d5",
+        "hash": "b0f1951e91b4d4c19de0611725b23e3c5f9735c94f8d199ec79be3cbdb812bf2"
+    },
+    {
+        "index": 54,
+        "timestamp": 1778895036.2188442,
+        "state": "Completed Evolution Cycle #22",
+        "metadata": {
+            "iteration": 22,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "b0f1951e91b4d4c19de0611725b23e3c5f9735c94f8d199ec79be3cbdb812bf2",
+        "hash": "b56d7d011f74d2e2896749e3ed30c0066b402753a49ca78ef7458c08a0077795"
+    },
+    {
+        "index": 55,
+        "timestamp": 1778895087.9823914,
+        "state": "Completed Peak Evolution Cycle #17",
+        "metadata": {
+            "iteration": 17,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "b56d7d011f74d2e2896749e3ed30c0066b402753a49ca78ef7458c08a0077795",
+        "hash": "19e74b19fbfae5e80d901391a2961b4f0f60bde10f4cc7ddb3d80e501bb2afc0"
+    },
+    {
+        "index": 56,
+        "timestamp": 1778895110.5030167,
+        "state": "Completed Peak Evolution Cycle #19",
+        "metadata": {
+            "iteration": 19,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "19e74b19fbfae5e80d901391a2961b4f0f60bde10f4cc7ddb3d80e501bb2afc0",
+        "hash": "91fddeba39e6b9eac6c517ba8562096065ff8f8610fa4427ff1f72687d1f8ad4"
+    },
+    {
+        "index": 57,
+        "timestamp": 1778895163.6549346,
+        "state": "Completed Evolution Cycle #23",
+        "metadata": {
+            "iteration": 23,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "91fddeba39e6b9eac6c517ba8562096065ff8f8610fa4427ff1f72687d1f8ad4",
+        "hash": "651550585c52cbcf93e9c9acf48c311264bfcb82847d6cdfe10f45ecb3c4ed05"
+    },
+    {
+        "index": 58,
+        "timestamp": 1778895255.217855,
+        "state": "Completed Peak Evolution Cycle #18",
+        "metadata": {
+            "iteration": 18,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "651550585c52cbcf93e9c9acf48c311264bfcb82847d6cdfe10f45ecb3c4ed05",
+        "hash": "6cf84ea0647b57a482dff974ff4e364b6f48a1320ccab5f2ec207ddae7f054b1"
+    },
+    {
+        "index": 59,
+        "timestamp": 1778895255.3334904,
+        "state": "Completed Peak Evolution Cycle #20",
+        "metadata": {
+            "iteration": 20,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "6cf84ea0647b57a482dff974ff4e364b6f48a1320ccab5f2ec207ddae7f054b1",
+        "hash": "da95dd144e046a8420a422207484c2e9af3e0db45e7a767586f109e7f261833e"
+    },
+    {
+        "index": 60,
+        "timestamp": 1778895276.9563377,
+        "state": "Completed Evolution Cycle #24",
+        "metadata": {
+            "iteration": 24,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "da95dd144e046a8420a422207484c2e9af3e0db45e7a767586f109e7f261833e",
+        "hash": "f0c33bf40ed88753dd7f679fcaf013393365859f5590f3d29fd1227ec3344c95"
+    },
+    {
+        "index": 61,
+        "timestamp": 1778895399.2797008,
+        "state": "Completed Peak Evolution Cycle #21",
+        "metadata": {
+            "iteration": 21,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "f0c33bf40ed88753dd7f679fcaf013393365859f5590f3d29fd1227ec3344c95",
+        "hash": "6a476a0645c8635ee61ef338eae4fe950b384133c8185d04e6a5979389f85a55"
+    },
+    {
+        "index": 62,
+        "timestamp": 1778895410.8391492,
+        "state": "Completed Peak Evolution Cycle #19",
+        "metadata": {
+            "iteration": 19,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "6a476a0645c8635ee61ef338eae4fe950b384133c8185d04e6a5979389f85a55",
+        "hash": "516b9e8a8a04c6e9d0e8c9185361f1dc4442f37a1e609951538a74ea738c0ba4"
+    },
+    {
+        "index": 63,
+        "timestamp": 1778895530.0406985,
+        "state": "Completed Evolution Cycle #26",
+        "metadata": {
+            "iteration": 26,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "516b9e8a8a04c6e9d0e8c9185361f1dc4442f37a1e609951538a74ea738c0ba4",
+        "hash": "51d0c9a7c915fb40b4c112f6584681a39caad6448d74a17def94097f654e2447"
+    },
+    {
+        "index": 64,
+        "timestamp": 1778895555.7863715,
+        "state": "Completed Peak Evolution Cycle #22",
+        "metadata": {
+            "iteration": 22,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "51d0c9a7c915fb40b4c112f6584681a39caad6448d74a17def94097f654e2447",
+        "hash": "fcfec0859e41504465f0ac32dff21d960ff5e54ad53212be814632d179b98028"
+    },
+    {
+        "index": 65,
+        "timestamp": 1778895560.7006545,
+        "state": "Completed Peak Evolution Cycle #20",
+        "metadata": {
+            "iteration": 20,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "fcfec0859e41504465f0ac32dff21d960ff5e54ad53212be814632d179b98028",
+        "hash": "3b553be2306e9b6850a5fa674d4731292d0a79955372eaa08347de76f58f3ba7"
+    },
+    {
+        "index": 66,
+        "timestamp": 1778895683.2521856,
+        "state": "Completed Evolution Cycle #27",
+        "metadata": {
+            "iteration": 27,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "3b553be2306e9b6850a5fa674d4731292d0a79955372eaa08347de76f58f3ba7",
+        "hash": "4a83946c7dae51bc86132a6074b964b5b740b78a7c2b1c911d0d5926af6359ff"
+    },
+    {
+        "index": 67,
+        "timestamp": 1778895725.3126054,
+        "state": "Completed Peak Evolution Cycle #23",
+        "metadata": {
+            "iteration": 23,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "4a83946c7dae51bc86132a6074b964b5b740b78a7c2b1c911d0d5926af6359ff",
+        "hash": "f35d2dd6bccc90bf8b78ec8c30de8e703e22ec26b81f787d47b2e894ba0d5486"
+    },
+    {
+        "index": 68,
+        "timestamp": 1778895735.3816442,
+        "state": "Completed Peak Evolution Cycle #21",
+        "metadata": {
+            "iteration": 21,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "f35d2dd6bccc90bf8b78ec8c30de8e703e22ec26b81f787d47b2e894ba0d5486",
+        "hash": "c3596c18f4aa5e0b3f52a04c36f7e7da5e095113a65e51f3b3a6b4a1589095eb"
+    },
+    {
+        "index": 69,
+        "timestamp": 1778895798.990758,
+        "state": "Completed Evolution Cycle #28",
+        "metadata": {
+            "iteration": 28,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "c3596c18f4aa5e0b3f52a04c36f7e7da5e095113a65e51f3b3a6b4a1589095eb",
+        "hash": "286cc79be0e7efeebe2c048cc70ae3532c52257021dfcdd19d43484229f8e27b"
+    },
+    {
+        "index": 70,
+        "timestamp": 1778895873.8705063,
+        "state": "Completed Peak Evolution Cycle #24",
+        "metadata": {
+            "iteration": 24,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "286cc79be0e7efeebe2c048cc70ae3532c52257021dfcdd19d43484229f8e27b",
+        "hash": "5b97eeec6e60dc72ccb3b98dc6eea66e1d1839d25aba141c981e0f47159edbc1"
+    },
+    {
+        "index": 71,
+        "timestamp": 1778895889.4957542,
+        "state": "Completed Peak Evolution Cycle #22",
+        "metadata": {
+            "iteration": 22,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "5b97eeec6e60dc72ccb3b98dc6eea66e1d1839d25aba141c981e0f47159edbc1",
+        "hash": "c155057bd129f9326afe9940eae58192f2d004cf59e7e6d0ad7d8a673a8797b9"
+    },
+    {
+        "index": 72,
+        "timestamp": 1778895940.553633,
+        "state": "Completed Evolution Cycle #29",
+        "metadata": {
+            "iteration": 29,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "c155057bd129f9326afe9940eae58192f2d004cf59e7e6d0ad7d8a673a8797b9",
+        "hash": "62994ff7f91fa9dca710940e48cc24de6606d13e6035efde734cd602128d4e5c"
+    },
+    {
+        "index": 73,
+        "timestamp": 1778896062.2508166,
+        "state": "Completed Peak Evolution Cycle #25",
+        "metadata": {
+            "iteration": 25,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "62994ff7f91fa9dca710940e48cc24de6606d13e6035efde734cd602128d4e5c",
+        "hash": "7fcd41d67913208890d1f05aaaafa3d90310a01074333e784c12faa4022f7bed"
+    },
+    {
+        "index": 74,
+        "timestamp": 1778896068.106294,
+        "state": "Completed Peak Evolution Cycle #23",
+        "metadata": {
+            "iteration": 23,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "7fcd41d67913208890d1f05aaaafa3d90310a01074333e784c12faa4022f7bed",
+        "hash": "f2ad3d34cb4be4bf2118486ea524f22181434d04ca3bb165dd43b49f2effe060"
+    },
+    {
+        "index": 75,
+        "timestamp": 1778896086.3722558,
+        "state": "Completed Evolution Cycle #30",
+        "metadata": {
+            "iteration": 30,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "f2ad3d34cb4be4bf2118486ea524f22181434d04ca3bb165dd43b49f2effe060",
+        "hash": "ecdcc99bd0ddf2f1ddf8a1e74d8698619a6cd1e3c6aa101e745ee8bee40f7cb7"
+    },
+    {
+        "index": 76,
+        "timestamp": 1778896189.38687,
+        "state": "Completed Evolution Cycle #31",
+        "metadata": {
+            "iteration": 31,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "ecdcc99bd0ddf2f1ddf8a1e74d8698619a6cd1e3c6aa101e745ee8bee40f7cb7",
+        "hash": "d19a9b01dba9bc3a4fcecd7508663386fd519567a02a2e6f0b2e3581272273ed"
+    },
+    {
+        "index": 77,
+        "timestamp": 1778896212.6995099,
+        "state": "Completed Peak Evolution Cycle #26",
+        "metadata": {
+            "iteration": 26,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "d19a9b01dba9bc3a4fcecd7508663386fd519567a02a2e6f0b2e3581272273ed",
+        "hash": "00b5f59c456ca8e4355dd3a83076475567fab7e7959370d032213028a5e8695f"
+    },
+    {
+        "index": 78,
+        "timestamp": 1778896253.6265078,
+        "state": "Completed Peak Evolution Cycle #24",
+        "metadata": {
+            "iteration": 24,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "00b5f59c456ca8e4355dd3a83076475567fab7e7959370d032213028a5e8695f",
+        "hash": "6ef6cbba31cc512091ddbd137861904da10f68994b552049ff2ce203d5a1c6b1"
+    },
+    {
+        "index": 79,
+        "timestamp": 1778896288.1524687,
+        "state": "Completed Evolution Cycle #32",
+        "metadata": {
+            "iteration": 32,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "6ef6cbba31cc512091ddbd137861904da10f68994b552049ff2ce203d5a1c6b1",
+        "hash": "82477b6e0fd4b86cf9ebd0b8eb757d294c1fd9da633496644bc9a56042f96f53"
+    },
+    {
+        "index": 80,
+        "timestamp": 1778896373.0383923,
+        "state": "Completed Peak Evolution Cycle #27",
+        "metadata": {
+            "iteration": 27,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "82477b6e0fd4b86cf9ebd0b8eb757d294c1fd9da633496644bc9a56042f96f53",
+        "hash": "89aa150ca477240764c70705e53303873403ea4296e4b0b620e246f4f44ea3a5"
+    },
+    {
+        "index": 81,
+        "timestamp": 1778896398.7587125,
+        "state": "Completed Evolution Cycle #33",
+        "metadata": {
+            "iteration": 33,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "89aa150ca477240764c70705e53303873403ea4296e4b0b620e246f4f44ea3a5",
+        "hash": "0daf23b2d0f24894bc41f38e7a75c71d4d21a958f88d3f3d3e2016b14e2edf86"
+    },
+    {
+        "index": 82,
+        "timestamp": 1778896404.1196837,
+        "state": "Completed Peak Evolution Cycle #25",
+        "metadata": {
+            "iteration": 25,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "0daf23b2d0f24894bc41f38e7a75c71d4d21a958f88d3f3d3e2016b14e2edf86",
+        "hash": "0e4845edef62bc740c7efd62f2be538c0ab2c9bb5ecc440b92a875ccc982d8c4"
+    },
+    {
+        "index": 83,
+        "timestamp": 1778896505.395142,
+        "state": "Completed Peak Evolution Cycle #28",
+        "metadata": {
+            "iteration": 28,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "0e4845edef62bc740c7efd62f2be538c0ab2c9bb5ecc440b92a875ccc982d8c4",
+        "hash": "3ce094a9e920f7a3d92bd23cbb8c56e2007b529dd8fddf5e28c6472b1c2b385c"
+    },
+    {
+        "index": 84,
+        "timestamp": 1778896534.9838178,
+        "state": "Completed Evolution Cycle #34",
+        "metadata": {
+            "iteration": 34,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "3ce094a9e920f7a3d92bd23cbb8c56e2007b529dd8fddf5e28c6472b1c2b385c",
+        "hash": "7ab1e17320046740d72897ff8e7ea258002fe121145388c8ac112fc63e3c2db0"
+    },
+    {
+        "index": 85,
+        "timestamp": 1778896549.655939,
+        "state": "Completed Peak Evolution Cycle #26",
+        "metadata": {
+            "iteration": 26,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "7ab1e17320046740d72897ff8e7ea258002fe121145388c8ac112fc63e3c2db0",
+        "hash": "1c85b22238eb5a90e0b2e01373952e3edfb457dfb56ce37c13735494d72321f9"
+    },
+    {
+        "index": 86,
+        "timestamp": 1778896659.3934817,
+        "state": "Completed Evolution Cycle #35",
+        "metadata": {
+            "iteration": 35,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "1c85b22238eb5a90e0b2e01373952e3edfb457dfb56ce37c13735494d72321f9",
+        "hash": "c658b6aabefd0c4b6cfae0b640f0d32436fbe6d7a62d3f390472db7de0ff8ff8"
+    },
+    {
+        "index": 87,
+        "timestamp": 1778896664.9205706,
+        "state": "Completed Peak Evolution Cycle #29",
+        "metadata": {
+            "iteration": 29,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "c658b6aabefd0c4b6cfae0b640f0d32436fbe6d7a62d3f390472db7de0ff8ff8",
+        "hash": "816aaf0e16e7c9e4c1776b856d4af9ba491053ad7958cf29fc5922889b41137e"
+    },
+    {
+        "index": 88,
+        "timestamp": 1778896740.6480513,
+        "state": "Completed Peak Evolution Cycle #27",
+        "metadata": {
+            "iteration": 27,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "816aaf0e16e7c9e4c1776b856d4af9ba491053ad7958cf29fc5922889b41137e",
+        "hash": "b112e6fde83303ddc6cb44da648d3f56945c4746fa1cca9278cd5174113ed05b"
+    },
+    {
+        "index": 89,
+        "timestamp": 1778896788.1809285,
+        "state": "Completed Evolution Cycle #36",
+        "metadata": {
+            "iteration": 36,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "b112e6fde83303ddc6cb44da648d3f56945c4746fa1cca9278cd5174113ed05b",
+        "hash": "71526a77b21f064272214fe7a2948c792d8c0b5503d2f07dac7cfccaf3cf5e6a"
+    },
+    {
+        "index": 90,
+        "timestamp": 1778896840.9003525,
+        "state": "Completed Peak Evolution Cycle #30",
+        "metadata": {
+            "iteration": 30,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "71526a77b21f064272214fe7a2948c792d8c0b5503d2f07dac7cfccaf3cf5e6a",
+        "hash": "2c1a647eb03525639f3e04ecd37ec8826775f576bb2a58f9a5c713fb4987d9a3"
+    },
+    {
+        "index": 91,
+        "timestamp": 1778896888.6055872,
+        "state": "Completed Evolution Cycle #37",
+        "metadata": {
+            "iteration": 37,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "2c1a647eb03525639f3e04ecd37ec8826775f576bb2a58f9a5c713fb4987d9a3",
+        "hash": "2f10f3ccd48315f31843f9183f2608b7b587a5b4faa4714f84d9736ded46ecb6"
+    },
+    {
+        "index": 92,
+        "timestamp": 1778896901.2661712,
+        "state": "Completed Peak Evolution Cycle #28",
+        "metadata": {
+            "iteration": 28,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "2f10f3ccd48315f31843f9183f2608b7b587a5b4faa4714f84d9736ded46ecb6",
+        "hash": "9d2f2b6010ae0de4f23219c48962cf0e25d499e06f14c4e527352218e3800211"
+    },
+    {
+        "index": 93,
+        "timestamp": 1778897003.0906968,
+        "state": "Completed Evolution Cycle #38",
+        "metadata": {
+            "iteration": 38,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "9d2f2b6010ae0de4f23219c48962cf0e25d499e06f14c4e527352218e3800211",
+        "hash": "c0ed604e182b5c6191b98369816ae6d3090cd6a51df2a885909d395d8a7795eb"
+    },
+    {
+        "index": 94,
+        "timestamp": 1778897009.1035478,
+        "state": "Completed Peak Evolution Cycle #31",
+        "metadata": {
+            "iteration": 31,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "c0ed604e182b5c6191b98369816ae6d3090cd6a51df2a885909d395d8a7795eb",
+        "hash": "ac02c7a4a5b12367de624bfafc8aa12560485106a351d18e4a5a1d898a2d739d"
+    },
+    {
+        "index": 95,
+        "timestamp": 1778897079.9458773,
+        "state": "Completed Peak Evolution Cycle #29",
+        "metadata": {
+            "iteration": 29,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "ac02c7a4a5b12367de624bfafc8aa12560485106a351d18e4a5a1d898a2d739d",
+        "hash": "4ebf90f6190a725f99728012460cc3f939ea80a5e62d9abf3aef4bed8ed28329"
+    },
+    {
+        "index": 96,
+        "timestamp": 1778897129.6942623,
+        "state": "Completed Evolution Cycle #39",
+        "metadata": {
+            "iteration": 39,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "4ebf90f6190a725f99728012460cc3f939ea80a5e62d9abf3aef4bed8ed28329",
+        "hash": "841500dd5cbdc165d0013aa812c1549eeb6c0c90d07d0227bbd880b35ed3d0a0"
+    },
+    {
+        "index": 97,
+        "timestamp": 1778897204.2296853,
+        "state": "Completed Peak Evolution Cycle #32",
+        "metadata": {
+            "iteration": 32,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "841500dd5cbdc165d0013aa812c1549eeb6c0c90d07d0227bbd880b35ed3d0a0",
+        "hash": "a069436451a7153e08eab89e26f8735c32838fc687c459e669e65926de80c685"
+    },
+    {
+        "index": 98,
+        "timestamp": 1778897278.8181732,
+        "state": "Completed Peak Evolution Cycle #30",
+        "metadata": {
+            "iteration": 30,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "a069436451a7153e08eab89e26f8735c32838fc687c459e669e65926de80c685",
+        "hash": "6901048c567995f2699ea7ec4db5bdd459946b0f5da0fd7fac97162af2b306ca"
+    },
+    {
+        "index": 99,
+        "timestamp": 1778897282.9664342,
+        "state": "Completed Evolution Cycle #40",
+        "metadata": {
+            "iteration": 40,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "6901048c567995f2699ea7ec4db5bdd459946b0f5da0fd7fac97162af2b306ca",
+        "hash": "a998010aad37c8ac9d673c224fb47debe63c2dc5fd64dbb668bbad259bdc3d3f"
+    },
+    {
+        "index": 100,
+        "timestamp": 1778897403.828959,
+        "state": "Completed Evolution Cycle #41",
+        "metadata": {
+            "iteration": 41,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "a998010aad37c8ac9d673c224fb47debe63c2dc5fd64dbb668bbad259bdc3d3f",
+        "hash": "f7b3c5f651e32bd2af5e4e8cfb80e8b6f0d7b56f3a69714d0a14c4806ae1978f"
+    },
+    {
+        "index": 101,
+        "timestamp": 1778897411.6732938,
+        "state": "Completed Peak Evolution Cycle #33",
+        "metadata": {
+            "iteration": 33,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "f7b3c5f651e32bd2af5e4e8cfb80e8b6f0d7b56f3a69714d0a14c4806ae1978f",
+        "hash": "52ab8389ff9de0c52be5f4ad92e0f35777e1c499fcb29bd6daa42f2cd6b4284c"
+    },
+    {
+        "index": 102,
+        "timestamp": 1778897498.8549185,
+        "state": "Completed Peak Evolution Cycle #31",
+        "metadata": {
+            "iteration": 31,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "52ab8389ff9de0c52be5f4ad92e0f35777e1c499fcb29bd6daa42f2cd6b4284c",
+        "hash": "f2cbed3fdea333ab24359d8d0bd594fc04964ecb225258abfed4356ad1831c73"
+    },
+    {
+        "index": 103,
+        "timestamp": 1778897542.3732522,
+        "state": "Completed Evolution Cycle #42",
+        "metadata": {
+            "iteration": 42,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "f2cbed3fdea333ab24359d8d0bd594fc04964ecb225258abfed4356ad1831c73",
+        "hash": "28f244ccd48085ca5b870bbf8e80174838331cabe17342fc27e75b127224d904"
+    },
+    {
+        "index": 104,
+        "timestamp": 1778897583.5536783,
+        "state": "Completed Peak Evolution Cycle #34",
+        "metadata": {
+            "iteration": 34,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "28f244ccd48085ca5b870bbf8e80174838331cabe17342fc27e75b127224d904",
+        "hash": "b5117f77bb8bf4b93156493a97a0a86e92a9f8564579116a731d2b0178fcc8cb"
+    },
+    {
+        "index": 105,
+        "timestamp": 1778897678.9858732,
+        "state": "Completed Evolution Cycle #43",
+        "metadata": {
+            "iteration": 43,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "b5117f77bb8bf4b93156493a97a0a86e92a9f8564579116a731d2b0178fcc8cb",
+        "hash": "13f64daab4acd23b3e5c56b887dc5c79d55ed6313c02e107836d1e1dba1b4ec9"
+    },
+    {
+        "index": 106,
+        "timestamp": 1778897746.5134382,
+        "state": "Completed Peak Evolution Cycle #32",
+        "metadata": {
+            "iteration": 32,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "13f64daab4acd23b3e5c56b887dc5c79d55ed6313c02e107836d1e1dba1b4ec9",
+        "hash": "30dd68a6afcb5957354603a36cf6f0b723c97ea592dc6c7228df4a1288d8a201"
+    },
+    {
+        "index": 107,
+        "timestamp": 1778897798.572029,
+        "state": "Completed Peak Evolution Cycle #35",
+        "metadata": {
+            "iteration": 35,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "30dd68a6afcb5957354603a36cf6f0b723c97ea592dc6c7228df4a1288d8a201",
+        "hash": "740c8f3f72b5bf022d3fdd2efbc3949c9270a5b31991da4e8d08e90159baa025"
+    },
+    {
+        "index": 108,
+        "timestamp": 1778897821.9343424,
+        "state": "Completed Evolution Cycle #44",
+        "metadata": {
+            "iteration": 44,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "740c8f3f72b5bf022d3fdd2efbc3949c9270a5b31991da4e8d08e90159baa025",
+        "hash": "db157cb649f178b92a30d83e55aa1285baacd0f34a63f2cf704fc6d296dbb045"
+    },
+    {
+        "index": 109,
+        "timestamp": 1778897970.951295,
+        "state": "Completed Peak Evolution Cycle #33",
+        "metadata": {
+            "iteration": 33,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "db157cb649f178b92a30d83e55aa1285baacd0f34a63f2cf704fc6d296dbb045",
+        "hash": "8b31782be914e19323555d66e433ce4cc6150300b42f5dc7c5a37fd746551d23"
+    },
+    {
+        "index": 110,
+        "timestamp": 1778898003.8814878,
+        "state": "Completed Evolution Cycle #45",
+        "metadata": {
+            "iteration": 45,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "8b31782be914e19323555d66e433ce4cc6150300b42f5dc7c5a37fd746551d23",
+        "hash": "b90beb99669b8ce344fc24df9980bca2bd046e5ed6ea00029a6ac5b1806a2df2"
+    },
+    {
+        "index": 111,
+        "timestamp": 1778898014.272599,
+        "state": "Completed Peak Evolution Cycle #36",
+        "metadata": {
+            "iteration": 36,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "b90beb99669b8ce344fc24df9980bca2bd046e5ed6ea00029a6ac5b1806a2df2",
+        "hash": "09ea9d37adb9a9a463611d9860d397e895afdaa82fafee38ed20557847a4d859"
+    },
+    {
+        "index": 112,
+        "timestamp": 1778898169.7635007,
+        "state": "Completed Evolution Cycle #46",
+        "metadata": {
+            "iteration": 46,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "09ea9d37adb9a9a463611d9860d397e895afdaa82fafee38ed20557847a4d859",
+        "hash": "507813a17895dd6403d01214aba17bea0de6b032def3d3e67e1eeb60fac3281e"
+    },
+    {
+        "index": 113,
+        "timestamp": 1778898225.164535,
+        "state": "Completed Peak Evolution Cycle #34",
+        "metadata": {
+            "iteration": 34,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "507813a17895dd6403d01214aba17bea0de6b032def3d3e67e1eeb60fac3281e",
+        "hash": "e0bc8aab18d31056b0e43de5770e8f1beea93a1ba79652ab6cae4aaba5fc2e2a"
+    },
+    {
+        "index": 114,
+        "timestamp": 1778898236.1625988,
+        "state": "Completed Peak Evolution Cycle #37",
+        "metadata": {
+            "iteration": 37,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "e0bc8aab18d31056b0e43de5770e8f1beea93a1ba79652ab6cae4aaba5fc2e2a",
+        "hash": "bf9ec1a8fb24dc8ab339460d7b938c9285096709a5f19a63a6525e6dae3da28d"
+    },
+    {
+        "index": 115,
+        "timestamp": 1778898308.2771184,
+        "state": "Completed Evolution Cycle #47",
+        "metadata": {
+            "iteration": 47,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "bf9ec1a8fb24dc8ab339460d7b938c9285096709a5f19a63a6525e6dae3da28d",
+        "hash": "13dc3acf43f17640af1b5594e3fb371ef2158ed625ffba59b866bb29af40f38d"
+    },
+    {
+        "index": 116,
+        "timestamp": 1778898440.1567757,
+        "state": "Completed Peak Evolution Cycle #38",
+        "metadata": {
+            "iteration": 38,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "13dc3acf43f17640af1b5594e3fb371ef2158ed625ffba59b866bb29af40f38d",
+        "hash": "e7584449e6c9c50784add1deb36ab40d28a1032555fd9d61ef066b26967a14b9"
+    },
+    {
+        "index": 117,
+        "timestamp": 1778898458.2708328,
+        "state": "Completed Peak Evolution Cycle #35",
+        "metadata": {
+            "iteration": 35,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "e7584449e6c9c50784add1deb36ab40d28a1032555fd9d61ef066b26967a14b9",
+        "hash": "2556e1468631c63c35358df24196b4486891829f4536d4a40b190d9bc8b63f35"
+    },
+    {
+        "index": 118,
+        "timestamp": 1778898580.6160731,
+        "state": "Completed Evolution Cycle #49",
+        "metadata": {
+            "iteration": 49,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "2556e1468631c63c35358df24196b4486891829f4536d4a40b190d9bc8b63f35",
+        "hash": "c8fadb632d6443ce263458702a82940ec929a0ba06ff188518f656318eb8d4ae"
+    },
+    {
+        "index": 119,
+        "timestamp": 1778898587.9549322,
+        "state": "Completed Peak Evolution Cycle #39",
+        "metadata": {
+            "iteration": 39,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "c8fadb632d6443ce263458702a82940ec929a0ba06ff188518f656318eb8d4ae",
+        "hash": "d94714212d49a1f5bf20ba105b01ccc496b18b251024e306696950f77126e9a8"
+    },
+    {
+        "index": 120,
+        "timestamp": 1778898666.9500887,
+        "state": "Completed Peak Evolution Cycle #36",
+        "metadata": {
+            "iteration": 36,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "d94714212d49a1f5bf20ba105b01ccc496b18b251024e306696950f77126e9a8",
+        "hash": "23be7ee638c87b655cea92a86ffa1954d65a3ef08115a9960e9e950bad1ee6fd"
+    },
+    {
+        "index": 121,
+        "timestamp": 1778898736.9317126,
+        "state": "Completed Evolution Cycle #50",
+        "metadata": {
+            "iteration": 50,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "23be7ee638c87b655cea92a86ffa1954d65a3ef08115a9960e9e950bad1ee6fd",
+        "hash": "6d7092f2cd7107554a5eb3638e1f474e491c34bce7cb51d17a90691873728a6b"
+    },
+    {
+        "index": 122,
+        "timestamp": 1778898763.599701,
+        "state": "Completed Peak Evolution Cycle #40",
+        "metadata": {
+            "iteration": 40,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "6d7092f2cd7107554a5eb3638e1f474e491c34bce7cb51d17a90691873728a6b",
+        "hash": "a7cd001d9b68212d800085d6b25a9400bcf121cd40a266c07b8e5cb219ec90e3"
+    },
+    {
+        "index": 123,
+        "timestamp": 1778898828.460852,
+        "state": "Completed Peak Evolution Cycle #37",
+        "metadata": {
+            "iteration": 37,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "a7cd001d9b68212d800085d6b25a9400bcf121cd40a266c07b8e5cb219ec90e3",
+        "hash": "0f8ad8041d5cdc830fa4774ecf9b59688fb92cf0835c8b1f2620706385032c6e"
+    },
+    {
+        "index": 124,
+        "timestamp": 1778898847.5880668,
+        "state": "Completed Evolution Cycle #51",
+        "metadata": {
+            "iteration": 51,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "0f8ad8041d5cdc830fa4774ecf9b59688fb92cf0835c8b1f2620706385032c6e",
+        "hash": "c39c4c621dc71822ae0bc984d9323462fcd395dcf49aadbd91e2d965b5201891"
+    },
+    {
+        "index": 125,
+        "timestamp": 1778898881.9686544,
+        "state": "Completed Peak Evolution Cycle #41",
+        "metadata": {
+            "iteration": 41,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "c39c4c621dc71822ae0bc984d9323462fcd395dcf49aadbd91e2d965b5201891",
+        "hash": "2fa777a1030d6721806a6956c375870d821ea7286f0f20a773266c552ae25769"
+    },
+    {
+        "index": 126,
+        "timestamp": 1778898919.2162025,
+        "state": "Completed Evolution Cycle #52",
+        "metadata": {
+            "iteration": 52,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "2fa777a1030d6721806a6956c375870d821ea7286f0f20a773266c552ae25769",
+        "hash": "842c2bec5d74ccae43e12cd67e4d41817b2244392a90474a521367599647ddcb"
+    },
+    {
+        "index": 127,
+        "timestamp": 1778898924.8356407,
+        "state": "Completed Peak Evolution Cycle #38",
+        "metadata": {
+            "iteration": 38,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "842c2bec5d74ccae43e12cd67e4d41817b2244392a90474a521367599647ddcb",
+        "hash": "dc9daa3714381a1e25eacf10769b168c77c52455809377bf9680abd6a1ee2c4b"
+    },
+    {
+        "index": 128,
+        "timestamp": 1778898959.720102,
+        "state": "Completed Peak Evolution Cycle #42",
+        "metadata": {
+            "iteration": 42,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "dc9daa3714381a1e25eacf10769b168c77c52455809377bf9680abd6a1ee2c4b",
+        "hash": "11388161889cba7b9a3e87eebcb42822e53d7b8e7915d10e5e6bd2047f8b7cb8"
+    },
+    {
+        "index": 129,
+        "timestamp": 1778898987.4669964,
+        "state": "Completed Evolution Cycle #53",
+        "metadata": {
+            "iteration": 53,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "11388161889cba7b9a3e87eebcb42822e53d7b8e7915d10e5e6bd2047f8b7cb8",
+        "hash": "ba2f4b04538e80b5a8a13280f95c115d1790d0ed9f3d24bf751d04f5143c91ea"
+    },
+    {
+        "index": 130,
+        "timestamp": 1778898992.0945451,
+        "state": "Completed Peak Evolution Cycle #39",
+        "metadata": {
+            "iteration": 39,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "ba2f4b04538e80b5a8a13280f95c115d1790d0ed9f3d24bf751d04f5143c91ea",
+        "hash": "77ea1bd23c0ea259986f6556cfd06e0ff9feea0f9f87250766a153bd071195a0"
+    },
+    {
+        "index": 131,
+        "timestamp": 1778899031.2422829,
+        "state": "Completed Peak Evolution Cycle #43",
+        "metadata": {
+            "iteration": 43,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "77ea1bd23c0ea259986f6556cfd06e0ff9feea0f9f87250766a153bd071195a0",
+        "hash": "e777b613646f72e7cc911645cf2cb816d7c545d7ad86132e18dde6e349758413"
+    },
+    {
+        "index": 132,
+        "timestamp": 1778899054.0186281,
+        "state": "Completed Peak Evolution Cycle #40",
+        "metadata": {
+            "iteration": 40,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "e777b613646f72e7cc911645cf2cb816d7c545d7ad86132e18dde6e349758413",
+        "hash": "99d9c3e98f45c9d945dbe8025cc6557520a33fb75730ff9bd821eb9809568ba1"
+    },
+    {
+        "index": 133,
+        "timestamp": 1778899056.126136,
+        "state": "Completed Evolution Cycle #54",
+        "metadata": {
+            "iteration": 54,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "99d9c3e98f45c9d945dbe8025cc6557520a33fb75730ff9bd821eb9809568ba1",
+        "hash": "41d659031f011a4a4cb02d7b7faadc7cf3cd9a28383731a8bab1692eae6830b6"
+    },
+    {
+        "index": 134,
+        "timestamp": 1778899098.8596342,
+        "state": "Completed Peak Evolution Cycle #44",
+        "metadata": {
+            "iteration": 44,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "41d659031f011a4a4cb02d7b7faadc7cf3cd9a28383731a8bab1692eae6830b6",
+        "hash": "8922328b24002c10b586f4c7b7dd913a80114da692148876839d6d5b4476b3b2"
+    },
+    {
+        "index": 135,
+        "timestamp": 1778899119.0058546,
+        "state": "Completed Peak Evolution Cycle #41",
+        "metadata": {
+            "iteration": 41,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "8922328b24002c10b586f4c7b7dd913a80114da692148876839d6d5b4476b3b2",
+        "hash": "1719c839420755f2c6eacb5d83cb1d577f578e8445368904c95f2e59731874e6"
+    },
+    {
+        "index": 136,
+        "timestamp": 1778899124.4124928,
+        "state": "Completed Evolution Cycle #55",
+        "metadata": {
+            "iteration": 55,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "1719c839420755f2c6eacb5d83cb1d577f578e8445368904c95f2e59731874e6",
+        "hash": "7d8f26e48fb6f493bdf4a2601e8bd9597ed26800ceeb89b10d53ea6ea3612173"
+    },
+    {
+        "index": 137,
+        "timestamp": 1778899165.7740023,
+        "state": "Completed Peak Evolution Cycle #45",
+        "metadata": {
+            "iteration": 45,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "7d8f26e48fb6f493bdf4a2601e8bd9597ed26800ceeb89b10d53ea6ea3612173",
+        "hash": "783c4dbb3406f518a1788726bf93f820c26ceee20320a852e95dcf906454c40e"
+    },
+    {
+        "index": 138,
+        "timestamp": 1778899184.1529875,
+        "state": "Completed Peak Evolution Cycle #42",
+        "metadata": {
+            "iteration": 42,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "783c4dbb3406f518a1788726bf93f820c26ceee20320a852e95dcf906454c40e",
+        "hash": "31f7b27d9581cd90bbfa02c3e22ebc4a45e0100d5e5de35c713875bb19ea8b0c"
+    },
+    {
+        "index": 139,
+        "timestamp": 1778899192.171061,
+        "state": "Completed Evolution Cycle #56",
+        "metadata": {
+            "iteration": 56,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "31f7b27d9581cd90bbfa02c3e22ebc4a45e0100d5e5de35c713875bb19ea8b0c",
+        "hash": "017cbdfbdedab00d600ac76de3ddbbe7a2805920b21d1a2b436b103c69d793d4"
+    },
+    {
+        "index": 140,
+        "timestamp": 1778899227.543287,
+        "state": "Completed Peak Evolution Cycle #46",
+        "metadata": {
+            "iteration": 46,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "017cbdfbdedab00d600ac76de3ddbbe7a2805920b21d1a2b436b103c69d793d4",
+        "hash": "df060fa2242cb097650f09aff47eb6aeef00cc40bea125ca82d089e49746cc61"
+    },
+    {
+        "index": 141,
+        "timestamp": 1778899249.8660378,
+        "state": "Completed Peak Evolution Cycle #43",
+        "metadata": {
+            "iteration": 43,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "df060fa2242cb097650f09aff47eb6aeef00cc40bea125ca82d089e49746cc61",
+        "hash": "9439c94fa5eb97e60aa701cde1ea9b312664e50ff1ee6eaaa19d7fc543612388"
+    },
+    {
+        "index": 142,
+        "timestamp": 1778899258.8726587,
+        "state": "Completed Evolution Cycle #57",
+        "metadata": {
+            "iteration": 57,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "9439c94fa5eb97e60aa701cde1ea9b312664e50ff1ee6eaaa19d7fc543612388",
+        "hash": "bff0ca4e50e1257e31aca2719644ff2b93d49d9d00f37ff224e05e50035000df"
+    },
+    {
+        "index": 143,
+        "timestamp": 1778899293.7621217,
+        "state": "Completed Peak Evolution Cycle #47",
+        "metadata": {
+            "iteration": 47,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "bff0ca4e50e1257e31aca2719644ff2b93d49d9d00f37ff224e05e50035000df",
+        "hash": "b35f839aa436a32fe12de7eda996632315953891acfa757e86824c1bae025a25"
+    },
+    {
+        "index": 144,
+        "timestamp": 1778899322.8889275,
+        "state": "Completed Peak Evolution Cycle #44",
+        "metadata": {
+            "iteration": 44,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "b35f839aa436a32fe12de7eda996632315953891acfa757e86824c1bae025a25",
+        "hash": "b819620eba02b8b5c31260b6b7ddb095fa02ad3a68ca4c70d6a7e5e42cae0373"
+    },
+    {
+        "index": 145,
+        "timestamp": 1778899324.7990563,
+        "state": "Completed Evolution Cycle #58",
+        "metadata": {
+            "iteration": 58,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "b819620eba02b8b5c31260b6b7ddb095fa02ad3a68ca4c70d6a7e5e42cae0373",
+        "hash": "39677d9944ff9df8a80447fc2b7f173c6504c546ffaed0a64d7d83c7e942be04"
+    },
+    {
+        "index": 146,
+        "timestamp": 1778899364.0089283,
+        "state": "Completed Peak Evolution Cycle #48",
+        "metadata": {
+            "iteration": 48,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "39677d9944ff9df8a80447fc2b7f173c6504c546ffaed0a64d7d83c7e942be04",
+        "hash": "2ad527e011fb2a29291c3b0ef496aa8e9bb9c8bc038d43dac0f5b8c9156637dd"
+    },
+    {
+        "index": 147,
+        "timestamp": 1778899368.120572,
+        "state": "Completed Peak Evolution Cycle #45",
+        "metadata": {
+            "iteration": 45,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "2ad527e011fb2a29291c3b0ef496aa8e9bb9c8bc038d43dac0f5b8c9156637dd",
+        "hash": "23a86bfe9986e2844fd2603c1d2fa5eab7baf3c04a1be569a2cc79dcc38019ac"
+    },
+    {
+        "index": 148,
+        "timestamp": 1778899390.8741086,
+        "state": "Completed Evolution Cycle #59",
+        "metadata": {
+            "iteration": 59,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "23a86bfe9986e2844fd2603c1d2fa5eab7baf3c04a1be569a2cc79dcc38019ac",
+        "hash": "c024e5b20cf1572ac50ca3e23e9fc1a24964b04f0fa8737f5c89adec789390e6"
+    },
+    {
+        "index": 149,
+        "timestamp": 1778899430.9769535,
+        "state": "Completed Peak Evolution Cycle #46",
+        "metadata": {
+            "iteration": 46,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "c024e5b20cf1572ac50ca3e23e9fc1a24964b04f0fa8737f5c89adec789390e6",
+        "hash": "bfc4bf2329f58ccdc4a247dcb3d12d7490229ed7da18fcfc320b2a64a9d34bc6"
+    },
+    {
+        "index": 150,
+        "timestamp": 1778899432.2139032,
+        "state": "Completed Peak Evolution Cycle #49",
+        "metadata": {
+            "iteration": 49,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "bfc4bf2329f58ccdc4a247dcb3d12d7490229ed7da18fcfc320b2a64a9d34bc6",
+        "hash": "cba8294ab6423b4d61eb4e94ed0683c3231e42e482918420bd29f33a92814677"
+    },
+    {
+        "index": 151,
+        "timestamp": 1778899455.840777,
+        "state": "Completed Evolution Cycle #60",
+        "metadata": {
+            "iteration": 60,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "cba8294ab6423b4d61eb4e94ed0683c3231e42e482918420bd29f33a92814677",
+        "hash": "d2aab1419815c3001506465d28fffdb1a477d00700f410bf98efadc28cec2527"
+    },
+    {
+        "index": 152,
+        "timestamp": 1778899492.4970915,
+        "state": "Completed Peak Evolution Cycle #50",
+        "metadata": {
+            "iteration": 50,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "d2aab1419815c3001506465d28fffdb1a477d00700f410bf98efadc28cec2527",
+        "hash": "aa58fbd754bf6d8eac11c95ab4080b965b2916ef657c9ff1a7a96a46f8927407"
+    },
+    {
+        "index": 153,
+        "timestamp": 1778899495.09927,
+        "state": "Completed Peak Evolution Cycle #47",
+        "metadata": {
+            "iteration": 47,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "aa58fbd754bf6d8eac11c95ab4080b965b2916ef657c9ff1a7a96a46f8927407",
+        "hash": "f7991df74ef2b44c46e8c6b6580983af8f9ceae12aa14c51de55347a754a25d2"
+    },
+    {
+        "index": 154,
+        "timestamp": 1778899514.364924,
+        "state": "Completed Evolution Cycle #61",
+        "metadata": {
+            "iteration": 61,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "f7991df74ef2b44c46e8c6b6580983af8f9ceae12aa14c51de55347a754a25d2",
+        "hash": "a47a383f7f80e68fb33fd37129f3279285f0ee3cb3f58cf821e78ac9babf1670"
+    },
+    {
+        "index": 155,
+        "timestamp": 1778899537.3650072,
+        "state": "Completed Peak Evolution Cycle #48",
+        "metadata": {
+            "iteration": 48,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "a47a383f7f80e68fb33fd37129f3279285f0ee3cb3f58cf821e78ac9babf1670",
+        "hash": "f39ace36e8cfccf39370557cc7ea10b16a78e122bcbd2d0bddb6ffb50219ab90"
+    },
+    {
+        "index": 156,
+        "timestamp": 1778899554.6195602,
+        "state": "Completed Peak Evolution Cycle #51",
+        "metadata": {
+            "iteration": 51,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "f39ace36e8cfccf39370557cc7ea10b16a78e122bcbd2d0bddb6ffb50219ab90",
+        "hash": "580e8042f74fd3a5e6bde866770a98948d70fceb7579e3ffa44d597f40aaa17d"
+    },
+    {
+        "index": 157,
+        "timestamp": 1778899586.9107192,
+        "state": "Completed Peak Evolution Cycle #49",
+        "metadata": {
+            "iteration": 49,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "580e8042f74fd3a5e6bde866770a98948d70fceb7579e3ffa44d597f40aaa17d",
+        "hash": "8a149383fdfe06039cfccf40c87edcf482df1aa532d632cbe59c9a50c32db33d"
+    },
+    {
+        "index": 158,
+        "timestamp": 1778899591.739404,
+        "state": "Completed Evolution Cycle #62",
+        "metadata": {
+            "iteration": 62,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "8a149383fdfe06039cfccf40c87edcf482df1aa532d632cbe59c9a50c32db33d",
+        "hash": "25c50fff13c43fe5f53f248c4cac0898d36b8f1bcd5f1889a91ae64b8a729f84"
+    },
+    {
+        "index": 159,
+        "timestamp": 1778899626.6636465,
+        "state": "Completed Peak Evolution Cycle #52",
+        "metadata": {
+            "iteration": 52,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "25c50fff13c43fe5f53f248c4cac0898d36b8f1bcd5f1889a91ae64b8a729f84",
+        "hash": "6f630100cb17c9216c15ccfe8b5ac32d4254795940c37faf61f06bc578085093"
+    },
+    {
+        "index": 160,
+        "timestamp": 1778899661.6217418,
+        "state": "Completed Evolution Cycle #63",
+        "metadata": {
+            "iteration": 63,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "6f630100cb17c9216c15ccfe8b5ac32d4254795940c37faf61f06bc578085093",
+        "hash": "08561ae88342977ca63fef7c3bd70bc7261ba213cf300460276a59d7bccde2c4"
+    },
+    {
+        "index": 161,
+        "timestamp": 1778899663.1584868,
+        "state": "Completed Peak Evolution Cycle #50",
+        "metadata": {
+            "iteration": 50,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "08561ae88342977ca63fef7c3bd70bc7261ba213cf300460276a59d7bccde2c4",
+        "hash": "db866779befc4b4f24d3e57ef3db1aa9410f3680a682aac06d33e77455fe31b1"
+    },
+    {
+        "index": 162,
+        "timestamp": 1778899685.9917092,
+        "state": "Completed Peak Evolution Cycle #53",
+        "metadata": {
+            "iteration": 53,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "db866779befc4b4f24d3e57ef3db1aa9410f3680a682aac06d33e77455fe31b1",
+        "hash": "73999d4431acbafdb6bee4048cb8ade3ac0b2148e8ca539f22c9e06519585804"
+    },
+    {
+        "index": 163,
+        "timestamp": 1778899726.8711407,
+        "state": "Completed Peak Evolution Cycle #54",
+        "metadata": {
+            "iteration": 54,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "73999d4431acbafdb6bee4048cb8ade3ac0b2148e8ca539f22c9e06519585804",
+        "hash": "efee8dd269ce8b8a895c408b7548fac25211aeb4b5f4b7689816da9511e26b25"
+    },
+    {
+        "index": 164,
+        "timestamp": 1778899736.4522064,
+        "state": "Completed Evolution Cycle #64",
+        "metadata": {
+            "iteration": 64,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "efee8dd269ce8b8a895c408b7548fac25211aeb4b5f4b7689816da9511e26b25",
+        "hash": "14128c1a9ffb60ed01582cd6d64f64bd05e5821806a8826c79acc867d62e2270"
+    },
+    {
+        "index": 165,
+        "timestamp": 1778899737.198542,
+        "state": "Completed Peak Evolution Cycle #51",
+        "metadata": {
+            "iteration": 51,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "14128c1a9ffb60ed01582cd6d64f64bd05e5821806a8826c79acc867d62e2270",
+        "hash": "2b9e8c5e691d7d05e2fd15b249ed23e112d4a79fc43269f828ecd8604160f6df"
+    },
+    {
+        "index": 166,
+        "timestamp": 1778899790.633288,
+        "state": "Completed Peak Evolution Cycle #55",
+        "metadata": {
+            "iteration": 55,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "2b9e8c5e691d7d05e2fd15b249ed23e112d4a79fc43269f828ecd8604160f6df",
+        "hash": "ee77f5693c8bf1cf4460c1330fd1660fb3866aba93cd2a5f89867a1fcb87be94"
+    },
+    {
+        "index": 167,
+        "timestamp": 1778899803.0855408,
+        "state": "Completed Peak Evolution Cycle #52",
+        "metadata": {
+            "iteration": 52,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "ee77f5693c8bf1cf4460c1330fd1660fb3866aba93cd2a5f89867a1fcb87be94",
+        "hash": "c26f446607ac114eb628dd3c01ac1cfb0163883cf8bd4745892402ea07cb90ff"
+    },
+    {
+        "index": 168,
+        "timestamp": 1778899806.3726642,
+        "state": "Completed Evolution Cycle #65",
+        "metadata": {
+            "iteration": 65,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "c26f446607ac114eb628dd3c01ac1cfb0163883cf8bd4745892402ea07cb90ff",
+        "hash": "18be55f01a2d7ce5e7e607607471ad3632b6ec70affd4501832cfa38108a4940"
+    },
+    {
+        "index": 169,
+        "timestamp": 1778899841.1845596,
+        "state": "Completed Peak Evolution Cycle #56",
+        "metadata": {
+            "iteration": 56,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "18be55f01a2d7ce5e7e607607471ad3632b6ec70affd4501832cfa38108a4940",
+        "hash": "3b4899a16cc76029fbc7ac3cdac51f12716ee90b9d23fead006bffea7c68195e"
+    },
+    {
+        "index": 170,
+        "timestamp": 1778899871.7361395,
+        "state": "Completed Peak Evolution Cycle #53",
+        "metadata": {
+            "iteration": 53,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "3b4899a16cc76029fbc7ac3cdac51f12716ee90b9d23fead006bffea7c68195e",
+        "hash": "016dd4b4c7c625f3a6db1a6a7b60eb2bcb0ffc15fd9f03935e826522758b3982"
+    },
+    {
+        "index": 171,
+        "timestamp": 1778899911.9202769,
+        "state": "Completed Peak Evolution Cycle #57",
+        "metadata": {
+            "iteration": 57,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "016dd4b4c7c625f3a6db1a6a7b60eb2bcb0ffc15fd9f03935e826522758b3982",
+        "hash": "7d979b85af128a8babf96a197cac842f9cbb89b874742fb288788b4433628e89"
+    },
+    {
+        "index": 172,
+        "timestamp": 1778899924.0234907,
+        "state": "Completed Peak Evolution Cycle #54",
+        "metadata": {
+            "iteration": 54,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "7d979b85af128a8babf96a197cac842f9cbb89b874742fb288788b4433628e89",
+        "hash": "21ddfcf3113f437a90423eaa957fb883e9296928e264417dcf503a4c75efabb8"
+    },
+    {
+        "index": 173,
+        "timestamp": 1778899942.758681,
+        "state": "Completed Evolution Cycle #67",
+        "metadata": {
+            "iteration": 67,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "21ddfcf3113f437a90423eaa957fb883e9296928e264417dcf503a4c75efabb8",
+        "hash": "e0a49b898cdf688bf42a8a1ea43105cb5b769bb70b88081b29f6c6ef61e5d677"
+    },
+    {
+        "index": 174,
+        "timestamp": 1778899975.7216005,
+        "state": "Completed Peak Evolution Cycle #58",
+        "metadata": {
+            "iteration": 58,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "e0a49b898cdf688bf42a8a1ea43105cb5b769bb70b88081b29f6c6ef61e5d677",
+        "hash": "6a9e6c0217265ca0da72696d23d32556ca8f6ba770a1095c8fc152d02981dbe6"
+    },
+    {
+        "index": 175,
+        "timestamp": 1778899995.7400393,
+        "state": "Completed Peak Evolution Cycle #55",
+        "metadata": {
+            "iteration": 55,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "6a9e6c0217265ca0da72696d23d32556ca8f6ba770a1095c8fc152d02981dbe6",
+        "hash": "fdb2328d795d3d0d29ffed14ccb068f81b6782897451a0a6649a36debbcad398"
+    },
+    {
+        "index": 176,
+        "timestamp": 1778900011.1894162,
+        "state": "Completed Evolution Cycle #68",
+        "metadata": {
+            "iteration": 68,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "fdb2328d795d3d0d29ffed14ccb068f81b6782897451a0a6649a36debbcad398",
+        "hash": "6f9480dd2a0e5779671e5be9a2727f4059db251e882cfc6fcfccf4697df32c58"
+    },
+    {
+        "index": 177,
+        "timestamp": 1778900043.1704044,
+        "state": "Completed Peak Evolution Cycle #59",
+        "metadata": {
+            "iteration": 59,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "6f9480dd2a0e5779671e5be9a2727f4059db251e882cfc6fcfccf4697df32c58",
+        "hash": "3777c5371eadb69a68e1e9928e2e59ef20182d3f0729623aeac945d85681d545"
+    },
+    {
+        "index": 178,
+        "timestamp": 1778900064.6677816,
+        "state": "Completed Peak Evolution Cycle #56",
+        "metadata": {
+            "iteration": 56,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "3777c5371eadb69a68e1e9928e2e59ef20182d3f0729623aeac945d85681d545",
+        "hash": "59ec14c8d5aa2057e239fd9fdf9cd2956ebd2db40239dd59676a09c25875eb80"
+    },
+    {
+        "index": 179,
+        "timestamp": 1778900079.0710764,
+        "state": "Completed Evolution Cycle #69",
+        "metadata": {
+            "iteration": 69,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "59ec14c8d5aa2057e239fd9fdf9cd2956ebd2db40239dd59676a09c25875eb80",
+        "hash": "3031d8f7a5a1b9b23c76f1a6689d7b0f6b678dc5809a3a4e4379ec0a222933f7"
+    },
+    {
+        "index": 180,
+        "timestamp": 1778900111.190518,
+        "state": "Completed Peak Evolution Cycle #57",
+        "metadata": {
+            "iteration": 57,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "3031d8f7a5a1b9b23c76f1a6689d7b0f6b678dc5809a3a4e4379ec0a222933f7",
+        "hash": "41d9ed0317856fa3360d58937ebbb7376211b5e50da63307bd31d0ab49b64251"
+    },
+    {
+        "index": 181,
+        "timestamp": 1778900111.8297138,
+        "state": "Completed Peak Evolution Cycle #60",
+        "metadata": {
+            "iteration": 60,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "41d9ed0317856fa3360d58937ebbb7376211b5e50da63307bd31d0ab49b64251",
+        "hash": "b4ad9cdbb6535f8aafdd5ed13d1f28eb4c764a28c2ddb711d713b6d06c46317c"
+    },
+    {
+        "index": 182,
+        "timestamp": 1778900128.0947678,
+        "state": "Completed Evolution Cycle #70",
+        "metadata": {
+            "iteration": 70,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "b4ad9cdbb6535f8aafdd5ed13d1f28eb4c764a28c2ddb711d713b6d06c46317c",
+        "hash": "3e1119a41b784de2731401a8ea0bbeba8a984a941d440179b56e9584ee39f4a6"
+    },
+    {
+        "index": 183,
+        "timestamp": 1778900161.6033995,
+        "state": "Completed Peak Evolution Cycle #61",
+        "metadata": {
+            "iteration": 61,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "3e1119a41b784de2731401a8ea0bbeba8a984a941d440179b56e9584ee39f4a6",
+        "hash": "6448c0ba568ccc270affc3bdcabce903f8b99042d6a06ac702490854cdfac1cf"
+    },
+    {
+        "index": 184,
+        "timestamp": 1778900185.1264076,
+        "state": "Completed Peak Evolution Cycle #58",
+        "metadata": {
+            "iteration": 58,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "6448c0ba568ccc270affc3bdcabce903f8b99042d6a06ac702490854cdfac1cf",
+        "hash": "6068c1f7a7da6b3aa0c30a4aaf9320d1e3139d018843ecc15aff1dd6fe13a6e6"
+    },
+    {
+        "index": 185,
+        "timestamp": 1778900192.587287,
+        "state": "Completed Evolution Cycle #71",
+        "metadata": {
+            "iteration": 71,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "6068c1f7a7da6b3aa0c30a4aaf9320d1e3139d018843ecc15aff1dd6fe13a6e6",
+        "hash": "38b9fa9176ab74c80ab06100472c9d25414791f8bcf88e85cfe7e4bced21147f"
+    },
+    {
+        "index": 186,
+        "timestamp": 1778900227.8227284,
+        "state": "Completed Peak Evolution Cycle #62",
+        "metadata": {
+            "iteration": 62,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "38b9fa9176ab74c80ab06100472c9d25414791f8bcf88e85cfe7e4bced21147f",
+        "hash": "0137ff903b4751b05bef20ca92bacdb13ae592306cbd2b64bb67084b5f586fd0"
+    },
+    {
+        "index": 187,
+        "timestamp": 1778900244.8739693,
+        "state": "Completed Peak Evolution Cycle #59",
+        "metadata": {
+            "iteration": 59,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "0137ff903b4751b05bef20ca92bacdb13ae592306cbd2b64bb67084b5f586fd0",
+        "hash": "c866c2c6242ef903ba16403c600e791ec1cbadcddacee15bacb76985863d9f33"
+    },
+    {
+        "index": 188,
+        "timestamp": 1778900269.9877822,
+        "state": "Completed Evolution Cycle #72",
+        "metadata": {
+            "iteration": 72,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "c866c2c6242ef903ba16403c600e791ec1cbadcddacee15bacb76985863d9f33",
+        "hash": "a93f0b58e9b26649283be149614e95631a5cea5edeced83ddcec216d8f5666da"
+    },
+    {
+        "index": 189,
+        "timestamp": 1778900292.8920627,
+        "state": "Completed Peak Evolution Cycle #63",
+        "metadata": {
+            "iteration": 63,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "a93f0b58e9b26649283be149614e95631a5cea5edeced83ddcec216d8f5666da",
+        "hash": "3e4ad238b3f57e7f7b4a441ddba607f408615a58adab6728d7b79214d4a87c18"
+    },
+    {
+        "index": 190,
+        "timestamp": 1778900312.795798,
+        "state": "Completed Peak Evolution Cycle #60",
+        "metadata": {
+            "iteration": 60,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "3e4ad238b3f57e7f7b4a441ddba607f408615a58adab6728d7b79214d4a87c18",
+        "hash": "149e88e97cea9bfb2070a5f74e4e7c6962b57db20126b4f67dd208d30d2dc3a4"
+    },
+    {
+        "index": 191,
+        "timestamp": 1778900332.0466502,
+        "state": "Completed Evolution Cycle #73",
+        "metadata": {
+            "iteration": 73,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "149e88e97cea9bfb2070a5f74e4e7c6962b57db20126b4f67dd208d30d2dc3a4",
+        "hash": "0aa4907a41af062ee590385da2ff25deea3753cd51702519c14c2a91550b9e49"
+    },
+    {
+        "index": 192,
+        "timestamp": 1778900364.0998638,
+        "state": "Completed Peak Evolution Cycle #64",
+        "metadata": {
+            "iteration": 64,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "0aa4907a41af062ee590385da2ff25deea3753cd51702519c14c2a91550b9e49",
+        "hash": "6d3447978b3c03fe4caec70da57f6ebf0d0b687e3d6f192c7f8456cd13449d81"
+    },
+    {
+        "index": 193,
+        "timestamp": 1778900382.023924,
+        "state": "Completed Peak Evolution Cycle #61",
+        "metadata": {
+            "iteration": 61,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "6d3447978b3c03fe4caec70da57f6ebf0d0b687e3d6f192c7f8456cd13449d81",
+        "hash": "4355c5834940fc9e920b2dd8782510c6a10d893e2fdc5531be4bf0e74eaf48f8"
+    },
+    {
+        "index": 194,
+        "timestamp": 1778900391.7050412,
+        "state": "Completed Evolution Cycle #74",
+        "metadata": {
+            "iteration": 74,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "4355c5834940fc9e920b2dd8782510c6a10d893e2fdc5531be4bf0e74eaf48f8",
+        "hash": "4418771ab33e7a1abc1689399264752427676696dfa83392d2389e28948dce3f"
+    },
+    {
+        "index": 195,
+        "timestamp": 1778900422.9932568,
+        "state": "Completed Peak Evolution Cycle #65",
+        "metadata": {
+            "iteration": 65,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "4418771ab33e7a1abc1689399264752427676696dfa83392d2389e28948dce3f",
+        "hash": "c59256bf5525431924470a155202151c96529d148d11a049199aa96c4342a022"
+    },
+    {
+        "index": 196,
+        "timestamp": 1778900450.7396657,
+        "state": "Completed Peak Evolution Cycle #62",
+        "metadata": {
+            "iteration": 62,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "c59256bf5525431924470a155202151c96529d148d11a049199aa96c4342a022",
+        "hash": "80621801ec5af72734fc1448a72a2ffb60855b01cb3b5e6716e74cd8db03a73c"
+    },
+    {
+        "index": 197,
+        "timestamp": 1778900460.19136,
+        "state": "Completed Evolution Cycle #75",
+        "metadata": {
+            "iteration": 75,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "80621801ec5af72734fc1448a72a2ffb60855b01cb3b5e6716e74cd8db03a73c",
+        "hash": "5a21b3bb8b76a99a0e401af6b387e467629bbdabda30daafdcd7ffeaeec30125"
+    },
+    {
+        "index": 198,
+        "timestamp": 1778900489.8011177,
+        "state": "Completed Peak Evolution Cycle #63",
+        "metadata": {
+            "iteration": 63,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "5a21b3bb8b76a99a0e401af6b387e467629bbdabda30daafdcd7ffeaeec30125",
+        "hash": "7a2006469726882d1720372ad0f941ba7a8a45b7019d493b1be8ecf7f9a0dc3b"
+    },
+    {
+        "index": 199,
+        "timestamp": 1778900496.9936447,
+        "state": "Completed Peak Evolution Cycle #66",
+        "metadata": {
+            "iteration": 66,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "7a2006469726882d1720372ad0f941ba7a8a45b7019d493b1be8ecf7f9a0dc3b",
+        "hash": "f4b0daaae9b85ddf1e2fd668c53ce79321ca6e2bc559b12eb15ebe741764d610"
+    },
+    {
+        "index": 200,
+        "timestamp": 1778900524.1050122,
+        "state": "Completed Evolution Cycle #76",
+        "metadata": {
+            "iteration": 76,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "f4b0daaae9b85ddf1e2fd668c53ce79321ca6e2bc559b12eb15ebe741764d610",
+        "hash": "39d3c183a0feb58be51fecdc7660e4479a2ff93c04a7da7c702fc90b4c1e445c"
+    },
+    {
+        "index": 201,
+        "timestamp": 1778900555.6338735,
+        "state": "Completed Peak Evolution Cycle #64",
+        "metadata": {
+            "iteration": 64,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "39d3c183a0feb58be51fecdc7660e4479a2ff93c04a7da7c702fc90b4c1e445c",
+        "hash": "6851a0bd383492bb656b4046fb079413e96bfbea8ffe988e4ba73d079d7b941d"
+    },
+    {
+        "index": 202,
+        "timestamp": 1778900568.2695773,
+        "state": "Completed Peak Evolution Cycle #67",
+        "metadata": {
+            "iteration": 67,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "6851a0bd383492bb656b4046fb079413e96bfbea8ffe988e4ba73d079d7b941d",
+        "hash": "8098e308ae72f6c2d79f24e3f8686469a5f6676ef1f56c0dc6acbedf3f9d142f"
+    },
+    {
+        "index": 203,
+        "timestamp": 1778900598.2085056,
+        "state": "Completed Evolution Cycle #77",
+        "metadata": {
+            "iteration": 77,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "8098e308ae72f6c2d79f24e3f8686469a5f6676ef1f56c0dc6acbedf3f9d142f",
+        "hash": "2c54357ea11d6931087a43f3f7a6bfd73fa839072330c1ca76ccbf294508d175"
+    },
+    {
+        "index": 204,
+        "timestamp": 1778900612.0077457,
+        "state": "Completed Peak Evolution Cycle #65",
+        "metadata": {
+            "iteration": 65,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "2c54357ea11d6931087a43f3f7a6bfd73fa839072330c1ca76ccbf294508d175",
+        "hash": "51e8e531cad25abc17c4d449d00cac8addea976044147f2b74e82ac1af3538c0"
+    },
+    {
+        "index": 205,
+        "timestamp": 1778900635.485281,
+        "state": "Completed Peak Evolution Cycle #68",
+        "metadata": {
+            "iteration": 68,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "51e8e531cad25abc17c4d449d00cac8addea976044147f2b74e82ac1af3538c0",
+        "hash": "c90fe3296f7906e6176f3b77732a2b4464ab068c7b98865d48e7c3e1219996dc"
+    },
+    {
+        "index": 206,
+        "timestamp": 1778900682.236235,
+        "state": "Completed Evolution Cycle #78",
+        "metadata": {
+            "iteration": 78,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "c90fe3296f7906e6176f3b77732a2b4464ab068c7b98865d48e7c3e1219996dc",
+        "hash": "06ff0e5b2b0d6622a454dd36c8755f9c53d77d47dfe4512db003c719b54d4aff"
+    },
+    {
+        "index": 207,
+        "timestamp": 1778900685.2114172,
+        "state": "Completed Peak Evolution Cycle #66",
+        "metadata": {
+            "iteration": 66,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "06ff0e5b2b0d6622a454dd36c8755f9c53d77d47dfe4512db003c719b54d4aff",
+        "hash": "eee00c93e12301a0962a3b2bde4e42e2b99ffc4ff3ba47afb1daec162985ef4e"
+    },
+    {
+        "index": 208,
+        "timestamp": 1778900693.5145113,
+        "state": "Completed Peak Evolution Cycle #69",
+        "metadata": {
+            "iteration": 69,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "eee00c93e12301a0962a3b2bde4e42e2b99ffc4ff3ba47afb1daec162985ef4e",
+        "hash": "b7f2197bd91f2cceab6b15291d9654195d92bb631ea54aa62b7f4fe3959a4db9"
+    },
+    {
+        "index": 209,
+        "timestamp": 1778900761.7269914,
+        "state": "Completed Peak Evolution Cycle #67",
+        "metadata": {
+            "iteration": 67,
+            "status": "SINGULARITY_REACHED",
+            "warfare_intensity": "PEAK"
+        },
+        "previous_hash": "b7f2197bd91f2cceab6b15291d9654195d92bb631ea54aa62b7f4fe3959a4db9",
+        "hash": "e411f59c05c7425cc7d9cefda2cda16cd0b83dbfff1060812dfc8cd9d9c5490d"
+    },
+    {
+        "index": 210,
+        "timestamp": 1778900765.8142092,
+        "state": "Completed Evolution Cycle #79",
+        "metadata": {
+            "iteration": 79,
+            "status": "EVOLVED",
+            "warfare_intensity": "BRUTAL"
+        },
+        "previous_hash": "e411f59c05c7425cc7d9cefda2cda16cd0b83dbfff1060812dfc8cd9d9c5490d",
+        "hash": "779f18751d13b6bbd5d8099c474e2f315aad08f222c7741c3137d212cc78a962"
+    }
+]6ab6"
+    }
+]

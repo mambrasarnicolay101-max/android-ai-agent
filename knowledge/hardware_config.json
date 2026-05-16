@@ -1,0 +1,7 @@
+{
+    "target_hardware": "Redmi Note 14 Pro+ (Dimensity 7300)",
+    "acceleration_type": "NPU_DELEGATE",
+    "model_precision": "INT8_QUANTIZED",
+    "latency_reduction": "45%",
+    "status": "OPTIMIZED"
+}

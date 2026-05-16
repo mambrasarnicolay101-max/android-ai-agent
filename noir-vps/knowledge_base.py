@@ -7,6 +7,8 @@ except ImportError:
     SentenceTransformer = None
     faiss = None
 
+from security_guard import QueryGuard, SecurityBreachException
+
 log = logging.getLogger("KnowledgeBase")
 STORE_DIR = os.path.join(os.path.dirname(__file__), "..", "knowledge", "vector_store")
 os.makedirs(STORE_DIR, exist_ok=True)
@@ -40,6 +42,12 @@ class NeuralKnowledgeBase:
 
     @classmethod
     def add_knowledge(cls, text: str):
+        try:
+            text = QueryGuard.sanitize(text)
+        except SecurityBreachException as e:
+            log.error(f"Failed to add knowledge: {e}")
+            return
+
         cls._init_model()
         if not text or not cls._model: return
         
@@ -56,6 +64,12 @@ class NeuralKnowledgeBase:
 
     @classmethod
     def query(cls, question: str, top_k: int = 3):
+        try:
+            question = QueryGuard.sanitize(question)
+        except SecurityBreachException as e:
+            log.error(f"Query blocked: {e}")
+            return "SECURITY_ALERT: Malicious pattern detected in query."
+
         cls._init_model()
         if not cls._model or cls._index.ntotal == 0: return ""
         

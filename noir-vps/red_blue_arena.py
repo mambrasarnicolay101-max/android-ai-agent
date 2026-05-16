@@ -18,23 +18,21 @@ class RedBlueArena:
         os.makedirs(self.sandbox_dir, exist_ok=True)
         
     def build_dummy_system(self) -> str:
-        log.info("[ARENA] AI (Neural Coder) membangun sistem dummy (sistem buatan sendiri)...")
-        file_path = os.path.join(self.sandbox_dir, "dummy_app.py")
-        # Menyisipkan celah buatan secara sengaja untuk sarana latihan AI
-        code = '''
-def handle_user_input(user_id):
-    # DUMMY VULNERABILITY: SQL Injection
-    query = "SELECT * FROM users WHERE id = " + user_id
-    return query
+        log.info("[ARENA] AI (Neural Coder) merancang sistem dummy dinamis...")
+        
+        # Gunakan LLM untuk membuat sistem yang memiliki celah spesifik
+        from ai_router import OmniRouter
+        prompt = "Generate a short Python code snippet (30 lines max) for a dummy web service that contains at least two distinct security vulnerabilities (e.g., IDOR, XSS, SQLi, or Insecure Deserialization). Ensure it is functional but vulnerable."
+        code = OmniRouter.query(prompt, task_type="coding")
+        
+        if not code or "[Error]" in code:
+            # Fallback to simple vulnerable code if LLM fails
+            code = "def process(data):\n    import os\n    os.system('echo ' + data)"
 
-def execute_command(cmd):
-    # DUMMY VULNERABILITY: Command Injection
-    import os
-    os.system("echo " + cmd)
-'''
-        with open(file_path, "w") as f:
+        file_path = os.path.join(self.sandbox_dir, "dummy_app.py")
+        with open(file_path, "w", encoding="utf-8") as f:
             f.write(code.strip())
-        log.info(f"[ARENA] Sistem dummy berhasil dibuat di: {file_path}")
+        log.info(f"[ARENA] Sistem dummy dinamis berhasil dibuat di: {file_path}")
         return file_path
 
     def red_team_attack(self, target_file: str) -> list:
@@ -55,28 +53,25 @@ def execute_command(cmd):
         if not findings:
             return
 
-        with open(target_file, "r") as f:
-            lines = f.readlines()
+        with open(target_file, "r", encoding="utf-8") as f:
+            code = f.read()
             
-        patched = False
-        for finding in findings:
-            line_idx = finding['line'] - 1
-            # Proses Neural Coder / Blue Team memodifikasi kode untuk menambal celah
-            if "os.system" in lines[line_idx]:
-                lines[line_idx] = '    import subprocess\n    subprocess.run(["echo", cmd])  # PATCHED: Command Injection mitigated\n'
-                patched = True
-                log.info(f"[BLUE TEAM] Menambal kerentanan Command Injection pada baris {finding['line']}")
-            elif "SELECT" in lines[line_idx]:
-                lines[line_idx] = '    query = "SELECT * FROM users WHERE id = %s", (user_id,)  # PATCHED: SQL Injection mitigated\n'
-                patched = True
-                log.info(f"[BLUE TEAM] Menambal kerentanan SQL Injection pada baris {finding['line']}")
+        from ai_router import OmniRouter
+        prompt = f"As a Blue Team Defender, patch the following Python code to fix these vulnerabilities: {json.dumps(findings)}. Provide only the full patched code.\n\nCode:\n{code}"
+        patched_code = OmniRouter.query(prompt, task_type="coding")
 
-        if patched:
-            with open(target_file, "w") as f:
-                f.writelines(lines)
-            log.info("[BLUE TEAM] Patch keamanan berhasil diterapkan ke sistem dummy.")
+        if patched_code and "[Error]" not in patched_code:
+            # Strip markdown if present
+            if "```python" in patched_code:
+                patched_code = patched_code.split("```python")[1].split("```")[0].strip()
+            elif "```" in patched_code:
+                patched_code = patched_code.split("```")[1].split("```")[0].strip()
+
+            with open(target_file, "w", encoding="utf-8") as f:
+                f.write(patched_code)
+            log.info("[BLUE TEAM] Patch keamanan cerdas berhasil diterapkan ke sistem dummy.")
         else:
-            log.info("[BLUE TEAM] Gagal mempatch sistem secara otomatis.")
+            log.info("[BLUE TEAM] Gagal mempatch sistem secara otomatis melalui LLM.")
 
     def save_to_memory(self, attack_findings):
         log.info("[MEMORY] Mengonsolidasi metode serangan, celah, dan solusi patch ke Neural Memory...")
@@ -116,7 +111,9 @@ def execute_command(cmd):
         except ImportError:
             pass
 
-    def run_simulation(self):
+    def run_simulation(self, intensity="NORMAL"):
+        """Jalankan satu siklus simulasi perang siber."""
+        log.info(f" [ARENA] Starting {intensity} warfare simulation...")
         log.info("=====================================================")
         log.info("=== MEMULAI SIMULASI RED VS BLUE OTONOM (ARENA) ===")
         log.info("=====================================================")
@@ -142,7 +139,20 @@ def execute_command(cmd):
             else:
                 log.warning("[ARENA] Verifikasi gagal: Sistem masih memiliki kerentanan.")
                 
-        # Phase 5: Simpan ke Memori
+        # Phase 5: Simpan ke Memori & Battle Logger
+        log.info("[ARENA] Mencatat hasil pertempuran ke Battle Logger...")
+        from battle_logger import BattleLogger
+        BattleLogger.log_event(
+            event_type="SIMULATION",
+            target="Arena_Dummy_System",
+            attacker="Neural_Red_Team",
+            defender="Sovereign_Blue_Team",
+            methods=["Dynamic Vulnerability Exploitation"],
+            success=True if findings else False,
+            findings=findings,
+            evaluation="Simulasi otonom untuk melatih logika penambalan kode (Blue) vs eksploitasi (Red)."
+        )
+        
         self.save_to_memory(findings)
         log.info("=====================================================")
         log.info("=== SIMULASI PELATIHAN OTONOM SELESAI ===")

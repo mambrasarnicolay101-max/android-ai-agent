@@ -1,6 +1,6 @@
 import os, logging, time
 from pathlib import Path
-from ai_router import AIRouter
+from ai_router import OmniRouter
 from catalyst import catalyst
 from evolution_engine import evolution_engine
 from vector_memory import vector_memory as neural_memory
@@ -57,7 +57,7 @@ class NeuralArchitect:
         3. The actual code logic to be implemented.
         """
         
-        proposal_raw = AIRouter.query_gemini(audit_prompt)
+        proposal_raw = OmniRouter.query_gemini(audit_prompt)
         
         # Kirim ke Evolution Engine untuk persetujuan User
         proposal_id = f"ARCH_{int(time.time())}"

@@ -1,0 +1,29 @@
+{
+    "id": "BATTLE_1778933841_AUT",
+    "timestamp": "2026-05-17T00:17:21.268676",
+    "event_type": "PENTEST",
+    "participants": {
+        "attacker": "Autonomous_Pentester",
+        "defender": "System_Firewall/Hardening",
+        "target": "127.0.0.1"
+    },
+    "metrics": {
+        "methods_tried": [
+            "Port Scanning",
+            "Service Fingerprinting",
+            "Auth Check"
+        ],
+        "success": true,
+        "penetration_rate": 1.0,
+        "vulnerabilities_found": 5
+    },
+    "raw_findings": [
+        "Redis terbuka TANPA PASSWORD - risiko RCE",
+        6379,
+        8080,
+        5432,
+        23
+    ],
+    "evaluation": "Pentest report for 127.0.0.1. OSINT: N/A",
+    "status": "COMPLETED"
+}

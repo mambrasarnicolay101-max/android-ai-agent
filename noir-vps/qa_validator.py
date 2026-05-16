@@ -12,7 +12,7 @@ class QAValidator:
     
     @staticmethod
     def validate_code(code_path: str):
-        log.info(f"🔍 Validating code at: {code_path}")
+        log.info(f" Validating code at: {code_path}")
         
         if not os.path.exists(code_path):
             return {"success": False, "error": "File not found"}
@@ -24,9 +24,9 @@ class QAValidator:
         result = SandboxEngine.execute_python(code)
         
         if result["success"]:
-            log.info(f"✅ Code at {code_path} passed validation.")
+            log.info(f" Code at {code_path} passed validation.")
         else:
-            log.warning(f"❌ Code at {code_path} FAILED validation: {result.get('error')}")
+            log.warning(f" Code at {code_path} FAILED validation: {result.get('error')}")
             
         return result
 

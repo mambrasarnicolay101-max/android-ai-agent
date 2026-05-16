@@ -17,22 +17,22 @@ class SynthesisEngine:
         """Synthesizes a full markdown report from raw research bits."""
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
         
-        report = f"# 🌑 NOIR SOVEREIGN INTEL REPORT: {topic.upper()}\n"
+        report = f"#  NOIR SOVEREIGN INTEL REPORT: {topic.upper()}\n"
         report += f"**Synthesis Date:** {timestamp}\n"
         report += f"**Classification:** OMEGA-LEVEL INTEL\n\n"
         
-        report += "## 🎯 EXECUTIVE SUMMARY\n"
+        report += "##  EXECUTIVE SUMMARY\n"
         report += f"Analisis otonom terhadap domain '{topic}' telah disintesis dari {len(raw_data)} sumber intelijen. "
         report += "Berikut adalah poin-poin krusial yang harus diperhatikan.\n\n"
         
-        report += "## 🔍 SYNTHESIZED KNOWLEDGE BITS\n"
+        report += "##  SYNTHESIZED KNOWLEDGE BITS\n"
         for i, bit in enumerate(raw_data):
             report += f"### {i+1}. {bit.get('title', 'Knowledge Segment')}\n"
             report += f"> {bit.get('content', 'No detailed data available.')}\n\n"
             if 'source' in bit:
                 report += f"**Source:** {bit['source']}\n\n"
                 
-        report += "## 🧬 EVOLUTIONARY RECOMMENDATION\n"
+        report += "##  EVOLUTIONARY RECOMMENDATION\n"
         report += "Berdasarkan sintesis data di atas, Noir merekomendasikan:\n"
         report += "- **Optimalisasi Core**: Mengintegrasikan algoritma ini ke dalam pipeline otonom.\n"
         report += "- **Mesh Sync**: Membagikan pengetahuan ini ke seluruh agen aktif dalam Neural Mesh.\n\n"

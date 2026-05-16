@@ -1,0 +1,36 @@
+{
+    "id": "BATTLE_1778899543_NEU",
+    "timestamp": "2026-05-16T14:45:43.883915",
+    "event_type": "SIMULATION",
+    "participants": {
+        "attacker": "Neural_Red_Team",
+        "defender": "Sovereign_Blue_Team",
+        "target": "Arena_Dummy_System"
+    },
+    "metrics": {
+        "methods_tried": [
+            "Dynamic Vulnerability Exploitation"
+        ],
+        "success": true,
+        "penetration_rate": 1.0,
+        "vulnerabilities_found": 2
+    },
+    "raw_findings": [
+        {
+            "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\.sandbox\\arena\\dummy_app.py",
+            "line": 73,
+            "severity": "HIGH",
+            "message": "Deserialisasi pickle tidak aman - risiko RCE",
+            "snippet": "user_data = pickle.loads(data['user_data'])"
+        },
+        {
+            "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\.sandbox\\arena\\dummy_app.py",
+            "line": 83,
+            "severity": "MEDIUM",
+            "message": "Debug mode aktif di production",
+            "snippet": "app.run(debug=True)"
+        }
+    ],
+    "evaluation": "Simulasi otonom untuk melatih logika penambalan kode (Blue) vs eksploitasi (Red).",
+    "status": "COMPLETED"
+}

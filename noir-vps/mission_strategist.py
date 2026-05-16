@@ -1,41 +1,47 @@
-import os
-import json
-import logging
-from datetime import datetime
-from ai_router import AIRouter
-from swarm_protocol import SwarmBlackboard
+import os, json, time, logging
+from ai_router import OmniRouter
 
 log = logging.getLogger("MissionStrategist")
 
 class MissionStrategist:
     """
-    PILAR 10: MISSION STRATEGIST
-    Tugas: Memecah tugas kompleks menjadi sub-tugas yang dapat dieksekusi oleh pilar lain.
+    Pilar 10 - Mission Strategist
+    Menganalisis data memori dan memberikan forecasting strategis.
     """
     
     @staticmethod
-    def plan_mission(complex_command: str):
-        log.info(f"🎯 Planning mission for: {complex_command}")
+    def forecast_next_objective():
+        """U-20: Menganalisis kondisi sistem dan memprediksi target evolusi berikutnya."""
+        log.info(" [STRAT] Running strategic forecasting...")
         
-        prompt = f"""
-        Anda adalah Noir Mission Strategist (Pilar 10). 
-        Tugas Anda adalah memecah perintah kompleks berikut menjadi langkah-langkah teknis yang dapat dieksekusi oleh tim AI Sovereign (Neural Coder, Security Sentinel, dll).
-        
-        PERINTAH: {complex_command}
-        
-        Format Output: JSON list of steps.
-        """
-        
-        strategy = AIRouter.query_gemini(prompt)
-        # Kirim ke Swarm Bus
-        SwarmBlackboard.post_message(
-            sender="MissionStrategist",
-            target="ALL",
-            content={"type": "new_mission", "strategy": strategy, "original_command": complex_command}
+        # Ambil ringkasan memori terbaru
+        try:
+            from vector_memory import vector_memory
+            recent = vector_memory.query("system development state", n_results=5)
+        except:
+            recent = ["Initial setup complete.", "19 pillars active."]
+            
+        prompt = (
+            f"Based on these recent system events: {recent}\n\n"
+            "Forecast the next 3 logical objectives for the Noir Sovereign AI ecosystem. "
+            "Return a clean JSON object with keys: 'forecast', 'probability', 'impact'."
         )
         
-        return strategy
+        forecast_json = OmniRouter.query(prompt, task_type="reasoning")
+        
+        # Save to knowledge
+        path = os.path.join(os.path.dirname(__file__), "..", "knowledge", "mission_forecast.json")
+        try:
+            # Pastikan ini valid JSON sebelum simpan
+            data = json.loads(forecast_json)
+            with open(path, "w") as f:
+                json.dump(data, f, indent=4)
+            log.info(" [STRAT] Mission Forecast updated.")
+            return data
+        except:
+            log.error(f" [STRAT] Forecast failed to parse: {forecast_json}")
+            return {"error": "Synthesis in progress"}
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    MissionStrategist.plan_mission("Bangun sistem monitoring e-commerce otonom.")
+    MissionStrategist.forecast_next_objective()

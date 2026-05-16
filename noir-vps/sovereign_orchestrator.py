@@ -1,5 +1,5 @@
 """
-SOVEREIGN ORCHESTRATOR v2.0 — NOIR SOVEREIGN
+SOVEREIGN ORCHESTRATOR v2.0  NOIR SOVEREIGN
 =============================================
 Pilar Master: Pengendali 9 Pilar Maestro Noir Sovereign
 Mengatur siklus belajar, keamanan, dan evolusi secara penuh otonom.
@@ -20,6 +20,7 @@ log = logging.getLogger("SovereignOrchestrator")
 
 # ---------- Scheduler sederhana berbasis timestamp ----------
 _schedule: dict = {}
+_running_threads: dict = {} # key -> Thread object
 
 def _should_run(key: str, interval_sec: int) -> bool:
     # Offloading Logic: Skip heavy tasks if in LIGHT mode
@@ -31,10 +32,30 @@ def _should_run(key: str, interval_sec: int) -> bool:
         
     now = time.time()
     last = _schedule.get(key, 0)
+    
+    # Check if thread is still running
+    if key in _running_threads and _running_threads[key].is_alive():
+        log.debug(f"[ORK] Task '{key}' is still running, skipping this cycle.")
+        return False
+
     if now - last >= interval_sec:
         _schedule[key] = now
         return True
     return False
+
+def _start_task(key: str, target_func):
+    """Start task in a managed thread."""
+    t = threading.Thread(target=target_func, daemon=True)
+    _running_threads[key] = t
+    t.start()
+
+def spawn_sub_agent(name: str, task_func, *args):
+    """U-04: Spawn temporary 'worker' agent for specific tasks."""
+    log.info(f" [ORK] Spawning Sub-Agent: {name}...")
+    t = threading.Thread(target=task_func, args=args, daemon=True)
+    t.name = f"SubAgent_{name}"
+    t.start()
+    return t
 
 # ---------- Pilar Runners (masing-masing dibungkus try/except) ----------
 
@@ -125,7 +146,7 @@ def _run_auto_healer():
 
 def _run_antigravity_core():
     """
-    Pilar 9 — Antigravity Intelligence Core.
+    Pilar 9  Antigravity Intelligence Core.
     Menyinkronisasi seluruh pengetahuan & skill Antigravity AI
     (Google DeepMind) ke dalam memory store Noir Sovereign.
     Interval: 6 jam (21600s)
@@ -199,24 +220,124 @@ def _run_deep_state_memory():
     except Exception as e:
         log.error(f"[ORK] [MEM] Deep-State Memory gagal: {e}")
 
+def _run_self_evaluation():
+    """
+    Pilar 13  Self-Evaluation (Sovereign Maturity Index).
+    Menganalisis performa diri dan menghasilkan rekomendasi evolusi.
+    Interval: 1 jam (3600s)
+    """
+    try:
+        from sovereign_maturity_index import SovereignMaturityIndex
+        log.info("[ORK] [P13] Self-Evaluation: Memulai audit maturitas otonom...")
+        smi = SovereignMaturityIndex()
+        report = smi.calculate_index()
+        log.info(f"[ORK] [P13] Maturity Score: {report['overall_score']}% [{report['status']}]")
+    except Exception as e:
+        log.error(f"[ORK] [P13] Self-Evaluation gagal: {e}")
+
+def _run_ghost_mirror():
+    """Pilar 14  Ghost Mirror (Shadow Node). Failover heartbeat."""
+    try:
+        from shadow_node import ShadowNode
+        log.info("[ORK] [P14] Ghost Mirror: Heartbeat cycle...")
+        ShadowNode.run_heartbeat_cycle()
+    except Exception as e:
+        log.error(f"[ORK] [P14] Ghost Mirror gagal: {e}")
+
+def _run_forensic_audit():
+    """Pilar 15  Forensic Pathologist. System integrity audit."""
+    try:
+        from forensic_investigator import ForensicInvestigatorAgent
+        log.info("[ORK] [P15] Forensic Pathologist: Integrity audit...")
+        ForensicInvestigatorAgent.audit_system_integrity()
+    except Exception as e:
+        log.error(f"[ORK] [P15] Forensic Pathologist gagal: {e}")
+
+def _run_hardware_optimization():
+    """Pilar 16  Neural Hardware Optimizer. AI acceleration tuning."""
+    try:
+        from hardware_optimizer import HardwareOptimizerAgent
+        log.info("[ORK] [P16] Hardware Optimizer: Tuning models...")
+        HardwareOptimizerAgent.optimize_models()
+    except Exception as e:
+        log.error(f"[ORK] [P16] Hardware Optimizer gagal: {e}")
+
+def _run_linguistic_synthesis():
+    """Pilar 17  Linguistic Synthesis. Intent reasoning."""
+    try:
+        from linguistic_synthesis import LinguisticSynthesisAgent
+        log.info("[ORK] [P17] Linguistic Synthesis: Running reasoning cycle...")
+        # Test synthesis as audit
+        LinguisticSynthesisAgent.synthesize_intent("Analyze global security posture and optimize local reflexes.")
+    except Exception as e:
+        log.error(f"[ORK] [P17] Linguistic Synthesis gagal: {e}")
+
+def _run_strategist():
+    """Pilar 10  Mission Strategist. Strategic forecasting."""
+    try:
+        from mission_strategist import MissionStrategist
+        log.info("[ORK] [P10] Mission Strategist: Running forecasting...")
+        MissionStrategist.forecast_next_objective()
+    except Exception as e:
+        log.error(f"[ORK] [P10] Mission Strategist gagal: {e}")
+
+def _run_offensive_predator():
+    """Pilar 20  Advanced Offensive Predator. Systematic attack training."""
+    try:
+        from offensive_predator import OffensivePredatorAgent
+        log.info("[ORK] [P20] Offensive Predator: Initiating hunting & training cycle...")
+        OffensivePredatorAgent.research_new_exploits()
+        OffensivePredatorAgent.initiate_massive_attack_simulation()
+    except Exception as e:
+        log.error(f"[ORK] [P20] Offensive Predator gagal: {e}")
+
+def _run_honeypot_sentinel():
+    """Pilar 21  Honeypot Sentinel. Active trapping."""
+    try:
+        from honeypot_sentinel import HoneypotSentinel
+        log.info("[ORK] [P21] Honeypot Sentinel: Deploying new traps...")
+        HoneypotSentinel.deploy_trap()
+    except Exception as e:
+        log.error(f"[ORK] [P21] Honeypot Sentinel gagal: {e}")
+
+def _run_distributed_ledger():
+    """Pilar 22  Distributed Ledger. State integrity."""
+    try:
+        from distributed_ledger import DistributedLedger
+        log.info("[ORK] [P22] Distributed Ledger: Recording state & verifying integrity...")
+        DistributedLedger.record_state("Autonomous Orchestration Heartbeat")
+        DistributedLedger.verify_integrity()
+    except Exception as e:
+        log.error(f"[ORK] [P22] Distributed Ledger gagal: {e}")
+
 def _report_status_to_dashboard(cycle: int):
     """Kirim status orkestrasi ke dashboard."""
     try:
         import requests
-        gateway = os.environ.get("NOIR_GATEWAY_URL", "http://localhost:8765").rstrip("/")
+        gateway = os.environ.get("NOIR_GATEWAY_URL", "http://"+os.environ.get("NOIR_VPS_IP", "8.215.23.17")).rstrip("/")
         api_key = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
         headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
         requests.post(f"{gateway}/api/learning/update", headers=headers, json={
-            "status": f"Sovereign Orchestrator - Cycle #{cycle} aktif. Semua 12 Pilar berjalan otonom."
+            "status": f"Sovereign Orchestrator - Cycle #{cycle} aktif. Semua 19 Pilar berjalan otonom."
         }, timeout=5)
-    except Exception:
-        pass
+    except Exception as e:
+            log.debug(f"Silent error suppressed: {e}")
+
+def _run_grand_singularity():
+    try:
+        from grand_singularity_cycle import GrandSingularityCycle
+        log.info("[ORK] [GS] Grand Singularity Cycle: Memulai fase evolusi tingkat tinggi...")
+        gs = GrandSingularityCycle()
+        gs.run_cycle()
+        log.info("[ORK] [GS] Grand Singularity Cycle selesai.")
+    except Exception as e:
+        log.error(f"[ORK] [GS] Grand Singularity Cycle gagal: {e}")
 
 # ---------- Loop Utama Orchestrator ----------
 
 def run_orchestrator():
     log.info("=" * 60)
-    log.info("  SOVEREIGN ORCHESTRATOR v2.0 — 9 PILAR AKTIF")
+    log.info("  SOVEREIGN ORCHESTRATOR v2.0  9 PILAR AKTIF")
     log.info("  [P9] Antigravity Intelligence Core: ONLINE")
     log.info("=" * 60)
     cycle = 0
@@ -227,59 +348,99 @@ def run_orchestrator():
 
         # Pilar 1 & 6: Setiap 10 menit (600s)
         if _should_run("neural_coder", 600):
-            threading.Thread(target=_run_neural_coder, daemon=True).start()
+            _start_task("neural_coder", _run_neural_coder)
         if _should_run("network_sentinel", 600):
-            threading.Thread(target=_run_network_sentinel, daemon=True).start()
+            _start_task("network_sentinel", _run_network_sentinel)
 
         # Pilar 4: Setiap 30 menit (1800s)
         if _should_run("knowledge_absorber", 1800):
-            threading.Thread(target=_run_knowledge_absorber, daemon=True).start()
+            _start_task("knowledge_absorber", _run_knowledge_absorber)
 
         # Pilar 2: Setiap 60 menit (3600s)
         if _should_run("security_sentinel", 3600):
-            threading.Thread(target=_run_security_sentinel, daemon=True).start()
+            _start_task("security_sentinel", _run_security_sentinel)
 
         # Pilar 3 & Security Arena: Setiap 2 jam (7200s)
         if _should_run("autonomous_pentester", 7200):
-            threading.Thread(target=_run_autonomous_pentester, daemon=True).start()
+            _start_task("autonomous_pentester", _run_autonomous_pentester)
         if _should_run("red_blue_arena", 7200):
-            threading.Thread(target=_run_red_blue_arena, daemon=True).start()
+            _start_task("red_blue_arena", _run_red_blue_arena)
 
         # Pilar 8: Setiap 4 jam (14400s)
         if _should_run("memory_consolidator", 14400):
-            threading.Thread(target=_run_memory_consolidator, daemon=True).start()
+            _start_task("memory_consolidator", _run_memory_consolidator)
 
         # Pilar 5: Setiap 8 jam (28800s)
         if _should_run("neural_architect", 28800):
-            threading.Thread(target=_run_neural_architect, daemon=True).start()
+            _start_task("neural_architect", _run_neural_architect)
 
         # Pilar 7: Setiap 12 jam (43200s)
         if _should_run("auto_healer", 43200):
-            threading.Thread(target=_run_auto_healer, daemon=True).start()
+            _start_task("auto_healer", _run_auto_healer)
 
-        # Pilar 9: Antigravity Core — Setiap 6 jam (21600s)
+        # Pilar 9: Antigravity Core  Setiap 6 jam (21600s)
         if _should_run("antigravity_core", 21600):
-            threading.Thread(target=_run_antigravity_core, daemon=True).start()
+            _start_task("antigravity_core", _run_antigravity_core)
         
-        # Pilar 10: Mission Strategist — Setiap 3 jam (10800s)
+        # Pilar 10: Mission Strategist  Setiap 3 jam (10800s)
         if _should_run("mission_strategist", 10800):
-            threading.Thread(target=_run_mission_strategist, daemon=True).start()
+            _start_task("mission_strategist", _run_mission_strategist)
 
-        # Pilar 11: QA Validator — Setiap 4 jam (14400s)
+        # Pilar 11: QA Validator  Setiap 4 jam (14400s)
         if _should_run("qa_validator", 14400):
-            threading.Thread(target=_run_qa_validator, daemon=True).start()
+            _start_task("qa_validator", _run_qa_validator)
 
-        # Pilar 12: UX Weaver — Setiap 8 jam (28800s)
+        # Pilar 12: UX Weaver  Setiap 8 jam (28800s)
         if _should_run("ux_weaver", 28800):
-            threading.Thread(target=_run_ux_weaver, daemon=True).start()
+            _start_task("ux_weaver", _run_ux_weaver)
 
-        # Deep-State Memory Indexing — Setiap 6 jam (21600s)
+        # Deep-State Memory Indexing  Setiap 6 jam (21600s)
         if _should_run("deep_state_memory", 21600):
-            threading.Thread(target=_run_deep_state_memory, daemon=True).start()
+            _start_task("deep_state_memory", _run_deep_state_memory)
 
-        # Dynamic Skills (Plugins) — Setiap 5 menit (300s)
+        # Dynamic Skills (Plugins)  Setiap 5 menit (300s)
         if _should_run("dynamic_skills", 300):
-            threading.Thread(target=_run_dynamic_skills, daemon=True).start()
+            _start_task("dynamic_skills", _run_dynamic_skills)
+
+        # Pilar 13: Self-Evaluation  Setiap 1 jam (3600s)
+        if _should_run("self_evaluation", 3600):
+            _start_task("self_evaluation", _run_self_evaluation)
+
+        # Pilar 14: Ghost Mirror  Setiap 2 jam (7200s)
+        if _should_run("ghost_mirror", 7200):
+            _start_task("ghost_mirror", _run_ghost_mirror)
+
+        # Pilar 15: Forensic Pathologist  Setiap 4 jam (14400s)
+        if _should_run("forensic_audit", 14400):
+            _start_task("forensic_audit", _run_forensic_audit)
+
+        # Pilar 16: Hardware Optimizer  Setiap 8 jam (28800s)
+        if _should_run("hardware_optim", 28800):
+            _start_task("hardware_optim", _run_hardware_optimization)
+
+        # Pilar 17: Linguistic Synthesis  Setiap 3 jam (10800s)
+        if _should_run("linguistic_synth", 10800):
+            _start_task("linguistic_synth", _run_linguistic_synthesis)
+
+        # Pilar 10: Mission Strategist  Setiap 12 jam (43200s)
+        if _should_run("strategist", 43200):
+            _start_task("strategist", _run_strategist)
+            
+        # Pilar 20: Offensive Predator  Setiap 4 jam (14400s)
+        if _should_run("offensive_predator", 14400):
+            _start_task("offensive_predator", _run_offensive_predator)
+
+        # Pilar 21: Honeypot Sentinel  Setiap 2 jam (7200s)
+        if _should_run("honeypot_sentinel", 7200):
+            _start_task("honeypot_sentinel", _run_honeypot_sentinel)
+
+        # Pilar 22: Distributed Ledger  Setiap 1 jam (3600s)
+        if _should_run("distributed_ledger", 3600):
+            _start_task("distributed_ledger", _run_distributed_ledger)
+
+        # Grand Singularity Cycle  Setiap 6 jam (21600s)
+        if _should_run("grand_singularity", 21600):
+            _start_task("grand_singularity", _run_grand_singularity)
 
         # Laporan ke dashboard
         _report_status_to_dashboard(cycle)

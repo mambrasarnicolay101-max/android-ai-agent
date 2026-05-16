@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-NOIR SOVEREIGN v17.5 — TEMPORAL MEMORY SYSTEM
+NOIR SOVEREIGN v17.5  TEMPORAL MEMORY SYSTEM
 =============================================
 Sistem memori jangka panjang untuk menyimpan konteks, 
 preferensi user, dan keberhasilan tugas masa lalu.
@@ -64,13 +64,13 @@ class TemporalMemory:
             self.memory["interactions"] = self.memory["interactions"][-500:]
             
         self._save_memory()
-        log.info(f"🧠 Memory Recorded: {input_text[:30]}...")
+        log.info(f" Memory Recorded: {input_text[:30]}...")
 
     def update_preference(self, key, value):
         """Menyimpan preferensi user yang dipelajari secara otonom."""
         self.memory["preferences"][key] = value
         self._save_memory()
-        log.info(f"🎯 Preference Learned: {key} = {value}")
+        log.info(f" Preference Learned: {key} = {value}")
 
     def get_context_for_topic(self, topic):
         """Mencari memori relevan berdasarkan kata kunci."""

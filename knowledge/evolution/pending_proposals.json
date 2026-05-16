@@ -1,71 +1,69 @@
 [
     {
-        "id": "1c02647a",
-        "timestamp": "2026-05-11T15:53:40.179903",
-        "title": "Security Hardening: Penggunaan exec() berbahaya - risiko cod",
-        "description": "Security Sentinel mendeteksi kerentanan:\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\pc_executor.py:136 - Penggunaan exec() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py:17 - Penggunaan eval() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py:175 - Penggunaan eval() berbahaya - risiko code injection\n\nTindakan: Review dan perbaiki pola berbahaya ini.",
+        "id": "b39eabed",
+        "timestamp": "2026-05-12T05:43:20.919488",
+        "title": "Security Reflex: CPU_ANOMALY",
+        "description": "Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.",
         "changes": {
-            "security_fix": {
-                "findings": [
-                    {
-                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\pc_executor.py",
-                        "line": 136,
-                        "severity": "HIGH",
-                        "message": "Penggunaan exec() berbahaya - risiko code injection",
-                        "snippet": "exec(compile(code, \"<sandbox>\", \"exec\"), sandbox_globals)"
-                    },
-                    {
-                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py",
-                        "line": 17,
-                        "severity": "HIGH",
-                        "message": "Penggunaan eval() berbahaya - risiko code injection",
-                        "snippet": "(r\"eval\\s*\\(\", \"HIGH\", \"Penggunaan eval() berbahaya - risiko code injection\"),"
-                    },
-                    {
-                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py",
-                        "line": 175,
-                        "severity": "HIGH",
-                        "message": "Penggunaan eval() berbahaya - risiko code injection",
-                        "snippet": "if (\"atob(\" in content or \"base64.b64decode\" in content) and (\"eval(\" in content"
-                    }
-                ]
+            "reflex_action": {
+                "alert": "CPU_ANOMALY",
+                "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+                "timestamp": "Tue May 12 05:43:20 2026"
             }
         },
-        "complexity": 3,
+        "complexity": 1,
         "status": "PENDING_APPROVAL"
     },
     {
-        "id": "9fd59788",
-        "timestamp": "2026-05-11T15:53:43.706640",
-        "title": "Network Hardening: 3 risky port(s) detected on 127.0.0.1",
-        "description": "Port berisiko terbuka: ['5432=PostgreSQL', '8080=HTTP-Alt', '6379=Redis (no-auth default)']\nKerentanan kritis: Redis terbuka TANPA PASSWORD - risiko RCE\n\nTindakan: Tutup port yang tidak diperlukan, aktifkan auth, dan konfigurasi firewall.",
+        "id": "cf1f468f",
+        "timestamp": "2026-05-12T05:44:28.753707",
+        "title": "Security Reflex: CPU_ANOMALY",
+        "description": "Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.",
         "changes": {
-            "network_hardening": {
-                "host": "127.0.0.1",
-                "risky_ports": [
-                    5432,
-                    8080,
-                    6379
-                ],
-                "critical": [
-                    "Redis terbuka TANPA PASSWORD - risiko RCE"
-                ]
+            "reflex_action": {
+                "alert": "CPU_ANOMALY",
+                "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
+                "timestamp": "Tue May 12 05:44:28 2026"
             }
         },
-        "complexity": 4,
+        "complexity": 1,
         "status": "PENDING_APPROVAL"
     },
     {
-        "id": "519525c3",
-        "timestamp": "2026-05-11T23:59:08.384920",
+        "id": "457560df",
+        "timestamp": "2026-05-12T11:48:50.381088",
+        "title": "Architectural Optimization",
+        "description": "Autonomous optimization designed by NeuralArchitect agent.",
+        "changes": {
+            "proposal": "[Gemini Error] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 6.091931076s."
+        },
+        "complexity": 7,
+        "status": "PENDING_APPROVAL"
+    },
+    {
+        "id": "44d30156",
+        "timestamp": "2026-05-16T13:34:45.597725",
+        "title": "Security Simulation: 0 Vulnerabilities Patched",
+        "description": "Red-Blue Arena berhasil mendeteksi dan menambal 0 celah keamanan pada sistem dummy.",
+        "changes": {
+            "security_arena_report": {
+                "findings": []
+            }
+        },
+        "complexity": 2,
+        "status": "PENDING_APPROVAL"
+    },
+    {
+        "id": "7d4c3c35",
+        "timestamp": "2026-05-16T23:34:53.457079",
         "title": "Security Hardening: subprocess dengan shell=True - risiko sh",
-        "description": "Security Sentinel mendeteksi kerentanan:\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\brain.py:329 - subprocess dengan shell=True - risiko shell injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py:34 - subprocess dengan shell=True - risiko shell injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py:45 - subprocess dengan shell=True - risiko shell injection\n\nTindakan: Review dan perbaiki pola berbahaya ini.",
+        "description": "Security Sentinel mendeteksi kerentanan:\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\brain.py:331 - subprocess dengan shell=True - risiko shell injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py:34 - subprocess dengan shell=True - risiko shell injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py:45 - subprocess dengan shell=True - risiko shell injection\n\nTindakan: Review dan perbaiki pola berbahaya ini.",
         "changes": {
             "security_fix": {
                 "findings": [
                     {
                         "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\brain.py",
-                        "line": 329,
+                        "line": 331,
                         "severity": "HIGH",
                         "message": "subprocess dengan shell=True - risiko shell injection",
                         "snippet": "subprocess.run(f\"pip install {lib}\", shell=True)"
@@ -91,33 +89,55 @@
         "status": "PENDING_APPROVAL"
     },
     {
-        "id": "f16d48de",
-        "timestamp": "2026-05-11T23:59:08.985280",
+        "id": "c94f8570",
+        "timestamp": "2026-05-16T23:34:54.055830",
+        "title": "Network Hardening: 4 risky port(s) detected on 127.0.0.1",
+        "description": "Port berisiko terbuka: ['5432=PostgreSQL', '23=Telnet (plaintext)', '6379=Redis (no-auth default)', '8080=HTTP-Alt']\nKerentanan kritis: Redis terbuka TANPA PASSWORD - risiko RCE\n\nTindakan: Tutup port yang tidak diperlukan, aktifkan auth, dan konfigurasi firewall.",
+        "changes": {
+            "network_hardening": {
+                "host": "127.0.0.1",
+                "risky_ports": [
+                    5432,
+                    23,
+                    6379,
+                    8080
+                ],
+                "critical": [
+                    "Redis terbuka TANPA PASSWORD - risiko RCE"
+                ]
+            }
+        },
+        "complexity": 4,
+        "status": "PENDING_APPROVAL"
+    },
+    {
+        "id": "db7b3dca",
+        "timestamp": "2026-05-16T23:34:54.073961",
         "title": "Security Hardening: Penggunaan exec() berbahaya - risiko cod",
-        "description": "Security Sentinel mendeteksi kerentanan:\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\pc_executor.py:136 - Penggunaan exec() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py:17 - Penggunaan eval() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py:175 - Penggunaan eval() berbahaya - risiko code injection\n\nTindakan: Review dan perbaiki pola berbahaya ini.",
+        "description": "Security Sentinel mendeteksi kerentanan:\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\pc_executor.py:145 - Penggunaan exec() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\polymorphic_engine.py:56 - Penggunaan exec() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\polymorphic_engine.py:72 - Penggunaan exec() berbahaya - risiko code injection\n\nTindakan: Review dan perbaiki pola berbahaya ini.",
         "changes": {
             "security_fix": {
                 "findings": [
                     {
                         "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\pc_executor.py",
-                        "line": 136,
+                        "line": 145,
                         "severity": "HIGH",
                         "message": "Penggunaan exec() berbahaya - risiko code injection",
                         "snippet": "exec(compile(code, \"<sandbox>\", \"exec\"), sandbox_globals)"
                     },
                     {
-                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py",
-                        "line": 17,
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\polymorphic_engine.py",
+                        "line": 56,
                         "severity": "HIGH",
-                        "message": "Penggunaan eval() berbahaya - risiko code injection",
-                        "snippet": "(r\"eval\\s*\\(\", \"HIGH\", \"Penggunaan eval() berbahaya - risiko code injection\"),"
+                        "message": "Penggunaan exec() berbahaya - risiko code injection",
+                        "snippet": "exec({var_exec})"
                     },
                     {
-                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\security_sentinel.py",
-                        "line": 175,
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\polymorphic_engine.py",
+                        "line": 72,
                         "severity": "HIGH",
-                        "message": "Penggunaan eval() berbahaya - risiko code injection",
-                        "snippet": "if (\"atob(\" in content or \"base64.b64decode\" in content) and (\"eval(\" in content"
+                        "message": "Penggunaan exec() berbahaya - risiko code injection",
+                        "snippet": "exec(mutated)"
                     }
                 ]
             }
@@ -126,18 +146,123 @@
         "status": "PENDING_APPROVAL"
     },
     {
-        "id": "66d17e6b",
-        "timestamp": "2026-05-12T00:13:36.666670",
-        "title": "Security Reflex: CPU_ANOMALY",
-        "description": "Sistem mendeteksi anomali kritis: Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.. Log ini otomatis dicatat untuk audit kedaulatan.",
+        "id": "796f7c2b",
+        "timestamp": "2026-05-16T23:38:04.156156",
+        "title": "AI Self-Audit Result: web_server.py",
+        "description": "Automated audit findings for web_server.py:\n\n[OmniRouter Error] All providers failed or keys missing.",
         "changes": {
-            "reflex_action": {
-                "alert": "CPU_ANOMALY",
-                "msg": "Beban CPU terdeteksi di 100.0% - Kemungkinan serangan Resource Exhaustion.",
-                "timestamp": "Tue May 12 00:13:36 2026"
+            "audit_findings": {
+                "file": "web_server.py",
+                "report": "[OmniRouter Error] All providers failed or keys missing."
             }
         },
-        "complexity": 1,
+        "complexity": 3,
+        "status": "PENDING_APPROVAL"
+    },
+    {
+        "id": "d74ddd82",
+        "timestamp": "2026-05-17T00:17:21.240922",
+        "title": "Network Hardening: 4 risky port(s) detected on 127.0.0.1",
+        "description": "Port berisiko terbuka: ['6379=Redis (no-auth default)', '8080=HTTP-Alt', '5432=PostgreSQL', '23=Telnet (plaintext)']\nKerentanan kritis: Redis terbuka TANPA PASSWORD - risiko RCE\n\nTindakan: Tutup port yang tidak diperlukan, aktifkan auth, dan konfigurasi firewall.",
+        "changes": {
+            "network_hardening": {
+                "host": "127.0.0.1",
+                "risky_ports": [
+                    6379,
+                    8080,
+                    5432,
+                    23
+                ],
+                "critical": [
+                    "Redis terbuka TANPA PASSWORD - risiko RCE"
+                ]
+            }
+        },
+        "complexity": 4,
+        "status": "PENDING_APPROVAL"
+    },
+    {
+        "id": "c85d5535",
+        "timestamp": "2026-05-17T00:17:25.810579",
+        "title": "Security Hardening: subprocess dengan shell=True - risiko sh",
+        "description": "Security Sentinel mendeteksi kerentanan:\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\brain.py:331 - subprocess dengan shell=True - risiko shell injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py:34 - subprocess dengan shell=True - risiko shell injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py:45 - subprocess dengan shell=True - risiko shell injection\n\nTindakan: Review dan perbaiki pola berbahaya ini.",
+        "changes": {
+            "security_fix": {
+                "findings": [
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\brain.py",
+                        "line": 331,
+                        "severity": "HIGH",
+                        "message": "subprocess dengan shell=True - risiko shell injection",
+                        "snippet": "subprocess.run(f\"pip install {lib}\", shell=True)"
+                    },
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py",
+                        "line": 34,
+                        "severity": "HIGH",
+                        "message": "subprocess dengan shell=True - risiko shell injection",
+                        "snippet": "subprocess.Popen(cmd, shell=True)"
+                    },
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\evolution_bridge.py",
+                        "line": 45,
+                        "severity": "HIGH",
+                        "message": "subprocess dengan shell=True - risiko shell injection",
+                        "snippet": "subprocess.run(cmd, shell=True)"
+                    }
+                ]
+            }
+        },
+        "complexity": 3,
+        "status": "PENDING_APPROVAL"
+    },
+    {
+        "id": "0ba89f34",
+        "timestamp": "2026-05-17T00:17:25.954080",
+        "title": "Security Hardening: Penggunaan exec() berbahaya - risiko cod",
+        "description": "Security Sentinel mendeteksi kerentanan:\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\pc_executor.py:145 - Penggunaan exec() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\polymorphic_engine.py:56 - Penggunaan exec() berbahaya - risiko code injection\n[HIGH] C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\polymorphic_engine.py:72 - Penggunaan exec() berbahaya - risiko code injection\n\nTindakan: Review dan perbaiki pola berbahaya ini.",
+        "changes": {
+            "security_fix": {
+                "findings": [
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\pc_executor.py",
+                        "line": 145,
+                        "severity": "HIGH",
+                        "message": "Penggunaan exec() berbahaya - risiko code injection",
+                        "snippet": "exec(compile(code, \"<sandbox>\", \"exec\"), sandbox_globals)"
+                    },
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\polymorphic_engine.py",
+                        "line": 56,
+                        "severity": "HIGH",
+                        "message": "Penggunaan exec() berbahaya - risiko code injection",
+                        "snippet": "exec({var_exec})"
+                    },
+                    {
+                        "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\polymorphic_engine.py",
+                        "line": 72,
+                        "severity": "HIGH",
+                        "message": "Penggunaan exec() berbahaya - risiko code injection",
+                        "snippet": "exec(mutated)"
+                    }
+                ]
+            }
+        },
+        "complexity": 3,
+        "status": "PENDING_APPROVAL"
+    },
+    {
+        "id": "330551f4",
+        "timestamp": "2026-05-17T00:20:40.803207",
+        "title": "AI Self-Audit Result: ai_router.py",
+        "description": "Automated audit findings for ai_router.py:\n\n[OmniRouter Error] All providers failed or keys missing.",
+        "changes": {
+            "audit_findings": {
+                "file": "ai_router.py",
+                "report": "[OmniRouter Error] All providers failed or keys missing."
+            }
+        },
+        "complexity": 3,
         "status": "PENDING_APPROVAL"
     }
 ]

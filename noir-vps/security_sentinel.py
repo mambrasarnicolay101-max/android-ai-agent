@@ -1,5 +1,5 @@
 """
-SECURITY SENTINEL v2.0 — NOIR SOVEREIGN
+SECURITY SENTINEL v2.0  NOIR SOVEREIGN
 ==========================================
 Pilar 2: Static & Dynamic Security Analysis
 - SAST: Scan kode untuk pola berbahaya
@@ -189,14 +189,14 @@ class SecuritySentinel:
                 
                 # Alert ke Dashboard
                 try:
-                    GATEWAY = os.environ.get("NOIR_GATEWAY_URL", "http://localhost:8765").rstrip("/")
+                    GATEWAY = os.environ.get("NOIR_GATEWAY_URL", "http://"+os.environ.get("NOIR_VPS_IP", "8.215.23.17")).rstrip("/")
                     API_KEY = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
                     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
                     import requests
                     requests.post(f"{GATEWAY}/api/logs", headers=HEADERS, json={
                         "device_id": "SENTINEL_SHIELD",
                         "level": "CRITICAL",
-                        "message": f"🚨 MALWARE SHIELD: File '{os.path.basename(filepath)}' dikarantina karena ancaman kritis."
+                        "message": f" MALWARE SHIELD: File '{os.path.basename(filepath)}' dikarantina karena ancaman kritis."
                     }, timeout=5)
                 except: pass
                 return True

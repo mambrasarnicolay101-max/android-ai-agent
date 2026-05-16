@@ -1,0 +1,23 @@
+{
+    "id": "BATTLE_1778931371_AUT",
+    "timestamp": "2026-05-16T23:36:11.492951",
+    "event_type": "PENTEST",
+    "participants": {
+        "attacker": "Autonomous_Pentester",
+        "defender": "System_Firewall/Hardening",
+        "target": "scanme.nmap.org"
+    },
+    "metrics": {
+        "methods_tried": [
+            "Port Scanning",
+            "Service Fingerprinting",
+            "Auth Check"
+        ],
+        "success": false,
+        "penetration_rate": 0.0,
+        "vulnerabilities_found": 0
+    },
+    "raw_findings": [],
+    "evaluation": "Pentest report for scanme.nmap.org. OSINT: Web Server: Apache/2.4.7 (Ubuntu) | Status: 200",
+    "status": "COMPLETED"
+}

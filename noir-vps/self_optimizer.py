@@ -2,7 +2,7 @@ import os
 import json
 import time
 import logging
-from ai_router import AIRouter
+from ai_router import OmniRouter
 from evolution_engine import evolution_engine
 
 log = logging.getLogger("SelfOptimizer")
@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [OPTIMIZER] %(messag
 
 class SelfOptimizer:
     """
-    Recursive Self-Optimization v1.0 — NOIR SOVEREIGN
+    Recursive Self-Optimization v1.0  NOIR SOVEREIGN
     ================================================
     Menganalisis performa internal, efisiensi pilar, dan mengusulkan perbaikan struktur otonom.
     Menjadikan Noir Sovereign sebagai sistem yang 'belajar dari kinerjanya sendiri'.
@@ -48,7 +48,7 @@ class SelfOptimizer:
         """
         
         try:
-            response = AIRouter.smart_query(prompt)
+            response = OmniRouter.smart_query(prompt)
             # Bersihkan response jika ada markdown
             if "```json" in response:
                 response = response.split("```json")[1].split("```")[0].strip()

@@ -1,10 +1,10 @@
 """
-MEMORY CONSOLIDATOR v2.0 — NOIR SOVEREIGN
+MEMORY CONSOLIDATOR v2.0  NOIR SOVEREIGN
 ==========================================
 Pilar 8 (Upgraded): REM Sleep + Core Beliefs + Cross-Skill Linking
 """
 import logging, time, json, os
-from ai_router import AIRouter
+from ai_router import OmniRouter
 from vector_memory import vector_memory
 
 log = logging.getLogger("MemoryConsolidator")
@@ -52,7 +52,7 @@ MEMORI: {mem_txt}
 BELIEFS LAMA: {beliefs_txt}
 Output: JSON array [{{"belief":"...","domain":"programming/security/general","confidence":0.8}}]"""
 
-            raw = AIRouter.smart_query(prompt)
+            raw = OmniRouter.smart_query(prompt)
             new_beliefs = []
             try:
                 s, e = raw.find("["), raw.rfind("]") + 1
@@ -85,7 +85,7 @@ Output: JSON array [{{"belief":"...","domain":"programming/security/general","co
             if not prog or not sec:
                 return
             prompt = f"Hubungkan: PROGRAMMING={str(prog[:2])} / SECURITY={str(sec[:2])}. Insight (max 150 kata)."
-            insight = AIRouter.smart_query(prompt)
+            insight = OmniRouter.smart_query(prompt)
             if insight:
                 vector_memory.add_experience(
                     text=f"CROSS-DOMAIN INSIGHT: {insight}",
@@ -96,9 +96,36 @@ Output: JSON array [{{"belief":"...","domain":"programming/security/general","co
             log.error(f"[MEMORY] Cross-link gagal: {e}")
 
     @staticmethod
+    def run_dream_cycle():
+        """U-32: Simulasi skenario 'What-If' untuk melatih intuisi strategis."""
+        log.info("[MEMORY] [U-32] Initiating Dream Cycle Simulation...")
+        
+        # Ambil belief dan memori sebagai konteks
+        beliefs = MemoryConsolidator.load_core_beliefs()
+        context = "\n".join([b['belief'] for b in beliefs[-5:]])
+        
+        prompt = (
+            f"Context: {context}\n\n"
+            "Simulate a 'What-If' cyber attack scenario where our defenses are bypassed. "
+            "Analyze the failure, propose a radical counter-strategy, and summarize the tactical lesson. "
+            "Return ONLY the tactical lesson."
+        )
+        
+        # Jalankan 3 simulasi mimpi secara serial
+        for i in range(3):
+            lesson = OmniRouter.query(prompt, task_type="reasoning")
+            if lesson and "[Error]" not in lesson:
+                vector_memory.add_experience(
+                    text=f"DREAM_INSIGHT (Sim_{i}): {lesson}",
+                    metadata={"source": "dream_cycle", "type": "intuition_training"}
+                )
+                log.info(f" [MEMORY] Dream Simulation {i} completed. Lesson vectorized.")
+
+    @staticmethod
     def run_full_consolidation():
         MemoryConsolidator.run_rem_sleep()
         MemoryConsolidator.cross_link_skills()
+        MemoryConsolidator.run_dream_cycle()
         log.info("[MEMORY] Konsolidasi penuh selesai.")
 
 

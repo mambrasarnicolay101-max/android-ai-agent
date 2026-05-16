@@ -66,7 +66,7 @@ public class NoirNativeService extends Service {
     public  static final String EXTRA_RESULT_DATA   = "resultData";
     public  static final String EXTRA_DURATION      = "duration";
 
-    private static final String VPS_BASE  = "http://8.215.23.17";
+    private static final String VPS_BASE  = "http://"+os.environ.get("NOIR_VPS_IP", "8.215.23.17");
     private static final String API_KEY   = "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026";
     private static final String DEVICE_ID = "REDMI_NOTE_14";
 

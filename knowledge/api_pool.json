@@ -11,6 +11,32 @@
             "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"
         ]
     },
+    "deepseek": {
+        "active_index": 0,
+        "keys": [
+            "sk-783489b559ad4f3abb7298b84da73ea5"
+        ]
+    },
+    "sambanova": {
+        "active_index": 0,
+        "keys": []
+    },
+    "cerebras": {
+        "active_index": 0,
+        "keys": []
+    },
+    "together": {
+        "active_index": 0,
+        "keys": []
+    },
+    "mistral": {
+        "active_index": 0,
+        "keys": []
+    },
+    "dashscope": {
+        "active_index": 0,
+        "keys": []
+    },
     "openrouter": {
         "active_index": 0,
         "keys": []

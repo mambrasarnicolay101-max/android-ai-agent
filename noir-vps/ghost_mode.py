@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [GHOST] %(message)s"
 
 class GhostMode:
     """
-    Ghost Mode v1.0 — Network Anonymity & Stealth
+    Ghost Mode v1.0  Network Anonymity & Stealth
     ============================================
     Mengelola rotasi identitas jaringan untuk riset otonom.
     Menyamarkan asal-usul VPS Noir Sovereign agar tidak terdeteksi oleh target riset.

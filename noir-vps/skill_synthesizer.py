@@ -5,14 +5,14 @@ import time
 import subprocess
 import sys
 import re
-from ai_router import AIRouter
+from ai_router import OmniRouter
 
 log = logging.getLogger("SkillSynthesizer")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [SYNTHESIZER] %(message)s")
 
 class SkillSynthesizer:
     """
-    Sovereign Skill Synthesizer v1.0 — NOIR SOVEREIGN
+    Sovereign Skill Synthesizer v1.0  NOIR SOVEREIGN
     ================================================
     Membangun, menguji, dan memasang fitur baru secara otonom berdasarkan tujuan User.
     Proses meliputi: Brainstorming -> Coding -> Security Audit -> Validation -> Deployment.
@@ -42,7 +42,7 @@ SYARAT TEKNIS:
 7. Nama file akan dibuat otomatis dari nama class (snake_case).
 """
         try:
-            code_response = AIRouter.smart_query(prompt)
+            code_response = OmniRouter.smart_query(prompt)
         except Exception as e:
             return {"success": False, "reason": f"Neural Link Error: {e}"}
         

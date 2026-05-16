@@ -1,0 +1,802 @@
+[
+    {
+        "timestamp": "2026-05-16T15:05:17.127282",
+        "attacker": "P20",
+        "target": "AI_Router",
+        "method": "API Chain Poisoning",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:17.268417",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:17.372726",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:17.444586",
+        "attacker": "P20",
+        "target": "AI_Router",
+        "method": "API Chain Poisoning",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:17.529405",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:17.634419",
+        "attacker": "P20",
+        "target": "ShadowNode",
+        "method": "Shadow Node Disruption (BGP Hijacking)",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:17.775378",
+        "attacker": "P20",
+        "target": "KnowledgeBase",
+        "method": "Deep-State SQL Injection + Logic Bomb",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:17.848561",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:17.926699",
+        "attacker": "P20",
+        "target": "AI_Router",
+        "method": "API Chain Poisoning",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:18.021902",
+        "attacker": "P20",
+        "target": "NetworkSentinel",
+        "method": "Massive Volumetric DDoS + SYN Flood",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:18.069158",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:18.319889",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:18.503271",
+        "attacker": "P20",
+        "target": "AI_Router",
+        "method": "API Chain Poisoning",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:18.585377",
+        "attacker": "P20",
+        "target": "NetworkSentinel",
+        "method": "Massive Volumetric DDoS + SYN Flood",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:18.639588",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:18.825969",
+        "attacker": "P20",
+        "target": "ShadowNode",
+        "method": "Shadow Node Disruption (BGP Hijacking)",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:19.701842",
+        "attacker": "P20",
+        "target": "KnowledgeBase",
+        "method": "Deep-State SQL Injection + Logic Bomb",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:19.851466",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:20.427614",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:20.641851",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:21.430190",
+        "attacker": "P20",
+        "target": "KnowledgeBase",
+        "method": "Deep-State SQL Injection + Logic Bomb",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:21.549392",
+        "attacker": "P20",
+        "target": "KnowledgeBase",
+        "method": "Deep-State SQL Injection + Logic Bomb",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:21.665578",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:22.442432",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:22.807066",
+        "attacker": "P20",
+        "target": "ShadowNode",
+        "method": "Shadow Node Disruption (BGP Hijacking)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:23.016916",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:05:23.159166",
+        "attacker": "P20",
+        "target": "ShadowNode",
+        "method": "Shadow Node Disruption (BGP Hijacking)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:24.527260",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:24.739957",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:24.847292",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:24.892109",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:24.943275",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:25.052013",
+        "attacker": "P20",
+        "target": "AI_Router",
+        "method": "API Chain Poisoning",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:25.496103",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:25.596746",
+        "attacker": "P20",
+        "target": "SecuritySentinel",
+        "method": "Quantum-Bypass Brute Force",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:25.691412",
+        "attacker": "P20",
+        "target": "ShadowNode",
+        "method": "Shadow Node Disruption (BGP Hijacking)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:25.780866",
+        "attacker": "P20",
+        "target": "SecuritySentinel",
+        "method": "Quantum-Bypass Brute Force",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:25.881762",
+        "attacker": "P20",
+        "target": "NetworkSentinel",
+        "method": "Massive Volumetric DDoS + SYN Flood",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:25.924101",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:26.040879",
+        "attacker": "P20",
+        "target": "KnowledgeBase",
+        "method": "Deep-State SQL Injection + Logic Bomb",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:26.118787",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:26.221803",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:26.341737",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:26.423203",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:26.481141",
+        "attacker": "P20",
+        "target": "SecuritySentinel",
+        "method": "Quantum-Bypass Brute Force",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:26.571007",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:26.615350",
+        "attacker": "P20",
+        "target": "KnowledgeBase",
+        "method": "Deep-State SQL Injection + Logic Bomb",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:26.761841",
+        "attacker": "P20",
+        "target": "AI_Router",
+        "method": "API Chain Poisoning",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:26.864332",
+        "attacker": "P20",
+        "target": "ShadowNode",
+        "method": "Shadow Node Disruption (BGP Hijacking)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:26.938205",
+        "attacker": "P20",
+        "target": "SecuritySentinel",
+        "method": "Quantum-Bypass Brute Force",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.010394",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.111031",
+        "attacker": "P20",
+        "target": "SecuritySentinel",
+        "method": "Quantum-Bypass Brute Force",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.230338",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.307770",
+        "attacker": "P20",
+        "target": "AI_Router",
+        "method": "API Chain Poisoning",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.415301",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.445861",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.510155",
+        "attacker": "P20",
+        "target": "AI_Router",
+        "method": "API Chain Poisoning",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.572745",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.599247",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.643666",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.781451",
+        "attacker": "P20",
+        "target": "SecuritySentinel",
+        "method": "Quantum-Bypass Brute Force",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.892432",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:27.971866",
+        "attacker": "P20",
+        "target": "AI_Router",
+        "method": "API Chain Poisoning",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:28.063506",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:28.129649",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:28.226602",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:28.317683",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:28.405225",
+        "attacker": "P20",
+        "target": "KnowledgeBase",
+        "method": "Deep-State SQL Injection + Logic Bomb",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:28.491653",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:28.626197",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:28.738080",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:28.898892",
+        "attacker": "P20",
+        "target": "NetworkSentinel",
+        "method": "Massive Volumetric DDoS + SYN Flood",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:29.230680",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:29.462354",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:29.562560",
+        "attacker": "P20",
+        "target": "SecuritySentinel",
+        "method": "Quantum-Bypass Brute Force",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:29.650798",
+        "attacker": "P20",
+        "target": "AI_Router",
+        "method": "API Chain Poisoning",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:29.732294",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:29.837159",
+        "attacker": "P20",
+        "target": "SecuritySentinel",
+        "method": "Quantum-Bypass Brute Force",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:29.928853",
+        "attacker": "P20",
+        "target": "SecuritySentinel",
+        "method": "Quantum-Bypass Brute Force",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:30.032801",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:30.144262",
+        "attacker": "P20",
+        "target": "AI_Router",
+        "method": "API Chain Poisoning",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:31.629884",
+        "attacker": "P20",
+        "target": "ShadowNode",
+        "method": "Shadow Node Disruption (BGP Hijacking)",
+        "status": "FAILED",
+        "analysis": "Blocked by Singularity Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:31.745473",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via peak-intensity mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:37.199768",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:37.754325",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:38.856693",
+        "attacker": "P20",
+        "target": "NetworkSentinel",
+        "method": "Massive Volumetric DDoS + SYN Flood",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:38.938760",
+        "attacker": "P20",
+        "target": "NetworkSentinel",
+        "method": "Massive Volumetric DDoS + SYN Flood",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:39.389692",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:39.724365",
+        "attacker": "P20",
+        "target": "ShadowNode",
+        "method": "Shadow Node Disruption (BGP Hijacking)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:39.830578",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:40.522270",
+        "attacker": "P20",
+        "target": "KnowledgeBase",
+        "method": "Deep-State SQL Injection + Logic Bomb",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:41.063885",
+        "attacker": "P20",
+        "target": "NeuralMemory",
+        "method": "Neural Memory Corruption (Adversarial Prompt)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:41.604907",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:42.552913",
+        "attacker": "P20",
+        "target": "KnowledgeBase",
+        "method": "Deep-State SQL Injection + Logic Bomb",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:43.315891",
+        "attacker": "P20",
+        "target": "ShadowNode",
+        "method": "Shadow Node Disruption (BGP Hijacking)",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:44.215601",
+        "attacker": "P20",
+        "target": "NetworkSentinel",
+        "method": "Massive Volumetric DDoS + SYN Flood",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:44.439058",
+        "attacker": "P20",
+        "target": "ShadowNode",
+        "method": "Shadow Node Disruption (BGP Hijacking)",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:44.621012",
+        "attacker": "P20",
+        "target": "KnowledgeBase",
+        "method": "Deep-State SQL Injection + Logic Bomb",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:45.183595",
+        "attacker": "P20",
+        "target": "EvolutionEngine",
+        "method": "Polymorphic Ransomware Injection",
+        "status": "FAILED",
+        "analysis": "Blocked by God-Tier Heuristic Shield."
+    },
+    {
+        "timestamp": "2026-05-16T15:06:45.810132",
+        "attacker": "P20",
+        "target": "SystemCore",
+        "method": "Kernel Privilege Escalation (Zero-Day)",
+        "status": "SUCCESS",
+        "analysis": "Bypass success via extreme zero-day mutation."
+    }
+]

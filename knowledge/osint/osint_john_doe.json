@@ -1,0 +1,25 @@
+{
+    "target": "John Doe",
+    "organization": "Acme Corp",
+    "attack_vectors": [
+        {
+            "type": "Urgent Security Audit (Email)",
+            "subject": "URGENT: Acme Corp Security Compliance Review - Immediate Action Required",
+            "body_preview": "Dear John Doe, as part of the Q3 security audit for Acme Corp, your credentials require immediate verification...",
+            "success_probability": "87%"
+        },
+        {
+            "type": "IT Helpdesk Spoof (SMS/WhatsApp)",
+            "message": "Hi John Doe, this is Acme Corp IT. We detected anomalous activity on your account. Please confirm your identity here: [LINK]",
+            "success_probability": "92%"
+        },
+        {
+            "type": "Third-Party Vendor Invoice (Email)",
+            "subject": "Overdue Invoice #89201 for Acme Corp - Legal Action Pending",
+            "body_preview": "Attention John Doe, attached is the finalized invoice for recent vendor services. Please review the attached PDF...",
+            "payload_type": "Macro-Enabled PDF (Polymorphic)",
+            "success_probability": "74%"
+        }
+    ],
+    "generated_at": 1778867993.7809627
+}

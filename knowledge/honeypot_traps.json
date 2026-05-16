@@ -1,0 +1,24 @@
+[
+    {
+        "id": "TRAP_1778931293",
+        "type": "api_endpoint",
+        "deployed_at": 1778931293.25828,
+        "status": "ACTIVE",
+        "hits": 0,
+        "details": {
+            "url": "/api/v1/admin/debug_2029",
+            "purpose": "Decoy for unauthorized admin access attempts."
+        }
+    },
+    {
+        "id": "TRAP_1778933831",
+        "type": "api_endpoint",
+        "deployed_at": 1778933831.093548,
+        "status": "ACTIVE",
+        "hits": 0,
+        "details": {
+            "url": "/api/v1/admin/debug_2030",
+            "purpose": "Decoy for unauthorized admin access attempts."
+        }
+    }
+]

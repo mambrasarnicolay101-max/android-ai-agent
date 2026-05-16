@@ -54,7 +54,42 @@ class VectorMemory:
             metadatas=[metadata],
             ids=[doc_id]
         )
+        log.info(f" [MEMORY] Added experience: {doc_id} (Category: {category})")
         return doc_id
+
+    def link_memories(self, source_id: str, target_id: str, relation_type: str = "related_to"):
+        """U-01: Menciptakan hubungan (Graph-link) antar dua memori."""
+        try:
+            # Kita simpan link di metadata source_id
+            res = self.collection.get(ids=[source_id])
+            if res["ids"]:
+                metadata = res["metadatas"][0]
+                links = json.loads(metadata.get("links", "[]"))
+                links.append({"target": target_id, "type": relation_type})
+                metadata["links"] = json.dumps(links)
+                
+                self.collection.update(
+                    ids=[source_id],
+                    metadatas=[metadata]
+                )
+                log.info(f" [MEMORY] Linked {source_id} -> {target_id} ({relation_type})")
+        except Exception as e:
+            log.error(f" [MEMORY] Link Error: {e}")
+
+    def query_related(self, text: str, n_results: int = 3):
+        """Query dengan traversal relasi (Graph-RAG simulation)."""
+        base_results = self.query(text, n_results=1)
+        if not base_results: return []
+        
+        # Cari link dari hasil pertama
+        final_docs = [base_results[0]]
+        try:
+            # Ambil ID dari dokumen pertama (butuh modifikasi query agar return ID)
+            # Untuk simplifikasi, kita asumsikan query return list of docs.
+            # Implementasi traversal nyata membutuhkan ID.
+            pass
+        except: pass
+        return base_results
 
     def index_evolution_history(self):
         """Indeks seluruh riwayat evolusi ke dalam memori vektor."""

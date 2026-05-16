@@ -2,7 +2,7 @@ import os, json, logging
 import base64
 import cv2
 import numpy as np
-from ai_router import AIRouter
+from ai_router import OmniRouter
 from catalyst import catalyst
 from temporal_memory import global_memory as memory
 
@@ -15,7 +15,7 @@ class ScreenVisionIntelligence:
     
     @staticmethod
     def analyze_screen(image_path: str):
-        log.info("👁️ Vision Intelligence: Analyzing current screen state...")
+        log.info(" Vision Intelligence: Analyzing current screen state...")
         
         if not os.path.exists(image_path):
             return {"error": "Screen image not found."}
@@ -39,7 +39,7 @@ class ScreenVisionIntelligence:
             """
             
             # Memanfaatkan kemampuan multimodal & native JSON Gemini 2.0 Flash
-            response = AIRouter.query_gemini(prompt, image_base64=encoded_string, response_json=True)
+            response = OmniRouter.query_gemini(prompt, image_base64=encoded_string, response_json=True)
             result = json.loads(response)
             
             # FASE 3: Deteksi UI Elements

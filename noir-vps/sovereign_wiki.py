@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 
 class SovereignWiki:
     """
-    Generator Wiki Otonom v1.0 — NOIR SOVEREIGN
+    Generator Wiki Otonom v1.0  NOIR SOVEREIGN
     ===========================================
     Mengubah riwayat evolusi, pembelajaran, dan simulasi keamanan menjadi
     dokumentasi visual yang premium dan mudah dipantau oleh User.
@@ -41,7 +41,7 @@ class SovereignWiki:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOVEREIGN AEGIS — KNOWLEDGE WIKI</title>
+    <title>SOVEREIGN AEGIS  KNOWLEDGE WIKI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>

@@ -27,7 +27,7 @@ def launch_sovereign():
     cmd = [sys.executable, "-m", "uvicorn", "noir-ui.web_server:app", "--host", "0.0.0.0", "--port", "80"]
     try:
         process = subprocess.Popen(cmd)
-        print("[\033[92mSUCCESS\033[0m] Sovereign Dashboard is now ONLINE at http://8.215.23.17")
+        print("[\033[92mSUCCESS\033[0m] Sovereign Dashboard is now ONLINE at http://"+os.environ.get("NOIR_VPS_IP", "8.215.23.17"))
         print("[\033[94mINFO\033[0m] Waiting for Redmi Note 14 Agent to synchronize...")
         
         while True:

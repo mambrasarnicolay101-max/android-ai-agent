@@ -1,5 +1,5 @@
 """
-NOIR V7 — NEURAL NETWORKS MODULE
+NOIR V7  NEURAL NETWORKS MODULE
 =================================
 Implementasi algoritma berat (CNN, RNN, LSTM) untuk analisis data tingkat lanjut.
 Jalankan di VPS Alibaba.
@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 
-# ─── 1. CNN (Convolutional Neural Network) ───
+#  1. CNN (Convolutional Neural Network) 
 # Digunakan untuk analisis visual tingkat lanjut (Object Detection)
 class NoirCNN(nn.Module):
     def __init__(self):
@@ -29,7 +29,7 @@ class NoirCNN(nn.Module):
         x = x.view(x.size(0), -1)
         return self.fc(x)
 
-# ─── 2. RNN & LSTM (Long Short-Term Memory) ───
+#  2. RNN & LSTM (Long Short-Term Memory) 
 # Digunakan untuk analisis pola aktivitas user dan prediksi (Habit Tracking)
 class NoirLSTM(nn.Module):
     def __init__(self, input_size=10, hidden_size=64, num_layers=2):
@@ -41,7 +41,7 @@ class NoirLSTM(nn.Module):
         out, _ = self.lstm(x)
         return self.fc(out[:, -1, :])
 
-# ─── INTEGRASI BRAIN ───
+#  INTEGRASI BRAIN 
 def analyze_complex_pattern(data_sequence):
     """Fungsi pembungkus untuk dipanggil oleh brain.py."""
     model = NoirLSTM()

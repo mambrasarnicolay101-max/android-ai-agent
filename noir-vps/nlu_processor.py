@@ -1,5 +1,5 @@
 import os, json, logging, re
-from ai_router import AIRouter
+from ai_router import OmniRouter
 
 log = logging.getLogger("NLUProcessor")
 
@@ -24,7 +24,7 @@ class NLUProcessor:
         
         for key, intent in local_mapping.items():
             if key in raw_text:
-                log.info(f"⚡ NLU: Local Match Found -> {intent}")
+                log.info(f" NLU: Local Match Found -> {intent}")
                 return {
                     "original": text,
                     "normalized": raw_text,
@@ -36,7 +36,7 @@ class NLUProcessor:
         # 2. AI SMART NORMALIZATION (Re-enabled for Elite v17)
         try:
             prompt = f"Identify the intent of this message for an Android AI Agent. Return only the intent code (e.g. TAKE_SCREENSHOT, GET_BATTERY, SYSTEM_ACTION, RUN_AUDIT, or UNKNOWN). Message: '{raw_text}'"
-            intent = AIRouter.query_gemini(prompt).strip().upper()
+            intent = OmniRouter.query_gemini(prompt).strip().upper()
             if intent != "UNKNOWN":
                 return {"original": text, "normalized": raw_text, "intent": intent, "entities": {}, "slang_detected": False}
         except: pass
@@ -48,5 +48,5 @@ class NLUProcessor:
         """Mengekstrak pola struktur kalimat untuk pembelajaran otonom."""
         # Contoh: "Tolong nyalakan lampu" -> "ACTION_REQUEST(verb=nyalakan, target=lampu)"
         prompt = f"Analyze the grammatical structure of this normalized sentence and return a pattern template: '{normalized_text}'"
-        pattern = AIRouter.query_gemini(prompt)
+        pattern = OmniRouter.query_gemini(prompt)
         return pattern

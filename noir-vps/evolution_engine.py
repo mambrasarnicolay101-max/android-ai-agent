@@ -19,7 +19,7 @@ class SovereignEvolutionEngine:
     def __init__(self):
         os.makedirs(self.EVO_DIR, exist_ok=True)
 
-    # ─── HELPERS ───
+    #  HELPERS 
     def _load(self, path: str, default):
         """Load-before-write: selalu baca file terbaru dari disk."""
         if os.path.exists(path):
@@ -43,7 +43,7 @@ class SovereignEvolutionEngine:
             log.info(f"[EVO] Auto-expired {expired} proposal(s) yang lebih dari {self.PROPOSAL_TTL_DAYS} hari.")
         return active
 
-    # ─── PUBLIC API ───
+    #  PUBLIC API 
     def propose_evolution(self, title: str, description: str, changes: dict, complexity: int = 5) -> str:
         """Mendaftarkan proposal evolusi baru untuk persetujuan User."""
         # FIX H-06: Reload sebelum tulis agar tidak overwrite data dari thread lain

@@ -8,7 +8,7 @@ menjadi satu basis pengetahuan kedaulatan milik Noir.
 """
 
 import os, json, logging, time, requests
-from ai_router import AIRouter
+from ai_router import OmniRouter
 
 log = logging.getLogger("SovereignCatalyst")
 
@@ -24,8 +24,8 @@ class SovereignCatalyst:
         # 1. Gather perspectives from multiple models (Simulated via different prompts/parameters)
         # In a real multi-AI setup, we'd call different APIs here.
         perspectives = {
-            "gemini": AIRouter.query_gemini(f"Deep dive analysis: {topic}. Focus on implementation."),
-            "reasoning": AIRouter.query_gemini(f"Critical review and security risks of: {topic}.")
+            "gemini": OmniRouter.query_gemini(f"Deep dive analysis: {topic}. Focus on implementation."),
+            "reasoning": OmniRouter.query_gemini(f"Critical review and security risks of: {topic}.")
         }
 
         # 2. Synthesis (The Proprietary Part)
@@ -39,7 +39,7 @@ class SovereignCatalyst:
         Format as JSON with keys: [concept, implementation_steps, security_protocol, readiness_score].
         """
         
-        synthesis_raw = AIRouter.query_gemini(synthesis_prompt)
+        synthesis_raw = OmniRouter.query_gemini(synthesis_prompt)
         
         try:
             # Extract JSON and save to Private Vault

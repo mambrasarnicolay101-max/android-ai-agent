@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ANTIGRAVITY INTELLIGENCE CORE — NOIR SOVEREIGN INTEGRATION
+ANTIGRAVITY INTELLIGENCE CORE  NOIR SOVEREIGN INTEGRATION
 ===========================================================
 Modul ini menyuntikkan seluruh pengetahuan & skill milik Antigravity AI
 (Google DeepMind Advanced Agentic Coding) ke dalam otak Noir Sovereign.
@@ -27,14 +27,14 @@ from datetime import datetime
 
 log = logging.getLogger("AntigravityCore")
 
-# ─── PATH DEFINITIONS ───
+#  PATH DEFINITIONS 
 _BASE_DIR    = Path(__file__).resolve().parent
 _KNOWLEDGE_DIR = _BASE_DIR.parent / "knowledge"
 _MASTER_KB_PATH = _KNOWLEDGE_DIR / "antigravity_master_knowledge.json"
 _NEURAL_MEM_PATH = _KNOWLEDGE_DIR / "neural_memory.json"
 _SOVEREIGN_VAULT_PATH = _KNOWLEDGE_DIR / "sovereign_intelligence.json"
 
-# ─── KNOWLEDGE LOADER ───
+#  KNOWLEDGE LOADER 
 class AntigravityKnowledgeLoader:
     """Load dan cache seluruh pengetahuan Antigravity dari file JSON."""
     _cache: dict = {}
@@ -82,7 +82,7 @@ class AntigravityKnowledgeLoader:
         return list(set(skills))
 
 
-# ─── ANTIGRAVITY REASONING ENGINE ───
+#  ANTIGRAVITY REASONING ENGINE 
 class AntigravityReasoningEngine:
     """
     Engine penalaran berbasis pengetahuan Antigravity.
@@ -154,15 +154,15 @@ class AntigravityReasoningEngine:
             "",
             "=== PRINSIP DESAIN AGEN OTONOM ===",
         ]
-        response.extend([f"  • {p}" for p in principles])
+        response.extend([f"   {p}" for p in principles])
         response.append("")
         response.append("=== KEPUTUSAN ARSITEKTUR ===")
-        response.extend([f"  • {d}" for d in decisions])
+        response.extend([f"   {d}" for d in decisions])
 
         return "\n".join(response)
 
 
-# ─── ANTIGRAVITY SKILL REGISTRY ───
+#  ANTIGRAVITY SKILL REGISTRY 
 class AntigravitySkillRegistry:
     """
     Registry semua skill yang dikuasai Antigravity.
@@ -219,7 +219,7 @@ class AntigravitySkillRegistry:
 
         lines = [
             "=" * 60,
-            "  ANTIGRAVITY INTELLIGENCE CORE — SKILL REPORT",
+            "  ANTIGRAVITY INTELLIGENCE CORE  SKILL REPORT",
             f"  Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
             "=" * 60,
             f"  Name    : {identity.get('name', 'Antigravity')}",
@@ -256,7 +256,7 @@ class AntigravitySkillRegistry:
         return "\n".join(lines)
 
 
-# ─── MEMORY SEEDER ───
+#  MEMORY SEEDER 
 class AntigravityMemorySeeder:
     """
     Menyemai Neural Memory Noir dengan pengetahuan Antigravity
@@ -313,7 +313,7 @@ class AntigravityMemorySeeder:
                 new_memories.append({
                     "id": f"ag_{int(time.time())}_{lang}",
                     "timestamp": timestamp,
-                    "content": f"Antigravity MASTERY — {lang.upper()} [{data['level']}]: {skills_preview}...",
+                    "content": f"Antigravity MASTERY  {lang.upper()} [{data['level']}]: {skills_preview}...",
                     "category": "programming_mastery",
                     "source": "antigravity_core"
                 })
@@ -326,7 +326,7 @@ class AntigravityMemorySeeder:
             new_memories.append({
                 "id": f"ag_{int(time.time())}_cyber",
                 "timestamp": timestamp,
-                "content": f"Antigravity CYBERSECURITY — Web Exploitation Techniques: {'; '.join(web_exploits[:4])}",
+                "content": f"Antigravity CYBERSECURITY  Web Exploitation Techniques: {'; '.join(web_exploits[:4])}",
                 "category": "cybersecurity",
                 "source": "antigravity_core"
             })
@@ -337,7 +337,7 @@ class AntigravityMemorySeeder:
         new_memories.append({
             "id": f"ag_{int(time.time())}_evolution",
             "timestamp": timestamp,
-            "content": f"Antigravity EVOLUTION LOOP: {' → '.join(step.split(':')[0] for step in evolution)}",
+            "content": f"Antigravity EVOLUTION LOOP: {'  '.join(step.split(':')[0] for step in evolution)}",
             "category": "agent_architecture",
             "source": "antigravity_core"
         })
@@ -422,7 +422,7 @@ class AntigravityMemorySeeder:
             "intelligence": {
                 "concept": "8-Pillar autonomous agent design with self-evolution loop",
                 "implementation_steps": [
-                    "Observe → Analyze → Propose → Validate → Deploy → Monitor → Consolidate",
+                    "Observe  Analyze  Propose  Validate  Deploy  Monitor  Consolidate",
                     "Setiap pilar isolated di daemon thread dengan fault tolerance",
                     "Memory: Short-term dict + Long-term JSON/ChromaDB + Episodic logs"
                 ],
@@ -437,8 +437,8 @@ class AntigravityMemorySeeder:
             "intelligence": {
                 "concept": "Structured debugging & architecture decision framework",
                 "implementation_steps": [
-                    "Reproduksi → Isolasi → Hipotesis → Validasi → Fix → Regression Test → Document",
-                    "Network errors: connectivity → DNS → port → SSL → auth → rate limit",
+                    "Reproduksi  Isolasi  Hipotesis  Validasi  Fix  Regression Test  Document",
+                    "Network errors: connectivity  DNS  port  SSL  auth  rate limit",
                     "Profil performa dulu, optimize kemudian"
                 ],
                 "security_protocol": "Jangan fix bug dengan workaround, temukan root cause",
@@ -453,7 +453,7 @@ class AntigravityMemorySeeder:
         log.info(f"[ANTIGRAVITY] Sovereign Vault diperbarui dengan {len(vault)} intelligence entries.")
 
 
-# ─── PILAR ANTIGRAVITY (Pilar ke-9) ───
+#  PILAR ANTIGRAVITY (Pilar ke-9) 
 class AntigravityPillar:
     """
     Pilar ke-9 di Sovereign Orchestrator.
@@ -520,22 +520,22 @@ class AntigravityPillar:
         return f"[ANTIGRAVITY] Query '{query}' diproses. Knowledge base aktif dengan {len(kb)} domain."
 
 
-# ─── MODULE INIT ───
+#  MODULE INIT 
 def initialize():
     """Inisialisasi Antigravity Intelligence Core saat modul di-import."""
     log.info("=" * 55)
-    log.info("  ANTIGRAVITY INTELLIGENCE CORE v1.0 — INITIALIZING")
+    log.info("  ANTIGRAVITY INTELLIGENCE CORE v1.0  INITIALIZING")
     log.info("  Source: Google DeepMind Advanced Agentic Coding")
     log.info("=" * 55)
 
     kb = AntigravityKnowledgeLoader.load()
     if kb:
         identity = kb.get("identity", {})
-        log.info(f"  ✅ Knowledge loaded: {identity.get('name', 'Antigravity')}")
-        log.info(f"  ✅ Domains: {list(kb.keys())[:6]} ...")
-        log.info(f"  ✅ Status: READY (readiness_score=100)")
+        log.info(f"   Knowledge loaded: {identity.get('name', 'Antigravity')}")
+        log.info(f"   Domains: {list(kb.keys())[:6]} ...")
+        log.info(f"   Status: READY (readiness_score=100)")
     else:
-        log.warning("  ⚠️  Knowledge base kosong atau tidak ditemukan!")
+        log.warning("    Knowledge base kosong atau tidak ditemukan!")
 
     log.info("=" * 55)
 
@@ -543,7 +543,7 @@ def initialize():
 # Auto-initialize saat modul di-import
 initialize()
 
-# ─── STANDALONE TESTING ───
+#  STANDALONE TESTING 
 if __name__ == "__main__":
     logging.basicConfig(
         level=logging.INFO,
@@ -551,12 +551,12 @@ if __name__ == "__main__":
     )
 
     print("\n" + "=" * 60)
-    print("  ANTIGRAVITY INTELLIGENCE CORE — SELF TEST")
+    print("  ANTIGRAVITY INTELLIGENCE CORE  SELF TEST")
     print("=" * 60)
 
     # Test 1: Load knowledge
     kb = AntigravityKnowledgeLoader.load()
-    print(f"\n✅ Knowledge loaded. Domains: {list(kb.keys())}")
+    print(f"\n Knowledge loaded. Domains: {list(kb.keys())}")
 
     # Test 2: Skill report
     report = AntigravitySkillRegistry.generate_skill_report()
@@ -564,14 +564,14 @@ if __name__ == "__main__":
 
     # Test 3: Problem solving
     solution = AntigravityReasoningEngine.solve_problem("network_error", "VPS gateway timeout")
-    print(f"\n✅ Problem Solving Test:\n{solution[:500]}")
+    print(f"\n Problem Solving Test:\n{solution[:500]}")
 
     # Test 4: Seed memory
-    print("\n✅ Seeding neural memory...")
+    print("\n Seeding neural memory...")
     AntigravityPillar.run_knowledge_sync()
 
     # Test 5: Consult
     answer = AntigravityPillar.consult("Bagaimana cara debug error network pada VPS?")
-    print(f"\n✅ Consultation Result:\n{answer[:500]}")
+    print(f"\n Consultation Result:\n{answer[:500]}")
 
-    print("\n✅ ALL TESTS PASSED — Antigravity Intelligence Core ACTIVE")
+    print("\n ALL TESTS PASSED  Antigravity Intelligence Core ACTIVE")

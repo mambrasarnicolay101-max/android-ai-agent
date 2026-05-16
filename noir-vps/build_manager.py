@@ -16,7 +16,7 @@ class BuildManager:
     @staticmethod
     def trigger_apk_build():
         """Menjalankan proses build APK menggunakan Buildozer di VPS."""
-        log.info("🏗️ BuildManager: Initiating APK Rebuild (Noir Sovereign Native)...")
+        log.info(" BuildManager: Initiating APK Rebuild (Noir Sovereign Native)...")
         
         try:
             # Pastikan bin dir ada
@@ -31,10 +31,10 @@ class BuildManager:
                 stderr=subprocess.DEVNULL
             )
             
-            log.info(f"🚀 Build process started (PID: {process.pid}). Hasil akan muncul di folder /bin.")
+            log.info(f" Build process started (PID: {process.pid}). Hasil akan muncul di folder /bin.")
             return {"success": True, "pid": process.pid, "msg": "Build APK dimulai di latar belakang."}
         except Exception as e:
-            log.error(f"❌ Build APK gagal: {e}")
+            log.error(f" Build APK gagal: {e}")
             return {"success": False, "error": str(e)}
 
     @staticmethod
@@ -57,7 +57,7 @@ class BuildManager:
     def sync_desktop_client():
         """Menyiapkan paket pembaruan untuk aplikasi desktop."""
         # Logika untuk menandai versi desktop terbaru agar client melakukan 'pull'
-        log.info("🖥️ BuildManager: Desktop sync point updated.")
+        log.info(" BuildManager: Desktop sync point updated.")
         return {"success": True, "version": "21.1.x-stable"}
 
 if __name__ == "__main__":

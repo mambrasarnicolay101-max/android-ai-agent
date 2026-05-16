@@ -1,5 +1,5 @@
 import os, json, logging
-from ai_router import AIRouter
+from ai_router import OmniRouter
 from catalyst import catalyst
 
 log = logging.getLogger("LinguisticLearning")
@@ -11,7 +11,7 @@ class LinguisticMastery:
     
     @staticmethod
     def absorb_human_patterns():
-        log.info("🧠 Linguistic Mastery: Analyzing human language patterns via ChatGPT interface...")
+        log.info(" Linguistic Mastery: Analyzing human language patterns via ChatGPT interface...")
         
         # 1. Mission Prompt
         mission = """
@@ -26,8 +26,8 @@ class LinguisticMastery:
         """
         
         # We use Gemini for reasoning and synthesis
-        raw_analysis = AIRouter.query_gemini(mission)
-        synthesis = AIRouter.query_gemini(f"Extract these patterns into a structured JSON for an AI agent: {raw_analysis}", response_json=True)
+        raw_analysis = OmniRouter.query_gemini(mission)
+        synthesis = OmniRouter.query_gemini(f"Extract these patterns into a structured JSON for an AI agent: {raw_analysis}", response_json=True)
         
         try:
             patterns = json.loads(synthesis)
@@ -39,7 +39,7 @@ class LinguisticMastery:
             # 3. Evolve Catalyst
             catalyst.absorb_skill("Linguistic_Mastery", {"patterns_count": len(patterns), "complexity": 5})
             
-            log.info(f"✅ Human language patterns absorbed: {len(patterns)} nodes identified.")
+            log.info(f" Human language patterns absorbed: {len(patterns)} nodes identified.")
             return patterns
         except Exception as e:
             log.error(f"Failed to absorb patterns: {e}")

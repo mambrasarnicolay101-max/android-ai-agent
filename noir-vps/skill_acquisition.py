@@ -1,5 +1,5 @@
 import os, json, logging, requests
-from ai_router import AIRouter, ResearchEngine
+from ai_router import OmniRouter, ResearchEngine
 
 log = logging.getLogger("SkillAcquisition")
 
@@ -10,11 +10,11 @@ class SkillAcquisitionEngine:
     
     @staticmethod
     def discover_and_integrate(topic: str):
-        log.info(f"🔍 Discovering new AI tools for: {topic}")
+        log.info(f" Discovering new AI tools for: {topic}")
         
         # 1. Real Web Research
         search_query = f"best free API or tool for {topic} with documentation and endpoint"
-        search_results = AIRouter.web_search(search_query)
+        search_results = OmniRouter.web_search(search_query)
         
         # 2. Deep Analysis & Code Generation
         analysis_prompt = f"""
@@ -30,7 +30,7 @@ class SkillAcquisitionEngine:
         - test_instruction: How to verify it works
         """
         
-        analysis = AIRouter.query_gemini(analysis_prompt, response_json=True)
+        analysis = OmniRouter.query_gemini(analysis_prompt, response_json=True)
         
         try:
             tool_data = json.loads(analysis)
@@ -62,7 +62,7 @@ class SkillAcquisitionEngine:
         
         with open(SKILL_LIBRARY_PATH, "w") as f:
             json.dump(library, f, indent=4)
-        log.info(f"✅ Skill integrated: {tool_data['name']}")
+        log.info(f" Skill integrated: {tool_data['name']}")
 
     @staticmethod
     def get_integrated_skills():
@@ -78,7 +78,7 @@ class SkillAcquisitionEngine:
             return f"Skill {skill_name} belum terintegrasi."
         
         tool = skills[skill_name]
-        log.info(f"🚀 Executing dynamic skill: {skill_name}")
+        log.info(f" Executing dynamic skill: {skill_name}")
         
         # Logic eksekusi dinamis (DISABLED in v16 Stabilization)
         return {"status": "PAUSED", "message": f"Dynamic execution for '{skill_name}' is paused to save tokens."}

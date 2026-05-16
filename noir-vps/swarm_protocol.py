@@ -31,7 +31,7 @@ class SwarmBlackboard:
             # Keep only last 50 messages
             bus["messages"] = bus["messages"][-50:]
             cls._write_bus(bus)
-            log.info(f"🐝 [SWARM] {sender} -> {target}: {msg_id}")
+            log.info(f" [SWARM] {sender} -> {target}: {msg_id}")
             return msg_id
 
     @classmethod

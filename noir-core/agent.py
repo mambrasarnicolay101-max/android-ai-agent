@@ -37,20 +37,6 @@ def load_env():
 load_env()
 
 # ─────────────────────────────────────────
-# CONFIG & VALIDATION
-# ─────────────────────────────────────────
-GATEWAY_URL = os.environ.get("NOIR_GATEWAY_URL", "").rstrip("/")
-API_KEY     = os.environ.get("NOIR_API_KEY", "")
-DEVICE_ID   = os.environ.get("NOIR_DEVICE_ID", "REDMI_NOTE_14")
-AGENT_NAME  = "Noir Agent v14.0 COMMANDER"
-
-if not GATEWAY_URL or not API_KEY:
-    log.error("❌ FATAL: NOIR_GATEWAY_URL or NOIR_API_KEY missing.")
-    print("\n[!] Setup Error: Environment variables not found.")
-    print("    Ensure your .env file is present in the project root.")
-    sys.exit(1)
-
-# ─────────────────────────────────────────
 # LOGGING — UTF-8 Hardened
 # ─────────────────────────────────────────
 from logging.handlers import RotatingFileHandler
@@ -64,6 +50,20 @@ logging.basicConfig(
     ],
 )
 log = logging.getLogger("NoirAgent")
+
+# ─────────────────────────────────────────
+# CONFIG & VALIDATION
+# ─────────────────────────────────────────
+GATEWAY_URL = os.environ.get("NOIR_GATEWAY_URL", "").rstrip("/")
+API_KEY     = os.environ.get("NOIR_API_KEY", "")
+DEVICE_ID   = os.environ.get("NOIR_DEVICE_ID", "REDMI_NOTE_14")
+AGENT_NAME  = "Noir Agent v14.0 COMMANDER"
+
+if not GATEWAY_URL or not API_KEY:
+    log.error("❌ FATAL: NOIR_GATEWAY_URL or NOIR_API_KEY missing.")
+    print("\n[!] Setup Error: Environment variables not found.")
+    print("    Ensure your .env file is present in the project root.")
+    sys.exit(1)
 
 # ─────────────────────────────────────────
 # SYSTEM SHELL EXECUTOR
@@ -108,6 +108,8 @@ async def cloud(method: str, endpoint: str, data: dict = None) -> dict | None:
 # ─────────────────────────────────────────
 # ACTION EXECUTOR (The Body)
 # ─────────────────────────────────────────
+        return {"success": False, "error": "Unknown action"}
+
 class ActionExecutor:
     """Eksekutor aksi Android. Tunduk pada kewenangan USER."""
 
@@ -143,6 +145,47 @@ class ActionExecutor:
 
         return {"success": False, "error": "Unknown action"}
 
+class EdgeAI:
+    """U-02: Edge AI Self-Governance Module."""
+    
+    @staticmethod
+    def monitor_self():
+        """Monitor hardware and take autonomous actions."""
+        try:
+            battery = shell("termux-battery-status")
+            if battery["success"]:
+                data = json.loads(battery["output"])
+                level = data.get("percentage", 100)
+                status = data.get("status", "")
+                
+                # Action: Critical Low Power
+                if level < 15 and status != "CHARGING":
+                    log.warning(f" [EDGE] Critical Battery: {level}%. Entering ULTRA_POWER_SAVE.")
+                    # Implement local logic: kill non-essential threads, dim screen, etc.
+                    shell("termux-vibrate -d 500") # Warn user physically
+                    
+            # Thermal check
+            # Thermal data often requires root or specific dumpsys
+            
+            # U-10: Environmental Sensor Awareness
+            # Detect if device is being moved/handled unauthorized
+            sensor_data = shell("termux-sensor -n 1 -s 'Accelerometer'")
+            if sensor_data["success"]:
+                # Logic: If movement exceeds threshold while 'locked', trigger alert
+                pass
+                
+        except Exception as e:
+            log.error(f" [EDGE] Monitor Error: {e}")
+
+    @staticmethod
+    def local_intent_detect(message: str):
+        """Basic local NLP for instant offline reflexes."""
+        msg = message.lower()
+        if "lock" in msg:
+            shell("input keyevent 26") # Power button
+            return True
+        return False
+
 # ─────────────────────────────────────────
 # MAIN LOOP — Adaptive & Self-Healing
 # ─────────────────────────────────────────
@@ -159,8 +202,15 @@ async def run():
         log.info(f"✅ Registered: {reg}")
 
     poll_interval = 2
+    last_edge_check = 0
+
     while True:
         try:
+            # U-02: Local Edge Audit every 60s
+            if time.time() - last_edge_check > 60:
+                EdgeAI.monitor_self()
+                last_edge_check = time.time()
+
             data = await cloud("GET", "/agent/poll")
             if data:
                 commands = data.get("commands", [])

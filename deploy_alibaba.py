@@ -5,7 +5,7 @@ from scp import SCPClient
 import sys
 
 # Configuration from .env would be better, but we'll use the known working values from restart_vps.py
-VPS_IP = '8.215.23.17'
+VPS_IP = '"+os.environ.get("NOIR_VPS_IP", "8.215.23.17")+"'
 VPS_USER = 'root'
 VPS_PASS = 'N!colay_No1r.Ai@Agent#Secure'
 REMOTE_PATH = '/root/noir-agent'

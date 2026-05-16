@@ -48,7 +48,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.gridlayout import GridLayout
 
 # ─── CONFIG ──────────────────────────────────────────────────────────────────
-VPS_BASE  = "http://8.215.23.17"
+VPS_BASE  = "http://"+os.environ.get("NOIR_VPS_IP", "8.215.23.17")
 API_KEY   = "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026"
 DEVICE_ID = "REDMI_NOTE_14"
 

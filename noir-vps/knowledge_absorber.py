@@ -1,5 +1,5 @@
 import os, json, logging, time
-from ai_router import AIRouter
+from ai_router import OmniRouter
 from catalyst import catalyst
 from vector_memory import vector_memory as neural_memory
 
@@ -29,21 +29,21 @@ class OmniKnowledgeAbsorber:
         intelligence_pool = []
         
         log.info(" - Querying Gemini Node...")
-        gemini_intel = AIRouter.query_gemini(mission_prompt)
+        gemini_intel = OmniRouter.query(mission_prompt, task_type="reasoning")
         if gemini_intel: intelligence_pool.append({"source": "Gemini-Flash", "data": gemini_intel})
         
         log.info(" - Querying Groq/LLaMA Node...")
-        groq_intel = AIRouter.query_deepseek(mission_prompt)
+        groq_intel = OmniRouter.query(mission_prompt, task_type="reasoning")
         if groq_intel: intelligence_pool.append({"source": "Groq-LLaMA3", "data": groq_intel})
         
         if not intelligence_pool:
-            log.warning("⚠️ No intelligence absorbed from external nodes.")
+            log.warning(" No intelligence absorbed from external nodes.")
             return False
 
         # Sintesis pengetahuan yang diserap
         log.info("Synthesizing absorbed intelligence into internal memory...")
         synthesis_prompt = f"Synthesize the following external intelligence into a single internal knowledge node for Noir Agent. Focus on actionable insights: {json.dumps(intelligence_pool)}"
-        final_knowledge = AIRouter.query_gemini(synthesis_prompt)
+        final_knowledge = OmniRouter.query(synthesis_prompt, task_type="reasoning")
         
         # Simpan ke Catalyst (Basis Pengetahuan Kita Sendiri)
         node_id = f"absorbed_intel_{int(time.time())}"
@@ -60,7 +60,7 @@ class OmniKnowledgeAbsorber:
             source="omni_absorber"
         )
         
-        log.info(f"✅ Intelligence on '{topic}' successfully absorbed and localized.")
+        log.info(f" Intelligence on '{topic}' successfully absorbed and localized.")
         return True
 
 if __name__ == "__main__":

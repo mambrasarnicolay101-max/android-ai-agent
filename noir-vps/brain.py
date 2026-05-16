@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-NOIR AGENT V21.2 ELITE AEGIS — VPS BRAIN SERVICE
+NOIR AGENT V21.2 ELITE AEGIS  VPS BRAIN SERVICE
 ===================================================
 Otak komputasi berat: AI model routing, self-learning,
 knowledge refresh, dan Docker orchestration.
@@ -22,7 +22,7 @@ env_path = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(env_path)
 
 # Force Direct VPS Mode: No fallback to Cloudflare Workers to prevent unintended external triggers.
-GATEWAY  = os.environ.get("NOIR_GATEWAY_URL", "http://localhost:8765").rstrip("/")
+GATEWAY  = os.environ.get("NOIR_GATEWAY_URL", "http://"+os.environ.get("NOIR_VPS_IP", "8.215.23.17")).rstrip("/")
 API_KEY  = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
 GEMINI   = os.environ.get("GEMINI_API_KEY", "")
 GROQ     = os.environ.get("GROQ_API_KEY", "")
@@ -42,7 +42,7 @@ log = logging.getLogger("NoirBrain")
 
 from catalyst import SovereignCatalyst
 from temporal_memory import TemporalMemory
-from ai_router import AIRouter, EXPERT_SYSTEM_PROMPT, HEADERS
+from ai_router import OmniRouter, EXPERT_SYSTEM_PROMPT, HEADERS
 from vision_analyzer import ScreenVisionIntelligence
 from skill_acquisition import SkillAcquisitionEngine
 from evolution_engine import evolution_engine
@@ -51,7 +51,7 @@ from neural_architect import NeuralArchitect
 from feature_synthesizer import FeatureSynthesizer
 from build_manager import BuildManager
 
-# ─── ANTIGRAVITY INTELLIGENCE CORE ───
+#  ANTIGRAVITY INTELLIGENCE CORE 
 # Menyuntikkan seluruh pengetahuan & skill Antigravity AI (Google DeepMind)
 # ke dalam otak Noir Sovereign saat startup.
 try:
@@ -61,12 +61,12 @@ try:
         AntigravityReasoningEngine,
         AntigravityMemorySeeder,
     )
-    log.info("[BRAIN] ✅ Antigravity Intelligence Core loaded.")
+    log.info("[BRAIN]  Antigravity Intelligence Core loaded.")
     # Seed memory sekali saat boot
     AntigravityMemorySeeder.seed_neural_memory()
     AntigravityMemorySeeder.seed_sovereign_vault()
 except Exception as _ag_err:
-    log.warning(f"[BRAIN] ⚠️ Antigravity Core tidak dapat dimuat: {_ag_err}")
+    log.warning(f"[BRAIN]  Antigravity Core tidak dapat dimuat: {_ag_err}")
 
 # Initialize Core Mesh Components
 from catalyst import catalyst
@@ -74,13 +74,13 @@ from temporal_memory import global_memory as memory
 
 # EXPERT_SYSTEM_PROMPT imported from ai_router
 
-# ─── PHASED LEARNING ENGINE (Cost-Optimizer) ───
+#  PHASED LEARNING ENGINE (Cost-Optimizer) 
 class PhasedLearning:
     """Sistem riset bertahap untuk menghemat token dan meningkatkan kedalaman."""
     
     @staticmethod
     def start_mission(topic: str):
-        log.info(f"🚀 Starting Phased Mission: {topic}")
+        log.info(f" Starting Phased Mission: {topic}")
         PhasedLearning.report_progress(topic, "PHASE_1_SCOUT", "Memulai pencarian awal (Low Cost)...")
         
         # FASE 1: Pencarian Cepat (Scout)
@@ -88,11 +88,11 @@ class PhasedLearning:
         PhasedLearning.report_progress(topic, "PHASE_2_DEEP_DIVE", "Menganalisis data mendalam dengan DeepSeek...")
         
         # FASE 2: Analisis Mendalam (Deep Dive)
-        analysis = AIRouter.query_deepseek(f"Lakukan riset mendalam pada data ini: {scout_result}")
+        analysis = OmniRouter.query_deepseek(f"Lakukan riset mendalam pada data ini: {scout_result}")
         PhasedLearning.report_progress(topic, "PHASE_3_SYNTHESIS", "Menyusun laporan akhir (Synthesis)...")
         
         # FASE 3: Sintesis Akhir (Expert Conclusion)
-        final_report = AIRouter.query_gemini(f"Sintesis seluruh riset ini menjadi instruksi agen yang sempurna: {analysis}")
+        final_report = OmniRouter.query_gemini(f"Sintesis seluruh riset ini menjadi instruksi agen yang sempurna: {analysis}")
         PhasedLearning.report_progress(topic, "COMPLETED", "Misi riset selesai secara sempurna.")
         
         # NEW: Catalyst Meta-Learning Absorption
@@ -103,7 +103,7 @@ class PhasedLearning:
     @staticmethod
     def report_progress(topic: str, phase: str, status: str):
         """Mencatat progres ke Database via Gateway."""
-        log.info(f"📊 [{phase}] {status}")
+        log.info(f" [{phase}] {status}")
         try:
             import requests
             requests.post(f"{GATEWAY}/agent/command", headers=HEADERS, json={
@@ -116,15 +116,15 @@ class PhasedLearning:
     @staticmethod
     def get_consensus(prompt: str):
         """Single Standard Enforcement: Resolusi langsung via Gemini."""
-        log.info(f"🤝 Standard Resolution for: {prompt}")
-        opinion = AIRouter.query_gemini(prompt)
+        log.info(f" Standard Resolution for: {prompt}")
+        opinion = OmniRouter.query_gemini(prompt)
         return {"gemini": opinion}, opinion
 
     @staticmethod
     def request_permission(topic: str, description: str):
         """AI meminta izin untuk riset atau update fitur baru."""
-        log.info(f"🛡️ AI Requesting Permission: {topic}")
-        msg = f"⚠️ [PERMISSION REQUESTED]\nTopic: {topic}\nDesc: {description}\n\nAuthorization required to proceed."
+        log.info(f" AI Requesting Permission: {topic}")
+        msg = f" [PERMISSION REQUESTED]\nTopic: {topic}\nDesc: {description}\n\nAuthorization required to proceed."
         
         try:
             import requests
@@ -133,8 +133,8 @@ class PhasedLearning:
                 "action": {"type": "permission_request", "topic": topic, "desc": description},
                 "description": f"Auth Needed: {topic}"
             }, timeout=10)
-        except: pass
-        return "Permission request transmitted. Waiting for user handshake..."
+        except Exception as e:
+            log.warning(f"[BRAIN] Failed to report progress or request permission: {e}")
 
 from watchdog import SovereignWatchdog
 from security_enhancer import SovereignSecurityEnhancer
@@ -143,17 +143,17 @@ class SovereignMaintenance:
     """Orkestrasi otonom untuk Auto-Healing dan Keamanan."""
     @staticmethod
     def run_full_audit():
-        log.info("🛠️ Starting Sovereign Maintenance Audit...")
+        log.info(" Starting Sovereign Maintenance Audit...")
         SovereignWatchdog().run_diagnostics()
         SovereignSecurityEnhancer().audit_environment()
         return "Audit selesai. Silakan periksa Evolution Proposals untuk perbaikan yang diusulkan."
 
-# ─── NEURAL INTELLIGENCE CORE ───
+#  NEURAL INTELLIGENCE CORE 
 class PCExecutor:
     """Mengontrol PC via Secure Bridge dari VPS."""
     @staticmethod
     def run_pc_task(cmd: str):
-        log.info(f"💻 Sending task to PC Agent: {cmd}")
+        log.info(f" Sending task to PC Agent: {cmd}")
         try:
             # Encrypt command for PC
             encrypted_cmd = SecureVault.encrypt(cmd)
@@ -175,9 +175,10 @@ class PCExecutor:
             for a in agents:
                 if a.get("device_id") == "NOIR_PC_MASTER":
                     return a.get("online", False)
+        except Exception as e:
+            log.debug(f"[BRAIN] PC Master status check failed (possibly offline): {e}")
             return False
-        except: return False
-# ─── SELF-LEARNING HUB ───
+#  SELF-LEARNING HUB 
 
 # ResearchEngine moved to ai_router.py
 
@@ -185,7 +186,7 @@ class VideoIntelligence:
     """Analisis transkrip YouTube untuk belajar dari pakar."""
     @staticmethod
     def analyze_youtube(video_url: str):
-        log.info(f"📺 YouTube Intelligence: Analyzing {video_url}...")
+        log.info(f" YouTube Intelligence: Analyzing {video_url}...")
         try:
             from youtube_transcript_api import YouTubeTranscriptApi
             video_id = video_url.split("v=")[1].split("&")[0]
@@ -198,26 +199,26 @@ class InterAICollaboration:
     """Kolaborasi antar model AI untuk hasil terbaik (Distillation)."""
     @staticmethod
     def distill(prompt: str):
-        log.info("🤝 Single Standard Inference: Distilling answer via Gemini...")
-        return AIRouter.query_gemini(prompt)
+        log.info(" Single Standard Inference: Distilling answer via Gemini...")
+        return OmniRouter.query_gemini(prompt)
 
 class SandboxManager:
     """Uji fitur baru di Docker sandbox agar aman."""
     @staticmethod
     def run_experiment(code: str):
-        log.info("🧪 Sandbox Experiment: Testing code in Docker...")
+        log.info(" Sandbox Experiment: Testing code in Docker...")
         # Logic to launch temporary container and run code
         return "Experiment finished. Output: SUCCESS. Code is safe to deploy."
 
-# AIRouter, RateLimiter, and SemanticValidator moved to ai_router.py
+# OmniRouter, RateLimiter, and SemanticValidator moved to ai_router.py
 
-# ─── VISION ENGINE (Multimodal) ───
+#  VISION ENGINE (Multimodal) 
 class VisionEngine:
     """Menganalisis screenshot HP menggunakan Multimodal AI."""
 
     @staticmethod
     def analyze_screenshot(image_key: str, prompt: str) -> str:
-        log.info(f"👁️ Vision: Analyzing {image_key}...")
+        log.info(f" Vision: Analyzing {image_key}...")
         try:
             import requests, base64
             # 1. Ambil image dari Gateway R2
@@ -234,7 +235,7 @@ class VisionEngine:
             with open(tmp_img, "wb") as f: f.write(img_resp.content)
             
             vision_result = ScreenVisionIntelligence.analyze_screen(tmp_img)
-            log.info(f"👁️ Vision Analysis Result: {vision_result}")
+            log.info(f" Vision Analysis Result: {vision_result}")
             
             url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI}"
             resp = requests.post(
@@ -267,9 +268,10 @@ class VisionEngine:
             try:
                 if 'tmp_img' in locals() and os.path.exists(tmp_img):
                     os.remove(tmp_img)
-            except: pass
+            except Exception as e:
+                log.debug(f"[BRAIN] Failed to cleanup temporary vision image: {e}")
 
-# ─── SELF-LEARNING ENGINE ───
+#  SELF-LEARNING ENGINE 
 class LearningEngine:
     """Agent belajar dari histori dan mengoptimalkan dirinya."""
 
@@ -290,7 +292,7 @@ class LearningEngine:
     @staticmethod
     def knowledge_refresh():
         """Fetch dokumentasi terbaru dan simpan ke memory."""
-        log.info("📚 Knowledge Refresh: Syncing with latest tech docs...")
+        log.info(" Knowledge Refresh: Syncing with latest tech docs...")
         try:
             import requests
             # Contoh: Mengambil changelog terbaru dari Python/Android
@@ -302,22 +304,22 @@ class LearningEngine:
             for s in sources:
                 r = requests.get(s, timeout=10)
                 if r.status_code == 200:
-                    log.info(f"   ✅ Refreshed knowledge from: {s[:40]}...")
+                    log.info(f"    Refreshed knowledge from: {s[:40]}...")
                     # Simulasikan penyerapan skill ke Catalyst
                     catalyst.absorb_skill("Documentation_Refresh", {"name": f"Deep Dive: {s.split('/')[-1]}", "complexity": 2})
             
-            log.info("   → Brain optimization complete.")
+            log.info("    Brain optimization complete.")
         except Exception as e:
-            log.warning(f"   ❌ Refresh failed: {e}")
+            log.warning(f"    Refresh failed: {e}")
 
-# ─── SELF-UPDATE ENGINE ───
+#  SELF-UPDATE ENGINE 
 class SelfUpdateEngine:
     """Memeriksa dan menginstal pembaruan secara mandiri."""
 
     @staticmethod
     def check_dependencies():
         """Pastikan semua library tersedia dan up-to-date."""
-        log.info("🔄 Self-Update: Checking dependencies...")
+        log.info(" Self-Update: Checking dependencies...")
         libs = ["requests", "python-dotenv"]
         for lib in libs:
             result = subprocess.run(
@@ -325,10 +327,10 @@ class SelfUpdateEngine:
                 shell=True, capture_output=True, text=True
             )
             if result.returncode != 0:
-                log.warning(f"   ⚠️ {lib} missing. Installing...")
+                log.warning(f"    {lib} missing. Installing...")
                 subprocess.run(f"pip install {lib}", shell=True)
             else:
-                log.info(f"   ✅ {lib} OK")
+                log.info(f"    {lib} OK")
 
     @staticmethod
     def health_check_gateway() -> bool:
@@ -340,7 +342,7 @@ class SelfUpdateEngine:
         except:
             return False
 
-# ─── SECURE NETWORKING (E2EE) ───
+#  SECURE NETWORKING (E2EE) 
 class SecureVault:
     """Implementasi AES-256-GCM E2EE untuk jalur komunikasi."""
     @staticmethod
@@ -373,7 +375,7 @@ class SecureVault:
         except Exception as e:
             return f"[DECRYPT_ERROR] {e}"
 
-# ─── RATE LIMITER (v18.4 Turbo) — hanya untuk brain internal, AIRouter punya sendiri ───
+#  RATE LIMITER (v18.4 Turbo)  hanya untuk brain internal, OmniRouter punya sendiri 
 class BrainRateLimiter:
     """Membatasi jumlah request internal Brain untuk mencegah biaya bengkak."""
     _requests: list = []
@@ -389,7 +391,7 @@ class BrainRateLimiter:
         cls._requests.append(now)
         return True
 
-# ─── NEURAL CACHE (v18.4) — FIX H-01: _requests dipindah ke BrainRateLimiter ───
+#  NEURAL CACHE (v18.4)  FIX H-01: _requests dipindah ke BrainRateLimiter 
 class NeuralCache:
     """Caching AI responses in memory to save tokens and improve speed."""
     _cache: dict = {}
@@ -410,7 +412,7 @@ class NeuralCache:
         """Delegate rate-limit check ke BrainRateLimiter (Fix H-01)."""
         return BrainRateLimiter.check()
 
-# ─── SEMANTIC VALIDATOR (v14.0) ───
+#  SEMANTIC VALIDATOR (v14.0) 
 class SemanticValidator:
     """Validasi perintah tingkat lanjut menggunakan penalaran AI."""
     @staticmethod
@@ -422,8 +424,8 @@ class SemanticValidator:
             return False, "Dangerous system command detected."
         return True, "OK"
 
-# ─── PROBLEM SOLVING & SELF-HEALING ───
-# ─── VISION SENTINEL (v18.4 Phase 2) ───
+#  PROBLEM SOLVING & SELF-HEALING 
+#  VISION SENTINEL (v18.4 Phase 2) 
 class VisionSentinel:
     """Proactive Screen Monitoring & Autonomous Intelligence."""
     _last_check = 0
@@ -480,7 +482,7 @@ class DataArchiver:
             except Exception as e:
                 log.error(f"Backup Error: {e}")
 
-# ─── SELF-EVOLUTION ENGINE (v10.0) ───
+#  SELF-EVOLUTION ENGINE (v10.0) 
 class SelfEvolutionEngine:
     """Menganalisis diri, memberikan proposal update, dan laporan progres otonom."""
     
@@ -488,7 +490,7 @@ class SelfEvolutionEngine:
     def generate_progress_report():
         log.info("[PROGRESS] Generating Self-Evolution Progress Report...")
         prompt = "Analisis progres pengembangan diri Anda (Pemrograman, Cyber Security, Komunikasi, Matematika/Algoritma) dalam 2 jam terakhir. Berikan laporan ringkas."
-        report = AIRouter.smart_query(prompt)
+        report = OmniRouter.smart_query(prompt)
         
         # --- Catalyst Absorption (Proprietary Learning) ---
         log.info("[CATALYST] Consolidating neural pathways...")
@@ -503,9 +505,8 @@ class SelfEvolutionEngine:
             requests.post(f"{GATEWAY}/agent/command", headers=HEADERS, json={
                 "action": {"type": "evolution_report", "content": report},
                 "description": "2-Hourly Self-Evolution Report",
-                "priority": 2
-            }, timeout=10)
-        except: pass
+        except Exception as e:
+            log.warning(f"[BRAIN] Evolution report transmission failed: {e}")
         return report
 
     @staticmethod
@@ -513,7 +514,7 @@ class SelfEvolutionEngine:
         """Noir mencari skill baru secara otonom berdasarkan tren."""
         log.info("[EVOLUTION] Autonomous Evolution: Searching for new trending skills...")
         prompt = "Berperan sebagai agen AI independen yang berjalan di server PC. Eksplorasi secara internal satu konsep teknis baru (misal: algoritma optimasi, neural network terbaru, atau cyber defense) yang krusial untuk Anda pelajari hari ini. Buat ringkasan padat tentang konsep tersebut."
-        new_skill = AIRouter.smart_query(prompt)
+        new_skill = OmniRouter.smart_query(prompt)
         
         log.info(f"[ASSIMILATION] Assimilating new skill: {new_skill[:100]}...")
         topic_name = "Self_Discovered_Skill_" + str(int(time.time()))
@@ -525,16 +526,15 @@ class SelfEvolutionEngine:
             requests.post(f"{GATEWAY}/agent/command", headers=HEADERS, json={
                 "action": {"type": "new_skill_acquired", "content": new_skill},
                 "description": "Autonomous PC Skill Discovery",
-                "priority": 2
-            }, timeout=10)
-        except: pass
+        except Exception as e:
+            log.warning(f"[BRAIN] New skill transmission failed: {e}")
         return new_skill
 class ProactiveAgent:
     """FASE 4: Goal-Driven Autonomous Agent"""
     @staticmethod
     def explore_device():
         """Agen secara proaktif memeriksa UI perangkat secara otonom."""
-        log.info("🤖 Proactive Agent: Initiating Goal-Driven Exploration...")
+        log.info(" Proactive Agent: Initiating Goal-Driven Exploration...")
         try:
             import requests
             # Minta screenshot dengan parameter analyze_ui untuk dieksekusi VPS
@@ -547,7 +547,7 @@ class ProactiveAgent:
             log.error(f"Proactive Exploration Failed: {e}")
 
 def run():
-    log.info("Noir Agent Brain v21.2 ELITE AEGIS — Memulai Sovereign Orchestrator...")
+    log.info("Noir Agent Brain v21.2 ELITE AEGIS  Memulai Sovereign Orchestrator...")
 
     # Jalankan Sovereign Orchestrator sebagai thread utama (8 Pilar)
     try:

@@ -15,7 +15,7 @@ class EvolutionBridge:
             log.error(f"Evolution Target Missing: {abs_path}")
             return False
             
-        log.info(f"🧬 Evolving {component}/{file_path}...")
+        log.info(f" Evolving {component}/{file_path}...")
         try:
             with open(abs_path, "w") as f:
                 f.write(new_code)
@@ -27,7 +27,7 @@ class EvolutionBridge:
     @staticmethod
     def trigger_apk_evolution():
         """Initiates a background APK rebuild via Buildozer on VPS."""
-        log.info("📦 Triggering APK Evolution Build...")
+        log.info(" Triggering APK Evolution Build...")
         try:
             # We run this in a detached process to not block the brain
             cmd = "cd /root/noir-agent && docker exec noir-researcher buildozer android debug"
@@ -39,7 +39,7 @@ class EvolutionBridge:
     @staticmethod
     def trigger_dashboard_evolution():
         """Reloads the dashboard service after code changes."""
-        log.info("🎨 Triggering Dashboard Visual Evolution...")
+        log.info(" Triggering Dashboard Visual Evolution...")
         try:
             cmd = "cd /root/noir-agent && docker compose restart noir-dashboard"
             subprocess.run(cmd, shell=True)
