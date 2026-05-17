@@ -644,7 +644,7 @@ async def api_status():
             "ip": os.environ.get("NOIR_VPS_IP", "8.215.23.17"),
             "status": "ONLINE",
             "provider": "Alibaba Cloud Intelligence",
-            "active_pillars": 22,
+            "active_pillars": 25,
             "ai_tools": ["Gemini 2.0 Flash", "Groq Llama 3.3", "DeepSeek-Chat", "DashScope Qwen", "SambaNova", "Cerebras"]
         }
     }
@@ -705,6 +705,8 @@ async def api_summary():
                 {"name": "P15: Forensic Pathologist", "status": "ACTIVE"},
                 {"name": "P16: Hardware Optimizer", "status": "TUNING"},
                 {"name": "P17: Linguistic Synthesis", "status": "REASONING"},
+                {"name": "P18: OSINT Explorer", "status": "ACTIVE"},
+                {"name": "P19: Covert DNS Tunneling", "status": "STANDBY"},
                 {"name": "P20: Offensive Predator", "status": "HUNTING"},
                 {"name": "P21: Honeypot Sentinel", "status": "TRAPPING"},
                 {"name": "P22: Distributed Ledger", "status": "SECURE"},
@@ -844,9 +846,14 @@ async def api_summary():
                 {"name": "Forensic Pathologist", "status": "Auditing File System"},
                 {"name": "Hardware Optimizer", "status": "NPU Acceleration"},
                 {"name": "Linguistic Synthesis", "status": "Intent Analysis"},
+                {"name": "OSINT Explorer", "status": "Passive Scan Active"},
+                {"name": "Covert DNS Tunneling", "status": "Tunneling Secure"},
                 {"name": "Offensive Predator", "status": "Predator Mode [ON]"},
                 {"name": "Honeypot Sentinel", "status": "Traps Set"},
                 {"name": "Distributed Ledger", "status": "State Verified"},
+                {"name": "Sovereign Builder", "status": "Builder Ready"},
+                {"name": "Apex Evolution", "status": "Synthesis Cycle"},
+                {"name": "Defense Fortress", "status": "Fortress Enabled"},
                 {"name": "Grand Singularity", "status": "Orchestrating Cycle"}
             ],
             "sandbox": {
