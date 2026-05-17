@@ -137,7 +137,11 @@ class PhasedLearning:
             log.warning(f"[BRAIN] Failed to report progress or request permission: {e}")
 
 from watchdog import SovereignWatchdog
-from security_enhancer import SovereignSecurityEnhancer
+try:
+    from security_enhancer import SovereignSecurityEnhancer
+except ImportError:
+    SovereignSecurityEnhancer = None
+    log.warning("[BRAIN] security_enhancer module not found. SovereignMaintenance will skip security audit.")
 
 class SovereignMaintenance:
     """Orkestrasi otonom untuk Auto-Healing dan Keamanan."""
@@ -504,7 +508,8 @@ class SelfEvolutionEngine:
             import requests
             requests.post(f"{GATEWAY}/agent/command", headers=HEADERS, json={
                 "action": {"type": "evolution_report", "content": report},
-                "description": "2-Hourly Self-Evolution Report",
+                "description": "2-Hourly Self-Evolution Report"
+            }, timeout=10)
         except Exception as e:
             log.warning(f"[BRAIN] Evolution report transmission failed: {e}")
         return report
@@ -525,7 +530,8 @@ class SelfEvolutionEngine:
             import requests
             requests.post(f"{GATEWAY}/agent/command", headers=HEADERS, json={
                 "action": {"type": "new_skill_acquired", "content": new_skill},
-                "description": "Autonomous PC Skill Discovery",
+                "description": "Autonomous PC Skill Discovery"
+            }, timeout=10)
         except Exception as e:
             log.warning(f"[BRAIN] New skill transmission failed: {e}")
         return new_skill
@@ -552,7 +558,7 @@ def run():
     # Jalankan Sovereign Orchestrator sebagai thread utama (8 Pilar)
     try:
         from sovereign_orchestrator import run_orchestrator
-        log.info("[BRAIN] Sovereign Orchestrator (8 Pilar) diaktifkan.")
+        log.info("[BRAIN] Sovereign Orchestrator (25 Pilar) diaktifkan.")
         run_orchestrator()
     except ImportError as e:
         log.error(f"[BRAIN] Orchestrator tidak ditemukan, fallback ke legacy loop: {e}")

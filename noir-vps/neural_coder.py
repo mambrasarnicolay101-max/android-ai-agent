@@ -102,29 +102,19 @@ class NeuralCoder:
         # FASE 1: Autonomous Sandbox Verification
         from sandbox_engine import SandboxEngine
         verification = SandboxEngine.execute_python(logic_code)
-        
+
         # Simpan hasil sintesis ke Memori Vektor (RAG)
         vector_memory.add_experience(
             text=f"Algorithm Synthesis for {scenario} | Verified: {verification['success']}",
             metadata={"source": "neural_coder", "type": "algorithm_design", "scenario": scenario, "verified": str(verification['success'])}
         )
 
-        # FASE 1: Autonomous Sandbox Verification
-        from sandbox_engine import SandboxEngine
-        test_snippet = f"# Auto-generated test for {scenario}\ndef solve():\n    return True\nprint(solve())"
-        verification = SandboxEngine.execute_python(test_snippet)
-        
-        # Simpan hasil sintesis ke Memori Vektor (RAG)
-        vector_memory.add_experience(
-            text=f"Algorithm Synthesis for {scenario}: {json.dumps(logic_steps)} | Verified: {verification['success']}",
-            metadata={"source": "neural_coder", "type": "algorithm_design", "scenario": scenario, "verified": str(verification['success'])}
-        )
         # FASE 2: Propose Evolution to User (UI)
         from evolution_engine import evolution_engine
         evolution_engine.propose_evolution(
             title=f"New Algorithm: {scenario}",
             description=f"AI has synthesized and verified a new optimized algorithm for {scenario}. Deployment recommended for system efficiency.",
-            changes={"new_file": {"path": f"noir-vps/skills/algo_{int(time.time())}.py", "content": f"# Optimized Algorithm for {scenario}\n# Logic: {json.dumps(logic_steps)}\n\ndef optimized_logic():\n    pass # PROTECTED_AUTHORITY_BLOCK"}}
+            changes={"new_file": {"path": f"noir-vps/skills/algo_{int(time.time())}.py", "content": f"# Optimized Algorithm for {scenario}\n\ndef optimized_logic():\n    pass\n"}}
         )
 
         log.info(f"[NeuralCoder] Algoritma untuk '{scenario}' telah disimpan, DIVERIFIKASI, dan diusulkan sebagai EVOLUSI.")
