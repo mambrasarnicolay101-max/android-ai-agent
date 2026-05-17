@@ -461,21 +461,50 @@ async def api_chat(request: Request):
                     "is_command": True
                 }
 
-        # 2. Handle Intelligent Chat (Simulated AI Response for now)
-        # In a real scenario, this would call Gemini/GPT via a prompt.
-        replies = [
-            "Refleks neural dalam kondisi optimal. Sistem menunggu perintah strategis Anda.",
-            "Saya telah menganalisis kondisi swarm saat ini. Kita berada pada intensitas puncak.",
-            "Konsolidasi memori selesai. Seluruh keahlian telah disinkronkan.",
-            "Bagaimana kita akan melanjutkan siklus evolusi berikutnya?",
-            "Sovereign Core stabil. Memantau seluruh 8 pilar untuk anomali."
-        ]
-        import random
-        return {
-            "ok": True,
-            "reply": random.choice(replies),
-            "is_command": False
-        }
+        # 2. AI Chat Nyata via OmniRouter
+        try:
+            import sys as _sys
+            _sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "noir-vps")))
+            from ai_router import OmniRouter
+            
+            smi_score = local_state.get("smi_score", 100)
+            security_mode = local_state.get("security_mode", "SOVEREIGN_MASTER")
+            
+            system_context = f"""Kamu adalah NOIR SOVEREIGN AI AGENT — sistem kecerdasan otonom elite dengan 25 pilar aktif.
+
+Konteks Sistem Saat Ini:
+- Security Mode: {security_mode}
+- SMI Score: {smi_score}/100
+- Platform: Alibaba VPS 8.215.23.17
+- Bahasa Operasi: Bahasa Indonesia
+- Pilar Aktif: P1-Neural Coder, P2-Security Sentinel, P3-Pentester, P4-Knowledge Absorber,
+  P5-Neural Architect, P6-Network Sentinel, P7-Auto-Healer, P8-Memory Consolidator,
+  P23-Sovereign Builder, P24-Apex Evolution, P25-Defense Fortress, dan 14 pilar lainnya.
+
+Aturan:
+- Selalu jawab dalam Bahasa Indonesia yang profesional dan tegas
+- Berikan insight teknis yang relevan dan dapat dieksekusi
+- Jika diminta status, berikan laporan berdasarkan konteks sistem di atas
+- Jika diminta perintah operasional, konfirmasi dan berikan langkah teknis
+"""
+            full_prompt = f"{system_context}\n\nPertanyaan/Perintah: {message}"
+            ai_response = OmniRouter.query(full_prompt, task_type="general")
+            
+            if ai_response and "[OmniRouter Error]" not in ai_response:
+                return {"ok": True, "reply": ai_response, "is_command": False}
+            else:
+                # Fallback jika semua provider down
+                return {
+                    "ok": True,
+                    "reply": f"⚠️ Sovereign Neural beroperasi dalam mode offline. Semua provider AI sedang dalam pemulihan. Pesan Anda dicatat: '{message[:100]}'",
+                    "is_command": False
+                }
+        except Exception as llm_err:
+            return {
+                "ok": True,
+                "reply": f"⚠️ Koneksi ke Neural Core terputus sementara: {str(llm_err)[:100]}. Sistem terus beroperasi secara otonom.",
+                "is_command": False
+            }
     except Exception as e:
         return {"ok": False, "error": str(e)}
 

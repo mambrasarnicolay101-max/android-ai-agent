@@ -22,6 +22,7 @@ class GrandSingularityCycle:
         self.arena = RedBlueArena()
         self.last_rem_sleep = time.time()
         self.state_file = os.path.join(os.path.dirname(__file__), "..", "knowledge", "singularity_state.json")
+        self.checkpoint_file = os.path.join(os.path.dirname(__file__), "..", "knowledge", "singularity_checkpoint.json")
         self.state = self._load_state()
 
     def _load_state(self):
@@ -37,26 +38,69 @@ class GrandSingularityCycle:
             with open(self.state_file, "w") as f:
                 json.dump(self.state, f, indent=4)
         except Exception as e:
-            log.error(f"Failed to save singularity state: {e}")
+            log.error(f"Gagal menyimpan singularity state: {e}")
+
+    def _load_checkpoint(self) -> dict:
+        if os.path.exists(self.checkpoint_file):
+            try:
+                with open(self.checkpoint_file, "r") as f:
+                    cp = json.load(f)
+                # Only valid for current cycle
+                if cp.get("cycle") == self.state.get("cycle", 0) + 1:
+                    return cp
+            except: pass
+        return {"cycle": -1, "completed_phases": []}
+
+    def _mark_phase_done(self, phase: str):
+        cp = self._load_checkpoint()
+        if cp.get("cycle") != self.state.get("cycle", 0):
+            cp = {"cycle": self.state["cycle"], "completed_phases": []}
+        if phase not in cp["completed_phases"]:
+            cp["completed_phases"].append(phase)
+        with open(self.checkpoint_file, "w") as f:
+            json.dump(cp, f)
 
     def run_cycle(self):
-        """Menjalankan satu siklus penuh evolusi otonom."""
+        """Menjalankan satu siklus penuh evolusi otonom dengan checkpoint resume."""
         self.state["cycle"] += 1
         log.info(f" [SINGULARITY] Memulai Siklus Evolusi Agung #{self.state['cycle']}...")
         
+        cp = self._load_checkpoint()
+        completed = cp.get("completed_phases", [])
+        
         # 1. RESEARCH & KNOWLEDGE ABSORPTION
-        self._step_research()
+        if "research" not in completed:
+            self._step_research()
+            self._mark_phase_done("research")
+        else:
+            log.info(" [SINGULARITY] Fase 1 (Penelitian) sudah selesai — dilanjutkan dari checkpoint.")
         
         # 2. SIMULATION & WARFARE TRAINING
-        self._step_simulation()
+        if "simulation" not in completed:
+            self._step_simulation()
+            self._mark_phase_done("simulation")
+        else:
+            log.info(" [SINGULARITY] Fase 2 (Simulasi) sudah selesai — dilanjutkan dari checkpoint.")
         
         # 3. SELF-AUDIT & HARDENING
-        self._step_self_audit()
+        if "self_audit" not in completed:
+            self._step_self_audit()
+            self._mark_phase_done("self_audit")
+        else:
+            log.info(" [SINGULARITY] Fase 3 (Audit Mandiri) sudah selesai — dilanjutkan dari checkpoint.")
         
         # 4. REM SLEEP (MEMORY CONSOLIDATION)
-        if time.time() - self.last_rem_sleep > 43200: # Every 12 hours
-            self._step_rem_sleep()
+        if time.time() - self.last_rem_sleep > 43200:  # Every 12 hours
+            if "rem_sleep" not in completed:
+                self._step_rem_sleep()
+                self._mark_phase_done("rem_sleep")
             self.last_rem_sleep = time.time()
+
+        # Clear checkpoint setelah siklus berhasil
+        try:
+            if os.path.exists(self.checkpoint_file):
+                os.remove(self.checkpoint_file)
+        except: pass
 
         self._save_state()
         log.info(f" [SINGULARITY] Siklus #{self.state['cycle']} selesai. Hibernasi hingga jendela berikutnya.")

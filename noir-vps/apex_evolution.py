@@ -159,11 +159,29 @@ Hasilkan JSON dengan keys:
         except Exception as e:
             result["parse_status"] = f"RAW_STORED ({e})"
 
-        # Store in vector memory
-        vector_memory.add_experience(
-            text=f"APEX Skill Disintesis: {result.get('skill_name', domain+'/'+sub_domain)} | Level: {result.get('level', 'APEX')}",
-            metadata={"source": "apex_evolution", "domain": domain, "type": "apex_skill"}
-        )
+        # Store in vector memory with rich metadata for cross-pillar retrieval
+        try:
+            vector_memory.add_experience(
+                text=(
+                    f"APEX Skill: {result.get('skill_name', domain+'/'+sub_domain)}. "
+                    f"Domain: {domain}/{sub_domain}. Level: {result.get('level', 'APEX')}. "
+                    f"Description: {result.get('description', '')}. "
+                    f"Synergy: {', '.join(result.get('synergy_domains', []))}"
+                ),
+                category="apex_skill",
+                source="apex_evolution",
+                metadata={
+                    "skill_name": result.get("skill_name", "unknown"),
+                    "domain": domain,
+                    "sub_domain": sub_domain,
+                    "level": result.get("level", "APEX"),
+                    "skill_file": result.get("skill_file", ""),
+                    "timestamp": str(time.time())
+                }
+            )
+            log.info(f"[P24-APEX] Skill '{result.get('skill_name', 'unknown')}' berhasil diindeks ke Vector Memory.")
+        except Exception as vm_err:
+            log.warning(f"[P24-APEX] Vector Memory indexing gagal: {vm_err}")
 
         return result
 

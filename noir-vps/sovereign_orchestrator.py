@@ -1,7 +1,7 @@
 """
-SOVEREIGN ORCHESTRATOR v2.0  NOIR SOVEREIGN
+SOVEREIGN ORCHESTRATOR v3.0 ─ NOIR SOVEREIGN
 =============================================
-Pilar Master: Pengendali 9 Pilar Maestro Noir Sovereign
+Pilar Master: Pengendali 25 Pilar Maestro Noir Sovereign
 Mengatur siklus belajar, keamanan, dan evolusi secara penuh otonom.
 
 JADWAL EKSEKUSI:
@@ -20,7 +20,8 @@ log = logging.getLogger("SovereignOrchestrator")
 
 # ---------- Scheduler sederhana berbasis timestamp ----------
 _schedule: dict = {}
-_running_threads: dict = {} # key -> Thread object
+_running_threads: dict = {}  # key -> Thread object
+_threads_lock = threading.Lock()  # FIX: Thread safety untuk akses _running_threads
 
 def _should_run(key: str, interval_sec: int) -> bool:
     # Offloading Logic: Skip heavy tasks if in LIGHT mode
@@ -33,9 +34,12 @@ def _should_run(key: str, interval_sec: int) -> bool:
     now = time.time()
     last = _schedule.get(key, 0)
     
-    # Check if thread is still running
-    if key in _running_threads and _running_threads[key].is_alive():
-        log.debug(f"[ORK] Task '{key}' is still running, skipping this cycle.")
+    # FIX: Lock saat membaca _running_threads
+    with _threads_lock:
+        is_running = key in _running_threads and _running_threads[key].is_alive()
+    
+    if is_running:
+        log.debug(f"[ORK] Task '{key}' masih berjalan, melewati siklus ini.")
         return False
 
     if now - last >= interval_sec:
@@ -44,9 +48,11 @@ def _should_run(key: str, interval_sec: int) -> bool:
     return False
 
 def _start_task(key: str, target_func):
-    """Start task in a managed thread."""
+    """Memulai task dalam thread terkelola dengan perlindungan lock."""
     t = threading.Thread(target=target_func, daemon=True)
-    _running_threads[key] = t
+    # FIX: Lock saat menulis ke _running_threads
+    with _threads_lock:
+        _running_threads[key] = t
     t.start()
 
 def spawn_sub_agent(name: str, task_func, *args):

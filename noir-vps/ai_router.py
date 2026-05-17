@@ -4,6 +4,29 @@ from dotenv import load_dotenv
 load_dotenv()
 log = logging.getLogger("OmniRouter")
 
+# ── TOKEN BUDGET TRACKER ─────────────────────────────────────────────────────
+_DAILY_BUDGET = int(os.environ.get("NOIR_DAILY_TOKEN_LIMIT", 500))  # max API calls/day
+_call_log: dict = {}  # {"YYYY-MM-DD": {"provider": count}}
+
+def _track_call(provider: str) -> bool:
+    """Returns True if call is within budget, False if budget exceeded."""
+    today = time.strftime("%Y-%m-%d")
+    if today not in _call_log:
+        _call_log.clear()  # Purge old days
+        _call_log[today] = {}
+    _call_log[today][provider] = _call_log[today].get(provider, 0) + 1
+    total_today = sum(_call_log[today].values())
+    if total_today > _DAILY_BUDGET:
+        log.warning(f"[OMNI] Daily token budget ({_DAILY_BUDGET}) exceeded. Throttling calls.")
+        return False
+    return True
+
+def get_budget_status() -> dict:
+    today = time.strftime("%Y-%m-%d")
+    calls = _call_log.get(today, {})
+    total = sum(calls.values())
+    return {"date": today, "total_calls": total, "budget": _DAILY_BUDGET, "remaining": max(0, _DAILY_BUDGET - total), "by_provider": calls}
+
 # Unified API Key Pool Manager
 POOL_PATH = os.path.join(os.path.dirname(__file__), "..", "knowledge", "api_pool.json")
 
@@ -29,34 +52,40 @@ class OmniRouter:
         """Memilih provider terbaik berdasarkan tipe tugas secara otonom."""
         log.info(f" [OMNI] Routing task: {task_type}")
         
-        # 1. Tentukan urutan provider berdasarkan tugas
+        # Routing map — removed duplicate 'dashscope' from general
         routing_map = {
-            "coding": ["dashscope", "deepseek", "groq", "gemini"],
+            "coding":    ["dashscope", "deepseek", "groq", "gemini"],
             "reasoning": ["dashscope", "sambanova", "groq", "deepseek", "gemini"],
-            "vision": ["dashscope", "gemini"],
-            "general": ["dashscope", "gemini", "groq", "dashscope", "cerebras"]
+            "vision":    ["dashscope", "gemini"],
+            "general":   ["dashscope", "gemini", "groq", "cerebras"]
         }
         
         providers = routing_map.get(task_type, routing_map["general"])
         
         for provider in providers:
+            # Check token budget before calling
+            if not _track_call(provider):
+                continue
+
             res = OmniRouter._call_provider(provider, prompt, image_base64)
             if res and "[Error]" not in res:
-                # U-05: Self-Correction Loop for critical tasks
-                if task_type in ["coding", "reasoning"]:
-                    log.info(f" [OMNI] Critical task detected. Initiating Self-Correction via secondary provider...")
+                # U-05: Self-Correction — only 20% of the time to save tokens
+                import random
+                if task_type in ["coding", "reasoning"] and random.random() < 0.20:
+                    log.info(f" [OMNI] Self-Correction (20% check) via secondary provider...")
                     verifier = "gemini" if provider != "gemini" else "groq"
-                    verify_prompt = f"Verify and improve this AI output for correctness and security:\n\n{res}\n\nReturn only the corrected content."
-                    corrected = OmniRouter._call_provider(verifier, verify_prompt, None)
-                    if corrected and "[Error]" not in corrected:
-                        log.info(f" [OMNI] Self-Correction successful via {verifier}")
-                        res = corrected
+                    if _track_call(verifier):
+                        verify_prompt = f"Review dan perbaiki output AI ini untuk kebenaran dan keamanan:\n\n{res}\n\nKembalikan hanya konten yang telah diperbaiki."
+                        corrected = OmniRouter._call_provider(verifier, verify_prompt, None)
+                        if corrected and "[Error]" not in corrected:
+                            log.info(f" [OMNI] Self-Correction sukses via {verifier}")
+                            res = corrected
                 
-                log.info(f" [OMNI] Task completed by {provider}")
+                log.info(f" [OMNI] Task selesai oleh: {provider}")
                 return res
-            log.warning(f" [OMNI] Provider {provider} failed. Trying next...")
+            log.warning(f" [OMNI] Provider {provider} gagal. Mencoba berikutnya...")
 
-        return "[OmniRouter Error] All providers failed or keys missing."
+        return "[OmniRouter Error] Semua provider gagal atau API key tidak tersedia."
 
     @staticmethod
     def _call_provider(provider, prompt, image_base64):
