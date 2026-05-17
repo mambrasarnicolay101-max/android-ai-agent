@@ -36,8 +36,17 @@ def get_key(provider):
             pool = json.load(f)
         keys = pool.get(provider, {}).get("keys", [])
         idx = pool.get(provider, {}).get("active_index", 0)
-        return keys[idx % len(keys)] if keys else None
-    except: return None
+        key = keys[idx % len(keys)] if keys else None
+        if key:
+            return key
+    except:
+        pass
+    
+    # Fallback to .env config if pool is empty/missing
+    env_key = os.environ.get(f"{provider.upper()}_API_KEY")
+    if env_key and env_key != "GANTI_DENGAN_OPENROUTER_API_KEY":
+        return env_key
+    return None
 
 class OmniRouter:
     """
