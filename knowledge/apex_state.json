@@ -1,0 +1,38 @@
+{
+    "overall_level": "MASTER",
+    "overall_score": 57.14285714285714,
+    "domains": {
+        "software_engineering": {
+            "level": "MASTER",
+            "score": 100.0,
+            "evolution_cycles": 1,
+            "apex_skills": [
+                "APEX_software_engineering_embedded_1778988626"
+            ]
+        },
+        "cybersecurity": {
+            "level": "MASTER",
+            "score": 100.0,
+            "evolution_cycles": 0,
+            "apex_skills": []
+        },
+        "ai_intelligence": {
+            "level": "MASTER",
+            "score": 100.0,
+            "evolution_cycles": 0,
+            "apex_skills": []
+        },
+        "offensive_warfare": {
+            "level": "MASTER",
+            "score": 100.0,
+            "evolution_cycles": 0,
+            "apex_skills": []
+        },
+        "defensive_systems": {
+            "level": "MASTER",
+            "score": 100.0,
+            "evolution_cycles": 0,
+            "apex_skills": []
+        }
+    }
+}
