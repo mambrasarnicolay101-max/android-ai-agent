@@ -236,6 +236,9 @@
         <div class="nav-item" onclick="switchTab('tab-swarm', this)">🕷️ SWARM ORCHESTRATOR</div>
         <div class="nav-item" onclick="switchTab('tab-memory', this)">🧠 VECTOR MEMORY</div>
         <div class="nav-item" onclick="switchTab('tab-hardware', this)">🔌 HARDWARE LAB</div>
+
+        <div class="nav-section-title">Guides & Help</div>
+        <div class="nav-item" onclick="switchTab('tab-help', this)">🌟 CO-PILOT GUIDE</div>
     </aside>
 
     <main class="main-container">
@@ -289,6 +292,26 @@
                 <div class="card grid-span-3">
                     <div class="card-title">Global Activity Stream</div>
                     <div class="terminal-box" id="activity-stream">Connecting...</div>
+                </div>
+
+                <!-- USER-FRIENDLY QUICK ACTION CENTER -->
+                <div class="card grid-span-3" style="border: 1px solid rgba(0, 242, 255, 0.4); background: linear-gradient(180deg, rgba(0, 242, 255, 0.05) 0%, transparent 100%);">
+                    <div class="card-title" style="color: var(--accent-cyan); display: flex; justify-content: space-between; align-items: center;">
+                        <span>⚡ DERMAGA PINTASAN PERINTAH INSTAN (KENDALI RAMAH PENGGUNA)</span>
+                        <span style="font-size: 0.65rem; background: var(--accent-cyan); color: black; padding: 2px 8px; border-radius: 4px; font-weight: 800;">EASY OPERATIONAL MODE</span>
+                    </div>
+                    <div style="margin-bottom: 15px; font-size: 0.85rem; color: var(--text-dim);">
+                        Klik tombol pintasan otonom di bawah ini untuk langsung mengisi input perintah atau mengeksekusi kendali otonom AI Agent Anda:
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <button class="btn btn-green" onclick="useCommandPreset('/build web rancang website landing page premium dark-mode')">🔨 Rancang Web</button>
+                        <button class="btn btn-green" onclick="useCommandPreset('/build exe buat aplikasi sistem windows monitoring')">📦 Rancang Win EXE</button>
+                        <button class="btn btn-green" onclick="useCommandPreset('/build android aplikasi absensi native')">📱 Rancang APK Android</button>
+                        <button class="btn btn-purple" onclick="togglePcOverrideLocal()">⚙️ Toggle PC Override (ON/OFF)</button>
+                        <button class="btn" onclick="useCommandPreset('/screenshot')">📸 Ambil Screenshot HP</button>
+                        <button class="btn" onclick="useCommandPreset('/sysinfo')">🔍 Cek Spesifikasi Sistem</button>
+                        <button class="btn btn-crimson" onclick="useCommandPreset('/clean')">🧹 Pembersihan Sampah Log</button>
+                    </div>
                 </div>
 
                 <!-- NEURAL CHAT CONSOLE -->
@@ -530,6 +553,100 @@
                     <div class="card-title">Ducky Script Preview</div>
                     <div class="terminal-box" id="badusb-preview" style="height: 200px; font-size: 0.75rem;">
                         Pilih skenario untuk melihat urutan perintah...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. USER & CO-PILOT GUIDE (NEW & FRIENDLY) -->
+        <section id="tab-help" class="content-area">
+            <div class="grid-layout">
+                <!-- Onboarding Intro -->
+                <div class="card grid-span-3" style="background: linear-gradient(135deg, rgba(188,19,254,0.1) 0%, transparent 100%); border-color: rgba(188,19,254,0.3);">
+                    <div class="card-title" style="color: var(--accent-purple); font-size: 1.2rem; font-weight: 800;">🌟 SELAMAT DATANG DI PUSAT OPERASI NOIR SOVEREIGN</div>
+                    <p style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin-top: 10px;">
+                        Noir Sovereign adalah Ekosistem AI Agent Otonom yang memadukan kekuatan komputasi awan (VPS Alibaba) dengan PC ASUS lokal dan perangkat Android native (Aegis) Anda. Halaman panduan ini dirancang untuk memandu pengguna baru agar dapat mengoperasikan sistem dengan sangat mudah tanpa memerlukan latar belakang teknis yang mendalam!
+                    </p>
+                </div>
+
+                <!-- Step-by-Step Guide -->
+                <div class="card grid-span-2">
+                    <div class="card-title" style="color: var(--accent-cyan);">🚀 3 LANGKAH MUDAH MEMULAI</div>
+                    <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 15px;">
+                        <div style="display: flex; gap: 15px; align-items: flex-start; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div style="background: var(--accent-cyan); color: black; font-weight: 800; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+                            <div>
+                                <h4 style="font-weight: bold; color: white;">Aktifkan Desktop Launcher & Bypass Firewall</h4>
+                                <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 5px;">Double-click file <b>Noir Sovereign.exe</b> di Desktop Anda. Aplikasi desktop premium kami otomatis memantau konektivitas VPS Anda di background, melewati popup konsol CMD, dan menampilkan antarmuka ini secara rahasia dan aman.</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 15px; align-items: flex-start; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <div style="background: var(--accent-purple); color: white; font-weight: 800; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+                            <div>
+                                <h4 style="font-weight: bold; color: white;">Nyalakan PC Override Permission</h4>
+                                <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 5px;">Untuk mengizinkan AI Agent Anda menulis kode, menginstal library baru, atau menjalankan kompilasi program secara mandiri di PC Anda, pastikan tombol <b>Toggle PC Override</b> di tab Overview dalam kondisi <b>AKTIF (ON)</b>.</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 15px; align-items: flex-start;">
+                            <div style="background: var(--accent-green); color: black; font-weight: 800; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+                            <div>
+                                <h4 style="font-weight: bold; color: white;">Mulai Membangun Aplikasi Otonom</h4>
+                                <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 5px;">Ketikkan keinginan Anda di Link Neural Chat Console menggunakan prefiks perintah <b>/build</b>. Contoh: <i>/build web dashboard toko online minimalis</i>. Duduk santai dan saksikan Agen Anda menulis kode serta mengompilasinya untuk Anda secara langsung!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Help Tips -->
+                <div class="card">
+                    <div class="card-title" style="color: var(--accent-purple);">💡 TIPS OPERASIONAL CEPAT</div>
+                    <ul style="color: var(--text-dim); font-size: 0.85rem; line-height: 1.8; padding-left: 15px; margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+                        <li><b>Ingin Screenshot Ponsel?</b> Cukup ketik perintah <code>/screenshot</code> di konsol obrolan untuk menangkap tampilan ponsel Redmi Note 14 Anda secara instan.</li>
+                        <li><b>Melihat Hasil Build?</b> Buka folder lokal PC di <code>knowledge/sovereign_builds/</code> untuk melihat kode sumber yang ditulis otonom oleh AI Agent Anda.</li>
+                        <li><b>Evolusi Sistem:</b> Setiap kali AI Agent menyintesis skill baru, proposal evolusi akan muncul di tab <b>🧬 EVOLUTION</b>. Anda dapat menolak atau menyetujuinya dengan sekali klik!</li>
+                    </ul>
+                </div>
+
+                <!-- Interactive Command Cheat-sheet -->
+                <div class="card grid-span-3">
+                    <div class="card-title" style="color: var(--accent-gold);">📖 KAMUS DIREKTORI PERINTAH UTAMA</div>
+                    <div style="overflow-x: auto; margin-top: 15px;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid rgba(255,255,255,0.1); color: var(--accent-cyan);">
+                                    <th style="padding: 10px 15px;">Format Perintah</th>
+                                    <th style="padding: 10px 15px;">Tujuan Pengoperasian</th>
+                                    <th style="padding: 10px 15px;">Contoh Penggunaan</th>
+                                </tr>
+                            </thead>
+                            <tbody style="color: var(--text-bright);">
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 10px 15px; font-family: 'JetBrains Mono'; color: var(--accent-green);">/build [web|exe|android] [spek]</td>
+                                    <td style="padding: 10px 15px;">Memerintahkan AI Agent merancang & menyusun sistem web, desktop, atau mobile native secara otonom di PC Anda.</td>
+                                    <td style="padding: 10px 15px; color: var(--text-dim);"><code>/build exe aplikasi pemantau baterai</code></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 10px 15px; font-family: 'JetBrains Mono'; color: var(--accent-green);">/override [on|off]</td>
+                                    <td style="padding: 10px 15px;">Mengizinkan/mencabut hak otonom penuh AI Agent untuk menjalankan perintah lokal dan menginstal pustaka di PC.</td>
+                                    <td style="padding: 10px 15px; color: var(--text-dim);"><code>/override on</code></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 10px 15px; font-family: 'JetBrains Mono'; color: var(--accent-green);">/screenshot</td>
+                                    <td style="padding: 10px 15px;">Mengambil gambar layar ponsel target (Redmi Note 14) secara langsung dan mengirimkannya ke pusat kendali.</td>
+                                    <td style="padding: 10px 15px; color: var(--text-dim);"><code>/screenshot</code></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 10px 15px; font-family: 'JetBrains Mono'; color: var(--accent-green);">/sysinfo</td>
+                                    <td style="padding: 10px 15px;">Melakukan audit hardware secara komprehensif untuk menampilkan kapasitas RAM, CPU, dan suhu PC & HP.</td>
+                                    <td style="padding: 10px 15px; color: var(--text-dim);"><code>/sysinfo</code></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 10px 15px; font-family: 'JetBrains Mono'; color: var(--accent-green);">/clean</td>
+                                    <td style="padding: 10px 15px;">Menginstruksikan modul Auto-Healer untuk membersihkan file cache, logs tak berguna, dan mengoptimalkan memori sistem.</td>
+                                    <td style="padding: 10px 15px; color: var(--text-dim);"><code>/clean</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -925,6 +1042,37 @@
             msg.innerText = text;
             container.appendChild(msg);
             container.scrollTop = container.scrollHeight;
+        }
+
+        function useCommandPreset(cmd) {
+            const input = document.getElementById('chat-input');
+            input.value = cmd;
+            input.focus();
+            input.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function togglePcOverrideLocal() {
+            try {
+                const summaryRes = await fetch('/api/summary');
+                const summaryData = await summaryRes.json();
+                const currentState = summaryData.pc_override || false;
+                const newState = !currentState;
+                
+                const res = await fetch('/api/pc/override', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ state: newState })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert(`PC Override diubah ke: ${data.override ? 'AKTIF (ON)' : 'MATI (OFF)'}`);
+                    updateDashboard();
+                } else {
+                    alert("Gagal mengubah state override: " + data.error);
+                }
+            } catch (e) {
+                alert("Gagal terhubung ke web server.");
+            }
         }
 
         setInterval(updateDashboard, 5000);
