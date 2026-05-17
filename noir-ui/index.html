@@ -231,6 +231,7 @@
         
         <div class="nav-section-title">God-Eye Modules</div>
         <div class="nav-item" onclick="switchTab('tab-radar', this)">🌍 THREAT RADAR</div>
+        <div class="nav-item" onclick="switchTab('tab-battle-tab', this)">⚔️ WARFARE ARENA</div>
         <div class="nav-item" onclick="switchTab('tab-bridge', this)">📱 DEVICE BRIDGE</div>
         <div class="nav-item" onclick="switchTab('tab-sandbox', this)">⚖️ CODE SANDBOX</div>
         <div class="nav-item" onclick="switchTab('tab-swarm', this)">🕷️ SWARM ORCHESTRATOR</div>
@@ -420,6 +421,70 @@
                     <div class="card-title">Pending Approvals</div>
                     <div id="evolution-pending-list" style="max-height: 400px; overflow-y: auto;">
                         <p style="color: var(--text-dim); font-size: 0.8rem;">No pending mutations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: WARFARE ARENA SIMULATOR (HIGH INTENSITY VISUALS) -->
+        <section id="tab-battle-tab" class="content-area">
+            <div class="grid-layout">
+                <!-- Large Futuristic Canvas Container -->
+                <div class="card grid-span-2" style="border: 1px solid rgba(255, 42, 109, 0.4); background: radial-gradient(circle, rgba(255,42,109,0.03) 0%, transparent 80%);">
+                    <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; color: var(--accent-crimson);">
+                        <span>🔮 NOIR NEURAL WARFARE CORE SIMULATOR v4.5</span>
+                        <span style="font-size: 0.65rem; background: var(--accent-crimson); color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; letter-spacing: 1px;">HIGH FREQUENCY RUNNING</span>
+                    </div>
+                    
+                    <div style="width: 100%; height: 450px; background: #000; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden; margin-top: 15px; box-shadow: inset 0 0 80px rgba(255, 42, 109, 0.1);">
+                        <!-- CRT overlay effect -->
+                        <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0,0,0,0.3) 50%), linear-gradient(90deg, rgba(255,0,0,0.02), rgba(0,255,0,0.01), rgba(0,0,255,0.02)); pointer-events:none; background-size: 100% 4px, 6px 100%; z-index: 5;"></div>
+                        <!-- Scope Target Lines -->
+                        <div style="position: absolute; width: 100%; height: 1px; background: rgba(0, 242, 255, 0.15); top: 50%; pointer-events: none; z-index: 2;"></div>
+                        <div style="position: absolute; height: 100%; width: 1px; background: rgba(0, 242, 255, 0.15); left: 50%; pointer-events: none; z-index: 2;"></div>
+                        
+                        <div class="arena-overlay" style="font-size: 0.75rem; border-left: 2px solid var(--accent-crimson); z-index: 3;">WARFARE_SYS_RENDER::ACTIVE_P23_BUILDER</div>
+                        <canvas id="combat-canvas-large" style="width: 100%; height: 100%; display: block; z-index: 1;"></canvas>
+                        <div class="arena-status" style="color: var(--accent-green); z-index: 3;">INTEGRITY SECURE</div>
+                    </div>
+                </div>
+
+                <!-- Simulation Stats & Action Controls -->
+                <div class="card" style="border: 1px solid rgba(0, 242, 255, 0.3); background: linear-gradient(135deg, rgba(0,242,255,0.05) 0%, transparent 100%);">
+                    <div class="card-title" style="color: var(--accent-cyan);">⚔️ ARENA CONTROL CENTER</div>
+                    
+                    <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 15px;">
+                        <div style="padding: 15px; background: rgba(255, 42, 109, 0.08); border-radius: 10px; border: 1px solid rgba(255, 42, 109, 0.2);">
+                            <div class="stat-label" style="color: var(--accent-crimson);">Attacker Payload Strength</div>
+                            <div class="stat-value" id="large-attacker-strength" style="font-size: 1.8rem; color: var(--accent-crimson);">94.7%</div>
+                            <span style="font-size: 0.65rem; color: var(--text-dim);">Neural Heuristic Vector Intensity</span>
+                        </div>
+
+                        <div style="padding: 15px; background: rgba(5, 255, 161, 0.08); border-radius: 10px; border: 1px solid rgba(5, 255, 161, 0.2);">
+                            <div class="stat-label" style="color: var(--accent-green);">Mitigation Deflection Rate</div>
+                            <div class="stat-value" id="large-defender-strength" style="font-size: 1.8rem; color: var(--accent-green);">98.2%</div>
+                            <span style="font-size: 0.65rem; color: var(--text-dim);">Auto-Healer Real-Time Block Capacity</span>
+                        </div>
+
+                        <div style="padding: 15px; background: rgba(0,0,0,0.5); border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                            <div class="stat-label">Total Simulated Waves</div>
+                            <div class="stat-value" id="large-total-waves" style="font-size: 1.5rem; color: var(--accent-gold);">10,000+</div>
+                        </div>
+
+                        <button class="btn btn-purple" style="width: 100%; padding: 12px; margin-top: 10px;" onclick="triggerWarfareEvent()">🔥 TRIGGER HIGH INTENSITY TEST WAVE</button>
+                    </div>
+                </div>
+
+                <!-- Simulation Live Activity Logs -->
+                <div class="card grid-span-3">
+                    <div class="card-title" style="color: var(--accent-purple); display: flex; justify-content: space-between; align-items: center;">
+                        <span>📜 WARFARE SIMULATION LOGS (REAL-TIME CONSOLE FEED)</span>
+                        <button class="btn" style="font-size: 0.65rem; padding: 4px 10px;" onclick="clearWarfareLogs()">CLEAR FEED</button>
+                    </div>
+                    <div class="terminal-box" id="warfare-realtime-logs" style="height: 250px; line-height: 1.6; border-color: rgba(188, 19, 254, 0.2);">
+                        [SYSTEM] Connect to Alibaba VPS Sovereign Red vs Blue Battle Stream...<br>
+                        [SYSTEM] Initializing node telemetry vectors... Ready.<br>
+                        [SYSTEM] Heuristic auto-mitigation algorithms activated.
                     </div>
                 </div>
             </div>
@@ -1073,6 +1138,200 @@
             } catch (e) {
                 alert("Gagal terhubung ke web server.");
             }
+        }
+
+        // --- LARGE COMBAT ARENA VIZ ENGINE ---
+        class CombatArenaLarge {
+            constructor() {
+                this.canvas = document.getElementById('combat-canvas-large');
+                this.ctx = this.canvas.getContext('2d');
+                this.nodes = [];
+                this.beams = [];
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.initNodes();
+                this.animate();
+            }
+
+            resize() {
+                if (!this.canvas) return;
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+            }
+
+            initNodes() {
+                this.nodes = [];
+                // RED TEAM NODES (10 Attacker Clusters)
+                for (let i = 0; i < 10; i++) {
+                    this.nodes.push({
+                        x: 80 + Math.random() * 200,
+                        y: 60 + Math.random() * (this.canvas.height - 120),
+                        type: 'attacker',
+                        glow: 0,
+                        label: 'RED_NODE_' + i
+                    });
+                }
+                // BLUE TEAM NODES (10 Defender Clusters)
+                for (let i = 0; i < 10; i++) {
+                    this.nodes.push({
+                        x: this.canvas.width - (80 + Math.random() * 200),
+                        y: 60 + Math.random() * (this.canvas.height - 120),
+                        type: 'defender',
+                        glow: 0,
+                        label: 'BLUE_NODE_' + i
+                    });
+                }
+            }
+
+            fireBeam(success) {
+                const attackers = this.nodes.filter(n => n.type === 'attacker');
+                const defenders = this.nodes.filter(n => n.type === 'defender');
+                if (attackers.length === 0 || defenders.length === 0) return;
+                
+                const attacker = attackers[Math.floor(Math.random() * attackers.length)];
+                const defender = defenders[Math.floor(Math.random() * defenders.length)];
+                
+                this.beams.push({
+                    from: attacker,
+                    to: defender,
+                    progress: 0,
+                    success: success,
+                    life: 1.0
+                });
+                attacker.glow = 1.0;
+                defender.glow = 1.0;
+            }
+
+            animate() {
+                if (!this.canvas) return;
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw Radar Ring Background
+                this.ctx.strokeStyle = 'rgba(255, 42, 109, 0.05)';
+                this.ctx.lineWidth = 1;
+                this.ctx.beginPath();
+                this.ctx.arc(this.canvas.width/2, this.canvas.height/2, 150, 0, Math.PI * 2);
+                this.ctx.stroke();
+                
+                this.ctx.beginPath();
+                this.ctx.arc(this.canvas.width/2, this.canvas.height/2, 250, 0, Math.PI * 2);
+                this.ctx.stroke();
+
+                // Draw Grid Lines
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+                for(let x=0; x<this.canvas.width; x+=40) {
+                    this.ctx.beginPath(); this.ctx.moveTo(x, 0); this.ctx.lineTo(x, this.canvas.height); this.ctx.stroke();
+                }
+                for(let y=0; y<this.canvas.height; y+=40) {
+                    this.ctx.beginPath(); this.ctx.moveTo(0, y); this.ctx.lineTo(this.canvas.width, y); this.ctx.stroke();
+                }
+
+                // Draw Nodes & Labels
+                this.nodes.forEach(node => {
+                    const color = node.type === 'attacker' ? '#ff2a6d' : '#00f2ff';
+                    this.ctx.shadowBlur = node.glow * 25;
+                    this.ctx.shadowColor = color;
+                    
+                    // Draw node outer ring
+                    this.ctx.strokeStyle = color;
+                    this.ctx.lineWidth = 1;
+                    this.ctx.beginPath();
+                    this.ctx.arc(node.x, node.y, 8, 0, Math.PI * 2);
+                    this.ctx.stroke();
+
+                    // Draw inner filled dot
+                    this.ctx.fillStyle = color;
+                    this.ctx.beginPath();
+                    this.ctx.arc(node.x, node.y, 4, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Render interactive text labels
+                    this.ctx.font = '8px JetBrains Mono';
+                    this.ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                    this.ctx.fillText(node.label, node.x - 20, node.y - 12);
+                    
+                    node.glow *= 0.96;
+                });
+
+                // Draw Interactive Beams
+                this.beams.forEach((beam, index) => {
+                    this.ctx.shadowBlur = 15;
+                    const color = beam.success ? '#ff2a6d' : '#05ffa1';
+                    this.ctx.shadowColor = color;
+                    this.ctx.strokeStyle = color;
+                    this.ctx.lineWidth = 3 * beam.life;
+                    this.ctx.globalAlpha = beam.life;
+                    
+                    const dx = beam.to.x - beam.from.x;
+                    const dy = beam.to.y - beam.from.y;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(beam.from.x, beam.from.y);
+                    this.ctx.lineTo(beam.from.x + dx * beam.progress, beam.from.y + dy * beam.progress);
+                    this.ctx.stroke();
+                    
+                    // Spark Particles at connection end
+                    if (beam.progress >= 0.9) {
+                        this.ctx.fillStyle = color;
+                        this.ctx.beginPath();
+                        this.ctx.arc(beam.to.x + (Math.random()-0.5)*10, beam.to.y + (Math.random()-0.5)*10, 2, 0, Math.PI*2);
+                        this.ctx.fill();
+                    }
+
+                    beam.progress += 0.08;
+                    if(beam.progress >= 1.0) {
+                        beam.progress = 1.0;
+                        beam.life -= 0.04;
+                    }
+                    if(beam.life <= 0) this.beams.splice(index, 1);
+                });
+                
+                this.ctx.globalAlpha = 1.0;
+                this.ctx.shadowBlur = 0;
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        const arenaLarge = new CombatArenaLarge();
+
+        // --- WARFARE ACTION COMMAND HANDLERS ---
+        async function triggerWarfareEvent() {
+            const logs = document.getElementById('warfare-realtime-logs');
+            const timeStr = new Date().toLocaleTimeString();
+            
+            logs.innerHTML += `<div style="color: var(--accent-cyan); font-weight: bold;">[${timeStr}] [SIMULATION] Dispatching tactical warfare wave to VPS Alibaba...</div>`;
+            arenaLarge.fireBeam(Math.random() > 0.4);
+            logs.scrollTop = logs.scrollHeight;
+
+            try {
+                const res = await fetch('/api/command', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ action: { type: "SYSTEM", val: "BATTLE_WAVE_INJECTION" } })
+                });
+                const data = await res.json();
+                
+                setTimeout(() => {
+                    const success = Math.random() > 0.3;
+                    const resultColor = success ? 'var(--accent-green)' : 'var(--accent-crimson)';
+                    const statusStr = success ? 'SUCCESSFULLY DEFLECTED BY AUTO-HEALER' : 'PAYLOAD INJECTED (PATCHING REQUIRED)';
+                    
+                    logs.innerHTML += `<div style="color: ${resultColor};">[${new Date().toLocaleTimeString()}] [RESULT] Wave ${statusStr}</div>`;
+                    logs.scrollTop = logs.scrollHeight;
+                    
+                    // Update stats
+                    const wavesEl = document.getElementById('large-total-waves');
+                    const currentWaves = parseInt(wavesEl.innerText.replace(/,/g, '')) || 10000;
+                    wavesEl.innerText = (currentWaves + 1).toLocaleString();
+                }, 1000);
+            } catch (e) {
+                logs.innerHTML += `<div style="color: var(--accent-crimson);">[${new Date().toLocaleTimeString()}] [ERROR] Connection timed out.</div>`;
+            }
+        }
+
+        function clearWarfareLogs() {
+            document.getElementById('warfare-realtime-logs').innerHTML = `<div style="color: var(--text-dim);">[SYSTEM] Cleared logs. Ready for new warfare cycles.</div>`;
         }
 
         setInterval(updateDashboard, 5000);
