@@ -54,9 +54,9 @@ class PcBridgeHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
 def run():
-    server_address = ('"+os.environ.get("NOIR_VPS_IP", "8.215.23.17")+"', PORT)
+    server_address = ('127.0.0.1', PORT)
     httpd = HTTPServer(server_address, PcBridgeHandler)
-    print(f"[\033[92mREADY\033[0m] PC Bridge Listening on "+os.environ.get("NOIR_VPS_IP", "8.215.23.17")+":{PORT}")
+    print(f"[\033[92mREADY\033[0m] PC Bridge Listening on 127.0.0.1:{PORT}")
     print("Waiting for commands from Android Agent via USB...")
     try:
         httpd.serve_forever()
@@ -66,4 +66,3 @@ def run():
 
 if __name__ == '__main__':
     run()
-

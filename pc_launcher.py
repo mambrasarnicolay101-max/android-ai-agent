@@ -23,11 +23,11 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [LAUNCHER] %(message
 BASE_DIR = Path(__file__).resolve().parent
 
 # ─── KONFIGURASI LAUNCHER ────────────────────────────────────────────────────
-SERVER_HOST   = os.environ.get("NOIR_VPS_IP", "localhost")
+SERVER_HOST   = os.environ.get("NOIR_VPS_IP", "8.215.23.17")
 SERVER_PORT   = 8765          # Port khusus mode Desktop agar tidak bentrok
 
 # Ambil Gateway dari ENV jika ada (untuk koneksi ke VPS Remote)
-GATEWAY_URL   = os.environ.get("NOIR_GATEWAY_URL", f"http://{SERVER_HOST}:{SERVER_PORT}").rstrip("/")
+GATEWAY_URL   = os.environ.get("NOIR_GATEWAY_URL", f"http://{SERVER_HOST}").rstrip("/")
 SERVER_URL    = GATEWAY_URL
 
 WINDOW_TITLE  = "Noir Sovereign — PC Commander"
