@@ -1,63 +1,45 @@
-import os
-import shutil
-import psutil
-import time
+import os, shutil, logging
 
-def purge_junk():
-    print("[PURGE] Starting deep system cleanup...")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [PURGE] %(message)s")
+
+def purge_all():
+    logging.info("Starting total system purge and cache clearance...")
     
-    # 1. Clear __pycache__
-    for root, dirs, files in os.walk('.'):
-        for d in dirs:
-            if d == "__pycache__":
-                path = os.path.join(root, d)
-                print(f"  Removing {path}")
-                shutil.rmtree(path, ignore_errors=True)
+    # 1. Purge __pycache__
+    for root, dirs, files in os.walk("."):
+        if "__pycache__" in dirs:
+            pycache_path = os.path.join(root, "__pycache__")
+            logging.info(f"Removing {pycache_path}")
+            shutil.rmtree(pycache_path)
 
-    # 2. Clear old logs and sandbox
-    extra_dirs = ["logs", "noir-vps/.sandbox"]
-    for d in extra_dirs:
-        if os.path.exists(d):
-            print(f"  Purging directory: {d}")
-            shutil.rmtree(d, ignore_errors=True)
-        os.makedirs(d, exist_ok=True)
-
-    # 3. Remove legacy test scripts
-    legacy_files = [
-        "test_flow.py", "test_poll.py", "test_queue.py", 
-        "test_upload.py", "test_upload_vps.py", "test_upload_data.py",
-        "diagnose_ssl.py", "diagnose_ssl_file.py", "diagnose_ssl_final.py",
-        "ssl_report.txt", "ssl_report_final.txt", "test2.txt", "test_upload.py",
-        "AUDIT_REPORT.md", "AUDIT_REPORT_V17.md", "inventory_report.json", "summary.json",
-        "deploy_vps.py", "full_deploy.py", "final_deploy.py", "docker_run_deploy.py",
-        "audit_vps.py", "fix_deps.py", "packages.txt"
+    # 2. Clear old JSON states that might cause conflicts
+    files_to_reset = [
+        "knowledge/summary.json",
+        "knowledge/maturity_index.json",
+        "noir-vps/orchestrator.log",
+        "boot.log",
+        "server.log"
     ]
-    for f in legacy_files:
+    
+    for f in files_to_reset:
         if os.path.exists(f):
-            print(f"  Deleting legacy file: {f}")
-            os.remove(f)
+            logging.info(f"Resetting {f}")
+            with open(f, "w") as fd:
+                fd.write("{}")
 
-    print("[PURGE] Cleanup complete.")
+    # 3. Clear temporary Android build artifacts
+    android_build_dirs = [
+        "noir-android-native/app/build",
+        "noir-android-native/.gradle"
+    ]
+    for d in android_build_dirs:
+        if os.path.exists(d):
+            logging.info(f"Removing Android build cache: {d}")
+            try:
+                shutil.rmtree(d)
+            except: pass
 
-def ensure_single_command():
-    print("[SINGLE-CMD] Ensuring absolute process sovereignty...")
-    current_pid = os.getpid()
-    
-    # Target common Noir process names
-    targets = ["brain.py", "web_server.py"]
-    
-    for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
-        try:
-            cmd = proc.info.get('cmdline')
-            if cmd and any(t in " ".join(cmd) for t in targets):
-                if proc.info['pid'] != current_pid:
-                    print(f"  Killing redundant process: {proc.info['pid']} ({' '.join(cmd)})")
-                    proc.terminate()
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
-            continue
-
-    print("[SINGLE-CMD] All redundant commands purged.")
+    logging.info("Total purge complete. System is now at a clean-slate state.")
 
 if __name__ == "__main__":
-    purge_junk()
-    # ensure_single_command() # Only run if not in current session
+    purge_all()

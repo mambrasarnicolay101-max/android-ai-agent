@@ -8,15 +8,13 @@ REPO = "mambrasarnicky1-lgtm/android-ai-agent"
 BRANCH = "main"
 
 FILES_TO_SYNC = [
+    "noir-ui/index.html",
+    "noir-ui/web_server.py",
+    "sovereign_unified_boot.py",
+    "noir-vps/sovereign_orchestrator.py",
+    "noir-vps/grand_singularity_cycle.py",
     "noir-android-native/app/src/main/AndroidManifest.xml",
-    "noir-android-native/app/src/main/java/com/noir/aegis/MainActivity.java",
-    "noir-android-native/app/src/main/java/com/noir/aegis/CommandDispatcher.java",
-    "noir-android-native/app/src/main/java/com/noir/aegis/AegisAccessibilityService.java",
-    "noir-android-native/app/src/main/java/com/noir/aegis/SovereignEvolutionEngine.java",
-    "noir-android-native/app/src/main/java/com/noir/aegis/SecurityAuditSkill.java",
-    "noir-android-native/app/src/main/res/xml/accessibility_service_config.xml",
-    "noir-android-native/app/src/main/res/xml/device_admin_info.xml",
-    "noir-android-native/app/src/main/res/values/strings.xml"
+    "noir-android-native/app/src/main/java/com/noir/aegis/MainActivity.java"
 ]
 
 def sync_file(path):

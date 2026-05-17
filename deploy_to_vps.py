@@ -6,7 +6,7 @@ from scp import SCPClient
 
 load_dotenv()
 
-VPS_IP   = os.environ.get("NOIR_VPS_IP",   "os.environ.get("NOIR_VPS_IP", "8.215.23.17"))
+VPS_IP   = os.environ.get("NOIR_VPS_IP", "8.215.23.17")
 VPS_USER = os.environ.get("NOIR_VPS_USER", "root")
 VPS_PASS = os.environ.get("NOIR_VPS_PASS", "N!colay_No1r.Ai@Agent#Secure")
 REMOTE_ROOT = "/root/noir-agent"
@@ -34,6 +34,11 @@ def deploy():
         with SCPClient(ssh.get_transport()) as scp:
             print("Syncing .env...")
             scp.put(".env", remote_path=REMOTE_ROOT + "/.env")
+            print("Syncing root scripts...")
+            scripts = ["sovereign_unified_boot.py", "purge_system.py", "requirements.txt"]
+            for s in scripts:
+                if os.path.exists(s):
+                    scp.put(s, remote_path=REMOTE_ROOT + "/" + s)
             print("Syncing noir-ui/...")
             scp.put("noir-ui", remote_path=REMOTE_ROOT, recursive=True)
             print("Syncing noir-vps/...")

@@ -15,7 +15,19 @@ def start_dashboard():
 
 def start_pc_bridge():
     print("[\033[96mBRIDGE\033[0m] Establishing Neural PC Tunnel...")
-    subprocess.run([sys.executable, "pc_bridge_launcher.py"])
+    # Optional local bridge, if running on VPS this might fail gracefully
+    try:
+        subprocess.run([sys.executable, "pc_bridge_launcher.py"])
+    except: pass
+
+def start_shadow_node():
+    print("[\033[93mSHADOW\033[0m] Initializing Ghost Mirror (Shadow Failover)...")
+    subprocess.run([sys.executable, "noir-vps/shadow_node.py"])
+
+def start_singularity():
+    print("[\033[91mSINGULARITY\033[0m] Ignition: High-Level Evolution Cycle...")
+    # This might be a loop or a script that runs periodically
+    subprocess.run([sys.executable, "noir-vps/grand_singularity_cycle.py"])
 
 def start_evolution_monitor():
     print("[\033[95mEVOLUTION\033[0m] Monitoring Agent Growth...")
@@ -33,7 +45,8 @@ if __name__ == "__main__":
     processes = [
         Process(target=start_vps_brain),
         Process(target=start_dashboard),
-        Process(target=start_pc_bridge)
+        Process(target=start_shadow_node),
+        Process(target=start_singularity)
     ]
 
     for p in processes:

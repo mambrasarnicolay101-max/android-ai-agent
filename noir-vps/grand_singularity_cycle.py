@@ -42,7 +42,7 @@ class GrandSingularityCycle:
     def run_cycle(self):
         """Menjalankan satu siklus penuh evolusi otonom."""
         self.state["cycle"] += 1
-        log.info(f" [SINGULARITY] Starting Grand Evolution Cycle #{self.state['cycle']}...")
+        log.info(f" [SINGULARITY] Memulai Siklus Evolusi Agung #{self.state['cycle']}...")
         
         # 1. RESEARCH & KNOWLEDGE ABSORPTION
         self._step_research()
@@ -59,42 +59,42 @@ class GrandSingularityCycle:
             self.last_rem_sleep = time.time()
 
         self._save_state()
-        log.info(f" [SINGULARITY] Cycle #{self.state['cycle']} completed. Sleeping until next window.")
+        log.info(f" [SINGULARITY] Siklus #{self.state['cycle']} selesai. Hibernasi hingga jendela berikutnya.")
 
     def _step_research(self):
         """Tahap Penelitian: AI mencari tren keamanan dan teknologi baru."""
-        log.info(" [SINGULARITY] Phase 1: Autonomous Research...")
+        log.info(" [SINGULARITY] Fase 1: Penelitian Otonom...")
         topics = [
-            "LLM Security Vulnerabilities 2026",
-            "Advanced Evasion Techniques for Android Sandboxes",
-            "Post-Quantum Cryptography in Python",
-            "Zero-Day Analysis Methodology"
+            "Kerentanan Keamanan LLM 2026",
+            "Teknik Evasio Lanjutan untuk Sandbox Android",
+            "Kriptografi Pasca-Quantum dalam Python",
+            "Metodologi Analisis Zero-Day"
         ]
         import random
         topic = random.choice(topics)
         
-        prompt = f"Research the latest information about '{topic}'. Summarize key techniques and provide a Python snippet if applicable for defense or testing."
+        prompt = f"Lakukan riset informasi terbaru tentang '{topic}'. Ringkas teknik utama dan berikan cuplikan Python jika berlaku untuk pertahanan atau pengujian."
         research_result = OmniRouter.query(prompt, task_type="reasoning")
         
         if research_result and "[Error]" not in research_result:
             vector_memory.add_experience(
-                text=f"Research on {topic}: {research_result}",
+                text=f"Riset tentang {topic}: {research_result}",
                 metadata={"source": "grand_singularity", "type": "research_insight", "topic": topic}
             )
-            log.info(f" [SINGULARITY] Research on '{topic}' assimilated into memory.")
+            log.info(f" [SINGULARITY] Riset tentang '{topic}' telah diserap ke dalam memori.")
 
     def _step_simulation(self):
         """Tahap Simulasi: Red vs Blue Arena dengan peningkatan LLM."""
-        log.info(" [SINGULARITY] Phase 2: Cyber Warfare Simulation...")
+        log.info(" [SINGULARITY] Fase 2: Simulasi Perang Cyber...")
         try:
             self.arena.run_simulation()
-            log.info(" [SINGULARITY] Simulation Arena cycle finished.")
+            log.info(" [SINGULARITY] Siklus Arena Simulasi selesai.")
         except Exception as e:
-            log.error(f" [SINGULARITY] Simulation failed: {e}")
+            log.error(f" [SINGULARITY] Simulasi gagal: {e}")
 
     def _step_self_audit(self):
         """Tahap Audit Mandiri: Mencari anti-pattern dalam kode sendiri."""
-        log.info(" [SINGULARITY] Phase 3: Recursive Self-Audit...")
+        log.info(" [SINGULARITY] Fase 3: Audit-Mandiri Rekursif...")
         # Pilih file acak untuk di-audit
         core_files = ["brain.py", "ai_router.py", "sovereign_orchestrator.py", "web_server.py"]
         import random

@@ -73,16 +73,16 @@ def _run_knowledge_absorber():
         from knowledge_absorber import OmniKnowledgeAbsorber
         import random
         topics = [
-            "Advanced Python AsyncIO Security Patterns",
-            "Zero Trust Architecture Implementation 2025",
-            "Post-Quantum Cryptography Algorithms",
-            "OWASP Top 10 Mitigation Strategies",
-            "Rust Memory Safety vs C++ Vulnerabilities",
-            "Kubernetes Security Hardening Best Practices",
-            "LLM Fine-tuning LoRA QLoRA Techniques",
-            "Autonomous Agent Multi-step Reasoning",
-            "Graph Neural Networks for Anomaly Detection",
-            "Reverse Engineering with Ghidra Advanced Techniques",
+            "Pola Keamanan Lanjutan Python AsyncIO",
+            "Implementasi Arsitektur Zero Trust 2026",
+            "Algoritma Kriptografi Pasca-Quantum",
+            "Strategi Mitigasi OWASP Top 10",
+            "Keamanan Memori Rust vs Kerentanan C++",
+            "Praktik Terbaik Pengerasan Keamanan Kubernetes",
+            "Teknik Fine-tuning LLM LoRA QLoRA",
+            "Penalaran Multi-langkah Agen Otonom",
+            "Graph Neural Networks untuk Deteksi Anomali",
+            "Teknik Lanjutan Rekayasa Balik dengan Ghidra",
         ]
         topic = random.choice(topics)
         log.info(f"[ORK] [P4] Knowledge Absorber: Menyerap '{topic}'...")
@@ -310,6 +310,36 @@ def _run_distributed_ledger():
     except Exception as e:
         log.error(f"[ORK] [P22] Distributed Ledger gagal: {e}")
 
+def _run_sovereign_builder():
+    """Pilar 23 — Sovereign Builder. Universal software design engine."""
+    try:
+        from sovereign_builder import SovereignBuilder
+        log.info("[ORK] [P23] Sovereign Builder: Memulai siklus pembangunan program otonom...")
+        SovereignBuilder.autonomous_build_cycle()
+        log.info("[ORK] [P23] Sovereign Builder selesai.")
+    except Exception as e:
+        log.error(f"[ORK] [P23] Sovereign Builder gagal: {e}")
+
+def _run_apex_evolution():
+    """Pilar 24 — Apex Evolution Engine. Beyond-mastery recursive self-improvement."""
+    try:
+        from apex_evolution import ApexEvolutionEngine
+        log.info("[ORK] [P24] Apex Evolution: Memulai siklus evolusi rekursif melampaui mastery...")
+        ApexEvolutionEngine.run_recursive_evolution_cycle()
+        log.info("[ORK] [P24] Apex Evolution selesai.")
+    except Exception as e:
+        log.error(f"[ORK] [P24] Apex Evolution gagal: {e}")
+
+def _run_sovereign_defense():
+    """Pilar 25 — Sovereign Defense Fortress. Adaptive multi-layer defense."""
+    try:
+        from sovereign_defense import SovereignDefenseFortress
+        log.info("[ORK] [P25] Sovereign Defense Fortress: Menjalankan siklus pertahanan penuh...")
+        SovereignDefenseFortress.run_full_defense_cycle()
+        log.info("[ORK] [P25] Sovereign Defense Fortress selesai.")
+    except Exception as e:
+        log.error(f"[ORK] [P25] Sovereign Defense Fortress gagal: {e}")
+
 def _report_status_to_dashboard(cycle: int):
     """Kirim status orkestrasi ke dashboard."""
     try:
@@ -318,7 +348,7 @@ def _report_status_to_dashboard(cycle: int):
         api_key = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
         headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
         requests.post(f"{gateway}/api/learning/update", headers=headers, json={
-            "status": f"Sovereign Orchestrator - Cycle #{cycle} aktif. Semua 19 Pilar berjalan otonom."
+            "status": f"Sovereign Orchestrator - Cycle #{cycle} aktif. Semua 22 Pilar berjalan otonom."
         }, timeout=5)
     except Exception as e:
             log.debug(f"Silent error suppressed: {e}")
@@ -337,8 +367,10 @@ def _run_grand_singularity():
 
 def run_orchestrator():
     log.info("=" * 60)
-    log.info("  SOVEREIGN ORCHESTRATOR v2.0  9 PILAR AKTIF")
-    log.info("  [P9] Antigravity Intelligence Core: ONLINE")
+    log.info("  SOVEREIGN ORCHESTRATOR v3.0  25 PILAR AKTIF")
+    log.info("  [P23] Sovereign Builder: ONLINE")
+    log.info("  [P24] Apex Evolution Engine: ONLINE")
+    log.info("  [P25] Sovereign Defense Fortress: ONLINE")
     log.info("=" * 60)
     cycle = 0
 
@@ -442,11 +474,23 @@ def run_orchestrator():
         if _should_run("grand_singularity", 21600):
             _start_task("grand_singularity", _run_grand_singularity)
 
+        # Pilar 23: Sovereign Builder — Setiap 3 jam (10800s)
+        if _should_run("sovereign_builder", 10800):
+            _start_task("sovereign_builder", _run_sovereign_builder)
+
+        # Pilar 24: Apex Evolution — Setiap 2 jam (7200s)
+        if _should_run("apex_evolution", 7200):
+            _start_task("apex_evolution", _run_apex_evolution)
+
+        # Pilar 25: Sovereign Defense — Setiap 1 jam (3600s)
+        if _should_run("sovereign_defense", 3600):
+            _start_task("sovereign_defense", _run_sovereign_defense)
+
         # Laporan ke dashboard
         _report_status_to_dashboard(cycle)
 
         # Tidur 5 menit sebelum siklus berikutnya
-        log.info("[ORK] Semua 9 pilar aktif. Siklus berikutnya dalam 5 menit...")
+        log.info("[ORK] Semua 25 pilar aktif. Siklus berikutnya dalam 5 menit...")
         time.sleep(300)
 
 

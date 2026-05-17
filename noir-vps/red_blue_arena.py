@@ -90,8 +90,8 @@ class RedBlueArena:
         try:
             from evolution_engine import evolution_engine
             evolution_engine.propose_evolution(
-                title=f"Security Simulation: {len(attack_findings)} Vulnerabilities Patched",
-                description=f"Red-Blue Arena berhasil mendeteksi dan menambal {len(attack_findings)} celah keamanan pada sistem dummy.",
+                title=f"Simulasi Keamanan: {len(attack_findings)} Kerentanan Ditambal",
+                description=f"Arena Red-Blue berhasil mendeteksi dan menambal {len(attack_findings)} celah keamanan pada sistem dummy.",
                 changes={"security_arena_report": {"findings": attack_findings}},
                 complexity=2
             )
@@ -113,7 +113,7 @@ class RedBlueArena:
 
     def run_simulation(self, intensity="NORMAL"):
         """Jalankan satu siklus simulasi perang siber."""
-        log.info(f" [ARENA] Starting {intensity} warfare simulation...")
+        log.info(f" [ARENA] Memulai simulasi perang {intensity}...")
         log.info("=====================================================")
         log.info("=== MEMULAI SIMULASI RED VS BLUE OTONOM (ARENA) ===")
         log.info("=====================================================")
