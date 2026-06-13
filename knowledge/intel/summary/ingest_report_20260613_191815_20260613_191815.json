@@ -1,0 +1,14 @@
+{
+  "status": "COMPLETE",
+  "elapsed_seconds": 46.06,
+  "github_repos": 3,
+  "cves": 20,
+  "mitre_techs": 709,
+  "papers": 40,
+  "cisa_kev": 30,
+  "ctf_events": 16,
+  "owasp_sheets": 5,
+  "bp_cve": 10,
+  "bp_mitre": 30,
+  "digest": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\knowledge\\digest.md"
+}

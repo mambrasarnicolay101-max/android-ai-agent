@@ -26,5 +26,40 @@
     "blueprint_id": "CVE-2026-46442",
     "source_file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\knowledge\\intel\\skills_blueprints\\cve_defense_skills_20260613_105030.json",
     "synthesized_at": "2026-06-13T18:03:29.056922"
+  },
+  {
+    "success": false,
+    "reason": "Gagal mengidentifikasi struktur class dalam kode.",
+    "blueprint_id": "CVE-2026-46442",
+    "source_file": "c:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\knowledge\\intel\\skills_blueprints\\cve_defense_skills_20260613_105030.json",
+    "synthesized_at": "2026-06-13T19:14:57.874830"
+  },
+  {
+    "success": false,
+    "reason": "Gagal mengidentifikasi struktur class dalam kode.",
+    "blueprint_id": "CVE-2026-44748",
+    "source_file": "c:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\knowledge\\intel\\skills_blueprints\\cve_defense_skills_20260613_105030.json",
+    "synthesized_at": "2026-06-13T19:15:01.590374"
+  },
+  {
+    "success": false,
+    "reason": "Gagal mengidentifikasi struktur class dalam kode.",
+    "blueprint_id": "CVE-2023-54352",
+    "source_file": "c:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\knowledge\\intel\\skills_blueprints\\cve_defense_skills_20260613_105030.json",
+    "synthesized_at": "2026-06-13T19:15:05.295343"
+  },
+  {
+    "success": false,
+    "reason": "Gagal mengidentifikasi struktur class dalam kode.",
+    "blueprint_id": "CVE-2024-58348",
+    "source_file": "c:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\knowledge\\intel\\skills_blueprints\\cve_defense_skills_20260613_105030.json",
+    "synthesized_at": "2026-06-13T19:15:09.239023"
+  },
+  {
+    "success": false,
+    "reason": "Gagal mengidentifikasi struktur class dalam kode.",
+    "blueprint_id": "CVE-2024-58349",
+    "source_file": "c:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\knowledge\\intel\\skills_blueprints\\cve_defense_skills_20260613_105030.json",
+    "synthesized_at": "2026-06-13T19:15:12.886703"
   }
 ]

@@ -1,0 +1,149 @@
+{
+  "title": "Noir CTF Training Plan",
+  "generated": "2026-06-13T19:18:15.862432",
+  "platforms": [
+    {
+      "name": "HackTheBox",
+      "url": "https://www.hackthebox.com",
+      "type": "authorized"
+    },
+    {
+      "name": "TryHackMe",
+      "url": "https://tryhackme.com",
+      "type": "authorized"
+    },
+    {
+      "name": "PicoCTF",
+      "url": "https://picoctf.org",
+      "type": "authorized"
+    },
+    {
+      "name": "CTFlearn",
+      "url": "https://ctflearn.com",
+      "type": "authorized"
+    },
+    {
+      "name": "OverTheWire",
+      "url": "https://overthewire.org",
+      "type": "authorized"
+    },
+    {
+      "name": "DVWA (Local)",
+      "url": "localhost",
+      "type": "local_only"
+    }
+  ],
+  "upcoming_events": [
+    {
+      "title": "SCTF 2026",
+      "url": "https://sctf2026.xctf.org.cn/",
+      "ctftime": "https://ctftime.org/event/3314/",
+      "format": "Jeopardy",
+      "start": "2026-06-14T01:00:00+00:00",
+      "finish": "2026-06-15T01:00:00+00:00",
+      "weight": 0.0,
+      "organizers": [
+        "Syclover"
+      ],
+      "tags": []
+    },
+    {
+      "title": "Sieberrsec CTF 7.0",
+      "url": "https://sieberr.live/",
+      "ctftime": "https://ctftime.org/event/3299/",
+      "format": "Jeopardy",
+      "start": "2026-06-17T01:00:00+00:00",
+      "finish": "2026-06-17T13:00:00+00:00",
+      "weight": 0.0,
+      "organizers": [
+        "sieberr.live"
+      ],
+      "tags": []
+    },
+    {
+      "title": "BCACTF 7.0",
+      "url": "https://www.bcactf.com/",
+      "ctftime": "https://ctftime.org/event/3246/",
+      "format": "Jeopardy",
+      "start": "2026-06-19T10:00:00+00:00",
+      "finish": "2026-06-22T10:00:00+00:00",
+      "weight": 65.05,
+      "organizers": [
+        "Bing Chilling Academies"
+      ],
+      "tags": []
+    },
+    {
+      "title": "RIFFHACK: Black Market Break-In",
+      "url": "http://riffhack.biterra.co/",
+      "ctftime": "https://ctftime.org/event/3297/",
+      "format": "Jeopardy",
+      "start": "2026-06-19T12:00:00+00:00",
+      "finish": "2026-06-22T00:00:00+00:00",
+      "weight": 0,
+      "organizers": [
+        "Biterra"
+      ],
+      "tags": []
+    },
+    {
+      "title": "Google Capture The Flag 2026",
+      "url": "https://g.co/ctf",
+      "ctftime": "https://ctftime.org/event/3222/",
+      "format": "Jeopardy",
+      "start": "2026-06-19T18:00:00+00:00",
+      "finish": "2026-06-21T18:00:00+00:00",
+      "weight": 88.82,
+      "organizers": [
+        "Google CTF"
+      ],
+      "tags": []
+    }
+  ],
+  "study_repos": [
+    {
+      "name": "ffffffff0x/1earn",
+      "description": "ffffffff0x 团队维护的安全知识框架,内容包括不仅限于 web安全、工控安全、取证、应急、蓝队设施部署、后渗透、Linux安全、各类靶机writup",
+      "stars": 5690,
+      "url": "https://github.com/ffffffff0x/1earn",
+      "updated": "2026-06-12T05:57:56Z"
+    },
+    {
+      "name": "Hackplayers/hackthebox-writeups",
+      "description": "Writeups for HacktheBox 'boot2root' machines",
+      "stars": 2038,
+      "url": "https://github.com/Hackplayers/hackthebox-writeups",
+      "updated": "2026-06-13T12:08:15Z"
+    },
+    {
+      "name": "p4-team/ctf",
+      "description": "Ctf solutions from p4 team",
+      "stars": 1844,
+      "url": "https://github.com/p4-team/ctf",
+      "updated": "2026-06-11T23:13:57Z"
+    },
+    {
+      "name": "Ignitetechnologies/Vulnhub-CTF-Writeups",
+      "description": "This cheasheet is aimed at the CTF Players and Beginners to help them sort Vulnhub Labs. This list contains all the writeups available on hackingarticles.",
+      "stars": 1233,
+      "url": "https://github.com/Ignitetechnologies/Vulnhub-CTF-Writeups",
+      "updated": "2026-06-09T07:18:20Z"
+    },
+    {
+      "name": "susers/Writeups",
+      "description": "国内各大CTF赛题及writeup整理",
+      "stars": 832,
+      "url": "https://github.com/susers/Writeups",
+      "updated": "2026-06-11T16:40:29Z"
+    }
+  ],
+  "skill_tracks": [
+    "Web Exploitation (SQLi, XSS, CSRF, SSRF, XXE)",
+    "Binary Exploitation (Buffer Overflow, ROP Chains)",
+    "Reverse Engineering (Ghidra, IDA, radare2)",
+    "Cryptography (RSA, AES, Hash Collisions)",
+    "Forensics (Memory Dumps, Network Captures, Steganography)",
+    "OSINT (Passive Recon, Social Engineering Awareness)",
+    "Network Pentesting (Nmap, Nessus, Burp Suite — authorized targets only)"
+  ]
+}

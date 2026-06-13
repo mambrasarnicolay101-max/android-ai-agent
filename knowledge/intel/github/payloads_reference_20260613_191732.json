@@ -1,0 +1,11 @@
+{
+  "source": "PayloadsAllTheThings",
+  "url": "https://github.com/swisskyrepo/PayloadsAllTheThings",
+  "categories": [
+    ":book: Documentation",
+    ":technologist: Contributions",
+    ":beers: Sponsors"
+  ],
+  "license": "MIT",
+  "note": "Reference only - educational payload catalog"
+}

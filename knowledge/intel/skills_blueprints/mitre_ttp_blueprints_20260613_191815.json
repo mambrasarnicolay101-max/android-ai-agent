@@ -1,0 +1,540 @@
+[
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1055.011",
+    "tech_name": "Extra Window Memory Injection",
+    "tactics": [
+      "stealth",
+      "privilege-escalation"
+    ],
+    "platforms": [
+      "Windows"
+    ],
+    "objective": "Understand TTP T1055.011: Extra Window Memory Injection",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1053.005",
+    "tech_name": "Scheduled Task",
+    "tactics": [
+      "execution",
+      "persistence",
+      "privilege-escalation"
+    ],
+    "platforms": [
+      "Windows"
+    ],
+    "objective": "Understand TTP T1053.005: Scheduled Task",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1205.002",
+    "tech_name": "Socket Filters",
+    "tactics": [
+      "stealth",
+      "persistence",
+      "command-and-control"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1205.002: Socket Filters",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1560.001",
+    "tech_name": "Archive via Utility",
+    "tactics": [
+      "collection"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1560.001: Archive via Utility",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1021.005",
+    "tech_name": "VNC",
+    "tactics": [
+      "lateral-movement"
+    ],
+    "platforms": [
+      "Linux",
+      "Windows",
+      "macOS"
+    ],
+    "objective": "Understand TTP T1021.005: VNC",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1047",
+    "tech_name": "Windows Management Instrumentation",
+    "tactics": [
+      "execution"
+    ],
+    "platforms": [
+      "Windows"
+    ],
+    "objective": "Understand TTP T1047: Windows Management Instrumentation",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1687",
+    "tech_name": "Exploitation for Defense Impairment",
+    "tactics": [
+      "defense-impairment"
+    ],
+    "platforms": [
+      "IaaS",
+      "Linux",
+      "macOS",
+      "SaaS",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1687: Exploitation for Defense Impairment",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1113",
+    "tech_name": "Screen Capture",
+    "tactics": [
+      "collection"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1113: Screen Capture",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1027.011",
+    "tech_name": "Fileless Storage",
+    "tactics": [
+      "stealth"
+    ],
+    "platforms": [
+      "Linux",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1027.011: Fileless Storage",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1037",
+    "tech_name": "Boot or Logon Initialization Scripts",
+    "tactics": [
+      "persistence",
+      "privilege-escalation"
+    ],
+    "platforms": [
+      "ESXi",
+      "Linux",
+      "macOS",
+      "Network Devices",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1037: Boot or Logon Initialization Scripts",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1557",
+    "tech_name": "Adversary-in-the-Middle",
+    "tactics": [
+      "credential-access",
+      "collection"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS",
+      "Network Devices",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1557: Adversary-in-the-Middle",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1033",
+    "tech_name": "System Owner/User Discovery",
+    "tactics": [
+      "discovery"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS",
+      "Network Devices",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1033: System Owner/User Discovery",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1583",
+    "tech_name": "Acquire Infrastructure",
+    "tactics": [
+      "resource-development"
+    ],
+    "platforms": [
+      "PRE"
+    ],
+    "objective": "Understand TTP T1583: Acquire Infrastructure",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1218.011",
+    "tech_name": "Rundll32",
+    "tactics": [
+      "stealth"
+    ],
+    "platforms": [
+      "Windows"
+    ],
+    "objective": "Understand TTP T1218.011: Rundll32",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1613",
+    "tech_name": "Container and Resource Discovery",
+    "tactics": [
+      "discovery"
+    ],
+    "platforms": [
+      "Containers"
+    ],
+    "objective": "Understand TTP T1613: Container and Resource Discovery",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1583.007",
+    "tech_name": "Serverless",
+    "tactics": [
+      "resource-development"
+    ],
+    "platforms": [
+      "PRE"
+    ],
+    "objective": "Understand TTP T1583.007: Serverless",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1132.001",
+    "tech_name": "Standard Encoding",
+    "tactics": [
+      "command-and-control"
+    ],
+    "platforms": [
+      "ESXi",
+      "Linux",
+      "macOS",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1132.001: Standard Encoding",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1027.009",
+    "tech_name": "Embedded Payloads",
+    "tactics": [
+      "stealth"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1027.009: Embedded Payloads",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1556.003",
+    "tech_name": "Pluggable Authentication Modules",
+    "tactics": [
+      "defense-impairment",
+      "persistence",
+      "credential-access"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS"
+    ],
+    "objective": "Understand TTP T1556.003: Pluggable Authentication Modules",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.848626"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1578.004",
+    "tech_name": "Revert Cloud Instance",
+    "tactics": [
+      "defense-impairment"
+    ],
+    "platforms": [
+      "IaaS"
+    ],
+    "objective": "Understand TTP T1578.004: Revert Cloud Instance",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.849625"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1592",
+    "tech_name": "Gather Victim Host Information",
+    "tactics": [
+      "reconnaissance"
+    ],
+    "platforms": [
+      "PRE"
+    ],
+    "objective": "Understand TTP T1592: Gather Victim Host Information",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.849625"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1596.003",
+    "tech_name": "Digital Certificates",
+    "tactics": [
+      "reconnaissance"
+    ],
+    "platforms": [
+      "PRE"
+    ],
+    "objective": "Understand TTP T1596.003: Digital Certificates",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.849625"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1056.001",
+    "tech_name": "Keylogging",
+    "tactics": [
+      "collection",
+      "credential-access"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS",
+      "Network Devices",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1056.001: Keylogging",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.849625"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1564.012",
+    "tech_name": "File/Path Exclusions",
+    "tactics": [
+      "stealth"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1564.012: File/Path Exclusions",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.849625"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1222.002",
+    "tech_name": "Linux and Mac Permissions",
+    "tactics": [
+      "defense-impairment"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS"
+    ],
+    "objective": "Understand TTP T1222.002: Linux and Mac Permissions",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.849625"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1110.001",
+    "tech_name": "Password Guessing",
+    "tactics": [
+      "credential-access"
+    ],
+    "platforms": [
+      "Containers",
+      "ESXi",
+      "IaaS",
+      "Identity Provider",
+      "Linux",
+      "macOS",
+      "Network Devices",
+      "Office Suite",
+      "SaaS",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1110.001: Password Guessing",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.849625"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1216.001",
+    "tech_name": "PubPrn",
+    "tactics": [
+      "stealth"
+    ],
+    "platforms": [
+      "Windows"
+    ],
+    "objective": "Understand TTP T1216.001: PubPrn",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.849625"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1597.002",
+    "tech_name": "Purchase Technical Data",
+    "tactics": [
+      "reconnaissance"
+    ],
+    "platforms": [
+      "PRE"
+    ],
+    "objective": "Understand TTP T1597.002: Purchase Technical Data",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.849625"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1003",
+    "tech_name": "OS Credential Dumping",
+    "tactics": [
+      "credential-access"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1003: OS Credential Dumping",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.849625"
+  },
+  {
+    "type": "ttp_blueprint",
+    "source": "MITRE_ATTCK",
+    "tech_id": "T1129",
+    "tech_name": "Shared Modules",
+    "tactics": [
+      "execution"
+    ],
+    "platforms": [
+      "Linux",
+      "macOS",
+      "Windows"
+    ],
+    "objective": "Understand TTP T1129: Shared Modules",
+    "detection": "",
+    "practice": "Local VM lab / TryHackMe / HTB ONLY",
+    "generated": "2026-06-13T19:18:15.849625"
+  }
+]

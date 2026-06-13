@@ -530,11 +530,27 @@ class OWASPIngestor:
         "API_Security_Cheat_Sheet",
     ]
 
+    # Filenames verified against GitHub: OWASP/CheatSheetSeries/master/cheatsheets/
+    CONFIRMED_SHEETS = [
+        "Authentication_Cheat_Sheet",
+        "SQL_Injection_Prevention_Cheat_Sheet",
+        "Cross_Site_Scripting_Prevention_Cheat_Sheet",
+        "Cross-Site_Request_Forgery_Prevention_Cheat_Sheet",
+        "Input_Validation_Cheat_Sheet",
+        "Session_Management_Cheat_Sheet",
+        "API_Security_Cheat_Sheet",
+        "Injection_Prevention_in_Java_Cheat_Sheet",
+        "AJAX_Security_Cheat_Sheet",
+        "Access_Control_Cheat_Sheet",
+        "Password_Storage_Cheat_Sheet",
+        "Cryptographic_Storage_Cheat_Sheet",
+    ]
+
     def fetch_cheat_sheets(self) -> List[Dict]:
-        log.info(f"[OWASP] Fetching {len(self.CHEAT_SHEETS)} cheat sheets...")
+        log.info(f"[OWASP] Fetching {len(self.CONFIRMED_SHEETS)} cheat sheets...")
         results = []
         base = "https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/cheatsheets"
-        for sheet in self.CHEAT_SHEETS:
+        for sheet in self.CONFIRMED_SHEETS:
             key = f"owasp_cs_{sheet}"
             def _fetch(s=sheet):
                 url  = f"{base}/{s}.md"
