@@ -1,0 +1,2757 @@
+{
+  "total": 709,
+  "techniques": [
+    {
+      "id": "T1055.011",
+      "name": "Extra Window Memory Injection",
+      "description": "Adversaries may inject malicious code into process via Extra Window Memory (EWM) in order to evade process-based defenses as well as possibly elevate privileges. EWM injection is a method of executing arbitrary code in the address space of a separate live process. \n\nBefore creating a window, graphical Windows-based processes must prescribe to or register a windows class, which stipulate appearance",
+      "tactic": [
+        "stealth",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1053.005",
+      "name": "Scheduled Task",
+      "description": "Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. There are multiple ways to access the Task Scheduler in Windows. The [schtasks](https://attack.mitre.org/software/S0111) utility can be run directly on the command line, or the Task Scheduler can be opened through the GUI within the Administrator Tools section of the Co",
+      "tactic": [
+        "execution",
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1205.002",
+      "name": "Socket Filters",
+      "description": "Adversaries may attach filters to a network socket to monitor then activate backdoors used for persistence or command and control. With elevated permissions, adversaries can use features such as the `libpcap` library to open sockets and install filters to allow or disallow certain types of data to come through the socket. The filter may apply to all traffic passing through the specified network in",
+      "tactic": [
+        "stealth",
+        "persistence",
+        "command-and-control"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1560.001",
+      "name": "Archive via Utility",
+      "description": "Adversaries may use utilities to compress and/or encrypt collected data prior to exfiltration. Many utilities include functionalities to compress, encrypt, or otherwise package data into a format that is easier/more secure to transport.\n\nAdversaries may abuse various utilities to compress or encrypt data before exfiltration. Some third party utilities may be preinstalled, such as <code>tar</code> ",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1021.005",
+      "name": "VNC",
+      "description": "Adversaries may use [Valid Accounts](https://attack.mitre.org/techniques/T1078) to remotely control machines using Virtual Network Computing (VNC).  VNC is a platform-independent desktop sharing system that uses the RFB (“remote framebuffer”) protocol to enable users to remotely control another computer’s display by relaying the screen, mouse, and keyboard inputs over the network.(Citation: The Re",
+      "tactic": [
+        "lateral-movement"
+      ],
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1047",
+      "name": "Windows Management Instrumentation",
+      "description": "Adversaries may abuse Windows Management Instrumentation (WMI) to execute malicious commands and payloads. WMI is designed for programmers and is the infrastructure for management data and operations on Windows systems.(Citation: WMI 1-3) WMI is an administration feature that provides a uniform environment to access Windows system components.\n\nThe WMI service enables both local and remote access, ",
+      "tactic": [
+        "execution"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1687",
+      "name": "Exploitation for Defense Impairment",
+      "description": "Adversaries may exploit vulnerabilities in security software, infrastructure, or defensive components to degrade, disable, or otherwise continue to impair their ability to prevent, detect, or respond to malicious activity. \n \nAdversaries may exploit a system or application vulnerability to directly interfere with defensive mechanisms. Exploitation occurs when an adversary takes advantage of a prog",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "IaaS",
+        "Linux",
+        "macOS",
+        "SaaS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1113",
+      "name": "Screen Capture",
+      "description": "Adversaries may attempt to take screen captures of the desktop to gather information over the course of an operation. Screen capturing functionality may be included as a feature of a remote access tool used in post-compromise operations. Taking a screenshot is also typically possible through native utilities or API calls, such as <code>CopyFromScreen</code>, <code>xwd</code>, or <code>screencaptur",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1027.011",
+      "name": "Fileless Storage",
+      "description": "Adversaries may store data in \"fileless\" formats to conceal malicious activity from defenses. Fileless storage can be broadly defined as any format other than a file. Common examples of non-volatile fileless storage in Windows systems include the Windows Registry, event logs, or WMI repository.(Citation: Microsoft Fileless)(Citation: SecureList Fileless) Shared memory directories on Linux systems ",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Linux",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1037",
+      "name": "Boot or Logon Initialization Scripts",
+      "description": "Adversaries may use scripts automatically executed at boot or logon initialization to establish persistence.(Citation: Mandiant APT29 Eye Spy Email Nov 22)(Citation: Anomali Rocke March 2019) Initialization scripts can be used to perform administrative functions, which may often execute other programs or send information to an internal logging server. These scripts can vary based on operating syst",
+      "tactic": [
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1557",
+      "name": "Adversary-in-the-Middle",
+      "description": "Adversaries may attempt to position themselves between two or more networked devices using an adversary-in-the-middle (AiTM) technique to support follow-on behaviors such as [Network Sniffing](https://attack.mitre.org/techniques/T1040), [Transmitted Data Manipulation](https://attack.mitre.org/techniques/T1565/002), or replay attacks ([Exploitation for Credential Access](https://attack.mitre.org/te",
+      "tactic": [
+        "credential-access",
+        "collection"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1033",
+      "name": "System Owner/User Discovery",
+      "description": "Adversaries may attempt to identify the primary user, currently logged in user, set of users that commonly uses a system, or whether a user is actively using the system. They may do this, for example, by retrieving account usernames or by using [OS Credential Dumping](https://attack.mitre.org/techniques/T1003). The information may be collected in a number of different ways using other Discovery te",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1583",
+      "name": "Acquire Infrastructure",
+      "description": "Adversaries may buy, lease, rent, or obtain infrastructure that can be used during targeting. A wide variety of infrastructure exists for hosting and orchestrating adversary operations. Infrastructure solutions include physical or cloud servers, domains, and third-party web services.(Citation: TrendmicroHideoutsLease) Some infrastructure providers offer free trial periods, enabling infrastructure ",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1218.011",
+      "name": "Rundll32",
+      "description": "Adversaries may abuse rundll32.exe to proxy execution of malicious code. Using rundll32.exe, vice executing directly (i.e. [Shared Modules](https://attack.mitre.org/techniques/T1129)), may avoid triggering security tools that may not monitor execution of the rundll32.exe process because of allowlists or false positives from normal operations. Rundll32.exe is commonly associated with executing DLL ",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1613",
+      "name": "Container and Resource Discovery",
+      "description": "Adversaries may attempt to discover containers and other resources that are available within a containers environment. Other resources may include images, deployments, pods, nodes, and other information such as the status of a cluster.\n\nThese resources can be viewed within web applications such as the Kubernetes dashboard or can be queried via the Docker and Kubernetes APIs.(Citation: Docker API)(",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "Containers"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1583.007",
+      "name": "Serverless",
+      "description": "Adversaries may purchase and configure serverless cloud infrastructure, such as Cloudflare Workers, AWS Lambda functions, or Google Apps Scripts, that can be used during targeting. By utilizing serverless infrastructure, adversaries can make it more difficult to attribute infrastructure used during operations back to them.\n\nOnce acquired, the serverless runtime environment can be leveraged to eith",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1132.001",
+      "name": "Standard Encoding",
+      "description": "Adversaries may encode data with a standard data encoding system to make the content of command and control traffic more difficult to detect. Command and control (C2) information can be encoded using a standard data encoding system that adheres to existing protocol specifications. Common data encoding schemes include ASCII, Unicode, hexadecimal, Base64, and MIME.(Citation: Wikipedia Binary-to-text",
+      "tactic": [
+        "command-and-control"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1027.009",
+      "name": "Embedded Payloads",
+      "description": "Adversaries may embed payloads within other files to conceal malicious content from defenses. Otherwise seemingly benign files (such as scripts and executables) may be abused to carry and obfuscate malicious payloads and content. In some cases, embedded payloads may also enable adversaries to [Subvert Trust Controls](https://attack.mitre.org/techniques/T1553) by not impacting execution controls su",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1556.003",
+      "name": "Pluggable Authentication Modules",
+      "description": "Adversaries may modify pluggable authentication modules (PAM) to access user credentials or enable otherwise unwarranted access to accounts. PAM is a modular system of configuration files, libraries, and executable files which guide authentication for many services. The most common authentication module is <code>pam_unix.so</code>, which retrieves, sets, and verifies account authentication informa",
+      "tactic": [
+        "defense-impairment",
+        "persistence",
+        "credential-access"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1578.004",
+      "name": "Revert Cloud Instance",
+      "description": "An adversary may revert changes made to a cloud instance after they have performed malicious activities in attempt to evade detection and remove evidence of their presence. In highly virtualized environments, such as cloud-based infrastructure, this may be accomplished by restoring virtual machine (VM) or data storage snapshots through the cloud management dashboard or cloud APIs.\n\nAnother variati",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "IaaS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1592",
+      "name": "Gather Victim Host Information",
+      "description": "Adversaries may gather information about the victim's hosts that can be used during targeting. Information about hosts may include a variety of details, including administrative data (ex: name, assigned IP, functionality, etc.) as well as specifics regarding its configuration (ex: operating system, language, etc.).\n\nAdversaries may gather this information in various ways, such as direct collection",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1596.003",
+      "name": "Digital Certificates",
+      "description": "Adversaries may search public digital certificate data for information about victims that can be used during targeting. Digital certificates are issued by a certificate authority (CA) in order to cryptographically verify the origin of signed content. These certificates, such as those used for encrypted web traffic (HTTPS SSL/TLS communications), contain information about the registered organizatio",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1056.001",
+      "name": "Keylogging",
+      "description": "Adversaries may log user keystrokes to intercept credentials as the user types them. Keylogging is likely to be used to acquire credentials for new access opportunities when [OS Credential Dumping](https://attack.mitre.org/techniques/T1003) efforts are not effective, and may require an adversary to intercept keystrokes on a system for a substantial period of time before credentials can be successf",
+      "tactic": [
+        "collection",
+        "credential-access"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1564.012",
+      "name": "File/Path Exclusions",
+      "description": "Adversaries may attempt to hide their file-based artifacts by writing them to specific folders or file names excluded from antivirus (AV) scanning and other defensive capabilities. AV and other file-based scanners often include exclusions to optimize performance as well as ease installation and legitimate use of applications. These exclusions may be contextual (e.g., scans are only initiated in re",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1222.002",
+      "name": "Linux and Mac Permissions",
+      "description": "Adversaries may modify file or directory permissions/attributes to evade access control lists (ACLs) and access protected files.(Citation: Hybrid Analysis Icacls1 June 2018)(Citation: Hybrid Analysis Icacls2 May 2018) File and directory permissions are commonly managed by ACLs configured by the file or directory owner, or users with the appropriate permissions. File and directory ACL implementatio",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1110.001",
+      "name": "Password Guessing",
+      "description": "Adversaries with no prior knowledge of legitimate credentials within the system or environment may guess passwords to attempt access to accounts. Without knowledge of the password for an account, an adversary may opt to systematically guess the password using a repetitive or iterative mechanism. An adversary may guess login credentials without prior knowledge of system or environment passwords dur",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Containers",
+        "ESXi",
+        "IaaS",
+        "Identity Provider",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Office Suite",
+        "SaaS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1216.001",
+      "name": "PubPrn",
+      "description": "Adversaries may use PubPrn to proxy execution of malicious remote files. PubPrn.vbs is a [Visual Basic](https://attack.mitre.org/techniques/T1059/005) script that publishes a printer to Active Directory Domain Services. The script may be signed by Microsoft and is commonly executed through the [Windows Command Shell](https://attack.mitre.org/techniques/T1059/003) via <code>Cscript.exe</code>. For ",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1597.002",
+      "name": "Purchase Technical Data",
+      "description": "Adversaries may purchase technical information about victims that can be used during targeting. Information about victims may be available for purchase within reputable private sources and databases, such as paid subscriptions to feeds of scan databases or other data aggregation services. Adversaries may also purchase information from less-reputable sources such as dark web or cybercrime blackmark",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1003",
+      "name": "OS Credential Dumping",
+      "description": "Adversaries may attempt to dump credentials to obtain account login and credential material, normally in the form of a hash or a clear text password. Credentials can be obtained from OS caches, memory, or structures.(Citation: Brining MimiKatz to Unix) Credentials can then be used to perform [Lateral Movement](https://attack.mitre.org/tactics/TA0008) and access restricted information.\n\nSeveral of ",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1129",
+      "name": "Shared Modules",
+      "description": "Adversaries may execute malicious payloads via loading shared modules. Shared modules are executable files that are loaded into processes to provide access to reusable code, such as specific custom functions or invoking OS API functions (i.e., [Native API](https://attack.mitre.org/techniques/T1106)).\n\nAdversaries may use this functionality as a way to execute arbitrary payloads on a victim system.",
+      "tactic": [
+        "execution"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1602",
+      "name": "Data from Configuration Repository",
+      "description": "Adversaries may collect data related to managed devices from configuration repositories. Configuration repositories are used by management systems in order to configure, manage, and control data on remote systems. Configuration repositories may also facilitate remote access and administration of devices.\n\nAdversaries may target these repositories in order to collect large quantities of sensitive s",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "Network Devices"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1561.002",
+      "name": "Disk Structure Wipe",
+      "description": "Adversaries may corrupt or wipe the disk data structures on a hard drive necessary to boot a system; targeting specific critical systems or in large numbers in a network to interrupt availability to system and network resources. \n\nAdversaries may attempt to render the system unable to boot by overwriting critical data located in structures such as the master boot record (MBR) or partition table.(C",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1498.001",
+      "name": "Direct Network Flood",
+      "description": "Adversaries may attempt to cause a denial of service (DoS) by directly sending a high-volume of network traffic to a target. This DoS attack may also reduce the availability and functionality of the targeted system(s) and network. [Direct Network Flood](https://attack.mitre.org/techniques/T1498/001)s are when one or more systems are used to send a high-volume of network packets towards the targete",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "Windows",
+        "IaaS",
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1574.007",
+      "name": "Path Interception by PATH Environment Variable",
+      "description": "Adversaries may execute their own malicious payloads by hijacking environment variables used to load libraries. The PATH environment variable contains a list of directories (User and System) that the OS searches sequentially through in search of the binary that was called from a script or the command line. \n\nAdversaries can place a malicious program in an earlier entry in the list of directories s",
+      "tactic": [
+        "stealth",
+        "execution"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1213.002",
+      "name": "Sharepoint",
+      "description": "Adversaries may leverage the SharePoint repository as a source to mine valuable information. SharePoint will often contain useful information for an adversary to learn about the structure and functionality of the internal network and systems. For example, the following is a list of example information that may hold potential value to an adversary and may also be found on SharePoint:\n\n* Policies, p",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "Office Suite",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1006",
+      "name": "Direct Volume Access",
+      "description": "Adversaries may directly access a volume to bypass file access controls and file system monitoring. Windows allows programs to have direct access to logical volumes. Programs with direct access may read and write files directly from the drive by analyzing file system data structures. This technique may bypass Windows file access controls as well as file system monitoring tools.(Citation: Hakobyan ",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1588.007",
+      "name": "Artificial Intelligence",
+      "description": "Adversaries may obtain access to generative artificial intelligence tools, such as large language models (LLMs), to aid various techniques during targeting. These tools may be used to inform, bolster, and enable a variety of malicious tasks, including conducting [Reconnaissance](https://attack.mitre.org/tactics/TA0043), creating basic scripts, assisting social engineering, and even developing payl",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1666",
+      "name": "Modify Cloud Resource Hierarchy",
+      "description": "Adversaries may attempt to modify hierarchical structures in infrastructure-as-a-service (IaaS) environments in order to evade defenses.  \n\nIaaS environments often group resources into a hierarchy, enabling improved resource management and application of policies to relevant groups. Hierarchical structures differ among cloud providers. For example, in AWS environments, multiple accounts can be gro",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "IaaS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1564.008",
+      "name": "Email Hiding Rules",
+      "description": "Adversaries may use email rules to hide inbound emails in a compromised user's mailbox. Many email clients allow users to create inbox rules for various email functions, including moving emails to other folders, marking emails as read, or deleting emails. Rules may be created or modified within email clients or through external features such as the <code>New-InboxRule</code> or <code>Set-InboxRule",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS",
+        "Office Suite"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1491.002",
+      "name": "External Defacement",
+      "description": "An adversary may deface systems external to an organization in an attempt to deliver messaging, intimidate, or otherwise mislead an organization or users. [External Defacement](https://attack.mitre.org/techniques/T1491/002) may ultimately cause users to distrust the systems and to question/discredit the system’s integrity. Externally-facing websites are a common victim of defacement; often targete",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "Windows",
+        "IaaS",
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1027.013",
+      "name": "Encrypted/Encoded File",
+      "description": "Adversaries may encrypt or encode files to obfuscate strings, bytes, and other specific patterns to impede detection. Encrypting and/or encoding file content aims to conceal malicious artifacts within a file used in an intrusion. Many other techniques, such as [Software Packing](https://attack.mitre.org/techniques/T1027/002), [Steganography](https://attack.mitre.org/techniques/T1027/003), and [Emb",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1590.005",
+      "name": "IP Addresses",
+      "description": "Adversaries may gather the victim's IP addresses that can be used during targeting. Public IP addresses may be allocated to organizations by block, or a range of sequential addresses. Information about assigned IP addresses may include a variety of details, such as which IP addresses are in use. IP addresses may also enable an adversary to derive other details about a victim, such as organizationa",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1499.001",
+      "name": "OS Exhaustion Flood",
+      "description": "Adversaries may launch a denial of service (DoS) attack targeting an endpoint's operating system (OS). A system's OS is responsible for managing the finite resources as well as preventing the entire system from being overwhelmed by excessive demands on its capacity. These attacks do not need to exhaust the actual resources on a system; the attacks may simply exhaust the limits and available resour",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1014",
+      "name": "Rootkit",
+      "description": "Adversaries may use rootkits to hide the presence of programs, files, network connections, services, drivers, and other system components. Rootkits are programs that hide the existence of malware by intercepting/hooking and modifying operating system API calls that supply system information. (Citation: Symantec Windows Rootkits) \n\nRootkits or rootkit enabling functionality may reside at the user o",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1546.013",
+      "name": "PowerShell Profile",
+      "description": "Adversaries may gain persistence and elevate privileges by executing malicious content triggered by PowerShell profiles. A PowerShell profile  (<code>profile.ps1</code>) is a script that runs when [PowerShell](https://attack.mitre.org/techniques/T1059/001) starts and can be used as a logon script to customize user environments.\n\n[PowerShell](https://attack.mitre.org/techniques/T1059/001) supports ",
+      "tactic": [
+        "privilege-escalation",
+        "persistence"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1059.007",
+      "name": "JavaScript",
+      "description": "Adversaries may abuse various implementations of JavaScript for execution. JavaScript (JS) is a platform-independent scripting language (compiled just-in-time at runtime) commonly associated with scripts in webpages, though JS can be executed in runtime environments outside the browser.(Citation: NodeJS)\n\nJScript is the Microsoft implementation of the same scripting standard. JScript is interprete",
+      "tactic": [
+        "execution"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1685.003",
+      "name": "Modify or Spoof Tool UI",
+      "description": "Adversaries may spoof or manipulate security tool user interfaces (UIs) to falsely indicate tools are functioning normally and delay detection and response. \n\nAdversaries may present misleading or falsified security tool interfaces (UIs) that display normal or healthy status indicators, even when underlying security tools have been disabled, degraded, or otherwise tampered with. Security tools typ",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1590.002",
+      "name": "DNS",
+      "description": "Adversaries may gather information about the victim's DNS that can be used during targeting. DNS information may include a variety of details, including registered name servers as well as records that outline addressing for a target’s subdomains, mail servers, and other hosts. DNS MX, TXT, and SPF records may also reveal the use of third party cloud and SaaS providers, such as Office 365, G Suite,",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1485.001",
+      "name": "Lifecycle-Triggered Deletion",
+      "description": "Adversaries may modify the lifecycle policies of a cloud storage bucket to destroy all objects stored within.  \n\nCloud storage buckets often allow users to set lifecycle policies to automate the migration, archival, or deletion of objects after a set period of time.(Citation: AWS Storage Lifecycles)(Citation: GCP Storage Lifecycles)(Citation: Azure Storage Lifecycles) If a threat actor has suffici",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "IaaS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1123",
+      "name": "Audio Capture",
+      "description": "An adversary can leverage a computer's peripheral devices (e.g., microphones and webcams) or applications (e.g., voice and video call services) to capture audio recordings for the purpose of listening into sensitive conversations to gather information.(Citation: ESET Attor Oct 2019)\n\nMalware or scripts may be used to interact with the devices through an available API provided by the operating syst",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1543",
+      "name": "Create or Modify System Process",
+      "description": "Adversaries may create or modify system-level processes to repeatedly execute malicious payloads as part of persistence. When operating systems boot up, they can start processes that perform background system functions. On Windows and Linux, these system processes are referred to as services.(Citation: TechNet Services) On macOS, launchd processes known as [Launch Daemon](https://attack.mitre.org/",
+      "tactic": [
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Containers",
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1133",
+      "name": "External Remote Services",
+      "description": "Adversaries may leverage external-facing remote services to initially access and/or persist within a network. Remote services such as VPNs, Citrix, and other access mechanisms allow users to connect to internal enterprise network resources from external locations. There are often remote service gateways that manage connections and credential authentication for these services. Services such as [Win",
+      "tactic": [
+        "persistence",
+        "initial-access"
+      ],
+      "platforms": [
+        "Containers",
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1546.006",
+      "name": "LC_LOAD_DYLIB Addition",
+      "description": "Adversaries may establish persistence by executing malicious content triggered by the execution of tainted binaries. Mach-O binaries have a series of headers that are used to perform certain operations when a binary is loaded. The LC_LOAD_DYLIB header in a Mach-O binary tells macOS and OS X which dynamic libraries (dylibs) to load during execution time. These can be added ad-hoc to the compiled bi",
+      "tactic": [
+        "privilege-escalation",
+        "persistence"
+      ],
+      "platforms": [
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1539",
+      "name": "Steal Web Session Cookie",
+      "description": "An adversary may steal web application or service session cookies and use them to gain access to web applications or Internet services as an authenticated user without needing credentials. Web applications and services often use session cookies as an authentication token after a user has authenticated to a website.\n\nCookies are often valid for an extended period of time, even if the web applicatio",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Office Suite",
+        "SaaS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1053.007",
+      "name": "Container Orchestration Job",
+      "description": "Adversaries may abuse task scheduling functionality provided by container orchestration tools such as Kubernetes to schedule deployment of containers configured to execute malicious code. Container orchestration jobs run these automated tasks at a specific date and time, similar to cron jobs on a Linux system. Deployments of this type can also be configured to maintain a quantity of containers ove",
+      "tactic": [
+        "execution",
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Containers"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1568.002",
+      "name": "Domain Generation Algorithms",
+      "description": "Adversaries may make use of Domain Generation Algorithms (DGAs) to dynamically identify a destination domain for command and control traffic rather than relying on a list of static IP addresses or domains. This has the advantage of making it much harder for defenders to block, track, or take over the command and control channel, as there potentially could be thousands of domains that malware can c",
+      "tactic": [
+        "command-and-control"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1036.007",
+      "name": "Double File Extension",
+      "description": "Adversaries may abuse a double extension in the filename as a means of masquerading the true file type. A file name may include a secondary file type extension that may cause only the first extension to be displayed (ex: <code>File.txt.exe</code> may render in some views as just <code>File.txt</code>). However, the second extension is the true file type that determines how the file is opened and e",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1548.002",
+      "name": "Bypass User Account Control",
+      "description": "Adversaries may bypass UAC mechanisms to elevate process privileges on system. Windows User Account Control (UAC) allows a program to elevate its privileges (tracked as integrity levels ranging from low to high) to perform a task under administrator-level permissions, possibly by prompting the user for confirmation. The impact to the user ranges from denying the operation under high enforcement to",
+      "tactic": [
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1496.003",
+      "name": "SMS Pumping",
+      "description": "Adversaries may leverage messaging services for SMS pumping, which may impact system and/or hosted service availability.(Citation: Twilio SMS Pumping) SMS pumping is a type of telecommunications fraud whereby a threat actor first obtains a set of phone numbers from a telecommunications provider, then leverages a victim’s messaging infrastructure to send large amounts of SMS messages to numbers in ",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "SaaS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1016.001",
+      "name": "Internet Connection Discovery",
+      "description": "Adversaries may check for Internet connectivity on compromised systems. This may be performed during automated discovery and can be accomplished in numerous ways such as using [Ping](https://attack.mitre.org/software/S0097), <code>tracert</code>, and GET requests to websites, or performing initial speed testing to confirm bandwidth.\n\nAdversaries may use the results and responses from these request",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS",
+        "ESXi"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1548.003",
+      "name": "Sudo and Sudo Caching",
+      "description": "Adversaries may perform sudo caching and/or use the sudoers file to elevate privileges. Adversaries may do this to execute commands as other users or spawn processes with higher privileges.\n\nWithin Linux and MacOS systems, sudo (sometimes referred to as \"superuser do\") allows users to perform commands from terminals with elevated privileges and to control who can perform these commands on the syst",
+      "tactic": [
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1685.001",
+      "name": "Disable or Modify Windows Event Log",
+      "description": "Adversaries may disable or modify the Windows Event Log to limit data that can be leveraged for detections and audits. Windows Event Log records user and system activity such as login attempts and process creation.(Citation: EventLog_Core_Technologies) This data is used by security tools and analysts to generate detections. \n\nThe EventLog service maintains event logs from various system components",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1682",
+      "name": "Query Public AI Services",
+      "description": "Adversaries may query publicly accessible artificial intelligence (AI) services, such as large language models (LLMs), to support targeting and operations. In addition to searching websites or databases directly (i.e., [Search Open Websites/Domains](https://attack.mitre.org/techniques/T1593)), adversaries may use AI services to synthesize, aggregate, and analyze publicly available information at s",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1560.003",
+      "name": "Archive via Custom Method",
+      "description": "An adversary may compress or encrypt data that is collected prior to exfiltration using a custom method. Adversaries may choose to use custom archival methods, such as encryption with XOR or stream ciphers implemented with no external library or utility references. Custom implementations of well-known compression algorithms have also been used.(Citation: ESET Sednit Part 2)",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1578",
+      "name": "Modify Cloud Compute Infrastructure",
+      "description": "An adversary may attempt to modify a cloud account's compute service infrastructure to evade defenses. A modification to the compute service infrastructure can include the creation, deletion, or modification of one or more components such as compute instances, virtual machines, and snapshots.\n\nPermissions gained from the modification of infrastructure components may bypass restrictions that preven",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "IaaS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1584.008",
+      "name": "Network Devices",
+      "description": "Adversaries may compromise third-party network devices that can be used during targeting. Network devices, such as small office/home office (SOHO) routers, may be compromised where the adversary's ultimate goal is not [Initial Access](https://attack.mitre.org/tactics/TA0001) to that environment, but rather to leverage these devices to support additional targeting.\n\nOnce an adversary has control, c",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1583.008",
+      "name": "Malvertising",
+      "description": "Adversaries may purchase online advertisements that can be abused to distribute malware to victims. Ads can be purchased to plant as well as favorably position artifacts in specific locations  online, such as prominently placed within search engine results. These ads may make it more difficult for users to distinguish between actual search results and advertisements.(Citation: spamhaus-malvertisin",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1069",
+      "name": "Permission Groups Discovery",
+      "description": "Adversaries may attempt to discover group and permission settings. This information can help adversaries determine which user accounts and groups are available, the membership of users in particular groups, and which users and groups have elevated permissions.\n\nAdversaries may attempt to discover group permission settings in many different ways. This data may provide the adversary with information",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "Containers",
+        "IaaS",
+        "Identity Provider",
+        "Linux",
+        "macOS",
+        "Office Suite",
+        "SaaS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1114",
+      "name": "Email Collection",
+      "description": "Adversaries may target user email to collect sensitive information. Emails may contain sensitive data, including trade secrets or personal information, that can prove valuable to adversaries. Emails may also contain details of ongoing incident response operations, which may allow adversaries to adjust their techniques in order to maintain persistence or evade defenses.(Citation: TrustedSec OOB Com",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "Windows",
+        "macOS",
+        "Linux",
+        "Office Suite"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1003.002",
+      "name": "Security Account Manager",
+      "description": "Adversaries may attempt to extract credential material from the Security Account Manager (SAM) database either through in-memory techniques or through the Windows Registry where the SAM database is stored. The SAM is a database file that contains local accounts for the host, typically those found with the <code>net user</code> command. Enumerating the SAM database requires SYSTEM level access.\n\nA ",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1596.002",
+      "name": "WHOIS",
+      "description": "Adversaries may search public WHOIS data for information about victims that can be used during targeting. WHOIS data is stored by regional Internet registries (RIR) responsible for allocating and assigning Internet resources such as domain names. Anyone can query WHOIS servers for information about a registered domain, such as assigned IP blocks, contact information, and DNS nameservers.(Citation:",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1542.001",
+      "name": "System Firmware",
+      "description": "Adversaries may modify system firmware to persist on systems.The BIOS (Basic Input/Output System) and The Unified Extensible Firmware Interface (UEFI) or Extensible Firmware Interface (EFI) are examples of system firmware that operate as the software interface between the operating system and hardware of a computer.(Citation: Wikipedia BIOS)(Citation: Wikipedia UEFI)(Citation: About UEFI)\n\nSystem ",
+      "tactic": [
+        "stealth",
+        "persistence"
+      ],
+      "platforms": [
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1594",
+      "name": "Search Victim-Owned Websites",
+      "description": "Adversaries may search websites owned by the victim for information that can be used during targeting. Victim-owned websites may contain a variety of details, including names of departments/divisions, physical locations, and data about key employees such as names, roles, and contact info (ex: [Email Addresses](https://attack.mitre.org/techniques/T1589/002)). These sites may also have details highl",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1069.003",
+      "name": "Cloud Groups",
+      "description": "Adversaries may attempt to find cloud groups and permission settings. The knowledge of cloud permission groups can help adversaries determine the particular roles of users and groups within an environment, as well as which users are associated with a particular group.\n\nWith authenticated access there are several tools that can be used to find permissions groups. The <code>Get-MsolRole</code> Power",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "SaaS",
+        "IaaS",
+        "Office Suite",
+        "Identity Provider"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1574.011",
+      "name": "Services Registry Permissions Weakness",
+      "description": "Adversaries may execute their own malicious payloads by hijacking the Registry entries used by services. Flaws in the permissions for Registry keys related to services can allow adversaries to redirect the originally specified executable to one they control, launching their own code when a service starts. Windows stores local service configuration information in the Registry under <code>HKLM\\SYSTE",
+      "tactic": [
+        "stealth",
+        "execution"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1596.001",
+      "name": "DNS/Passive DNS",
+      "description": "Adversaries may search DNS data for information about victims that can be used during targeting. DNS information may include a variety of details, including registered name servers as well as records that outline addressing for a target’s subdomains, mail servers, and other hosts.\n\nAdversaries may search DNS data to gather actionable information. Threat actors can query nameservers for a target or",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1499.003",
+      "name": "Application Exhaustion Flood",
+      "description": "Adversaries may target resource intensive features of applications to cause a denial of service (DoS), denying availability to those applications. For example, specific features in web applications may be highly resource intensive. Repeated requests to those features may be able to exhaust system resources and deny access to the application or the server itself.(Citation: Arbor AnnualDoSreport Jan",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "Windows",
+        "IaaS",
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1195.001",
+      "name": "Compromise Software Dependencies and Development Tools",
+      "description": "Adversaries may manipulate software dependencies and development tools prior to receipt by a final consumer for the purpose of data or system compromise. Applications often depend on external software to function properly. Popular open source projects that are used as dependencies in many applications, such as pip and NPM packages, may be targeted as a means to add malicious code to users of the d",
+      "tactic": [
+        "initial-access"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1588.004",
+      "name": "Digital Certificates",
+      "description": "Adversaries may buy and/or steal SSL/TLS certificates that can be used during targeting. SSL/TLS certificates are designed to instill trust. They include information about the key, information about its owner's identity, and the digital signature of an entity that has verified the certificate's contents are correct. If the signature is valid, and the person examining the certificate trusts the sig",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1583.002",
+      "name": "DNS Server",
+      "description": "Adversaries may set up their own Domain Name System (DNS) servers that can be used during targeting. During post-compromise activity, adversaries may utilize DNS traffic for various tasks, including for Command and Control (ex: [Application Layer Protocol](https://attack.mitre.org/techniques/T1071)). Instead of hijacking existing DNS servers, adversaries may opt to configure and run their own DNS ",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1561",
+      "name": "Disk Wipe",
+      "description": "Adversaries may wipe or corrupt raw disk data on specific systems or in large numbers in a network to interrupt availability to system and network resources. With direct write access to a disk, adversaries may attempt to overwrite portions of disk data. Adversaries may opt to wipe arbitrary portions of disk data and/or wipe disk structures like the master boot record (MBR). A complete wipe of all ",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1071.004",
+      "name": "DNS",
+      "description": "Adversaries may communicate using the Domain Name System (DNS) application layer protocol to avoid detection/network filtering by blending in with existing traffic. Commands to the remote system, and often the results of those commands, will be embedded within the protocol traffic between the client and server. \n\nThe DNS protocol serves an administrative function in computer networking and thus ma",
+      "tactic": [
+        "command-and-control"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1552.005",
+      "name": "Cloud Instance Metadata API",
+      "description": "Adversaries may attempt to access the Cloud Instance Metadata API to collect credentials and other sensitive data.\n\nMost cloud service providers support a Cloud Instance Metadata API which is a service provided to running virtual instances that allows applications to access information about the running virtual instance. Available information generally includes name, security group, and additional",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "IaaS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1555.002",
+      "name": "Securityd Memory",
+      "description": "An adversary with root access may gather credentials by reading `securityd`’s memory. `securityd` is a service/daemon responsible for implementing security protocols such as encryption and authorization.(Citation: Apple Dev SecurityD) A privileged adversary may be able to scan through `securityd`'s memory to find the correct sequence of keys to decrypt the user’s logon keychain. This may provide t",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1615",
+      "name": "Group Policy Discovery",
+      "description": "Adversaries may gather information on Group Policy settings to identify paths for privilege escalation, security measures applied within a domain, and to discover patterns in domain objects that can be manipulated or used to blend in the environment. Group Policy allows for centralized management of user and computer settings in Active Directory (AD). Group policy objects (GPOs) are containers for",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1542.003",
+      "name": "Bootkit",
+      "description": "Adversaries may use bootkits to persist on systems. A bootkit is a malware variant that modifies the boot sectors of a hard drive, allowing malicious code to execute before a computer's operating system has loaded. Bootkits reside at a layer below the operating system and may make it difficult to perform full remediation unless an organization suspects one was used and can act accordingly.\n\nIn BIO",
+      "tactic": [
+        "stealth",
+        "persistence"
+      ],
+      "platforms": [
+        "Linux",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1025",
+      "name": "Data from Removable Media",
+      "description": "Adversaries may search connected removable media on computers they have compromised to find files of interest. Sensitive data can be collected from any removable media (optical disk drive, USB memory, etc.) connected to the compromised system prior to Exfiltration. Interactive command shells may be in use, and common functionality within [cmd](https://attack.mitre.org/software/S0106) may be used t",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1218.013",
+      "name": "Mavinject",
+      "description": "Adversaries may abuse mavinject.exe to proxy execution of malicious code. Mavinject.exe is the Microsoft Application Virtualization Injector, a Windows utility that can inject code into external processes as part of Microsoft Application Virtualization (App-V).(Citation: LOLBAS Mavinject)\n\nAdversaries may abuse mavinject.exe to inject malicious DLLs into running processes (i.e. [Dynamic-link Libra",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1074.001",
+      "name": "Local Data Staging",
+      "description": "Adversaries may stage collected data in a central location or directory on the local system prior to Exfiltration. Data may be kept in separate files or combined into one file through techniques such as [Archive Collected Data](https://attack.mitre.org/techniques/T1560). Interactive command shells may be used, and common functionality within [cmd](https://attack.mitre.org/software/S0106) and bash ",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1036.005",
+      "name": "Match Legitimate Resource Name or Location",
+      "description": "Adversaries may match or approximate the name or location of legitimate files, Registry keys, or other resources when naming/placing them. This is done for the sake of evading defenses and observation. \n\nThis may be done by placing an executable in a commonly trusted directory (ex: under System32) or giving it the name of a legitimate, trusted program (ex: `svchost.exe`). Alternatively, a Windows ",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Containers",
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1587.003",
+      "name": "Digital Certificates",
+      "description": "Adversaries may create self-signed SSL/TLS certificates that can be used during targeting. SSL/TLS certificates are designed to instill trust. They include information about the key, information about its owner's identity, and the digital signature of an entity that has verified the certificate's contents are correct. If the signature is valid, and the person examining the certificate trusts the s",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1565.001",
+      "name": "Stored Data Manipulation",
+      "description": "Adversaries may insert, delete, or manipulate data at rest in order to influence external outcomes or hide activity, thus threatening the integrity of the data.(Citation: FireEye APT38 Oct 2018)(Citation: DOJ Lazarus Sony 2018) By manipulating stored data, adversaries may attempt to affect a business process, organizational understanding, and decision making.\n\nStored data could include a variety o",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1110.002",
+      "name": "Password Cracking",
+      "description": "Adversaries may use password cracking to attempt to recover usable credentials, such as plaintext passwords, when credential material such as password hashes are obtained. [OS Credential Dumping](https://attack.mitre.org/techniques/T1003) can be used to obtain password hashes, this may only get an adversary so far when [Pass the Hash](https://attack.mitre.org/techniques/T1550/002) is not an option",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Identity Provider",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Office Suite",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1114.001",
+      "name": "Local Email Collection",
+      "description": "Adversaries may target user email on local systems to collect sensitive information. Files containing email data can be acquired from a user’s local system, such as Outlook storage or cache files.\n\nOutlook stores data locally in offline data files with an extension of .ost. Outlook 2010 and later supports .ost file sizes up to 50GB, while earlier versions of Outlook support up to 20GB.(Citation: O",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1555.001",
+      "name": "Keychain",
+      "description": "Adversaries may acquire credentials from Keychain. Keychain (or Keychain Services) is the macOS credential management system that stores account names, passwords, private keys, certificates, sensitive application data, payment data, and secure notes. There are three types of Keychains: Login Keychain, System Keychain, and Local Items (iCloud) Keychain. The default Keychain is the Login Keychain, w",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1547",
+      "name": "Boot or Logon Autostart Execution",
+      "description": "Adversaries may configure system settings to automatically execute a program during system boot or logon to maintain persistence or gain higher-level privileges on compromised systems. Operating systems may have mechanisms for automatically running a program on system boot or account logon.(Citation: Microsoft Run Key)(Citation: MSDN Authentication Packages)(Citation: Microsoft TimeProvider)(Citat",
+      "tactic": [
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1003.004",
+      "name": "LSA Secrets",
+      "description": "Adversaries with SYSTEM access to a host may attempt to access Local Security Authority (LSA) secrets, which can contain a variety of different credential materials, such as credentials for service accounts.(Citation: Passcape LSA Secrets)(Citation: Microsoft AD Admin Tier Model)(Citation: Tilbury Windows Credentials) LSA secrets are stored in the registry at <code>HKEY_LOCAL_MACHINE\\SECURITY\\Poli",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1600",
+      "name": "Weaken Encryption",
+      "description": "Adversaries may compromise a network device’s encryption capability in order to bypass encryption that would otherwise protect data communications.(Citation: Cisco Synful Knock Evolution)\n\nEncryption can be used to protect transmitted network traffic to maintain its confidentiality (protect against unauthorized disclosure) and integrity (protect against unauthorized changes). Encryption ciphers ar",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "Network Devices"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1606.002",
+      "name": "SAML Tokens",
+      "description": "An adversary may forge SAML tokens with any permissions claims and lifetimes if they possess a valid SAML token-signing certificate.(Citation: Microsoft SolarWinds Steps) The default lifetime of a SAML token is one hour, but the validity period can be specified in the <code>NotOnOrAfter</code> value of the <code>conditions ...</code> element in a token. This value can be changed using the <code>Ac",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "SaaS",
+        "Windows",
+        "IaaS",
+        "Office Suite",
+        "Identity Provider"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1036.008",
+      "name": "Masquerade File Type",
+      "description": "Adversaries may masquerade malicious payloads as legitimate files through changes to the payload's formatting, including the file’s signature, extension, icon, and contents. Various file types have a typical standard format, including how they are encoded and organized. For example, a file’s signature (also known as header or magic bytes) is the beginning bytes of a file and is often used to ident",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1489",
+      "name": "Service Stop",
+      "description": "Adversaries may stop or disable services on a system to render those services unavailable to legitimate users. Stopping critical services or processes can inhibit or stop response to an incident or aid in the adversary's overall objectives to cause damage to the environment.(Citation: Talos Olympic Destroyer 2018)(Citation: Novetta Blockbuster) \n\nAdversaries may accomplish this by disabling indivi",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "ESXi",
+        "IaaS",
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1587.001",
+      "name": "Malware",
+      "description": "Adversaries may develop malware and malware components that can be used during targeting. Building malicious software can include the development of payloads, droppers, post-compromise tools, backdoors (including backdoored images), packers, C2 protocols, and the creation of infected removable media. Adversaries may develop malware to support their operations, creating a means for maintaining cont",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1652",
+      "name": "Device Driver Discovery",
+      "description": "Adversaries may attempt to enumerate local device drivers on a victim host. Information about device drivers may highlight various insights that shape follow-on behaviors, such as the function/purpose of the host, present security tools (i.e. [Security Software Discovery](https://attack.mitre.org/techniques/T1518/001)) or other defenses (e.g., [Virtualization/Sandbox Evasion](https://attack.mitre.",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1087.002",
+      "name": "Domain Account",
+      "description": "Adversaries may attempt to get a listing of domain accounts. This information can help adversaries determine which domain accounts exist to aid in follow-on behavior such as targeting specific accounts which possess particular privileges.\n\nCommands such as <code>net user /domain</code> and <code>net group /domain</code> of the [Net](https://attack.mitre.org/software/S0039) utility, <code>dscacheut",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1547.014",
+      "name": "Active Setup",
+      "description": "Adversaries may achieve persistence by adding a Registry key to the Active Setup of the local machine. Active Setup is a Windows mechanism that is used to execute programs when a user logs in. The value stored in the Registry key will be executed after a user logs into the computer.(Citation: Klein Active Setup 2010) These programs will be executed under the context of the user and will have the a",
+      "tactic": [
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1564",
+      "name": "Hide Artifacts",
+      "description": "Adversaries may attempt to hide artifacts associated with their behaviors to evade detection. Operating systems may have features to hide various artifacts, such as important system files and administrative task execution, to avoid disrupting user work environments and prevent users from changing files or features on the system. Adversaries may abuse these features to hide artifacts such as files,",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Office Suite",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1559.002",
+      "name": "Dynamic Data Exchange",
+      "description": "Adversaries may use Windows Dynamic Data Exchange (DDE) to execute arbitrary commands. DDE is a client-server protocol for one-time and/or continuous inter-process communication (IPC) between applications. Once a link is established, applications can autonomously exchange transactions consisting of strings, warm data links (notifications when a data item changes), hot data links (duplications of c",
+      "tactic": [
+        "execution"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1204.002",
+      "name": "Malicious File",
+      "description": "An adversary may rely upon a user opening a malicious file in order to gain execution. Users may be subjected to social engineering to get them to open a file that will lead to code execution. This user action will typically be observed as follow-on behavior from [Spearphishing Attachment](https://attack.mitre.org/techniques/T1566/001). Adversaries may use several types of files that require a use",
+      "tactic": [
+        "execution"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1591.003",
+      "name": "Identify Business Tempo",
+      "description": "Adversaries may gather information about the victim's business tempo that can be used during targeting. Information about an organization’s business tempo may include a variety of details, including operational hours/days of the week. This information may also reveal times/dates of purchases and shipments of the victim’s hardware and software resources.\n\nAdversaries may gather this information in ",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1685.004",
+      "name": "Disable or Modify Linux Audit System Log",
+      "description": "Adversaries may disable or modify the Linux Audit system to hide malicious activity and avoid detection. Linux admins use the Linux Audit system to track security-relevant information on a system. The Linux Audit system operates at the kernel-level and maintains event logs on application and system activity such as process, network, file, and login events based on pre-configured rules. \n\nOften ref",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "Linux"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1071.005",
+      "name": "Publish/Subscribe Protocols",
+      "description": "Adversaries may communicate using publish/subscribe (pub/sub) application layer protocols to avoid detection/network filtering by blending in with existing traffic. Commands to the remote system, and often the results of those commands, will be embedded within the protocol traffic between the client and server. \n\nProtocols such as <code>MQTT</code>, <code>XMPP</code>, <code>AMQP</code>, and <code>",
+      "tactic": [
+        "command-and-control"
+      ],
+      "platforms": [
+        "macOS",
+        "Linux",
+        "Windows",
+        "Network Devices"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1592.001",
+      "name": "Hardware",
+      "description": "Adversaries may gather information about the victim's host hardware that can be used during targeting. Information about hardware infrastructure may include a variety of details such as types and versions on specific hosts, as well as the presence of additional components that might be indicative of added defensive protections (ex: card/biometric readers, dedicated encryption hardware, etc.).\n\nAdv",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1080",
+      "name": "Taint Shared Content",
+      "description": "\nAdversaries may deliver payloads to remote systems by adding content to shared storage locations, such as network drives or internal code repositories. Content stored on network drives or in other shared locations may be tainted by adding malicious programs, scripts, or exploit code to otherwise valid files. Once a user opens the shared tainted content, the malicious portion can be executed to ru",
+      "tactic": [
+        "lateral-movement"
+      ],
+      "platforms": [
+        "Windows",
+        "SaaS",
+        "Linux",
+        "macOS",
+        "Office Suite"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1484.002",
+      "name": "Trust Modification",
+      "description": "Adversaries may add new domain trusts, modify the properties of existing domain trusts, or otherwise change the configuration of trust relationships between domains and tenants to evade defenses and/or elevate privileges.Trust details, such as whether or not user identities are federated, allow authentication and authorization properties to apply between domains or tenants for the purpose of acces",
+      "tactic": [
+        "defense-impairment",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Identity Provider",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1213.006",
+      "name": "Databases",
+      "description": "Adversaries may leverage databases to mine valuable information. These databases may be hosted on-premises or in the cloud (both in platform-as-a-service and software-as-a-service environments). \n\nExamples of databases from which information may be collected include MySQL, PostgreSQL, MongoDB, Amazon Relational Database Service, Azure SQL Database, Google Firebase, and Snowflake. Databases may inc",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "IaaS",
+        "Linux",
+        "macOS",
+        "SaaS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1573.001",
+      "name": "Symmetric Cryptography",
+      "description": "Adversaries may employ a known symmetric encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Symmetric encryption algorithms use the same key for plaintext encryption and ciphertext decryption. Common symmetric encryption algorithms include AES, DES, 3DES, Blowfish, and RC4.",
+      "tactic": [
+        "command-and-control"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1087.001",
+      "name": "Local Account",
+      "description": "Adversaries may attempt to get a listing of local system accounts. This information can help adversaries determine which local accounts exist on a system to aid in follow-on behavior.\n\nCommands such as <code>net user</code> and <code>net localgroup</code> of the [Net](https://attack.mitre.org/software/S0039) utility and <code>id</code> and <code>groups</code> on macOS and Linux can list local user",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1586.001",
+      "name": "Social Media Accounts",
+      "description": "Adversaries may compromise social media accounts that can be used during targeting. For operations incorporating social engineering, the utilization of an online persona may be important. Rather than creating and cultivating social media profiles (i.e. [Social Media Accounts](https://attack.mitre.org/techniques/T1585/001)), adversaries may compromise existing social media accounts. Utilizing an ex",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1176.001",
+      "name": "Browser Extensions",
+      "description": "Adversaries may abuse internet browser extensions to establish persistent access to victim systems. Browser extensions or plugins are small programs that can add functionality to and customize aspects of internet browsers. They can be installed directly via a local file or custom URL or through a browser's app store - an official online platform where users can browse, install, and manage extensio",
+      "tactic": [
+        "persistence"
+      ],
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1542.005",
+      "name": "TFTP Boot",
+      "description": "Adversaries may abuse netbooting to load an unauthorized network device operating system from a Trivial File Transfer Protocol (TFTP) server. TFTP boot (netbooting) is commonly used by network administrators to load configuration-controlled network device images from a centralized management server. Netbooting is one option in the boot sequence and can be used to centralize, manage, and control de",
+      "tactic": [
+        "stealth",
+        "persistence"
+      ],
+      "platforms": [
+        "Network Devices"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1686.003",
+      "name": "Windows Host Firewall",
+      "description": "Adversaries may disable or modify the Windows host firewall to bypass controls limiting network usage. This can include disabling the Windows host firewall entirely, suppressing specific profiles (domain, private, public), or adding, deleting, and modifying firewall rules to allow or restrict traffic.(Citation: Nearest Neighbor Volexity)\n\nAdversaries may perform these modifications through multipl",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1543.003",
+      "name": "Windows Service",
+      "description": "Adversaries may create or modify Windows services to repeatedly execute malicious payloads as part of persistence. When Windows boots up, it starts programs or applications called services that perform background system functions.(Citation: TechNet Services) Windows service configuration information, including the file path to the service's executable or recovery programs/commands, is stored in th",
+      "tactic": [
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1568.001",
+      "name": "Fast Flux DNS",
+      "description": "Adversaries may use Fast Flux DNS to hide a command and control channel behind an array of rapidly changing IP addresses linked to a single domain resolution. This technique uses a fully qualified domain name, with multiple IP addresses assigned to it which are swapped with high frequency, using a combination of round robin IP addressing and short Time-To-Live (TTL) for a DNS resource record.(Cita",
+      "tactic": [
+        "command-and-control"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "ESXi"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1497.001",
+      "name": "System Checks",
+      "description": "Adversaries may employ various system checks to detect and avoid virtualization and analysis environments. This may include changing behaviors based on the results of checks for the presence of artifacts indicative of a virtual machine environment (VME) or sandbox. If the adversary detects a VME, they may alter their malware to disengage from the victim or conceal the core functions of the implant",
+      "tactic": [
+        "stealth",
+        "discovery"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1053.003",
+      "name": "Cron",
+      "description": "Adversaries may abuse the <code>cron</code> utility to perform task scheduling for initial or recurring execution of malicious code.(Citation: 20 macOS Common Tools and Techniques) The <code>cron</code> utility is a time-based job scheduler for Unix-like operating systems.  The <code> crontab</code> file contains the schedule of cron entries to be run and the specified times for execution. Any <co",
+      "tactic": [
+        "execution",
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "ESXi"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1069.002",
+      "name": "Domain Groups",
+      "description": "Adversaries may attempt to find domain-level groups and permission settings. The knowledge of domain-level permission groups can help adversaries determine which groups exist and which users belong to a particular group. Adversaries may use this information to determine which users have elevated permissions, such as domain administrators.\n\nCommands such as <code>net group /domain</code> of the [Ne",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1588.006",
+      "name": "Vulnerabilities",
+      "description": "Adversaries may acquire information about vulnerabilities that can be used during targeting. A vulnerability is a weakness in computer hardware or software that can, potentially, be exploited by an adversary to cause unintended or unanticipated behavior to occur. Adversaries may find vulnerability information by searching open databases or gaining access to closed vulnerability databases.(Citation",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1566.002",
+      "name": "Spearphishing Link",
+      "description": "Adversaries may send spearphishing emails with a malicious link in an attempt to gain access to victim systems. Spearphishing with a link is a specific variant of spearphishing. It is different from other forms of spearphishing in that it employs the use of links to download malware contained in email, instead of attaching malicious files to the email itself, to avoid defenses that may inspect ema",
+      "tactic": [
+        "initial-access"
+      ],
+      "platforms": [
+        "Identity Provider",
+        "Linux",
+        "macOS",
+        "Office Suite",
+        "SaaS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1499.004",
+      "name": "Application or System Exploitation",
+      "description": "Adversaries may exploit software vulnerabilities that can cause an application or system to crash and deny availability to users. (Citation: Sucuri BIND9 August 2015) Some systems may automatically restart critical applications and services when crashes occur, but they can likely be re-exploited to cause a persistent denial of service (DoS) condition.\n\nAdversaries may exploit known or zero-day vul",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "Windows",
+        "IaaS",
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1137",
+      "name": "Office Application Startup",
+      "description": "Adversaries may leverage Microsoft Office-based applications for persistence between startups. Microsoft Office is a fairly common application suite on Windows-based operating systems within an enterprise network. There are multiple mechanisms that can be used with Office for persistence when an Office-based application is started; this can include the use of Office Template Macros and add-ins.\n\nA",
+      "tactic": [
+        "persistence"
+      ],
+      "platforms": [
+        "Windows",
+        "Office Suite"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1218.004",
+      "name": "InstallUtil",
+      "description": "Adversaries may use InstallUtil to proxy execution of code through a trusted Windows utility. InstallUtil is a command-line utility that allows for installation and uninstallation of resources by executing specific installer components specified in .NET binaries. (Citation: MSDN InstallUtil) The InstallUtil binary may also be digitally signed by Microsoft and located in the .NET directories on a W",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1598.003",
+      "name": "Spearphishing Link",
+      "description": "Adversaries may send spearphishing messages with a malicious link to elicit sensitive information that can be used during targeting. Spearphishing for information is an attempt to trick targets into divulging information, frequently credentials or other actionable information. Spearphishing for information frequently involves social engineering techniques, such as posing as a source with a reason ",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1021.004",
+      "name": "SSH",
+      "description": "Adversaries may use [Valid Accounts](https://attack.mitre.org/techniques/T1078) to log into remote machines using Secure Shell (SSH). The adversary may then perform actions as the logged-on user.\n\nSSH is a protocol that allows authorized users to open remote shells on other computers. Many Linux and macOS versions come with SSH installed by default, although typically disabled until the user enabl",
+      "tactic": [
+        "lateral-movement"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1098.003",
+      "name": "Additional Cloud Roles",
+      "description": "An adversary may add additional roles or permissions to an adversary-controlled cloud account to maintain persistent access to a tenant. For example, adversaries may update IAM policies in cloud-based environments or add a new global administrator in Office 365 environments.(Citation: AWS IAM Policies and Permissions)(Citation: Google Cloud IAM Policies)(Citation: Microsoft Support O365 Add Anothe",
+      "tactic": [
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "IaaS",
+        "Identity Provider",
+        "Office Suite",
+        "SaaS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1547.012",
+      "name": "Print Processors",
+      "description": "Adversaries may abuse print processors to run malicious DLLs during system boot for persistence and/or privilege escalation. Print processors are DLLs that are loaded by the print spooler service, `spoolsv.exe`, during boot.(Citation: Microsoft Intro Print Processors)\n\nAdversaries may abuse the print spooler service by adding print processors that load malicious DLLs at startup. A print processor ",
+      "tactic": [
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1566.001",
+      "name": "Spearphishing Attachment",
+      "description": "Adversaries may send spearphishing emails with a malicious attachment in an attempt to gain access to victim systems. Spearphishing attachment is a specific variant of spearphishing. Spearphishing attachment is different from other forms of spearphishing in that it employs the use of malware attached to an email. All forms of spearphishing are electronically delivered social engineering targeted a",
+      "tactic": [
+        "initial-access"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1027.008",
+      "name": "Stripped Payloads",
+      "description": "Adversaries may attempt to make a payload difficult to analyze by removing symbols, strings, and other human readable information. Scripts and executables may contain variables names and other strings that help developers document code functionality. Symbols are often created by an operating system’s `linker` when executable payloads are compiled. Reverse engineers use these symbols and strings to",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1559.001",
+      "name": "Component Object Model",
+      "description": "Adversaries may use the Windows Component Object Model (COM) for local code execution. COM is an inter-process communication (IPC) component of the native Windows application programming interface (API) that enables interaction between software objects, or executable code that implements one or more interfaces.(Citation: Fireeye Hunting COM June 2019) Through COM, a client object can call methods ",
+      "tactic": [
+        "execution"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1574.001",
+      "name": "DLL",
+      "description": "Adversaries may abuse dynamic-link library files (DLLs) in order to achieve persistence, escalate privileges, and evade defenses. DLLs are libraries that contain code and data that can be simultaneously utilized by multiple programs. While DLLs are not malicious by nature, they can be abused through mechanisms such as side-loading, hijacking search order, and phantom DLL hijacking.(Citation: unit ",
+      "tactic": [
+        "stealth",
+        "execution"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1119",
+      "name": "Automated Collection",
+      "description": "Once established within a system or network, an adversary may use automated techniques for collecting internal data. Methods for performing this technique could include use of a [Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059) to search for and copy information fitting set criteria such as file type, location, or name at specific time intervals. \n\nIn cloud-based envir",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "IaaS",
+        "Linux",
+        "macOS",
+        "Office Suite",
+        "SaaS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1689",
+      "name": "Downgrade Attack",
+      "description": "Adversaries may downgrade or use a version of system features that may be outdated, vulnerable, and/or does not support updated security controls. Downgrade attacks typically take advantage of a system’s backward compatibility to force it into less secure modes of operation.\n\nAdversaries may downgrade and use various less-secure versions of features of a system, such as [Command and Scripting Inte",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "macOS",
+        "Windows",
+        "Linux"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1115",
+      "name": "Clipboard Data",
+      "description": "Adversaries may collect data stored in the clipboard from users copying information within or between applications. \n\nFor example, on Windows adversaries can access clipboard data by using <code>clip.exe</code> or <code>Get-Clipboard</code>.(Citation: MSDN Clipboard)(Citation: clip_win_server)(Citation: CISA_AA21_200B) Additionally, adversaries may monitor then replace users’ clipboard with their ",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1003.007",
+      "name": "Proc Filesystem",
+      "description": "Adversaries may gather credentials from the proc filesystem or `/proc`. The proc filesystem is a pseudo-filesystem used as an interface to kernel data structures for Linux based systems managing virtual memory. For each process, the `/proc/<PID>/maps` file shows how memory is mapped within the process’s virtual address space. And `/proc/<PID>/mem`, exposed for debugging purposes, provides access t",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Linux"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1583.005",
+      "name": "Botnet",
+      "description": "Adversaries may buy, lease, or rent a network of compromised systems that can be used during targeting. A botnet is a network of compromised systems that can be instructed to perform coordinated tasks.(Citation: Norton Botnet) Adversaries may purchase a subscription to use an existing botnet from a booter/stresser service. \n\nInternet-facing edge devices and related network appliances that are end-",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1555.005",
+      "name": "Password Managers",
+      "description": "Adversaries may acquire user credentials from third-party password managers.(Citation: ise Password Manager February 2019) Password managers are applications designed to store user credentials, normally in an encrypted database. Credentials are typically accessible after a user provides a master password that unlocks the database. After the database is unlocked, these credentials may be copied to ",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1553.001",
+      "name": "Gatekeeper Bypass",
+      "description": "Adversaries may modify file attributes and subvert Gatekeeper functionality to evade user prompts and execute untrusted programs. Gatekeeper is a set of technologies that act as layer of Apple’s security model to ensure only trusted applications are executed on a host. Gatekeeper was built on top of File Quarantine in Snow Leopard (10.6, 2009) and has grown to include Code Signing, security policy",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1675",
+      "name": "ESXi Administration Command",
+      "description": "Adversaries may abuse ESXi administration services to execute commands on guest machines hosted within an ESXi virtual environment. Persistent background services on ESXi-hosted VMs, such as the VMware Tools Daemon Service, allow for remote management from the ESXi server. The tools daemon service runs as `vmtoolsd.exe` on Windows guest operating systems, `vmware-tools-daemon` on macOS, and `vmtoo",
+      "tactic": [
+        "execution"
+      ],
+      "platforms": [
+        "ESXi"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1608.004",
+      "name": "Drive-by Target",
+      "description": "Adversaries may prepare an operational environment to infect systems that visit a website over the normal course of browsing. Endpoint systems may be compromised through browsing to adversary controlled sites, as in [Drive-by Compromise](https://attack.mitre.org/techniques/T1189). In such cases, the user's web browser is typically targeted for exploitation (often not requiring any extra user inter",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1007",
+      "name": "System Service Discovery",
+      "description": "Adversaries may try to gather information about registered local system services. Adversaries may obtain information about services using tools as well as OS utility commands such as <code>sc query</code>, <code>tasklist /svc</code>, <code>systemctl --type=service</code>, and <code>net start</code>. Adversaries may also gather information about schedule tasks via commands such as `schtasks` on Win",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1040",
+      "name": "Network Sniffing",
+      "description": "Adversaries may passively sniff network traffic to capture information about an environment, including authentication material passed over the network. Network sniffing refers to using the network interface on a system to monitor or capture information sent over a wired or wireless connection. An adversary may place a network interface into promiscuous mode to passively access data in transit over",
+      "tactic": [
+        "credential-access",
+        "discovery"
+      ],
+      "platforms": [
+        "IaaS",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1553.002",
+      "name": "Code Signing",
+      "description": "Adversaries may create, acquire, or steal code signing materials to sign their malware or tools. Code signing provides a level of authenticity on a binary from the developer and a guarantee that the binary has not been tampered with. (Citation: Wikipedia Code Signing) The certificates used during an operation may be created, acquired, or stolen by the adversary. (Citation: Securelist Digital Certi",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1530",
+      "name": "Data from Cloud Storage",
+      "description": "Adversaries may access data from cloud storage.\n\nMany IaaS providers offer solutions for online data object storage such as Amazon S3, Azure Storage, and Google Cloud Storage. Similarly, SaaS enterprise platforms such as Office 365 and Google Workspace provide cloud-based document storage to users through services such as OneDrive and Google Drive, while SaaS application providers such as Slack, C",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "IaaS",
+        "Office Suite",
+        "SaaS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1565.003",
+      "name": "Runtime Data Manipulation",
+      "description": "Adversaries may modify systems in order to manipulate the data as it is accessed and displayed to an end user, thus threatening the integrity of the data.(Citation: FireEye APT38 Oct 2018)(Citation: DOJ Lazarus Sony 2018) By manipulating runtime data, adversaries may attempt to affect a business process, organizational understanding, and decision making.\n\nAdversaries may alter application binaries",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1552.002",
+      "name": "Credentials in Registry",
+      "description": "Adversaries may search the Registry on compromised systems for insecurely stored credentials. The Windows Registry stores configuration information that can be used by the system or other programs. Adversaries may query the Registry looking for credentials and passwords that have been stored for use by other programs or services. Sometimes these credentials are used for automatic logons.\n\nExample ",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1135",
+      "name": "Network Share Discovery",
+      "description": "Adversaries may look for folders and drives shared on remote systems as a means of identifying sources of information to gather as a precursor for Collection and to identify potential systems of interest for Lateral Movement. Networks often contain shared network drives and folders that enable users to access file directories on various systems across a network. \n\nFile sharing over a Windows netwo",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1120",
+      "name": "Peripheral Device Discovery",
+      "description": "Adversaries may attempt to gather information about attached peripheral devices and components connected to a computer system.(Citation: Peripheral Discovery Linux)(Citation: Peripheral Discovery macOS) Peripheral devices could include auxiliary resources that support a variety of functionalities such as keyboards, printers, cameras, smart card readers, or removable storage. The information may be",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1036.009",
+      "name": "Break Process Trees",
+      "description": "An adversary may attempt to evade process tree-based analysis by modifying executed malware's parent process ID (PPID). If endpoint protection software leverages the “parent-child\" relationship for detection, breaking this relationship could result in the adversary’s behavior not being associated with previous process tree activity. On Unix-based systems breaking this process tree is common practi",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1590.004",
+      "name": "Network Topology",
+      "description": "Adversaries may gather information about the victim's network topology that can be used during targeting. Information about network topologies may include a variety of details, including the physical and/or logical arrangement of both external-facing and internal network environments. This information may also include specifics regarding network devices (gateways, routers, etc.) and other infrastr",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1587.002",
+      "name": "Code Signing Certificates",
+      "description": "Adversaries may create self-signed code signing certificates that can be used during targeting. Code signing is the process of digitally signing executables and scripts to confirm the software author and guarantee that the code has not been altered or corrupted. Code signing provides a level of authenticity for a program from the developer and a guarantee that the program has not been tampered wit",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1222.001",
+      "name": "Windows Permissions",
+      "description": "Adversaries may modify file or directory permissions/attributes to evade access control lists (ACLs) and access protected files.(Citation: Hybrid Analysis Icacls1 June 2018)(Citation: Hybrid Analysis Icacls2 May 2018) File and directory permissions are commonly managed by ACLs configured by the file or directory owner, or users with the appropriate permissions. File and directory ACL implementatio",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1137.006",
+      "name": "Add-ins",
+      "description": "Adversaries may abuse Microsoft Office add-ins to obtain persistence on a compromised system. Office add-ins can be used to add functionality to Office programs. (Citation: Microsoft Office Add-ins) There are different types of add-ins that can be used by the various Office products; including Word/Excel add-in Libraries (WLL/XLL), VBA add-ins, Office Component Object Model (COM) add-ins, automati",
+      "tactic": [
+        "persistence"
+      ],
+      "platforms": [
+        "Windows",
+        "Office Suite"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1685.002",
+      "name": "Disable or Modify Cloud Log",
+      "description": "An adversary may disable or modify cloud logging capabilities and integrations to limit what data is collected on their activities and avoid detection. Cloud environments allow for collection and analysis of audit and application logs that provide insight into what activities a user does within the environment. If an adversary has sufficient permissions, they can disable or modify logging to avoid",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "IaaS",
+        "SaaS",
+        "Identity Provider",
+        "Office Suite"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1505.002",
+      "name": "Transport Agent",
+      "description": "Adversaries may abuse Microsoft transport agents to establish persistent access to systems. Microsoft Exchange transport agents can operate on email messages passing through the transport pipeline to perform various tasks such as filtering spam, filtering malicious attachments, journaling, or adding a corporate signature to the end of all outgoing emails.(Citation: Microsoft TransportAgent Jun 201",
+      "tactic": [
+        "persistence"
+      ],
+      "platforms": [
+        "Linux",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1082",
+      "name": "System Information Discovery",
+      "description": "An adversary may attempt to get detailed information about the operating system and hardware, including version, patches, hotfixes, service packs, and architecture. Adversaries may use this information to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions. This behavior is distinct from [Local Storage Discovery](https://attac",
+      "tactic": [
+        "discovery"
+      ],
+      "platforms": [
+        "ESXi",
+        "IaaS",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1071",
+      "name": "Application Layer Protocol",
+      "description": "Adversaries may communicate using OSI application layer protocols to avoid detection/network filtering by blending in with existing traffic. Commands to the remote system, and often the results of those commands, will be embedded within the protocol traffic between the client and server. \n\nAdversaries may utilize many different protocols, including those used for web browsing, transferring files, ",
+      "tactic": [
+        "command-and-control"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices",
+        "ESXi"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1574.014",
+      "name": "AppDomainManager",
+      "description": "Adversaries may execute their own malicious payloads by hijacking how the .NET `AppDomainManager` loads assemblies. The .NET framework uses the `AppDomainManager` class to create and manage one or more isolated runtime environments (called application domains) inside a process to host the execution of .NET applications. Assemblies (`.exe` or `.dll` binaries compiled to run as .NET code) may be loa",
+      "tactic": [
+        "stealth",
+        "execution"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1074.002",
+      "name": "Remote Data Staging",
+      "description": "Adversaries may stage data collected from multiple systems in a central location or directory on one system prior to Exfiltration. Data may be kept in separate files or combined into one file through techniques such as [Archive Collected Data](https://attack.mitre.org/techniques/T1560). Interactive command shells may be used, and common functionality within [cmd](https://attack.mitre.org/software/",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "ESXi",
+        "IaaS",
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1098.006",
+      "name": "Additional Container Cluster Roles",
+      "description": "An adversary may add additional roles or permissions to an adversary-controlled user or service account to maintain persistent access to a container orchestration system. For example, an adversary with sufficient permissions may create a RoleBinding or a ClusterRoleBinding to bind a Role or ClusterRole to a Kubernetes account.(Citation: Kubernetes RBAC)(Citation: Aquasec Kubernetes Attack 2023) Wh",
+      "tactic": [
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Containers"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1053",
+      "name": "Scheduled Task/Job",
+      "description": "Adversaries may abuse task scheduling functionality to facilitate initial or recurring execution of malicious code. Utilities exist within all major operating systems to schedule programs or scripts to be executed at a specified date and time. A task can also be scheduled on a remote system, provided the proper authentication is met (ex: RPC and file and printer sharing in Windows environments). S",
+      "tactic": [
+        "execution",
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Containers",
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1218.007",
+      "name": "Msiexec",
+      "description": "Adversaries may abuse msiexec.exe to proxy execution of malicious payloads. Msiexec.exe is the command-line utility for the Windows Installer and is thus commonly associated with executing installation packages (.msi).(Citation: Microsoft msiexec) The Msiexec.exe binary may also be digitally signed by Microsoft.\n\nAdversaries may abuse msiexec.exe to launch local or network accessible MSI files. Ms",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1590.003",
+      "name": "Network Trust Dependencies",
+      "description": "Adversaries may gather information about the victim's network trust dependencies that can be used during targeting. Information about network trusts may include a variety of details, including second or third-party organizations/domains (ex: managed service providers, contractors, etc.) that have connected (and potentially elevated) network access.\n\nAdversaries may gather this information in vario",
+      "tactic": [
+        "reconnaissance"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1498.002",
+      "name": "Reflection Amplification",
+      "description": "Adversaries may attempt to cause a denial of service (DoS) by reflecting a high-volume of network traffic to a target. This type of Network DoS takes advantage of a third-party server intermediary that hosts and will respond to a given spoofed source IP address. This third-party server is commonly termed a reflector. An adversary accomplishes a reflection attack by sending packets to reflectors wi",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "Windows",
+        "IaaS",
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1556.002",
+      "name": "Password Filter DLL",
+      "description": "Adversaries may register malicious password filter dynamic link libraries (DLLs) into the authentication process to acquire user credentials as they are validated. \n\nWindows password filters are password policy enforcement mechanisms for both domain and local accounts. Filters are implemented as DLLs containing a method to validate potential passwords against password policies. Filter DLLs can be ",
+      "tactic": [
+        "defense-impairment",
+        "persistence",
+        "credential-access"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1505.005",
+      "name": "Terminal Services DLL",
+      "description": "Adversaries may abuse components of Terminal Services to enable persistent access to systems. Microsoft Terminal Services, renamed to Remote Desktop Services in some Windows Server OSs as of 2022, enable remote terminal connections to hosts. Terminal Services allows servers to transmit a full, interactive, graphical user interface to clients via RDP.(Citation: Microsoft Remote Desktop Services)\n\n[",
+      "tactic": [
+        "persistence"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1059.002",
+      "name": "AppleScript",
+      "description": "Adversaries may abuse AppleScript for execution. AppleScript is a macOS scripting language designed to control applications and parts of the OS via inter-application messages called AppleEvents.(Citation: Apple AppleScript) These AppleEvent messages can be sent independently or easily scripted with AppleScript. These events can locate open windows, send keystrokes, and interact with almost any ope",
+      "tactic": [
+        "execution"
+      ],
+      "platforms": [
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1176",
+      "name": "Software Extensions",
+      "description": "Adversaries may abuse software extensions to establish persistent access to victim systems. Software extensions are modular components that enhance or customize the functionality of software applications, including web browsers, Integrated Development Environments (IDEs), and other platforms.(Citation: Chrome Extension C2 Malware)(Citation: Abramovsky VSCode Security) Extensions are typically inst",
+      "tactic": [
+        "persistence"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1499.002",
+      "name": "Service Exhaustion Flood",
+      "description": "Adversaries may target the different network services provided by systems to conduct a denial of service (DoS). Adversaries often target the availability of DNS and web services, however others have been targeted as well.(Citation: Arbor AnnualDoSreport Jan 2018) Web server software can be attacked through a variety of means, some of which apply generally while others are specific to the software ",
+      "tactic": [
+        "impact"
+      ],
+      "platforms": [
+        "Windows",
+        "IaaS",
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1195.003",
+      "name": "Compromise Hardware Supply Chain",
+      "description": "Adversaries may manipulate hardware components in products prior to receipt by a final consumer for the purpose of data or system compromise. By modifying hardware or firmware in the supply chain, adversaries can insert a backdoor into consumer networks that may be difficult to detect and give the adversary a high degree of control over the system. Hardware backdoors may be inserted into various d",
+      "tactic": [
+        "initial-access"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1106",
+      "name": "Native API",
+      "description": "Adversaries may interact with the native OS application programming interface (API) to execute behaviors. Native APIs provide a controlled means of calling low-level OS services within the kernel, such as those involving hardware/devices, memory, and processes.(Citation: NT API Windows)(Citation: Linux Kernel API) These native APIs are leveraged by the OS during system boot (when other system comp",
+      "tactic": [
+        "execution"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1558.005",
+      "name": "Ccache Files",
+      "description": "\nAdversaries may attempt to steal Kerberos tickets stored in credential cache files (or ccache). These files are used for short term storage of a user's active session credentials. The ccache file is created upon user authentication and allows for access to multiple services without the user having to re-enter credentials. \n\nThe <code>/etc/krb5.conf</code> configuration file and the <code>KRB5CCNA",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1070.007",
+      "name": "Clear Network Connection History and Configurations",
+      "description": "Adversaries may clear or remove evidence of malicious network connections in order to clean up traces of their operations. Configuration settings as well as various artifacts that highlight connection history may be created on a system and/or in application logs from behaviors that require network connections, such as [Remote Services](https://attack.mitre.org/techniques/T1021) or [External Remote",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1558.004",
+      "name": "AS-REP Roasting",
+      "description": "Adversaries may reveal credentials of accounts that have disabled Kerberos preauthentication by [Password Cracking](https://attack.mitre.org/techniques/T1110/002) Kerberos messages.(Citation: Harmj0y Roasting AS-REPs Jan 2017) \n\nPreauthentication offers protection against offline [Password Cracking](https://attack.mitre.org/techniques/T1110/002). When enabled, a user requesting access to a resourc",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1584.003",
+      "name": "Virtual Private Server",
+      "description": "Adversaries may compromise third-party Virtual Private Servers (VPSs) that can be used during targeting. There exist a variety of cloud service providers that will sell virtual machines/containers as a service. Adversaries may compromise VPSs purchased by third-party entities. By compromising a VPS to use as infrastructure, adversaries can make it difficult to physically tie back operations to the",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1059.010",
+      "name": "AutoHotKey & AutoIT",
+      "description": "Adversaries may execute commands and perform malicious tasks using AutoIT and AutoHotKey automation scripts. AutoIT and AutoHotkey (AHK) are scripting languages that enable users to automate Windows tasks. These automation scripts can be used to perform a wide variety of actions, such as clicking on buttons, entering text, and opening and closing programs.(Citation: AutoIT)(Citation: AutoHotKey)\n\n",
+      "tactic": [
+        "execution"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1600.001",
+      "name": "Reduce Key Space",
+      "description": "Adversaries may reduce the level of effort required to decrypt data transmitted over the network by reducing the cipher strength of encrypted communications.(Citation: Cisco Synful Knock Evolution)\n\nAdversaries can weaken the encryption software on a compromised network device by reducing the key size used by the software to convert plaintext to ciphertext (e.g., from hundreds or thousands of byte",
+      "tactic": [
+        "defense-impairment"
+      ],
+      "platforms": [
+        "Network Devices"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1070.003",
+      "name": "Clear Command History",
+      "description": "In addition to clearing system logs, an adversary may clear the command history of a compromised account to conceal the actions undertaken during an intrusion. Various command interpreters keep track of the commands users type in their terminal so that users can retrace what they've done.\n\nOn Linux and macOS, these command histories can be accessed in a few different ways. While logged in, this co",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1202",
+      "name": "Indirect Command Execution",
+      "description": "Adversaries may abuse utilities that allow for command execution to bypass security restrictions that limit the use of command-line interpreters. Various Windows utilities may be used to execute commands, possibly without invoking [cmd](https://attack.mitre.org/software/S0106). For example, [Forfiles](https://attack.mitre.org/software/S0193), the Program Compatibility Assistant (`pcalua.exe`), com",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1091",
+      "name": "Replication Through Removable Media",
+      "description": "Adversaries may move onto systems, possibly those on disconnected or air-gapped networks, by copying malware to removable media and taking advantage of Autorun features when the media is inserted into a system and executes. In the case of Lateral Movement, this may occur through modification of executable files stored on removable media or by copying malware and renaming it to look like a legitima",
+      "tactic": [
+        "lateral-movement",
+        "initial-access"
+      ],
+      "platforms": [
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1005",
+      "name": "Data from Local System",
+      "description": "Adversaries may search local system sources, such as file systems, configuration files, local databases, virtual machine files, or process memory, to find files of interest and sensitive data prior to Exfiltration.\n\nAdversaries may do this using a [Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059), such as [cmd](https://attack.mitre.org/software/S0106) as well as a [Net",
+      "tactic": [
+        "collection"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1140",
+      "name": "Deobfuscate/Decode Files or Information",
+      "description": "Adversaries may use [Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027) to hide artifacts of an intrusion from analysis. They may require separate mechanisms to decode or deobfuscate that information depending on how they intend to use it. Methods for doing that include built-in functionality of malware or by using utilities present on the system.\n\nOne such example is the ",
+      "tactic": [
+        "stealth"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1137.005",
+      "name": "Outlook Rules",
+      "description": "Adversaries may abuse Microsoft Outlook rules to obtain persistence on a compromised system. Outlook rules allow a user to define automated behavior to manage email messages. A benign rule might, for example, automatically move an email to a particular folder in Outlook if it contains specific words from a specific sender. Malicious Outlook rules can be created that can trigger code execution when",
+      "tactic": [
+        "persistence"
+      ],
+      "platforms": [
+        "Windows",
+        "Office Suite"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1586.003",
+      "name": "Cloud Accounts",
+      "description": "Adversaries may compromise cloud accounts that can be used during targeting. Adversaries can use compromised cloud accounts to further their operations, including leveraging cloud storage services such as Dropbox, Microsoft OneDrive, or AWS S3 buckets for [Exfiltration to Cloud Storage](https://attack.mitre.org/techniques/T1567/002) or to [Upload Tool](https://attack.mitre.org/techniques/T1608/002",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1586.002",
+      "name": "Email Accounts",
+      "description": "Adversaries may compromise email accounts that can be used during targeting. Adversaries can use compromised email accounts to further their operations, such as leveraging them to conduct [Phishing for Information](https://attack.mitre.org/techniques/T1598), [Phishing](https://attack.mitre.org/techniques/T1566), or large-scale spam email campaigns. Utilizing an existing persona with a compromised ",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1098.007",
+      "name": "Additional Local or Domain Groups",
+      "description": "An adversary may add additional local or domain groups to an adversary-controlled account to maintain persistent access to a system or domain.\n\nOn Windows, accounts may use the `net localgroup` and `net group` commands to add existing users to local and domain groups.(Citation: Microsoft Net Localgroup)(Citation: Microsoft Net Group) On Linux, adversaries may use the `usermod` command for the same",
+      "tactic": [
+        "persistence",
+        "privilege-escalation"
+      ],
+      "platforms": [
+        "Windows",
+        "macOS",
+        "Linux"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1608.001",
+      "name": "Upload Malware",
+      "description": "Adversaries may upload malware to third-party or adversary controlled infrastructure to make it accessible during targeting. Malicious software can include payloads, droppers, post-compromise tools, backdoors, and a variety of other malicious content. Adversaries may upload malware to support their operations, such as making a payload available to a victim network to enable [Ingress Tool Transfer]",
+      "tactic": [
+        "resource-development"
+      ],
+      "platforms": [
+        "PRE"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1195",
+      "name": "Supply Chain Compromise",
+      "description": "Adversaries may manipulate products or product delivery mechanisms prior to receipt by a final consumer for the purpose of data or system compromise.\n\nSupply chain compromise can take place at any stage of the supply chain including:\n\n* Manipulation of development tools\n* Manipulation of a development environment\n* Manipulation of source code repositories (public or private)\n* Manipulation of sour",
+      "tactic": [
+        "initial-access"
+      ],
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "SaaS"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1190",
+      "name": "Exploit Public-Facing Application",
+      "description": "Adversaries may attempt to exploit a weakness in an Internet-facing host or system to initially access a network. The weakness in the system can be a software bug, a temporary glitch, or a misconfiguration.\n\nExploited applications are often websites/web servers, but can also include databases (like SQL), standard services (like SMB or SSH), network device administration and management protocols (l",
+      "tactic": [
+        "initial-access"
+      ],
+      "platforms": [
+        "Containers",
+        "ESXi",
+        "IaaS",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1558",
+      "name": "Steal or Forge Kerberos Tickets",
+      "description": "Adversaries may attempt to subvert Kerberos authentication by stealing or forging Kerberos tickets to enable [Pass the Ticket](https://attack.mitre.org/techniques/T1550/003). Kerberos is an authentication protocol widely used in modern Windows domain environments. In Kerberos environments, referred to as “realms”, there are three basic participants: client, service, and Key Distribution Center (KD",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1555",
+      "name": "Credentials from Password Stores",
+      "description": "Adversaries may search for common password storage locations to obtain user credentials.(Citation: F-Secure The Dukes) Passwords are stored in several places on a system, depending on the operating system or application holding the credentials. There are also specific applications and services that store passwords to make them easier for users to manage and maintain, such as password managers and ",
+      "tactic": [
+        "credential-access"
+      ],
+      "platforms": [
+        "IaaS",
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "detection": ""
+    },
+    {
+      "id": "T1567",
+      "name": "Exfiltration Over Web Service",
+      "description": "Adversaries may use an existing, legitimate external Web service to exfiltrate data rather than their primary command and control channel. Popular Web services acting as an exfiltration mechanism may give a significant amount of cover due to the likelihood that hosts within a network are already communicating with them prior to compromise. Firewall rules may also already exist to permit traffic to",
+      "tactic": [
+        "exfiltration"
+      ],
+      "platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Office Suite",
+        "SaaS",
+        "Windows"
+      ],
+      "detection": ""
+    }
+  ],
+  "source_url": "https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
+  "fetched_at": "2026-06-13T18:00:15.553962"
+}

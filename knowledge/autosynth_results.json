@@ -1,0 +1,30 @@
+[
+  {
+    "success": false,
+    "reason": "Neural Link Error: type object 'OmniRouter' has no attribute 'smart_query'",
+    "blueprint_id": "CVE-2026-46442",
+    "source_file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\knowledge\\intel\\skills_blueprints\\cve_defense_skills_20260613_105030.json",
+    "synthesized_at": "2026-06-13T18:00:42.735171"
+  },
+  {
+    "success": false,
+    "reason": "Gagal mengidentifikasi struktur class dalam kode.",
+    "blueprint_id": "CVE-2026-46442",
+    "source_file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\knowledge\\intel\\skills_blueprints\\cve_defense_skills_20260613_105030.json",
+    "synthesized_at": "2026-06-13T18:01:30.910199"
+  },
+  {
+    "success": false,
+    "reason": "Gagal mengidentifikasi struktur class dalam kode.",
+    "blueprint_id": "CVE-2026-46442",
+    "source_file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\knowledge\\intel\\skills_blueprints\\cve_defense_skills_20260613_105030.json",
+    "synthesized_at": "2026-06-13T18:02:49.484067"
+  },
+  {
+    "success": false,
+    "reason": "Gagal mengidentifikasi struktur class dalam kode.",
+    "blueprint_id": "CVE-2026-46442",
+    "source_file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\knowledge\\intel\\skills_blueprints\\cve_defense_skills_20260613_105030.json",
+    "synthesized_at": "2026-06-13T18:03:29.056922"
+  }
+]

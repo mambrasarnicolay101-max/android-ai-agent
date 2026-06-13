@@ -90,15 +90,22 @@ def _cached(key: str, fetch_fn: Callable, ttl: int = 3600) -> Any:
     return result
 
 # ── GitHub Auth Token ─────────────────────────────────────────────────────────
-# Token diperlukan untuk meningkatkan rate limit GitHub API dari 60 → 5000 req/jam
+# Token untuk meningkatkan rate limit GitHub API. Jika token kedaluwarsa,
+# _http_get akan otomatis fallback ke request tanpa token (akses public repo).
 GITHUB_TOKEN = "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"
 
 # ── HTTP Client ───────────────────────────────────────────────────────────────
 def _http_get(url: str, headers: dict = None, timeout: int = 20) -> str:
-    try:
-        # Auto-inject GitHub token untuk semua request ke api.github.com
+    """
+    HTTP GET dengan fallback otomatis:
+    - Jika request GitHub dengan token gagal (401/403/404), retry tanpa token.
+    - Public repositories GitHub tetap bisa diakses tanpa auth.
+    """
+    is_github = "api.github.com" in url or "raw.githubusercontent.com" in url
+
+    def _do_request(use_token: bool) -> str:
         base_headers = {"User-Agent": "NoirSovereign-KnowledgeEngine/2.0 (Research; Legal)"}
-        if "api.github.com" in url or "raw.githubusercontent.com" in url:
+        if use_token and is_github and GITHUB_TOKEN:
             base_headers["Authorization"] = f"token {GITHUB_TOKEN}"
         req = urllib.request.Request(
             url,
@@ -106,7 +113,21 @@ def _http_get(url: str, headers: dict = None, timeout: int = 20) -> str:
         )
         with urllib.request.urlopen(req, timeout=timeout) as r:
             return r.read().decode("utf-8", errors="ignore")
+
+    try:
+        return _do_request(use_token=True)
     except urllib.error.HTTPError as e:
+        if is_github and e.code in (401, 403, 404):
+            # Token mungkin kedaluwarsa — coba lagi tanpa token
+            log.warning(f"HTTP {e.code} (token error) -> retry tanpa auth: {url[:60]}")
+            try:
+                return _do_request(use_token=False)
+            except urllib.error.HTTPError as e2:
+                log.warning(f"HTTP {e2.code} (no-auth retry) -> {url[:70]}")
+                return ""
+            except Exception as e2:
+                log.warning(f"Fetch error no-auth [{url[:60]}]: {e2}")
+                return ""
         log.warning(f"HTTP {e.code} -> {url[:70]}")
         return ""
     except Exception as e:
@@ -287,34 +308,47 @@ class MITREIngestor:
     def fetch_techniques(self) -> Dict:
         log.info("[MITRE] Fetching ATT&CK Enterprise techniques...")
         key = "mitre_attack_enterprise"
+        # URL order: mitre/cti (STIX 2.0, confirmed working) -> mitre-attack/attack-stix-data (STIX 2.1, fallback)
+        # Keduanya menghasilkan file ~50MB sehingga timeout panjang diperlukan
+        MITRE_URLS = [
+            "https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
+            "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack.json",
+        ]
         def _fetch():
-            url = "https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json"
-            text = _http_get(url, timeout=60)
-            if not text:
-                return {}
-            try:
-                data  = json.loads(text)
-                objs  = data.get("objects", [])
-                techs = [
-                    {
-                        "id":          o.get("external_references", [{}])[0].get("external_id", ""),
-                        "name":        o.get("name"),
-                        "description": (o.get("description") or "")[:400],
-                        "tactic":      [p.get("phase_name") for p in o.get("kill_chain_phases", [])],
-                        "platforms":   o.get("x_mitre_platforms", []),
-                        "detection":   (o.get("x_mitre_detection") or "")[:300],
-                    }
-                    for o in objs
-                    if o.get("type") == "attack-pattern" and not o.get("revoked", False)
-                ]
-                return {
-                    "total":      len(techs),
-                    "techniques": techs[:100],  # Top 100
-                    "fetched_at": datetime.utcnow().isoformat()
-                }
-            except Exception as e:
-                log.error(f"[MITRE] Parse error: {e}")
-                return {}
+            for url in MITRE_URLS:
+                log.info(f"[MITRE] Mencoba URL: {url[:80]}...")
+                text = _http_get(url, timeout=300)  # 5 menit — file ~50MB
+                if not text:
+                    log.warning(f"[MITRE] URL gagal: {url[:70]}")
+                    continue
+                try:
+                    data  = json.loads(text)
+                    objs  = data.get("objects", [])
+                    techs = [
+                        {
+                            "id":          o.get("external_references", [{}])[0].get("external_id", ""),
+                            "name":        o.get("name"),
+                            "description": (o.get("description") or "")[:400],
+                            "tactic":      [p.get("phase_name") for p in o.get("kill_chain_phases", [])],
+                            "platforms":   o.get("x_mitre_platforms", []),
+                            "detection":   (o.get("x_mitre_detection") or "")[:300],
+                        }
+                        for o in objs
+                        if o.get("type") == "attack-pattern" and not o.get("revoked", False)
+                    ]
+                    if techs:
+                        log.info(f"[MITRE] Berhasil: {len(techs)} teknik dari {url[:60]}")
+                        return {
+                            "total":      len(techs),
+                            "techniques": techs[:200],  # Top 200 techniques
+                            "source_url": url,
+                            "fetched_at": datetime.utcnow().isoformat()
+                        }
+                    log.warning(f"[MITRE] 0 teknik dari URL ini, mencoba fallback...")
+                except Exception as e:
+                    log.error(f"[MITRE] Parse error dari {url[:60]}: {e}")
+                    continue
+            return {}
         data = _cached(key, _fetch, ttl=86400)
         if data:
             saved = _save_intel("mitre", "attack_enterprise_techniques", data)
