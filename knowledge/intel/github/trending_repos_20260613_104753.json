@@ -1,0 +1,60 @@
+[
+  {
+    "name": "vinayaklatthe/microsoft-security-skills",
+    "description": "Curated Microsoft Security skills for AI agents - Defender, Sentinel, Entra, Purview, Intune, Security Copilot",
+    "language": "JavaScript",
+    "stars": 84,
+    "topics": [
+      "ai-agents",
+      "copilot",
+      "defender",
+      "entra",
+      "entra-id",
+      "microsoft",
+      "purview",
+      "security",
+      "securitycopilot",
+      "sentinel"
+    ],
+    "url": "https://github.com/vinayaklatthe/microsoft-security-skills",
+    "readme_url": "https://raw.githubusercontent.com/vinayaklatthe/microsoft-security-skills/HEAD/README.md",
+    "readme_snippet": "<p align=\"center\">\n  <img src=\"assets/banner-v2.svg\" alt=\"Microsoft Security Skills\" width=\"100%\">\n</p>\n\n<h1 align=\"center\">Microsoft Security Skills Plugin</h1>\n\n<p align=\"center\">\n  <a href=\"LICENSE\"><img src=\"https://img.shields.io/badge/license-MIT-50E6FF?style=flat-square&labelColor=0A2540\" alt=\"License: MIT\"></a>\n  <img src=\"https://img.shields.io/badge/skills-58-50E6FF?style=flat-square&labelColor=0A2540\" alt=\"58 skills\">\n  <img src=\"https://img.shields.io/badge/validated-2%20models-50E6FF?style=flat-square&labelColor=0A2540\" alt=\"Validated across 2 models\">\n  <img src=\"https://img.shields.io/badge/grounded%20in-Microsoft%20Learn-50E6FF?style=flat-square&labelColor=0A2540\" alt=\"Grounded in Microsoft Learn\">\n  <img src=\"https://img.shields.io/badge/hosts-Copilot%20%7C%20Claude%20%7C%20Cursor%20%7C%20Codex%20%7C%20Gemini-50E6FF?style=flat-square&labelColor=0A2540\" alt=\"Compatible hosts\">\n</p>\n\n<p align=\"center\">\n  <a href=\"#install-in-60-seconds\"><b>Install the plugin</b></a> .\n  "
+  },
+  {
+    "name": "buynao/aipath",
+    "description": "Interactive AI General Education Course — 30 Lessons, Zero Math",
+    "language": "JavaScript",
+    "stars": 65,
+    "topics": [
+      "ai",
+      "machine-learning"
+    ],
+    "url": "https://github.com/buynao/aipath",
+    "readme_url": "https://raw.githubusercontent.com/buynao/aipath/HEAD/README.md",
+    "readme_snippet": "# AI Path · AI Literacy\n\n**English** · [中文](./README.zh-CN.md)\n\n<p align=\"center\">\n  <a href=\"https://aipath.buynao.com\">\n    <img src=\"media/hero-en.gif\" alt=\"An LLM thinking one token at a time — drag the temperature and its top-5 candidates reshape\" width=\"760\">\n  </a>\n</p>\n\n<p align=\"center\">\n  <b>▶ Live site — <a href=\"https://aipath.buynao.com\">aipath.buynao.com</a></b> &nbsp;·&nbsp; no signup, every concept is playable\n</p>\n\n<p align=\"center\"><sub>↑ The homepage hero (Lesson 15 · the next-token game): an LLM guesses one token at a time — turn the temperature and watch its top-5 candidates reshape, from focused to “wild.”</sub></p>\n\n> A from-scratch AI course designed for absolute beginners — **6 stages, 30 lessons**. No piles of formulas, no jargon dumps. It packs the core principles of AI into intuition through visualizations and interactive demos, then has you write real code to build an AI app that actually runs.\n\nFrom \"what is a neural network\" to \"building a RAG knowledge b"
+  },
+  {
+    "name": "Tools2U/AI-Website-Audit-CLI",
+    "description": "Open-source AI-powered website audit CLI using the OpenAI API for SEO, UX, accessibility, performance, trust, and content analysis.",
+    "language": "Python",
+    "stars": 59,
+    "topics": [
+      "accessibility",
+      "ai",
+      "audit",
+      "automation",
+      "cli",
+      "developer",
+      "openai",
+      "python",
+      "security",
+      "securityaudit",
+      "seo",
+      "ux",
+      "website-audit"
+    ],
+    "url": "https://github.com/Tools2U/AI-Website-Audit-CLI",
+    "readme_url": "https://raw.githubusercontent.com/Tools2U/AI-Website-Audit-CLI/HEAD/README.md",
+    "readme_snippet": "<p align=\"center\">\n  <img src=\"assets/banner.svg\" alt=\"AI Website Audit CLI\" width=\"100%\" />\n</p>\n\n<h1 align=\"center\">AI Website Audit CLI</h1>\n\n<p align=\"center\">\n  Open-source CLI for deterministic website audits and OpenAI-powered strategy reports using the modern Responses API.\n</p>\n\n<p align=\"center\">\n  <a href=\"#quick-start\">Quick start</a> ·\n  <a href=\"#openai-integration\">OpenAI integration</a> ·\n  <a href=\"#features\">Features</a> ·\n  <a href=\"docs/cli-reference.md\">CLI reference</a> ·\n  <a href=\"docs/openai-integration.md\">OpenAI docs</a> ·\n  <a href=\"CONTRIBUTING.md\">Contributing</a>\n</p>\n\n---\n\n## What is this?\n\n`ai-website-audit-cli` turns a public website URL into a structured audit package:\n\n1. **Extraction JSON** with the facts the tool found on the page.\n2. **Deterministic audit JSON** with transparent rule-based checks and scores.\n3. **Markdown report** generated locally or with OpenAI.\n4. **Optional standalone HTML report** for sharing with clients or teams.\n5. **OpenA"
+  }
+]

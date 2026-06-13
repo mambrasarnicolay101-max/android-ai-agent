@@ -1,0 +1,107 @@
+[
+  {
+    "name": "ffffffff0x/1earn",
+    "description": "ffffffff0x 团队维护的安全知识框架,内容包括不仅限于 web安全、工控安全、取证、应急、蓝队设施部署、后渗透、Linux安全、各类靶机writup",
+    "stars": 5690,
+    "url": "https://github.com/ffffffff0x/1earn",
+    "updated": "2026-06-12T05:57:56Z"
+  },
+  {
+    "name": "Hackplayers/hackthebox-writeups",
+    "description": "Writeups for HacktheBox 'boot2root' machines",
+    "stars": 2038,
+    "url": "https://github.com/Hackplayers/hackthebox-writeups",
+    "updated": "2026-06-13T12:08:15Z"
+  },
+  {
+    "name": "p4-team/ctf",
+    "description": "Ctf solutions from p4 team",
+    "stars": 1844,
+    "url": "https://github.com/p4-team/ctf",
+    "updated": "2026-06-11T23:13:57Z"
+  },
+  {
+    "name": "Ignitetechnologies/Vulnhub-CTF-Writeups",
+    "description": "This cheasheet is aimed at the CTF Players and Beginners to help them sort Vulnhub Labs. This list contains all the writeups available on hackingarticles.",
+    "stars": 1233,
+    "url": "https://github.com/Ignitetechnologies/Vulnhub-CTF-Writeups",
+    "updated": "2026-06-09T07:18:20Z"
+  },
+  {
+    "name": "susers/Writeups",
+    "description": "国内各大CTF赛题及writeup整理",
+    "stars": 832,
+    "url": "https://github.com/susers/Writeups",
+    "updated": "2026-06-11T16:40:29Z"
+  },
+  {
+    "name": "Adamkadaban/CTFs",
+    "description": "CTF Cheat Sheet + Writeups / Files for some of the Security CTFs that I've done",
+    "stars": 830,
+    "url": "https://github.com/Adamkadaban/CTFs",
+    "updated": "2026-06-08T14:19:39Z"
+  },
+  {
+    "name": "smallkirby/kernelpwn",
+    "description": "kernel-pwn and writeup collection",
+    "stars": 717,
+    "url": "https://github.com/smallkirby/kernelpwn",
+    "updated": "2026-06-12T04:23:23Z"
+  },
+  {
+    "name": "perfectblue/ctf-writeups",
+    "description": "Perfect Blue's CTF Writeups",
+    "stars": 693,
+    "url": "https://github.com/perfectblue/ctf-writeups",
+    "updated": "2026-06-05T11:30:48Z"
+  },
+  {
+    "name": "bl4de/ctf",
+    "description": "My CTF journey since 2015. Stats, writeups, code snippets, notes, challenges.",
+    "stars": 581,
+    "url": "https://github.com/bl4de/ctf",
+    "updated": "2026-06-11T11:10:50Z"
+  },
+  {
+    "name": "testert1ng/hacker101-ctf",
+    "description": "Hacker101 CTF Writeup",
+    "stars": 523,
+    "url": "https://github.com/testert1ng/hacker101-ctf",
+    "updated": "2026-05-12T15:30:20Z"
+  },
+  {
+    "name": "balsn/ctf_writeup",
+    "description": "CTF writeups from Balsn",
+    "stars": 474,
+    "url": "https://github.com/balsn/ctf_writeup",
+    "updated": "2026-05-11T12:57:04Z"
+  },
+  {
+    "name": "USTC-Hackergame/hackergame2021-writeups",
+    "description": "Hackergame 2021 的官方与非官方题解",
+    "stars": 469,
+    "url": "https://github.com/USTC-Hackergame/hackergame2021-writeups",
+    "updated": "2026-05-18T14:01:18Z"
+  },
+  {
+    "name": "shiltemann/CTF-writeups-public",
+    "description": "Writeups for infosec Capture the Flag events by team Galaxians",
+    "stars": 435,
+    "url": "https://github.com/shiltemann/CTF-writeups-public",
+    "updated": "2026-06-01T21:24:39Z"
+  },
+  {
+    "name": "vmayoral/robot_hacking_manual",
+    "description": "Robot Hacking Manual (RHM). From robotics to cybersecurity. Papers, notes and writeups from a journey into robot cybersecurity.",
+    "stars": 399,
+    "url": "https://github.com/vmayoral/robot_hacking_manual",
+    "updated": "2026-05-19T15:58:36Z"
+  },
+  {
+    "name": "HackThisSite/CTF-Writeups",
+    "description": "Things we learned from Capture The Flag hacking competitions we participated in.",
+    "stars": 263,
+    "url": "https://github.com/HackThisSite/CTF-Writeups",
+    "updated": "2026-06-02T09:32:41Z"
+  }
+]

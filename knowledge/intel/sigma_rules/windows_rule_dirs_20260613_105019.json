@@ -1,0 +1,42 @@
+[
+  {
+    "name": "builtin",
+    "url": null
+  },
+  {
+    "name": "create_remote_thread",
+    "url": null
+  },
+  {
+    "name": "create_stream_hash",
+    "url": null
+  },
+  {
+    "name": "dns_query",
+    "url": null
+  },
+  {
+    "name": "driver_load",
+    "url": null
+  },
+  {
+    "name": "file",
+    "url": null
+  },
+  {
+    "name": "image_load",
+    "url": null
+  },
+  {
+    "name": "network_connection",
+    "url": null
+  },
+  {
+    "name": "pipe_created",
+    "url": null
+  },
+  {
+    "name": "powershell",
+    "url": null
+  }
+]

@@ -1,0 +1,440 @@
+[
+  {
+    "query": "autonomous AI security agent",
+    "title": "EvoArena: Tracking Memory Evolution for Robust LLM Agents in Dynamic Environments",
+    "summary": "Large language model (LLM) agents have achieved strong performance on a wide range of benchmarks, yet most evaluations assume static environments. In contrast, real-world deployment is inherently dynamic, requiring agents to continually align their knowledge, skills, and behavior with changing environments and updated task conditions. To address this gap, we introduce EvoArena, a benchmark suite that models environment changes as sequences of progressive updates across terminal, software, and so",
+    "url": "http://arxiv.org/abs/2606.13681v1",
+    "authors": [
+      "Jundong Xu",
+      "Qingchuan Li",
+      "Jiaying Wu"
+    ]
+  },
+  {
+    "query": "autonomous AI security agent",
+    "title": "InterleaveThinker: Reinforcing Agentic Interleaved Generation",
+    "summary": "Recent image generators have demonstrated impressive photorealism and instruction-following capabilities in single-image generation and editing. However, constrained by their architectures, they cannot achieve interleaved generation (text-image sequence), which has crucial applications in visual narratives, guidance, and embodied manipulation. Even the latest open-source Unified Multimodal Models (UMMs) exhibit limited performance in this regard. In this paper, we introduce InterleaveThinker, th",
+    "url": "http://arxiv.org/abs/2606.13679v1",
+    "authors": [
+      "Dian Zheng",
+      "Harry Lee",
+      "Manyuan Zhang"
+    ]
+  },
+  {
+    "query": "autonomous AI security agent",
+    "title": "SpatialClaw: Rethinking Action Interface for Agentic Spatial Reasoning",
+    "summary": "Spatial reasoning, the ability to determine where objects are, how they relate, and how they move in 3D, remains a fundamental challenge for vision-language models (VLMs). Tool-augmented agents attempt to address this by augmenting VLMs with specialist perception modules, yet their effectiveness is bounded by the action interface through which those tools are invoked. In this work, we study how the design of this interface shapes the agent's capacity for open-ended spatial reasoning. Existing sp",
+    "url": "http://arxiv.org/abs/2606.13673v1",
+    "authors": [
+      "Seokju Cho",
+      "Ryo Hachiuma",
+      "Abhishek Badki"
+    ]
+  },
+  {
+    "query": "autonomous AI security agent",
+    "title": "Agents-K1: Towards Agent-native Knowledge Orchestration",
+    "summary": "Current LLM-based research agents have advanced through agent orchestration, yet largely overlook scientific knowledge orchestration. Existing works often reduce papers to abstracts, surface mentions, and flat \\texttt{cites} edges, omitting key entities, claims, evidence, mechanisms, and method lineages essential for scientific reasoning. To this end, we introduce \\textbf{Agents-K1}, an end-to-end knowledge orchestration pipeline that converts raw documents into agent-native scientific knowledge",
+    "url": "http://arxiv.org/abs/2606.13669v1",
+    "authors": [
+      "Zongsheng Cao",
+      "Bihao Zhan",
+      "Jinxin Shi"
+    ]
+  },
+  {
+    "query": "autonomous AI security agent",
+    "title": "HyperTool: Beyond Step-Wise Tool Calls for Tool-Augmented Agents",
+    "summary": "Tool-augmented LLM agents commonly rely on step-wise atomic tool calls, where each invocation, observation, and value transfer is exposed in the main reasoning trace. This creates an \\emph{execution-granularity mismatch}: locally deterministic tool workflows are unfolded into repeated model-visible decisions, consuming context and forcing the model to manage low-level dataflow in the trace. We introduce \\textbf{HyperTool}, a unified executable MCP-style tool interface that changes the model-visi",
+    "url": "http://arxiv.org/abs/2606.13663v1",
+    "authors": [
+      "Yaxin Du",
+      "Yifan Zhou",
+      "Yujie Ge"
+    ]
+  },
+  {
+    "query": "large language model cybersecurity",
+    "title": "EvoArena: Tracking Memory Evolution for Robust LLM Agents in Dynamic Environments",
+    "summary": "Large language model (LLM) agents have achieved strong performance on a wide range of benchmarks, yet most evaluations assume static environments. In contrast, real-world deployment is inherently dynamic, requiring agents to continually align their knowledge, skills, and behavior with changing environments and updated task conditions. To address this gap, we introduce EvoArena, a benchmark suite that models environment changes as sequences of progressive updates across terminal, software, and so",
+    "url": "http://arxiv.org/abs/2606.13681v1",
+    "authors": [
+      "Jundong Xu",
+      "Qingchuan Li",
+      "Jiaying Wu"
+    ]
+  },
+  {
+    "query": "large language model cybersecurity",
+    "title": "Learning to Reason by Analogy via Retrieval-Augmented Reinforcement Fine-Tuning",
+    "summary": "Retrieval-augmented generation (RAG) has become a standard mechanism for grounding language models in external knowledge, yet conventional retrieval based on lexical or semantic similarity is poorly suited for complex reasoning tasks: a semantically similar problem may demand an entirely different solution strategy, while a superficially different problem may share the same underlying reasoning pattern. We propose Retrieval-Augmented Reinforcement Fine-Tuning (RA-RFT), a post-training framework ",
+    "url": "http://arxiv.org/abs/2606.13680v1",
+    "authors": [
+      "Zilin Xiao",
+      "Qi Ma",
+      "Chun-cheng Jason Chen"
+    ]
+  },
+  {
+    "query": "large language model cybersecurity",
+    "title": "InterleaveThinker: Reinforcing Agentic Interleaved Generation",
+    "summary": "Recent image generators have demonstrated impressive photorealism and instruction-following capabilities in single-image generation and editing. However, constrained by their architectures, they cannot achieve interleaved generation (text-image sequence), which has crucial applications in visual narratives, guidance, and embodied manipulation. Even the latest open-source Unified Multimodal Models (UMMs) exhibit limited performance in this regard. In this paper, we introduce InterleaveThinker, th",
+    "url": "http://arxiv.org/abs/2606.13679v1",
+    "authors": [
+      "Dian Zheng",
+      "Harry Lee",
+      "Manyuan Zhang"
+    ]
+  },
+  {
+    "query": "large language model cybersecurity",
+    "title": "A model of local and global reciprocity",
+    "summary": "We often decide how to treat friends based on observations of their past behavior, whereas actions toward strangers are typically guided by their public reputations. These two kinds of information underlie two classical mechanisms for the evolution of cooperation$\\unicode{x2014}$direct and indirect reciprocity$\\unicode{x2014}$which have largely been studied in isolation. They are not interchangeable: we can recall the past actions of only a small circle of close contacts, whereas for the far lar",
+    "url": "http://arxiv.org/abs/2606.13678v1",
+    "authors": [
+      "Mari Kawakatsu",
+      "Yohsuke Murase",
+      "Taylor A. Kessinger"
+    ]
+  },
+  {
+    "query": "large language model cybersecurity",
+    "title": "Mana: Dexterous Manipulation of Articulated Tools",
+    "summary": "Articulated tool manipulation remains a major challenge in dexterous robotics due to the need to coordinate internal degrees of freedom and contact-rich interactions. While prior work has largely focused on rigid objects, articulated tool use remains underexplored because of its physical complexity and the difficulty of learning functional grasping and manipulation policies. We present Mana (Manipulation Animator), a general sim-to-real framework that reinterprets dexterous manipulation as an an",
+    "url": "http://arxiv.org/abs/2606.13677v1",
+    "authors": [
+      "Zhao-Heng Yin",
+      "Guanya Shi",
+      "Pieter Abbeel"
+    ]
+  },
+  {
+    "query": "automated vulnerability detection neural",
+    "title": "Understanding Truncated Positional Encodings for Graph Neural Networks",
+    "summary": "Positional encodings (PEs) enhance the power of graph neural networks (GNNs), both theoretically and empirically. Two of the most popular families of PEs - spectral (e.g., Laplacian eigenspaces, effective resistance) and walk-based (polynomials of the adjacency matrix) - are theoretically equivalent in expressive power, with expressivity between the 1-WL and 3-WL tests. However, this equivalence assumes the GNN uses the \"complete\" version of these PEs, which requires $O(n^3)$ time and space comp",
+    "url": "http://arxiv.org/abs/2606.13671v1",
+    "authors": [
+      "James Flora",
+      "Mitchell Black",
+      "Weng-Keen Wong"
+    ]
+  },
+  {
+    "query": "automated vulnerability detection neural",
+    "title": "Automated reproducibility assessments in the social and behavioral sciences using large language models",
+    "summary": "Reproducibility in the social and behavioral sciences is typically evaluated by independent researchers who reanalyze the original data to assess whether the published findings can be recovered. However, such approaches are resource-intensive and difficult to scale. Here, we show that large language models (LLMs) can automate reproducibility assessments. Using N=76 published studies with predefined claims from the behavioral and social sciences, we compare LLM-generated analysis with the origina",
+    "url": "http://arxiv.org/abs/2606.13670v1",
+    "authors": [
+      "Tobias Holtdirk",
+      "Pietro Marcolongo",
+      "Anna Steinberg Schulten"
+    ]
+  },
+  {
+    "query": "automated vulnerability detection neural",
+    "title": "Semi-Device-Independent Certification for Nonlocality without Entanglement",
+    "summary": "In this work, we investigate maximum-confidence discrimination, which encompasses minimum-error and unambiguous discrimination, for ensembles of separable states by considering global and separable measurements. We demonstrate that global measurements outperform separable ones, thereby establishing nonlocality without entanglement (NLWE) in terms of confidence in a detection event, a fine-grained state-identification strategy that maximizes the probability of a correct guess given a measurement ",
+    "url": "http://arxiv.org/abs/2606.13667v1",
+    "authors": [
+      "Hanwool Lee",
+      "Joonwoo Bae"
+    ]
+  },
+  {
+    "query": "automated vulnerability detection neural",
+    "title": "EurekAgent: Agent Environment Engineering is All You Need For Autonomous Scientific Discovery",
+    "summary": "LLM-based agents have shown increasing potential in automating scientific discovery. Given an optimizable metric and an execution environment, they can propose, validate, and iterate scientific solutions, and have produced results that outperform human-designed approaches. As model capabilities continue to improve, we argue that the bottleneck for autonomous scientific discovery is shifting from prescribing agent workflows to designing agent environments: the resources, constraints, and interfac",
+    "url": "http://arxiv.org/abs/2606.13662v1",
+    "authors": [
+      "Amy Xin",
+      "Jiening Siow",
+      "Junjie Wang"
+    ]
+  },
+  {
+    "query": "automated vulnerability detection neural",
+    "title": "Robust Control of ECH Deposition Profiles on DIII-D",
+    "summary": "Electron Cyclotron Heating (ECH) is a key actuator in DIII-D and future tokamaks that provides auxiliary heating, localized current drive for scenario development and MHD stability, and even impurity pump-out. Due to its control flexibility and applications, a gyrotron optimization algorithm was developed to multitask and fine-tune the deposition location and heating power of each gyrotron while providing robustness to hardware failure. The ECH Optimization (ECHO) algorithm finds the optimal gyr",
+    "url": "http://arxiv.org/abs/2606.13661v1",
+    "authors": [
+      "A. Rothstein",
+      "H. J. Farre-Kaga",
+      "K. Yasoda"
+    ]
+  },
+  {
+    "query": "adversarial machine learning attack defense",
+    "title": "Learning to Reason by Analogy via Retrieval-Augmented Reinforcement Fine-Tuning",
+    "summary": "Retrieval-augmented generation (RAG) has become a standard mechanism for grounding language models in external knowledge, yet conventional retrieval based on lexical or semantic similarity is poorly suited for complex reasoning tasks: a semantically similar problem may demand an entirely different solution strategy, while a superficially different problem may share the same underlying reasoning pattern. We propose Retrieval-Augmented Reinforcement Fine-Tuning (RA-RFT), a post-training framework ",
+    "url": "http://arxiv.org/abs/2606.13680v1",
+    "authors": [
+      "Zilin Xiao",
+      "Qi Ma",
+      "Chun-cheng Jason Chen"
+    ]
+  },
+  {
+    "query": "adversarial machine learning attack defense",
+    "title": "Mana: Dexterous Manipulation of Articulated Tools",
+    "summary": "Articulated tool manipulation remains a major challenge in dexterous robotics due to the need to coordinate internal degrees of freedom and contact-rich interactions. While prior work has largely focused on rigid objects, articulated tool use remains underexplored because of its physical complexity and the difficulty of learning functional grasping and manipulation policies. We present Mana (Manipulation Animator), a general sim-to-real framework that reinterprets dexterous manipulation as an an",
+    "url": "http://arxiv.org/abs/2606.13677v1",
+    "authors": [
+      "Zhao-Heng Yin",
+      "Guanya Shi",
+      "Pieter Abbeel"
+    ]
+  },
+  {
+    "query": "adversarial machine learning attack defense",
+    "title": "Improving Robotic Generalist Policies via Flow Reversal Steering",
+    "summary": "Generalist policies can learn a wide range of skills from diverse robot datasets. In order to solve or improve on challenging news tasks, we need a way to infer and invoke the appropriate actions from the policy's rich behavioral prior, especially when directly commanding the policy fails. We focus on flow matching generalists and propose Flow Reversal Steering (FRS): a method that takes suboptimal but ``reasonable'' actions, finds their latent noises by passing them through the flow policy in r",
+    "url": "http://arxiv.org/abs/2606.13675v1",
+    "authors": [
+      "Andy Tang",
+      "William Chen",
+      "Andrew Wagenmaker"
+    ]
+  },
+  {
+    "query": "adversarial machine learning attack defense",
+    "title": "RepWAM: World Action Modeling with Representation Visual-Action Tokenizers",
+    "summary": "This work presents RepWAM, a representation-centric world action model (WAM) built on representation visual-action tokenizers. Existing WAMs typically inherit reconstruction-oriented video tokenizers from pretrained video generation models. Although these tokenizers preserve visual fidelity, pixel reconstruction alone provides limited guidance for learning instruction-following dynamics that connect future prediction with robot control. To address this, we explore a semantic visual-action latent",
+    "url": "http://arxiv.org/abs/2606.13674v1",
+    "authors": [
+      "Junke Wang",
+      "Qihang Zhang",
+      "Shuai Yang"
+    ]
+  },
+  {
+    "query": "adversarial machine learning attack defense",
+    "title": "$\\texttt{WEAVER}$, Better, Faster, Longer: An Effective World Model for Robotic Manipulation",
+    "summary": "The potential impacts of world models (WMs, i.e., learned simulators) on robotics are far-reaching -- policy evaluation, policy improvement, and test-time planning -- all with limited real-world interaction. To unlock these downstream capabilities, a WM needs to jointly satisfy three desiderata: $\\textit{(i)}$ fidelity (i.e., producing simulated trajectories that correlate with reality), $\\textit{(ii)}$ consistency (i.e., producing simulated trajectories that are coherent over long horizons), an",
+    "url": "http://arxiv.org/abs/2606.13672v1",
+    "authors": [
+      "Arnav Kumar Jain",
+      "Yilin Wu",
+      "Jesse Farebrother"
+    ]
+  },
+  {
+    "query": "zero-day vulnerability prediction",
+    "title": "Modality Forcing for Scalable Spatial Generation",
+    "summary": "Text-to-image (T2I) models contain rich spatial priors. Synthesizing photorealistic, cluttered scenes requires an understanding of geometry, including perspective and relative scale. Prior works adapt T2I models to leverage this prior for depth prediction, but they require dense depth data and involve complex recipes. We propose Modality Forcing, a simple, scalable post-training recipe for joint image-depth generation using a single DiT trained on sparse depth data. Modality Forcing enables cond",
+    "url": "http://arxiv.org/abs/2606.13676v1",
+    "authors": [
+      "Bardienus Pieter Duisterhof",
+      "Deva Ramanan",
+      "Jeffrey Ichnowski"
+    ]
+  },
+  {
+    "query": "zero-day vulnerability prediction",
+    "title": "RepWAM: World Action Modeling with Representation Visual-Action Tokenizers",
+    "summary": "This work presents RepWAM, a representation-centric world action model (WAM) built on representation visual-action tokenizers. Existing WAMs typically inherit reconstruction-oriented video tokenizers from pretrained video generation models. Although these tokenizers preserve visual fidelity, pixel reconstruction alone provides limited guidance for learning instruction-following dynamics that connect future prediction with robot control. To address this, we explore a semantic visual-action latent",
+    "url": "http://arxiv.org/abs/2606.13674v1",
+    "authors": [
+      "Junke Wang",
+      "Qihang Zhang",
+      "Shuai Yang"
+    ]
+  },
+  {
+    "query": "zero-day vulnerability prediction",
+    "title": "$\\texttt{WEAVER}$, Better, Faster, Longer: An Effective World Model for Robotic Manipulation",
+    "summary": "The potential impacts of world models (WMs, i.e., learned simulators) on robotics are far-reaching -- policy evaluation, policy improvement, and test-time planning -- all with limited real-world interaction. To unlock these downstream capabilities, a WM needs to jointly satisfy three desiderata: $\\textit{(i)}$ fidelity (i.e., producing simulated trajectories that correlate with reality), $\\textit{(ii)}$ consistency (i.e., producing simulated trajectories that are coherent over long horizons), an",
+    "url": "http://arxiv.org/abs/2606.13672v1",
+    "authors": [
+      "Arnav Kumar Jain",
+      "Yilin Wu",
+      "Jesse Farebrother"
+    ]
+  },
+  {
+    "query": "zero-day vulnerability prediction",
+    "title": "World Tracing: Generative Pixel-Aligned Geometry Beyond the Visible",
+    "summary": "Image-to-3D methods often trade off faithfulness and completeness: depth estimators are anchored to input pixels but stop at the visible surface, while image-to-3D models generate complete shapes that are often misaligned with the input. We introduce World Tracing, a generative pixel-aligned geometry representation that predicts 3D points aligned with observed pixels while completing geometry beyond the visible surface. For each input pixel, World Tracing predicts an ordered stack of camera-spac",
+    "url": "http://arxiv.org/abs/2606.13652v1",
+    "authors": [
+      "Hao Zhang",
+      "Mohamed El Banani",
+      "Jen-Hao Cheng"
+    ]
+  },
+  {
+    "query": "zero-day vulnerability prediction",
+    "title": "Operadic consistency: a label-free signal for compositional reasoning failures in LLMs",
+    "summary": "Detecting LLM reasoning failures at inference time without ground-truth labels has motivated a wide range of confidence baselines, including self-consistency, semantic entropy, and P(True), built on within-question sampling and self-evaluation. Operad theory, the formalism for systems built by iterated substitution, suggests a complementary diagnostic: a model's direct answer to a compositional query should agree with the answer it produces by composing a stated decomposition of the same query. ",
+    "url": "http://arxiv.org/abs/2606.13649v1",
+    "authors": [
+      "Nathaniel Bottman",
+      "Yinhong Liu",
+      "Kyle Richardson"
+    ]
+  },
+  {
+    "query": "threat intelligence automation",
+    "title": "Learning to Reason by Analogy via Retrieval-Augmented Reinforcement Fine-Tuning",
+    "summary": "Retrieval-augmented generation (RAG) has become a standard mechanism for grounding language models in external knowledge, yet conventional retrieval based on lexical or semantic similarity is poorly suited for complex reasoning tasks: a semantically similar problem may demand an entirely different solution strategy, while a superficially different problem may share the same underlying reasoning pattern. We propose Retrieval-Augmented Reinforcement Fine-Tuning (RA-RFT), a post-training framework ",
+    "url": "http://arxiv.org/abs/2606.13680v1",
+    "authors": [
+      "Zilin Xiao",
+      "Qi Ma",
+      "Chun-cheng Jason Chen"
+    ]
+  },
+  {
+    "query": "threat intelligence automation",
+    "title": "Mana: Dexterous Manipulation of Articulated Tools",
+    "summary": "Articulated tool manipulation remains a major challenge in dexterous robotics due to the need to coordinate internal degrees of freedom and contact-rich interactions. While prior work has largely focused on rigid objects, articulated tool use remains underexplored because of its physical complexity and the difficulty of learning functional grasping and manipulation policies. We present Mana (Manipulation Animator), a general sim-to-real framework that reinterprets dexterous manipulation as an an",
+    "url": "http://arxiv.org/abs/2606.13677v1",
+    "authors": [
+      "Zhao-Heng Yin",
+      "Guanya Shi",
+      "Pieter Abbeel"
+    ]
+  },
+  {
+    "query": "threat intelligence automation",
+    "title": "SpatialClaw: Rethinking Action Interface for Agentic Spatial Reasoning",
+    "summary": "Spatial reasoning, the ability to determine where objects are, how they relate, and how they move in 3D, remains a fundamental challenge for vision-language models (VLMs). Tool-augmented agents attempt to address this by augmenting VLMs with specialist perception modules, yet their effectiveness is bounded by the action interface through which those tools are invoked. In this work, we study how the design of this interface shapes the agent's capacity for open-ended spatial reasoning. Existing sp",
+    "url": "http://arxiv.org/abs/2606.13673v1",
+    "authors": [
+      "Seokju Cho",
+      "Ryo Hachiuma",
+      "Abhishek Badki"
+    ]
+  },
+  {
+    "query": "threat intelligence automation",
+    "title": "Automated reproducibility assessments in the social and behavioral sciences using large language models",
+    "summary": "Reproducibility in the social and behavioral sciences is typically evaluated by independent researchers who reanalyze the original data to assess whether the published findings can be recovered. However, such approaches are resource-intensive and difficult to scale. Here, we show that large language models (LLMs) can automate reproducibility assessments. Using N=76 published studies with predefined claims from the behavioral and social sciences, we compare LLM-generated analysis with the origina",
+    "url": "http://arxiv.org/abs/2606.13670v1",
+    "authors": [
+      "Tobias Holtdirk",
+      "Pietro Marcolongo",
+      "Anna Steinberg Schulten"
+    ]
+  },
+  {
+    "query": "threat intelligence automation",
+    "title": "Agents-K1: Towards Agent-native Knowledge Orchestration",
+    "summary": "Current LLM-based research agents have advanced through agent orchestration, yet largely overlook scientific knowledge orchestration. Existing works often reduce papers to abstracts, surface mentions, and flat \\texttt{cites} edges, omitting key entities, claims, evidence, mechanisms, and method lineages essential for scientific reasoning. To this end, we introduce \\textbf{Agents-K1}, an end-to-end knowledge orchestration pipeline that converts raw documents into agent-native scientific knowledge",
+    "url": "http://arxiv.org/abs/2606.13669v1",
+    "authors": [
+      "Zongsheng Cao",
+      "Bihao Zhan",
+      "Jinxin Shi"
+    ]
+  },
+  {
+    "query": "penetration testing reinforcement learning",
+    "title": "Learning to Reason by Analogy via Retrieval-Augmented Reinforcement Fine-Tuning",
+    "summary": "Retrieval-augmented generation (RAG) has become a standard mechanism for grounding language models in external knowledge, yet conventional retrieval based on lexical or semantic similarity is poorly suited for complex reasoning tasks: a semantically similar problem may demand an entirely different solution strategy, while a superficially different problem may share the same underlying reasoning pattern. We propose Retrieval-Augmented Reinforcement Fine-Tuning (RA-RFT), a post-training framework ",
+    "url": "http://arxiv.org/abs/2606.13680v1",
+    "authors": [
+      "Zilin Xiao",
+      "Qi Ma",
+      "Chun-cheng Jason Chen"
+    ]
+  },
+  {
+    "query": "penetration testing reinforcement learning",
+    "title": "InterleaveThinker: Reinforcing Agentic Interleaved Generation",
+    "summary": "Recent image generators have demonstrated impressive photorealism and instruction-following capabilities in single-image generation and editing. However, constrained by their architectures, they cannot achieve interleaved generation (text-image sequence), which has crucial applications in visual narratives, guidance, and embodied manipulation. Even the latest open-source Unified Multimodal Models (UMMs) exhibit limited performance in this regard. In this paper, we introduce InterleaveThinker, th",
+    "url": "http://arxiv.org/abs/2606.13679v1",
+    "authors": [
+      "Dian Zheng",
+      "Harry Lee",
+      "Manyuan Zhang"
+    ]
+  },
+  {
+    "query": "penetration testing reinforcement learning",
+    "title": "Mana: Dexterous Manipulation of Articulated Tools",
+    "summary": "Articulated tool manipulation remains a major challenge in dexterous robotics due to the need to coordinate internal degrees of freedom and contact-rich interactions. While prior work has largely focused on rigid objects, articulated tool use remains underexplored because of its physical complexity and the difficulty of learning functional grasping and manipulation policies. We present Mana (Manipulation Animator), a general sim-to-real framework that reinterprets dexterous manipulation as an an",
+    "url": "http://arxiv.org/abs/2606.13677v1",
+    "authors": [
+      "Zhao-Heng Yin",
+      "Guanya Shi",
+      "Pieter Abbeel"
+    ]
+  },
+  {
+    "query": "penetration testing reinforcement learning",
+    "title": "Improving Robotic Generalist Policies via Flow Reversal Steering",
+    "summary": "Generalist policies can learn a wide range of skills from diverse robot datasets. In order to solve or improve on challenging news tasks, we need a way to infer and invoke the appropriate actions from the policy's rich behavioral prior, especially when directly commanding the policy fails. We focus on flow matching generalists and propose Flow Reversal Steering (FRS): a method that takes suboptimal but ``reasonable'' actions, finds their latent noises by passing them through the flow policy in r",
+    "url": "http://arxiv.org/abs/2606.13675v1",
+    "authors": [
+      "Andy Tang",
+      "William Chen",
+      "Andrew Wagenmaker"
+    ]
+  },
+  {
+    "query": "penetration testing reinforcement learning",
+    "title": "RepWAM: World Action Modeling with Representation Visual-Action Tokenizers",
+    "summary": "This work presents RepWAM, a representation-centric world action model (WAM) built on representation visual-action tokenizers. Existing WAMs typically inherit reconstruction-oriented video tokenizers from pretrained video generation models. Although these tokenizers preserve visual fidelity, pixel reconstruction alone provides limited guidance for learning instruction-following dynamics that connect future prediction with robot control. To address this, we explore a semantic visual-action latent",
+    "url": "http://arxiv.org/abs/2606.13674v1",
+    "authors": [
+      "Junke Wang",
+      "Qihang Zhang",
+      "Shuai Yang"
+    ]
+  },
+  {
+    "query": "AI red team autonomous",
+    "title": "EurekAgent: Agent Environment Engineering is All You Need For Autonomous Scientific Discovery",
+    "summary": "LLM-based agents have shown increasing potential in automating scientific discovery. Given an optimizable metric and an execution environment, they can propose, validate, and iterate scientific solutions, and have produced results that outperform human-designed approaches. As model capabilities continue to improve, we argue that the bottleneck for autonomous scientific discovery is shifting from prescribing agent workflows to designing agent environments: the resources, constraints, and interfac",
+    "url": "http://arxiv.org/abs/2606.13662v1",
+    "authors": [
+      "Amy Xin",
+      "Jiening Siow",
+      "Junjie Wang"
+    ]
+  },
+  {
+    "query": "AI red team autonomous",
+    "title": "Before You Think: System 0, AI-Mediated Cognition and Cognitive Colonization",
+    "summary": "This paper examines three recent frameworks for understanding the cognitive and epistemic consequences of artificial intelligence: Tri-System Theory, Thinkframes, and System 0. It argues that while the first two capture important dimensions of AI's influence on individual reasoning and collective epistemic practices, System 0 occupies a theoretically distinctive position that neither can fully replicate. The paper introduces the concept of cognitive colonization, according to which AI systems ca",
+    "url": "http://arxiv.org/abs/2606.13658v1",
+    "authors": [
+      "Marianna Bergamaschi Ganapini",
+      "Massimo Chiriatti",
+      "Enrico Panai"
+    ]
+  },
+  {
+    "query": "AI red team autonomous",
+    "title": "The Moving Drone: Negotiating Agency Between the Voice and the Virtual",
+    "summary": "Melodic material in Hindustani music is presented in relation to a tonic, usually sustained by the tanpura, a four-stringed drone instrument. Rooted in Hindustani music, 'The Moving Drone' sets the traditionally static drone into motion that, throughout the performance, gains increasing agency transitioning from reactive to more proactive roles. The work employs four independent loopers in Max/MSP to function as 'virtual' drones. They are populated cyclically in real-time as the vocalist improvi",
+    "url": "http://arxiv.org/abs/2606.13640v1",
+    "authors": [
+      "Nithya Shikarpur",
+      "Victor Arul",
+      "Anna Huang"
+    ]
+  },
+  {
+    "query": "AI red team autonomous",
+    "title": "Valid Inference with Synthetic Data via Task Exchangeability",
+    "summary": "There is a proliferation of work arguing for the use of synthetic data in scientific research. For example, social scientists are arguing for the use of LLM-generated \"silicon samples\" in pilot studies; AI evaluations increasingly rely on \"LLM-as-a-judge\" outputs; and proteomics research is accelerated by generative models that produce synthetic protein structures. These developments raise an intriguing possibility: synthetic data may help researchers ask more questions, run more studies, and ac",
+    "url": "http://arxiv.org/abs/2606.13629v1",
+    "authors": [
+      "Lezhi Tan",
+      "Tijana Zrnic"
+    ]
+  },
+  {
+    "query": "AI red team autonomous",
+    "title": "EpiBench: Verifiable Evaluation of AI Agents on Epigenomics Analysis",
+    "summary": "We introduce EpiBench, a verifiable benchmark for short-horizon epigenomics analysis. EpiBench evaluates whether agents can make well-defined analysis decisions from realistic workflow states and return deterministically gradable answers. The benchmark includes 106 evaluations across CUT\\&amp;Tag/CUT\\&amp;RUN, ATAC-seq, ChIP-seq, and DNA methylation workflows. Across 5,088 valid trajectories from 16 model-harness pairs, no system passed a majority of attempts: GPT-5.5 / Pi led at 45.0\\% (143/318",
+    "url": "http://arxiv.org/abs/2606.13602v1",
+    "authors": [
+      "Harihara Muralidharan",
+      "Reema Baskar",
+      "Soo Hee Lee"
+    ]
+  }
+]

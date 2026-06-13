@@ -1,0 +1,249 @@
+[
+  {
+    "title": "CyberSci Nationals 2025-2026",
+    "url": "https://cybersecuritychallenge.ca/",
+    "ctftime": "https://ctftime.org/event/3125/",
+    "format": "Jeopardy",
+    "start": "2026-06-13T13:00:00+00:00",
+    "finish": "2026-06-14T23:00:00+00:00",
+    "weight": 0.0,
+    "organizers": [
+      "CyberSciOrganizers"
+    ],
+    "tags": []
+  },
+  {
+    "title": "Crypto CTF 2026",
+    "url": "https://cr.yp.toc.tf/",
+    "ctftime": "https://ctftime.org/event/3034/",
+    "format": "Jeopardy",
+    "start": "2026-06-13T14:00:00+00:00",
+    "finish": "2026-06-14T14:00:00+00:00",
+    "weight": 91.0,
+    "organizers": [
+      "ASIS"
+    ],
+    "tags": []
+  },
+  {
+    "title": "Operation Heist CTF 2026",
+    "url": "https://registration.hackkap.com/",
+    "ctftime": "https://ctftime.org/event/3327/",
+    "format": "Jeopardy",
+    "start": "2026-06-13T14:00:00+00:00",
+    "finish": "2026-06-14T14:00:00+00:00",
+    "weight": 0,
+    "organizers": [
+      "HACK KAP"
+    ],
+    "tags": []
+  },
+  {
+    "title": "SCTF 2026",
+    "url": "https://sctf2026.xctf.org.cn/",
+    "ctftime": "https://ctftime.org/event/3314/",
+    "format": "Jeopardy",
+    "start": "2026-06-14T01:00:00+00:00",
+    "finish": "2026-06-15T01:00:00+00:00",
+    "weight": 0.0,
+    "organizers": [
+      "Syclover"
+    ],
+    "tags": []
+  },
+  {
+    "title": "Sieberrsec CTF 7.0",
+    "url": "https://sieberr.live/",
+    "ctftime": "https://ctftime.org/event/3299/",
+    "format": "Jeopardy",
+    "start": "2026-06-17T01:00:00+00:00",
+    "finish": "2026-06-17T13:00:00+00:00",
+    "weight": 0.0,
+    "organizers": [
+      "sieberr.live"
+    ],
+    "tags": []
+  },
+  {
+    "title": "BCACTF 7.0",
+    "url": "https://www.bcactf.com/",
+    "ctftime": "https://ctftime.org/event/3246/",
+    "format": "Jeopardy",
+    "start": "2026-06-19T10:00:00+00:00",
+    "finish": "2026-06-22T10:00:00+00:00",
+    "weight": 65.05,
+    "organizers": [
+      "Bing Chilling Academies"
+    ],
+    "tags": []
+  },
+  {
+    "title": "RIFFHACK: Black Market Break-In",
+    "url": "http://riffhack.biterra.co/",
+    "ctftime": "https://ctftime.org/event/3297/",
+    "format": "Jeopardy",
+    "start": "2026-06-19T12:00:00+00:00",
+    "finish": "2026-06-22T00:00:00+00:00",
+    "weight": 0,
+    "organizers": [
+      "Biterra"
+    ],
+    "tags": []
+  },
+  {
+    "title": "Google Capture The Flag 2026",
+    "url": "https://g.co/ctf",
+    "ctftime": "https://ctftime.org/event/3222/",
+    "format": "Jeopardy",
+    "start": "2026-06-19T18:00:00+00:00",
+    "finish": "2026-06-21T18:00:00+00:00",
+    "weight": 88.82,
+    "organizers": [
+      "Google CTF"
+    ],
+    "tags": []
+  },
+  {
+    "title": "TraceBash CTF 2026",
+    "url": "https://ctf.tracebash.xyz/",
+    "ctftime": "https://ctftime.org/event/3323/",
+    "format": "Jeopardy",
+    "start": "2026-06-26T09:30:00+00:00",
+    "finish": "2026-06-27T09:30:00+00:00",
+    "weight": 0.0,
+    "organizers": [
+      "TraceBash"
+    ],
+    "tags": []
+  },
+  {
+    "title": "Grey Cat The Flag 2026 Finals",
+    "url": "https://ctf.nusgreyhats.org/",
+    "ctftime": "https://ctftime.org/event/3173/",
+    "format": "Jeopardy",
+    "start": "2026-06-27T02:00:00+00:00",
+    "finish": "2026-06-28T02:00:00+00:00",
+    "weight": 0.0,
+    "organizers": [
+      "NUSGreyhats"
+    ],
+    "tags": []
+  },
+  {
+    "title": "V1T CTF 2026",
+    "url": "https://ctf.v1t.site/",
+    "ctftime": "https://ctftime.org/event/3249/",
+    "format": "Jeopardy",
+    "start": "2026-06-27T02:00:00+00:00",
+    "finish": "2026-06-28T14:00:00+00:00",
+    "weight": 22.14,
+    "organizers": [
+      "R4wr"
+    ],
+    "tags": []
+  },
+  {
+    "title": "SekaiCTF 2026",
+    "url": "https://ctf.sekai.team/",
+    "ctftime": "https://ctftime.org/event/3113/",
+    "format": "Jeopardy",
+    "start": "2026-06-27T08:00:00+00:00",
+    "finish": "2026-06-29T08:00:00+00:00",
+    "weight": 79.25,
+    "organizers": [
+      "Project Sekai"
+    ],
+    "tags": []
+  },
+  {
+    "title": "MntcrlCTF 2026",
+    "url": "https://ctf.mntcrl.it/",
+    "ctftime": "https://ctftime.org/event/3282/",
+    "format": "Jeopardy",
+    "start": "2026-06-27T16:00:00+00:00",
+    "finish": "2026-06-28T16:00:00+00:00",
+    "weight": 0.0,
+    "organizers": [
+      "M0NT3C4RL0"
+    ],
+    "tags": []
+  },
+  {
+    "title": "MindBreak 2026 by ESGI",
+    "url": "https://linktr.ee/m1ndbr34k",
+    "ctftime": "https://ctftime.org/event/3315/",
+    "format": "Jeopardy",
+    "start": "2026-07-03T21:00:00+00:00",
+    "finish": "2026-07-04T06:00:00+00:00",
+    "weight": 0.0,
+    "organizers": [
+      "ESGI"
+    ],
+    "tags": []
+  },
+  {
+    "title": "No Hack No CTF 2026",
+    "url": "https://nhnc.ic3dt3a.org/",
+    "ctftime": "https://ctftime.org/event/3180/",
+    "format": "Jeopardy",
+    "start": "2026-07-04T00:00:00+00:00",
+    "finish": "2026-07-06T00:00:00+00:00",
+    "weight": 23.47,
+    "organizers": [
+      "ICEDTEA"
+    ],
+    "tags": []
+  },
+  {
+    "title": "R3CTF 2026",
+    "url": "https://ctf2026.r3kapig.com/",
+    "ctftime": "https://ctftime.org/event/3149/",
+    "format": "Jeopardy",
+    "start": "2026-07-04T02:00:00+00:00",
+    "finish": "2026-07-06T02:00:00+00:00",
+    "weight": 35.95,
+    "organizers": [
+      "r3kapig"
+    ],
+    "tags": []
+  },
+  {
+    "title": "Fluid Attacks' CTF 2026-2",
+    "url": "https://fluidattacks.com/ctf",
+    "ctftime": "https://ctftime.org/event/3325/",
+    "format": "Jeopardy",
+    "start": "2026-07-04T13:00:00+00:00",
+    "finish": "2026-07-05T01:00:00+00:00",
+    "weight": 0,
+    "organizers": [
+      "Fluid Attacks"
+    ],
+    "tags": []
+  },
+  {
+    "title": "LYKNCTF",
+    "url": "https://ctf.itzdenkii.me/",
+    "ctftime": "https://ctftime.org/event/3280/",
+    "format": "Jeopardy",
+    "start": "2026-07-06T00:00:00+00:00",
+    "finish": "2026-07-08T00:00:00+00:00",
+    "weight": 0.0,
+    "organizers": [
+      "FolodyCTF"
+    ],
+    "tags": []
+  },
+  {
+    "title": "L3akCTF 2026",
+    "url": "https://ctf.l3ak.team/",
+    "ctftime": "https://ctftime.org/event/3061/",
+    "format": "Jeopardy",
+    "start": "2026-07-10T18:00:00+00:00",
+    "finish": "2026-07-12T18:00:00+00:00",
+    "weight": 34.47,
+    "organizers": [
+      "L3ak"
+    ],
+    "tags": []
+  }
+]
