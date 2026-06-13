@@ -11,39 +11,44 @@ Pilar 6 (Upgraded): Real-time network monitoring & ACTIVE DEFENSE
 import subprocess, os, platform, logging, time, re, json, threading, socket
 from collections import defaultdict
 
+"""
+NETWORK SENTINEL v2.5  NOIR SOVEREIGN
+=======================================
+Pilar 6 (Upgraded): Real-time network monitoring & ACTIVE DEFENSE
+- Parse SSH auth.log untuk brute-force detection
+- Auto-block IP via iptables/netsh
+- Honeypot Mesh (Port Jebakan)
+- Automated Counter-Strike (Retaliation via Nmap)
+"""
+import subprocess, os, platform, logging, time, re, json, threading, socket
+from collections import defaultdict
+
+from knowledge_db import sovereign_db
+
 log = logging.getLogger("NetworkSentinel")
 
 GATEWAY = os.environ.get("NOIR_GATEWAY_URL", "http://"+os.environ.get("NOIR_VPS_IP", "8.215.23.17")).rstrip("/")
 API_KEY = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
 HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
 
-BLOCKED_IPS_FILE = os.path.join(os.path.dirname(__file__), "..", "knowledge", "blocked_ips.json")
 INTEL_DIR = os.path.join(os.path.dirname(__file__), "..", "knowledge")
 
 class NetworkSentinel:
     """Aegis Active Defense v2.5 - Deteksi, Blokir, & Serang Balik."""
 
-    _blocked_ips: set = set()
     _fail_counts: dict = defaultdict(int)
     _last_audit: float = 0
     _honeypot_started = False
 
     @classmethod
     def load_blocked_ips(cls):
-        try:
-            if os.path.exists(BLOCKED_IPS_FILE):
-                with open(BLOCKED_IPS_FILE, "r") as f:
-                    data = json.load(f)
-                    cls._blocked_ips = set(data.get("blocked", []))
-        except: pass
+        # Database digunakan secara langsung, load state dihapus.
+        pass
 
     @classmethod
     def save_blocked_ips(cls):
-        try:
-            os.makedirs(os.path.dirname(BLOCKED_IPS_FILE), exist_ok=True)
-            with open(BLOCKED_IPS_FILE, "w") as f:
-                json.dump({"blocked": list(cls._blocked_ips), "updated": time.strftime("%Y-%m-%dT%H:%M:%S")}, f)
-        except: pass
+        # Database menyimpan state secara real-time.
+        pass
 
     @staticmethod
     def counter_strike(ip: str):
@@ -155,7 +160,7 @@ class NetworkSentinel:
 
     @staticmethod
     def block_ip(ip: str):
-        if ip in NetworkSentinel._blocked_ips: return
+        if sovereign_db.is_ip_blocked(ip): return
         system = platform.system()
         success = False
         try:
@@ -172,8 +177,7 @@ class NetworkSentinel:
         except: pass
 
         if success:
-            NetworkSentinel._blocked_ips.add(ip)
-            NetworkSentinel.save_blocked_ips()
+            sovereign_db.add_blocked_ip(ip, reason="Aegis Active Defense Triggered")
             NetworkSentinel._alert_dashboard(ip)
             
             # [ACTIVE DEFENSE] Pemicu Counter-Strike (Asynchronous)
@@ -191,27 +195,46 @@ class NetworkSentinel:
         except: pass
 
     @staticmethod
+    def _scan_honeypot_traps() -> list:
+        """
+        [AEGIS v30.0] Membaca jebakan langsung dari SQLite.
+        """
+        threat_ips = []
+        # Untuk V30, idealnya kita cek syslog atau service yang connect ke port jebakan.
+        # Karena _scan_honeypot_traps di v2.6 masih mock file, kita akan log dan skip file check.
+        # Implementasi honeypot socket listen ada di start_honeypot.
+        return threat_ips
+
+    @staticmethod
     def audit_network():
-        log.info("[SENTINEL] Memulai audit keamanan jaringan v2.5...")
+        log.info("[SENTINEL] Memulai audit keamanan jaringan v2.6 AEGIS...")
         
         # Inisialisasi Honeypot Ports
         if not NetworkSentinel._honeypot_started:
-            NetworkSentinel.start_honeypot(port=2222) # SSH Fake Port
-            NetworkSentinel.start_honeypot(port=23)   # Telnet Fake Port
-            NetworkSentinel.start_honeypot(port=8080) # HTTP Proxy Fake Port
+            # Load active traps from SQLite
+            active_traps = sovereign_db.get_active_traps()
+            for trap in active_traps:
+                NetworkSentinel.start_honeypot(port=trap["port"])
             NetworkSentinel._honeypot_started = True
-
-        NetworkSentinel.load_blocked_ips()
+        
+        # [AEGIS] Scan brute-force dari auth.log
         suspicious_ips = NetworkSentinel._detect_bruteforce()
-        for ip in suspicious_ips:
+
+        # Gabungkan dan deduplicate semua ancaman
+        all_threats = list(set(suspicious_ips))
+        for ip in all_threats:
             NetworkSentinel.block_ip(ip)
 
         conns = NetworkSentinel.get_active_connections()
-        established = [c for c in conns if "ESTAB" in c.get("state", "")]
-        return {"blocked_count": len(NetworkSentinel._blocked_ips), "threats": suspicious_ips}
+        blocked_list = sovereign_db.get_all_blocked_ips()
+        return {
+            "blocked_count": len(blocked_list),
+            "threats": all_threats,
+            "brute_force": suspicious_ips,
+            "honeypot_decoys": []
+        }
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     NetworkSentinel.audit_network()
     while True: time.sleep(1) # Keep alive untuk mendengarkan port Honeypot
-

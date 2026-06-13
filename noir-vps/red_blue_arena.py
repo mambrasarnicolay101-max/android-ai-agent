@@ -95,10 +95,6 @@ class RedBlueArena:
                 changes={"security_arena_report": {"findings": attack_findings}},
                 complexity=2
             )
-            # Karena ini simulasi otomatis yang sukses, kita auto-approve untuk dokumentasi
-            pending = evolution_engine.get_all_evolutions()["pending"]
-            if pending:
-                evolution_engine.approve_evolution(pending[-1]["id"])
         except Exception as e:
             log.warning(f"[MEMORY] Gagal log ke evolution engine: {e}")
                 

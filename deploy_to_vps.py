@@ -1,100 +1,138 @@
-import paramiko
 import os
-import time
-from dotenv import load_dotenv
+import zipfile
+import paramiko
 from scp import SCPClient
 
-load_dotenv()
+def zipdir(path, ziph):
+    # ziph is zipfile handle
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            # relative path to preserve directory structure inside zip
+            rel_path = os.path.relpath(file_path, os.path.dirname(path))
+            ziph.write(file_path, arcname=rel_path)
 
-VPS_IP   = os.environ.get("NOIR_VPS_IP", "8.215.23.17")
-VPS_USER = os.environ.get("NOIR_VPS_USER", "root")
-VPS_PASS = os.environ.get("NOIR_VPS_PASS", "N!colay_No1r.Ai@Agent#Secure")
-REMOTE_ROOT = "/root/noir-agent"
+def create_archive():
+    print("[*] Mengemas Dashboard dan Mesin Noir Sovereign...")
+    zip_path = "noir_deployment.zip"
+    dashboard_path = r"C:\Users\ASUS\.gemini\antigravity\scratch\android-ai-agent\noir_dashboard\dist"
+    ai_engine_path = r"C:\Users\ASUS\.gemini\config\plugins\noir-sovereign\skills\autonomous-penetration\resources"
 
-def exec_cmd(ssh, cmd, wait=True):
-    _, stdout, stderr = ssh.exec_command(cmd)
-    if wait:
-        out = stdout.read().decode().strip()
-        err = stderr.read().decode().strip()
-        return out, err
-    return None, None
+    with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        if os.path.exists(dashboard_path):
+            zipdir(dashboard_path, zipf)
+        if os.path.exists(ai_engine_path):
+            zipdir(ai_engine_path, zipf)
+            
+    print(f"[+] Berhasil membuat {zip_path}")
+    return zip_path
 
-def deploy():
-    print(f"=== NOIR SOVEREIGN DEPLOY v21.4 ===")
-    print(f"Target: {VPS_IP}")
-
+def deploy_to_vps(zip_file, host, user, password):
+    print(f"[*] Menghubungkan ke VPS {host}...")
+    
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
+    
     try:
-        ssh.connect(VPS_IP, username=VPS_USER, password=VPS_PASS, timeout=15)
-        print("Connected to VPS.")
-
-        # 1. Sync files
+        ssh.connect(host, username=user, password=password)
+        
+        # 1. Setup Direktori di VPS
+        print("[*] Menyiapkan direktori di VPS (/opt/noir_sovereign)...")
+        ssh.exec_command("rm -rf /opt/noir_sovereign")
+        ssh.exec_command("mkdir -p /opt/noir_sovereign")
+        
+        # 2. Upload file
+        print("[*] Mengunggah file instalasi...")
         with SCPClient(ssh.get_transport()) as scp:
-            print("Syncing .env...")
-            scp.put(".env", remote_path=REMOTE_ROOT + "/.env")
-            print("Syncing root scripts...")
-            scripts = ["sovereign_unified_boot.py", "purge_system.py", "requirements.txt"]
-            for s in scripts:
-                if os.path.exists(s):
-                    scp.put(s, remote_path=REMOTE_ROOT + "/" + s)
-            print("Syncing noir-ui/...")
-            scp.put("noir-ui", remote_path=REMOTE_ROOT, recursive=True)
-            print("Syncing noir-vps/...")
-            scp.put("noir-vps", remote_path=REMOTE_ROOT, recursive=True)
+            scp.put(zip_file, remote_path='/opt/noir_sovereign/')
+            
+        # 3. Ekstrak dan Install Dependensi
+        print("[*] Mengekstrak dan mengatur environment (Python, Nginx)...")
+        commands = [
+            "cd /opt/noir_sovereign",
+            "apt-get update && apt-get install -y unzip nginx python3-pip",
+            "unzip -o noir_deployment.zip",
+            "pip3 install fastapi uvicorn requests paramiko"
+        ]
+        
+        for cmd in commands:
+            stdin, stdout, stderr = ssh.exec_command(cmd)
+            stdout.channel.recv_exit_status() # wait for command to finish
+            
+        # 4. Setup Nginx untuk Dashboard React
+        nginx_conf = """
+server {
+    listen 80;
+    server_name _;
+    
+    root /opt/noir_sovereign/dist;
+    index index.html;
+    
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+    
+    location /api/ {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+        """
+        ssh.exec_command(f"echo '{nginx_conf}' > /etc/nginx/sites-available/default")
+        ssh.exec_command("systemctl restart nginx")
+        
+        # 5. Setup Systemd Service untuk Mesin Singularity
+        service_conf = """
+[Unit]
+Description=Noir Sovereign Singularity Engine
+After=network.target
 
-        # 2. Ensure python-multipart is installed (required for file upload endpoint)
-        print("Ensuring dependencies are installed...")
-        out, _ = exec_cmd(ssh, "pip3 install python-multipart websockets --quiet 2>&1 | tail -3")
-        print(f"  Deps: {out[:80] if out else 'OK'}")
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/noir_sovereign/resources/singularity
+ExecStart=/usr/bin/python3 singularity_orchestrator.py --continuous --interval 30
+Restart=always
+RestartSec=5
 
-        # 3. Purge __pycache__ to avoid stale bytecode conflicts
-        exec_cmd(ssh, f"find {REMOTE_ROOT} -type d -name __pycache__ -exec rm -rf {{}} + 2>/dev/null || true")
-        print("Purged __pycache__ directories.")
+[Install]
+WantedBy=multi-user.target
+        """
+        
+        api_service_conf = """
+[Unit]
+Description=Noir Sovereign Backend API
+After=network.target
 
-        # 4. Kill ALL old server processes (both gunicorn AND uvicorn)
-        print("Stopping all server processes...")
-        exec_cmd(ssh, "pkill -9 -f gunicorn 2>/dev/null || true")
-        exec_cmd(ssh, "pkill -9 -f uvicorn 2>/dev/null || true")
-        exec_cmd(ssh, "pkill -9 -f web_server 2>/dev/null || true")
-        exec_cmd(ssh, "fuser -k 80/tcp 2>/dev/null || true")
-        time.sleep(2)
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/noir_sovereign/resources/singularity
+ExecStart=/usr/local/bin/uvicorn backend_api:app --host 0.0.0.0 --port 8000
+Restart=always
 
-        # 5. Ensure screenshots directory exists
-        exec_cmd(ssh, f"mkdir -p {REMOTE_ROOT}/noir-ui/screenshots")
-        print("Screenshots directory ensured.")
-
-        # 6. Start server — uvicorn ONLY (standardized, no gunicorn)
-        print("Starting Noir Sovereign (uvicorn, port 80)...")
-        start_cmd = (
-            f"cd {REMOTE_ROOT}/noir-ui && "
-            f"nohup python3 -m uvicorn web_server:app "
-            f"--host 0.0.0.0 --port 80 --workers 1 "
-            f"> server.log 2>&1 &"
-        )
-        exec_cmd(ssh, start_cmd, wait=False)
-        time.sleep(5)
-
-        # 7. Verify
-        out, _ = exec_cmd(ssh, "netstat -tuln | grep :80")
-        if out:
-            print(f"SUCCESS: Server is LIVE on Port 80")
-            print(f"  {out.strip()}")
-        else:
-            print("WARNING: Port 80 not detected. Checking logs...")
-            log, _ = exec_cmd(ssh, f"tail -n 25 {REMOTE_ROOT}/noir-ui/server.log")
-            print(f"Server Log:\n{log}")
-
-        # 8. Final connectivity check
-        out, _ = exec_cmd(ssh, "curl -s -o /dev/null -w '%{http_code}' http://"+os.environ.get("NOIR_VPS_IP", "8.215.23.17")+"/")
-        print(f"HTTP Health Check: {out} (expected: 200)")
-
+[Install]
+WantedBy=multi-user.target
+        """
+        
+        ssh.exec_command(f"echo '{service_conf}' > /etc/systemd/system/noir-engine.service")
+        ssh.exec_command(f"echo '{api_service_conf}' > /etc/systemd/system/noir-api.service")
+        
+        ssh.exec_command("systemctl daemon-reload")
+        ssh.exec_command("systemctl enable noir-api.service")
+        ssh.exec_command("systemctl start noir-api.service")
+        ssh.exec_command("systemctl enable noir-engine.service")
+        ssh.exec_command("systemctl start noir-engine.service")
+        
+        print(f"[+] DEPLOYMENT SUKSES! Noir Sovereign kini hidup di {host}")
+        print(f"[+] Akses Dashboard dari mana saja: http://{host}")
+        
     except Exception as e:
-        print(f"DEPLOY ERROR: {str(e)}")
+        print(f"[-] Error deployment: {e}")
     finally:
         ssh.close()
-        print("=== DEPLOY COMPLETE ===")
 
 if __name__ == "__main__":
-    deploy()
+    zip_path = create_archive()
+    deploy_to_vps(zip_path, "8.215.23.17", "root", "N!colay_No1r.Ai@Agent#Secure")

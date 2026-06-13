@@ -1,0 +1,18 @@
+[Unit]
+Description=Noir Sovereign Web Commander Server V30.1 — Port 80
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/noir-agent/noir-ui
+ExecStart=/usr/bin/python3 -m uvicorn web_server:app --host 0.0.0.0 --port 80 --workers 1
+Restart=always
+RestartSec=5
+StandardOutput=append:/root/noir-agent/noir-ui/server.log
+StandardError=append:/root/noir-agent/noir-ui/server.log
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONPATH=/root/noir-agent/noir-vps:/root/noir-agent/noir-ui
+
+[Install]
+WantedBy=multi-user.target

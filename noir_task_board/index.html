@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noir Task Board | AI-Powered Task Management</title>
+    <meta name="description" content="A beautiful glassmorphism kanban board created by Noir Sovereign AI.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Background Orbs for aesthetics -->
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+
+        <!-- Main Glass Panel -->
+        <main class="glass-panel">
+            <header>
+                <h1>Noir <span>Task Board</span></h1>
+                <p>Advanced Cognitive Workflow Management</p>
+            </header>
+
+            <section class="task-input-section">
+                <form id="task-form">
+                    <input type="text" id="task-input" placeholder="Add a new directive..." autocomplete="off" required>
+                    <button type="submit" id="add-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                </form>
+            </section>
+
+            <section class="task-list-section">
+                <div class="list-header">
+                    <h2>Pending Directives</h2>
+                    <span id="task-count" class="badge">0</span>
+                </div>
+                <ul id="task-list">
+                    <!-- Tasks will be injected here via JS -->
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html>

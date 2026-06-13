@@ -68,12 +68,15 @@ if not GATEWAY_URL or not API_KEY:
 # ─────────────────────────────────────────
 # SYSTEM SHELL EXECUTOR
 # ─────────────────────────────────────────
+import shlex
+
 def shell(cmd: str, timeout: int = 60) -> dict:
-    """Jalankan perintah shell dengan penanganan error penuh."""
+    """Jalankan perintah shell secara aman menggunakan pemecahan token (shell=False)."""
     log.info(f"[SHELL] {cmd}")
     try:
+        cmd_args = shlex.split(cmd)
         r = subprocess.run(
-            cmd, shell=True, capture_output=True,
+            cmd_args, shell=False, capture_output=True,
             text=True, timeout=timeout,
             encoding="utf-8", errors="replace"
         )
@@ -81,6 +84,7 @@ def shell(cmd: str, timeout: int = 60) -> dict:
     except subprocess.TimeoutExpired:
         return {"success": False, "output": "", "error": f"Timeout setelah {timeout}s"}
     except Exception as e:
+        log.error(f"[SHELL_ERR] Gagal mengeksekusi {cmd}: {e}")
         return {"success": False, "output": "", "error": str(e)}
 
 # ─────────────────────────────────────────

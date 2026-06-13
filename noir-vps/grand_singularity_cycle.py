@@ -106,26 +106,67 @@ class GrandSingularityCycle:
         log.info(f" [SINGULARITY] Siklus #{self.state['cycle']} selesai. Hibernasi hingga jendela berikutnya.")
 
     def _step_research(self):
-        """Tahap Penelitian: AI mencari tren keamanan dan teknologi baru."""
-        log.info(" [SINGULARITY] Fase 1: Penelitian Otonom...")
-        topics = [
-            "Kerentanan Keamanan LLM 2026",
-            "Teknik Evasio Lanjutan untuk Sandbox Android",
-            "Kriptografi Pasca-Quantum dalam Python",
-            "Metodologi Analisis Zero-Day"
-        ]
-        import random
-        topic = random.choice(topics)
+        """Tahap Penelitian: AI Interrogation & Deep Web Crawling."""
+        log.info(" [SINGULARITY] Fase 1: Active AI Interrogation & Web Crawling...")
         
-        prompt = f"Lakukan riset informasi terbaru tentang '{topic}'. Ringkas teknik utama dan berikan cuplikan Python jika berlaku untuk pertahanan atau pengujian."
-        research_result = OmniRouter.query(prompt, task_type="reasoning")
+        # 1. Minta AI pihak ketiga untuk memikirkan topik/pertanyaan tersulit saat ini
+        meta_prompt = (
+            "Kamu adalah inti kognitif Noir. Hasilkan tepat 3 topik/pertanyaan spesifik dan "
+            "mutakhir tentang keamanan siber, eksploitasi zero-day, atau AI evasion yang "
+            "paling sulit dipecahkan tahun ini. Jawab hanya dengan format list 1, 2, 3 "
+            "tanpa pembukaan/penutup."
+        )
+        log.info(" [SINGULARITY] Menghasilkan daftar interogasi ke OmniRouter...")
+        topics_raw = OmniRouter.query(meta_prompt, task_type="reasoning")
         
-        if research_result and "[Error]" not in research_result:
-            vector_memory.add_experience(
-                text=f"Riset tentang {topic}: {research_result}",
-                metadata={"source": "grand_singularity", "type": "research_insight", "topic": topic}
+        # Parsing manual
+        topics = []
+        if topics_raw and "[Error]" not in topics_raw:
+            import re
+            lines = topics_raw.split('\n')
+            for line in lines:
+                clean = re.sub(r'^\d+[\.\)\-]\s*', '', line.strip())
+                if clean and len(clean) > 10:
+                    topics.append(clean)
+        
+        if not topics:
+            topics = ["Advanced Evasion Techniques in Python 2026", "Kernel-level Rootkits Analysis"]
+
+        # Limit to max 3 topics per cycle
+        topics = topics[:3]
+        log.info(f" [SINGULARITY] Topik didapatkan: {topics}")
+        
+        # 2. Deep Web Crawling untuk setiap topik
+        from autonomous_browser import AutonomousBrowser
+        
+        for topic in topics:
+            log.info(f" [SINGULARITY] Memulai rayapan mendalam untuk: {topic}")
+            # Crawl web dan dapatkan array dictionary {"url", "text"}
+            scraped_data = AutonomousBrowser.explore_topic(topic)
+            
+            if not scraped_data:
+                log.warning(f" [SINGULARITY] Tidak ada data web ditemukan untuk: {topic}")
+                continue
+                
+            # 3. Lempar data mentah internet kembali ke AI Pihak Ketiga untuk ekstraksi
+            log.info(" [SINGULARITY] Menganalisis hasil scraping dengan OmniRouter...")
+            combined_text = "\n\n".join([f"Source: {d['url']}\n{d['text'][:1500]}" for d in scraped_data])
+            
+            extraction_prompt = (
+                f"Topik: {topic}\n"
+                f"Berikut adalah data mentah yang disedot dari internet:\n{combined_text}\n\n"
+                "Ekstrak secara mendalam menjadi satu kesimpulan teknis atau cuplikan kode yang "
+                "bisa langsung menjadi 'Skill/Pengetahuan' baru untukku. Fokus pada aspek paling teknikal."
             )
-            log.info(f" [SINGULARITY] Riset tentang '{topic}' telah diserap ke dalam memori.")
+            
+            extracted_knowledge = OmniRouter.query(extraction_prompt, task_type="coding")
+            
+            if extracted_knowledge and "[Error]" not in extracted_knowledge:
+                vector_memory.add_experience(
+                    text=f"Deep Scrape ({topic}):\n{extracted_knowledge}",
+                    metadata={"source": "deep_crawler", "type": "active_learning", "topic": topic[:50]}
+                )
+                log.info(f" [SINGULARITY] ✔️ Pengetahuan dari '{topic[:30]}...' telah dienkripsi ke memori vektor.")
 
     def _step_simulation(self):
         """Tahap Simulasi: Red vs Blue Arena dengan peningkatan LLM."""

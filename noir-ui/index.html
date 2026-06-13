@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noir Sovereign | v29.0 God-Eye View</title>
+    <title>Noir Sovereign | v30.1 Grand Singularity</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -212,12 +212,385 @@
             background: var(--bg-deep); z-index: 9999; display: flex; flex-direction: column;
             align-items: center; justify-content: center; transition: 0.5s;
         }
+
+        /* FLOATING CO-PILOT CHAT TOGGLE BUTTON */
+        #copilot-toggle {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            box-shadow: 0 0 25px rgba(188, 19, 254, 0.5), inset 0 0 10px rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.2);
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: float-copilot 3s ease-in-out infinite;
+            outline: none;
+        }
+        #copilot-toggle:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 35px var(--accent-cyan);
+            border-color: var(--accent-cyan);
+        }
+        @keyframes float-copilot {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* SLIDING CO-PILOT PANEL */
+        #copilot-panel {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            height: 100%;
+            background: rgba(5, 5, 10, 0.96);
+            backdrop-filter: blur(25px);
+            border-left: 1px solid rgba(188, 19, 254, 0.3);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+        }
+        #copilot-panel.active {
+            right: 0;
+        }
+        .copilot-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(188, 19, 254, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+        }
+        .copilot-header-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .copilot-close-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .copilot-close-btn:hover {
+            color: var(--accent-crimson);
+            transform: scale(1.1);
+        }
+        #copilot-messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-purple) transparent;
+        }
+        .copilot-suggestions {
+            padding: 10px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            background: rgba(0,0,0,0.25);
+            border-top: 1px solid rgba(255,255,255,0.02);
+        }
+        .suggestion-chip {
+            background: rgba(188, 19, 254, 0.1);
+            border: 1px solid rgba(188, 19, 254, 0.2);
+            color: #d1d5db;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .suggestion-chip:hover {
+            background: rgba(0, 242, 255, 0.15);
+            border-color: var(--accent-cyan);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .copilot-input-area {
+            padding: 20px;
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .copilot-input-row {
+            display: flex;
+            gap: 10px;
+        }
+        #copilot-input {
+            flex: 1;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            outline: none;
+            font-size: 0.85rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        #copilot-input:focus {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 8px rgba(188, 19, 254, 0.2);
+        }
+
+        /* TERMINAL STYLE */
+        .terminal-container {
+            background: rgba(5, 5, 10, 0.9);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin-top: 15px;
+        }
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+        }
+        .terminal-output {
+            height: 350px;
+            overflow-y: auto;
+            color: #05ffa1;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        .terminal-input-row {
+            display: flex;
+            gap: 10px;
+        }
+        .terminal-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 4px;
+            padding: 10px;
+            color: white;
+            font-family: inherit;
+        }
+        .terminal-input:focus {
+            border-color: var(--accent-cyan);
+            outline: none;
+        }
+
+        /* FILE MANAGER STYLE */
+        .file-manager {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .file-breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .file-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .file-table th, .file-table td {
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .file-table th {
+            color: var(--text-dim);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        .file-table tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+        .file-item-icon {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        .file-editor-modal {
+            display: none;
+            position: fixed;
+            top: 50px;
+            left: 50px;
+            right: 50px;
+            bottom: 50px;
+            background: rgba(10, 10, 20, 0.98);
+            border: 1px solid var(--accent-purple);
+            border-radius: 8px;
+            z-index: 10000;
+            padding: 20px;
+            flex-direction: column;
+            box-shadow: 0 0 30px rgba(188, 19, 254, 0.4);
+        }
+        .file-editor-textarea {
+            flex: 1;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            color: white;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 15px;
+            resize: none;
+            margin-bottom: 15px;
+        }
+
+        /* PLANNER & AGENT STYLE */
+        .plan-card {
+            border: 1px solid rgba(188, 19, 254, 0.2);
+            border-radius: 6px;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        .plan-card:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 10px rgba(188, 19, 254, 0.1);
+        }
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .plan-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+            padding-left: 10px;
+            border-left: 2px solid rgba(255,255,255,0.05);
+        }
+        .step-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            padding: 5px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.01);
+        }
+        .step-status-btn {
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .step-status-pending { background: rgba(255,255,255,0.1); color: #fff; }
+        .step-status-in_progress { background: rgba(0, 242, 255, 0.1); color: var(--accent-cyan); border-color: rgba(0, 242, 255, 0.3); }
+        .step-status-done { background: rgba(5, 255, 161, 0.1); color: var(--accent-green); border-color: rgba(5, 255, 161, 0.3); }
+        .step-status-failed { background: rgba(255, 42, 109, 0.1); color: var(--accent-crimson); border-color: rgba(255, 42, 109, 0.3); }
+
+        .agent-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.01);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .agent-item:hover {
+            background: rgba(255,255,255,0.03);
+            border-color: rgba(0, 242, 255, 0.2);
+        }
+        .agent-item.active {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 242, 255, 0.03);
+        }
     </style>
 </head>
 <body>
     <div id="loader">
-        <h1 style="color: var(--accent-purple); font-family: 'JetBrains Mono';">SOVEREIGN V29.0</h1>
+        <h1 style="color: var(--accent-purple); font-family: 'JetBrains Mono';">SOVEREIGN V30.1</h1>
         <p style="color: var(--text-dim); margin-top: 10px;">Establishing God-Eye View...</p>
+    </div>
+
+    <!-- SECURITY AUTHENTICATION MODAL -->
+    <div id="auth-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 2, 4, 0.95); z-index: 10000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(20px);">
+        <div class="card" style="width: 400px; text-align: center; border: 1px solid var(--accent-purple); box-shadow: 0 0 30px rgba(188, 19, 254, 0.2);">
+            <div style="font-size: 3rem; margin-bottom: 15px;">🔒</div>
+            <div class="card-title" style="color: var(--accent-purple); font-size: 1.1rem;">LINK NEURAL TERKUNCI</div>
+            <p style="color: var(--text-dim); font-size: 0.85rem; margin: 10px 0 20px 0; line-height: 1.5;">Masukkan Kunci Otorisasi Sovereign Anda untuk membuka dekripsi dashboard dan mengakses kendali otonom.</p>
+            <input type="password" id="auth-token-input" placeholder="Masukkan Kunci Otorisasi (Token)..." style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); color: white; text-align: center; margin-bottom: 20px; outline: none; font-family: 'JetBrains Mono';" onkeydown="if(event.key==='Enter') submitAuthToken()">
+            <button class="btn btn-purple" style="width: 100%; padding: 12px;" onclick="submitAuthToken()">DEKRIPSI KENDALI</button>
+        </div>
+    </div>
+
+    <!-- PERSISTENT NEURAL CO-PILOT CHAT PANEL -->
+    <button id="copilot-toggle" onclick="toggleCopilotPanel()" title="Buka Asisten Neural Co-Pilot">🧠</button>
+
+    <div id="copilot-panel">
+        <div class="copilot-header">
+            <div class="copilot-header-title">
+                <span>🧠</span> NEURAL CO-PILOT v30.1
+            </div>
+            <button class="copilot-close-btn" onclick="toggleCopilotPanel()">&times;</button>
+        </div>
+        <div id="copilot-messages-container">
+            <div class="message ai">Neural Co-Pilot aktif. Hubungan telemetri terjalin. Silakan berikan perintah atau konsultasikan strategi pertempuran Anda dalam bahasa alami.</div>
+        </div>
+        
+        <!-- Suggestions Chips -->
+        <div class="copilot-suggestions">
+            <span class="suggestion-chip" onclick="clickSuggestion('/sysinfo')">🔍 Cek Spesifikasi</span>
+            <span class="suggestion-chip" onclick="clickSuggestion('/screenshot')">📸 Ambil Screenshot</span>
+            <span class="suggestion-chip" onclick="clickSuggestion('tampilkan skor SMI terbaru')">📈 Skor SMI</span>
+            <span class="suggestion-chip" onclick="clickSuggestion('bagaimana status web server VPS?')">🛡️ Status Server</span>
+            <span class="suggestion-chip" onclick="clickSuggestion('/build web e-commerce minimalis dark')">🔨 Rancang Web</span>
+        </div>
+
+        <div class="copilot-input-area">
+            <div class="copilot-input-row">
+                <input type="text" id="copilot-input" placeholder="Tulis instruksi tanpa batas di sini..." onkeydown="if(event.key==='Enter') sendCopilotMessage()">
+                <button class="btn btn-purple" style="padding: 10px 20px; font-size: 0.8rem;" onclick="sendCopilotMessage()">KIRIM</button>
+            </div>
+        </div>
     </div>
 
     <div class="bg-grid"></div>
@@ -227,6 +600,7 @@
         
         <div class="nav-section-title">Core Operations</div>
         <div class="nav-item active" onclick="switchTab('tab-overview', this)">🌐 OVERVIEW</div>
+        <div class="nav-item" onclick="switchTab('tab-skills', this)">🧠 NEURAL SKILLS</div>
         <div class="nav-item" onclick="switchTab('tab-evolution', this)">🧬 EVOLUTION</div>
         
         <div class="nav-section-title">God-Eye Modules</div>
@@ -237,6 +611,12 @@
         <div class="nav-item" onclick="switchTab('tab-swarm', this)">🕷️ SWARM ORCHESTRATOR</div>
         <div class="nav-item" onclick="switchTab('tab-memory', this)">🧠 VECTOR MEMORY</div>
         <div class="nav-item" onclick="switchTab('tab-hardware', this)">🔌 HARDWARE LAB</div>
+
+        <div class="nav-section-title">Antigravity Controls</div>
+        <div class="nav-item" onclick="switchTab('tab-terminal', this)">🖥️ BASH TERMINAL</div>
+        <div class="nav-item" onclick="switchTab('tab-filemanager', this)">📁 FILE MANAGER</div>
+        <div class="nav-item" onclick="switchTab('tab-taskplanner', this)">📋 TASK PLANNER</div>
+        <div class="nav-item" onclick="switchTab('tab-agenthub', this)">🤖 AGENT HUB</div>
 
         <div class="nav-section-title">Guides & Help</div>
         <div class="nav-item" onclick="switchTab('tab-help', this)">🌟 CO-PILOT GUIDE</div>
@@ -623,6 +1003,205 @@
             </div>
         </section>
 
+        <!-- 1.B. NEURAL SKILLS MATRIX (MAP & SPECS) — LIVE V30.1 -->
+        <section id="tab-skills" class="content-area">
+            <div class="grid-layout">
+                <!-- Header Banner with Live SMI -->
+                <div class="card grid-span-3" style="background: linear-gradient(135deg, rgba(5,255,161,0.08) 0%, transparent 100%); border-color: rgba(5,255,161,0.25);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+                        <div>
+                            <div class="card-title" style="color: var(--accent-green); font-size: 1.25rem; font-weight: 800; font-family: 'JetBrains Mono';">🧠 NEURAL SKILLS MATRIX — V30.1 GRAND SINGULARITY</div>
+                            <p style="color: var(--text-dim); font-size: 0.85rem; line-height: 1.5; margin-top: 6px;">Data langsung dari VPS Alibaba. Skor dihitung berdasarkan maturitas model, evolusi otonom, dan sintesis skill APEX real-time.</p>
+                        </div>
+                        <div style="display: flex; gap: 8px; align-items: center; flex-shrink: 0;">
+                            <div id="skills-live-indicator" style="width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%; animation: pulse 1.5s infinite;"></div>
+                            <span style="font-size: 0.75rem; color: var(--text-dim); font-family: 'JetBrains Mono';" id="skills-last-updated">Memuat...</span>
+                            <button onclick="loadSkillsData()" style="padding: 4px 10px; background: rgba(5,255,161,0.1); border: 1px solid var(--accent-green); color: var(--accent-green); border-radius: 4px; font-size: 0.7rem; cursor: pointer;">⟳ REFRESH</button>
+                        </div>
+                    </div>
+
+                    <!-- Live Stats Row -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 18px;">
+                        <div style="background: rgba(5,255,161,0.05); border: 1px solid rgba(5,255,161,0.15); border-radius: 8px; padding: 12px; text-align: center;">
+                            <div style="font-size: 1.6rem; font-weight: 900; color: var(--accent-green); font-family: 'JetBrains Mono';" id="sk-smi-score">—</div>
+                            <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 2px;">SMI SCORE</div>
+                        </div>
+                        <div style="background: rgba(0,212,255,0.05); border: 1px solid rgba(0,212,255,0.15); border-radius: 8px; padding: 12px; text-align: center;">
+                            <div style="font-size: 1.6rem; font-weight: 900; color: var(--accent-cyan); font-family: 'JetBrains Mono';" id="sk-skill-count">—</div>
+                            <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 2px;">TOTAL SKILLS</div>
+                        </div>
+                        <div style="background: rgba(188,19,254,0.05); border: 1px solid rgba(188,19,254,0.15); border-radius: 8px; padding: 12px; text-align: center;">
+                            <div style="font-size: 1.6rem; font-weight: 900; color: var(--accent-purple); font-family: 'JetBrains Mono';" id="sk-evolutions">—</div>
+                            <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 2px;">EVOLUSI TOTAL</div>
+                        </div>
+                        <div style="background: rgba(255,56,56,0.05); border: 1px solid rgba(255,56,56,0.15); border-radius: 8px; padding: 12px; text-align: center;">
+                            <div style="font-size: 1.6rem; font-weight: 900; color: var(--accent-crimson); font-family: 'JetBrains Mono';" id="sk-battles">—</div>
+                            <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 2px;">BATTLE REPORTS</div>
+                        </div>
+                        <div style="background: rgba(255,165,0,0.05); border: 1px solid rgba(255,165,0,0.15); border-radius: 8px; padding: 12px; text-align: center;">
+                            <div style="font-size: 1.6rem; font-weight: 900; color: #ffa500; font-family: 'JetBrains Mono';" id="sk-blocked">—</div>
+                            <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 2px;">IP DIBLOKIR</div>
+                        </div>
+                        <div style="background: rgba(5,255,161,0.03); border: 1px solid rgba(5,255,161,0.1); border-radius: 8px; padding: 12px; text-align: center;">
+                            <div style="font-size: 1rem; font-weight: 900; color: var(--accent-green); font-family: 'JetBrains Mono'; margin-top: 4px;" id="sk-status">—</div>
+                            <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 2px;">STATUS</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Pillar Cards (3 categories) -->
+                <div id="skill-cat-governance" class="card">
+                    <div class="card-title" style="color: var(--accent-purple); display: flex; justify-content: space-between; align-items: center;">
+                        <span>🔧 System Governance</span>
+                        <span class="badge badge-purple" style="font-size: 0.7rem;">MASTER</span>
+                    </div>
+                    <div id="skill-pillars-governance" style="margin-top: 15px;">
+                        <div style="color: var(--text-dim); font-size: 0.8rem; padding: 20px 0; text-align: center;">Memuat data live...</div>
+                    </div>
+                </div>
+
+                <div id="skill-cat-defense" class="card">
+                    <div class="card-title" style="color: var(--accent-cyan); display: flex; justify-content: space-between; align-items: center;">
+                        <span>⚔️ Cyber Defense Mesh</span>
+                        <span class="badge badge-cyan" style="font-size: 0.7rem;">ELITE</span>
+                    </div>
+                    <div id="skill-pillars-defense" style="margin-top: 15px;">
+                        <div style="color: var(--text-dim); font-size: 0.8rem; padding: 20px 0; text-align: center;">Memuat data live...</div>
+                    </div>
+                </div>
+
+                <div id="skill-cat-offensive" class="card">
+                    <div class="card-title" style="color: var(--accent-crimson); display: flex; justify-content: space-between; align-items: center;">
+                        <span>🔬 Offensive & OSINT</span>
+                        <span class="badge badge-crimson" style="font-size: 0.7rem;">ADVANCED</span>
+                    </div>
+                    <div id="skill-pillars-offensive" style="margin-top: 15px;">
+                        <div style="color: var(--text-dim); font-size: 0.8rem; padding: 20px 0; text-align: center;">Memuat data live...</div>
+                    </div>
+                </div>
+
+                <!-- Knowledge Capacity Bar -->
+                <div class="card grid-span-3" style="background: rgba(0,0,0,0.2);">
+                    <div class="card-title" style="color: var(--accent-cyan); font-family: 'JetBrains Mono'; font-size: 0.9rem;">📊 KAPASITAS KNOWLEDGE BASE</div>
+                    <div style="margin-top: 14px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 6px;">
+                            <span style="color: #fff;">Knowledge Base (KB)</span>
+                            <span style="color: var(--accent-green); font-family: 'JetBrains Mono';" id="sk-kb-value">— KB</span>
+                        </div>
+                        <div style="height: 10px; background: rgba(255,255,255,0.05); border-radius: 5px; overflow: hidden; position: relative;">
+                            <div id="sk-kb-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green)); border-radius: 5px; transition: width 1.2s ease;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Future Roadmap -->
+                <div class="card grid-span-3" style="border: 1px dashed rgba(255,255,255,0.15); background: rgba(255,255,255,0.01);">
+                    <div class="card-title" style="color: var(--accent-cyan); font-family: 'JetBrains Mono';">🚀 STRATEGIS ROADMAP — SKILL BARU YANG AKAN DATANG</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="padding: 12px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent-cyan); border-radius: 0 6px 6px 0;">
+                            <div style="font-weight: bold; color: #fff; font-size: 0.85rem; display: flex; justify-content: space-between;">
+                                <span>🌐 Deep OSINT Phishing Synthesis</span>
+                                <span style="color: var(--accent-cyan); font-size: 0.75rem;">SEGERA</span>
+                            </div>
+                            <p style="color: var(--text-dim); font-size: 0.75rem; line-height: 1.4; margin-top: 5px;">Integrasi osint canggih untuk menganalisis metadata publik secara defensif dan mengidentifikasi vektor serangan potensial.</p>
+                        </div>
+                        <div style="padding: 12px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent-purple); border-radius: 0 6px 6px 0;">
+                            <div style="font-weight: bold; color: #fff; font-size: 0.85rem; display: flex; justify-content: space-between;">
+                                <span>🧬 Polymorphic Engine Mutation</span>
+                                <span style="color: var(--accent-purple); font-size: 0.75rem;">SEGERA</span>
+                            </div>
+                            <p style="color: var(--text-dim); font-size: 0.75rem; line-height: 1.4; margin-top: 5px;">Kemampuan otonom untuk mengubah kode enkripsi pelindung secara real-time guna menghindari deteksi ancaman.</p>
+                        </div>
+                        <div style="padding: 12px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent-green); border-radius: 0 6px 6px 0;">
+                            <div style="font-weight: bold; color: #fff; font-size: 0.85rem; display: flex; justify-content: space-between;">
+                                <span>📡 Covert DNS Tunneling Link</span>
+                                <span style="color: var(--accent-green); font-size: 0.75rem;">SEGERA</span>
+                            </div>
+                            <p style="color: var(--text-dim); font-size: 0.75rem; line-height: 1.4; margin-top: 5px;">Jalur cadangan otonom melalui sub-query DNS untuk memulihkan komunikasi jika koneksi TCP/HTTP utama diblokir.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+        // NEURAL SKILLS LIVE DATA LOADER
+        function renderPillarBar(pillar) {
+            const score = pillar.score;
+            const color = score >= 95 ? 'var(--accent-green)' : score >= 80 ? 'var(--accent-cyan)' : 'var(--accent-purple)';
+            return `<div style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
+                    <span style="color: #fff;">${pillar.id} — ${pillar.name}</span>
+                    <span style="color: ${color}; font-family: 'JetBrains Mono';">${score}%</span>
+                </div>
+                <div style="height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                    <div class="skill-bar-fill" style="width: 0%; height: 100%; background: ${color}; border-radius: 3px; transition: width 1s ease;" data-target="${score}%"></div>
+                </div>
+            </div>`;
+        }
+
+        async function loadSkillsData() {
+            try {
+                document.getElementById('skills-live-indicator').style.background = 'var(--accent-cyan)';
+                const apiKey = window._NOIR_API_KEY || 'NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026';
+                const res = await fetch('/api/skills', { headers: { 'Authorization': 'Bearer ' + apiKey } });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const d = await res.json();
+
+                // Update stats
+                document.getElementById('sk-smi-score').textContent = (d.overall_score || 0).toFixed(1) + '%';
+                document.getElementById('sk-skill-count').textContent = d.skill_count || 0;
+                document.getElementById('sk-evolutions').textContent = d.evolutions_total || 0;
+                document.getElementById('sk-battles').textContent = d.battle_reports_count || 0;
+                document.getElementById('sk-blocked').textContent = d.blocked_ips_count || 0;
+                document.getElementById('sk-status').textContent = d.status || 'ACTIVE';
+                document.getElementById('sk-kb-value').textContent = ((d.knowledge_kb || 0) / 1024).toFixed(1) + ' MB';
+                document.getElementById('skills-last-updated').textContent = 'Live: ' + new Date().toLocaleTimeString();
+
+                // KB bar (max ~100MB = 100000 KB)
+                const kbPct = Math.min(100, ((d.knowledge_kb || 0) / 100000) * 100);
+                setTimeout(() => { document.getElementById('sk-kb-bar').style.width = kbPct + '%'; }, 100);
+
+                // Render pillars by category
+                ['governance', 'defense', 'offensive'].forEach(cat => {
+                    const pillars = (d.pillars || []).filter(p => p.category === cat);
+                    const container = document.getElementById('skill-pillars-' + cat);
+                    if (container && pillars.length > 0) {
+                        container.innerHTML = pillars.map(renderPillarBar).join('');
+                        // Animate bars
+                        setTimeout(() => {
+                            container.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                                bar.style.width = bar.dataset.target;
+                            });
+                        }, 150);
+                    }
+                });
+
+                document.getElementById('skills-live-indicator').style.background = 'var(--accent-green)';
+            } catch (e) {
+                console.warn('[SKILLS] Load error:', e);
+                document.getElementById('skills-live-indicator').style.background = 'var(--accent-crimson)';
+                document.getElementById('skills-last-updated').textContent = 'Error: ' + e.message;
+            }
+        }
+
+        // Auto-load when tab is opened
+        document.querySelector('[onclick*="tab-skills"]') && (() => {
+            const orig = document.querySelector('[onclick*="tab-skills"]').getAttribute('onclick');
+            document.querySelector('[onclick*="tab-skills"]').setAttribute('onclick', orig + '; loadSkillsData()');
+        })();
+
+        // Also auto-refresh every 30s if tab is active
+        setInterval(() => {
+            const skillsTab = document.getElementById('tab-skills');
+            if (skillsTab && skillsTab.classList.contains('active')) loadSkillsData();
+        }, 30000);
+
+        // Load on page ready
+        window.addEventListener('DOMContentLoaded', () => { setTimeout(loadSkillsData, 800); });
+        </script>
+
+
         <!-- 8. USER & CO-PILOT GUIDE (NEW & FRIENDLY) -->
         <section id="tab-help" class="content-area">
             <div class="grid-layout">
@@ -717,9 +1296,193 @@
             </div>
         </section>
 
+        <!-- 🖥️ TERMINAL -->
+        <section id="tab-terminal" class="content-area">
+            <div class="card">
+                <div class="card-title">🖥️ LIVE BASH TERMINAL</div>
+                <p class="stat-label">Eksekusi perintah terminal VPS secara real-time dengan kendali penuh.</p>
+                
+                <div class="terminal-container">
+                    <div class="terminal-header">
+                        <span>SOVEREIGN CORE MESH TERMINAL (DIRECT VPS)</span>
+                        <span id="terminal-status" style="color: var(--accent-green);">● CONNECTED</span>
+                    </div>
+                    <div class="terminal-output" id="terminal-output-box">> Noir Sovereign Terminal Ready. Tulis perintah Anda di bawah...</div>
+                    <div class="terminal-input-row">
+                        <input type="text" class="terminal-input" id="terminal-cmd-input" placeholder="Tulis perintah (misal: ls -la, uname -a, df -h) dan tekan Enter..." onkeydown="if(event.key==='Enter') executeTerminalCommand()">
+                        <button class="btn btn-purple" onclick="executeTerminalCommand()">EXECUTE</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📁 FILE MANAGER -->
+        <section id="tab-filemanager" class="content-area">
+            <div class="card">
+                <div class="card-title">📁 VPS FILE MANAGER</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <div class="file-breadcrumbs" id="file-breadcrumbs-box">/root/noir-agent</div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn" style="border: 1px solid rgba(255,255,255,0.1); padding: 5px 15px;" onclick="openNewFileCreator()">+ FILE BARU</button>
+                        <button class="btn btn-purple" style="padding: 5px 15px;" onclick="loadFileDirectory('.')">REFRESH</button>
+                    </div>
+                </div>
+
+                <div class="table-container" style="background: rgba(0,0,0,0.3); border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); overflow: hidden;">
+                    <table class="file-table">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Ukuran</th>
+                                <th>Modifikasi</th>
+                                <th style="text-align: right;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="file-list-body">
+                            <!-- JS populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Text Editor Modal -->
+            <div class="file-editor-modal" id="file-editor-modal">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 id="editor-title" style="color: var(--accent-purple); font-family: 'JetBrains Mono';">Edit File</h3>
+                    <button class="btn" onclick="closeFileEditor()" style="background: transparent; color: var(--accent-crimson);">BATAL</button>
+                </div>
+                <input type="text" id="editor-file-path" readonly style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 10px; margin-bottom: 15px; border-radius: 4px; font-family: 'JetBrains Mono';">
+                <textarea class="file-editor-textarea" id="editor-textarea-content"></textarea>
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <button class="btn btn-purple" onclick="saveFileContent()">SIMPAN FILE</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📋 TASK PLANNER -->
+        <section id="tab-taskplanner" class="content-area">
+            <div class="grid-layout">
+                <div class="card">
+                    <div class="card-title">Buat Rencana Tugas Baru</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
+                        <div>
+                            <label class="stat-label">Judul Rencana</label>
+                            <input type="text" id="new-plan-title" placeholder="Misal: Deploy Server Baru..." style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); color: white;">
+                        </div>
+                        <div>
+                            <label class="stat-label">Langkah-langkah Tugas (Satu langkah per baris)</label>
+                            <textarea id="new-plan-steps" placeholder="Langkah 1: Setup VPS&#10;Langkah 2: Install Docker&#10;Langkah 3: Run Container" style="width: 100%; height: 120px; padding: 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); color: white; resize: none; font-family: inherit;"></textarea>
+                        </div>
+                        <button class="btn btn-purple" onclick="createNewTaskPlan()">BUAT RENCANA</button>
+                    </div>
+                </div>
+
+                <div class="card grid-span-2">
+                    <div class="card-title">Daftar Rencana Kerja Otonom</div>
+                    <div style="margin-top: 15px; max-height: 400px; overflow-y: auto;" id="plans-container-box">
+                        <!-- JS populated -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🤖 AGENT HUB -->
+        <section id="tab-agenthub" class="content-area">
+            <div class="grid-layout">
+                <div class="card">
+                    <div class="card-title">Spawn Subagent Baru</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
+                        <div>
+                            <label class="stat-label">Nama Tugas Agen</label>
+                            <input type="text" id="agent-task-name" placeholder="Misal: Penetration Test Agent..." style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); color: white;">
+                        </div>
+                        <div>
+                            <label class="stat-label">Pilih Provider Model</label>
+                            <select id="agent-provider" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); color: white;">
+                                <option value="gemini">Gemini 2.0 Flash (Default)</option>
+                                <option value="groq">Llama 3.3 Versatile (Groq)</option>
+                                <option value="deepseek">DeepSeek Chat</option>
+                                <option value="dashscope">Qwen Plus (AliCloud)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="stat-label">Tugas & Instruksi Agen</label>
+                            <textarea id="agent-prompt" placeholder="Berikan deskripsi detail tentang tugas yang harus diselesaikan subagent ini..." style="width: 100%; height: 120px; padding: 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); color: white; resize: none; font-family: inherit;"></textarea>
+                        </div>
+                        <button class="btn btn-purple" onclick="spawnNewAgent()">SPAWN SUBAGENT</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Subagent Aktif</div>
+                    <div style="margin-top: 15px; max-height: 400px; overflow-y: auto;" id="active-agents-list-box">
+                        <!-- JS populated -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Output & Log Agen</div>
+                    <div style="margin-top: 15px;" id="agent-output-box">
+                        <p style="color: var(--text-dim); text-align: center; margin-top: 50px;">Pilih subagent di sebelah kiri untuk melihat output log terperinci.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <script>
+        let SOVEREIGN_AUTH_TOKEN = localStorage.getItem('sovereign_auth_token') || '';
+
+        function checkAuth() {
+            // Membaca token dari query parameter jika dibuka lewat PC Launcher
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlToken = urlParams.get('token');
+            if (urlToken) {
+                SOVEREIGN_AUTH_TOKEN = urlToken;
+                localStorage.setItem('sovereign_auth_token', urlToken);
+                // Bersihkan URL parameter untuk keamanan
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+
+            if (!SOVEREIGN_AUTH_TOKEN) {
+                document.getElementById('auth-modal').style.display = 'flex';
+                document.getElementById('auth-token-input').focus();
+            } else {
+                document.getElementById('auth-modal').style.display = 'none';
+                updateDashboard();
+                loadBadUSBScenarios();
+            }
+        }
+
+        function submitAuthToken() {
+            const input = document.getElementById('auth-token-input');
+            const token = input.value.trim();
+            if (!token) return;
+            SOVEREIGN_AUTH_TOKEN = token;
+            localStorage.setItem('sovereign_auth_token', token);
+            document.getElementById('auth-modal').style.display = 'none';
+            updateDashboard();
+            loadBadUSBScenarios();
+        }
+
+        // Custom authenticated fetch wrapper
+        async function authFetch(url, options = {}) {
+            if (!options.headers) options.headers = {};
+            options.headers['Authorization'] = 'Bearer ' + SOVEREIGN_AUTH_TOKEN;
+            options.headers['Content-Type'] = 'application/json';
+            
+            const res = await fetch(url, options);
+            if (res.status === 401) {
+                // Token tidak valid/kedaluwarsa
+                SOVEREIGN_AUTH_TOKEN = '';
+                localStorage.removeItem('sovereign_auth_token');
+                document.getElementById('auth-modal').style.display = 'flex';
+                throw new Error("Unauthorized");
+            }
+            return res;
+        }
+
         function switchTab(id, el) {
             document.querySelectorAll('.content-area').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
@@ -729,16 +1492,15 @@
 
         async function triggerAction(actionName) {
             alert(`[SIMULATION] Command '${actionName}' sent to Sovereign Core via Neural Link.`);
-            fetch('/api/command', {
+            authFetch('/api/command', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ action: { type: "SYSTEM", val: actionName } })
             });
         }
 
         async function updateDashboard() {
             try {
-                const res = await fetch('/api/summary?v=' + Date.now());
+                const res = await authFetch('/api/summary?v=' + Date.now());
                 const data = await res.json();
 
                 // Hide loader
@@ -873,7 +1635,7 @@
                 }
 
                 // Fetch Battle Stats
-                const battleRes = await fetch('/api/battle/stats');
+                const battleRes = await authFetch('/api/battle/stats');
                 const battleData = await battleRes.json();
                 if (battleData.success) {
                     const attackerRate = (battleData.data.attacker_success_rate * 100).toFixed(1);
@@ -900,7 +1662,7 @@
         let badusbScenarios = {};
         async function loadBadUSBScenarios() {
             try {
-                const res = await fetch('/api/badusb/scenarios');
+                const res = await authFetch('/api/badusb/scenarios');
                 const data = await res.json();
                 if (data.success) {
                     badusbScenarios = data.scenarios;
@@ -924,9 +1686,8 @@
         });
 
         async function approveEvolution(id) {
-            const res = await fetch('/api/evolution/approve', {
+            const res = await authFetch('/api/evolution/approve', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ id })
             });
             const data = await res.json();
@@ -934,9 +1695,8 @@
         }
 
         async function rejectEvolution(id) {
-            const res = await fetch('/api/evolution/reject', {
+            const res = await authFetch('/api/evolution/reject', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ id })
             });
             const data = await res.json();
@@ -950,9 +1710,8 @@
             if (!confirm(`Konfirmasi peluncuran serangan Hardware ${scenario}?`)) return;
 
             try {
-                const res = await fetch('/api/badusb/trigger', {
+                const res = await authFetch('/api/badusb/trigger', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ scenario, device_id: 'REDMI_NOTE_14' })
                 });
                 const data = await res.json();
@@ -1073,40 +1832,121 @@
         const arena = new CombatArena();
         let lastEngagements = 0;
 
-        // --- NEURAL CHAT LOGIC ---
+        // --- NEURAL CHAT & FLOATING CO-PILOT LOGIC ---
+        function toggleCopilotPanel() {
+            const panel = document.getElementById('copilot-panel');
+            panel.classList.toggle('active');
+            if (panel.classList.contains('active')) {
+                document.getElementById('copilot-input').focus();
+            }
+        }
+
+        function clickSuggestion(text) {
+            const input = document.getElementById('copilot-input');
+            input.value = text;
+            input.focus();
+        }
+
+        async function sendCopilotMessage() {
+            const input = document.getElementById('copilot-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessageToBoth(message, 'user');
+            input.value = '';
+
+            try {
+                const thinkingId = addMessageToBoth("Menghubungkan ke neural Swarm Brain... ⚡", 'ai', true);
+                
+                const res = await authFetch('/api/chat', {
+                    method: 'POST',
+                    body: JSON.stringify({ message })
+                });
+                const data = await res.json();
+                
+                removeThinkingIndicator(thinkingId);
+                
+                if (data.ok) {
+                    addMessageToBoth(data.reply, 'ai');
+                } else {
+                    addMessageToBoth("Galat: " + data.error, 'ai');
+                }
+            } catch (e) {
+                addMessageToBoth("Link Neural tidak stabil. Koneksi terputus.", 'ai');
+            }
+        }
+
         async function sendChatMessage() {
             const input = document.getElementById('chat-input');
             const message = input.value.trim();
             if (!message) return;
 
-            // Add user message
-            addMessage(message, 'user');
+            addMessageToBoth(message, 'user');
             input.value = '';
 
             try {
-                const res = await fetch('/api/chat', {
+                const thinkingId = addMessageToBoth("Menghubungkan ke neural Swarm Brain... ⚡", 'ai', true);
+                
+                const res = await authFetch('/api/chat', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ message })
                 });
                 const data = await res.json();
+                
+                removeThinkingIndicator(thinkingId);
+                
                 if (data.ok) {
-                    addMessage(data.reply, 'ai');
+                    addMessageToBoth(data.reply, 'ai');
                 } else {
-                    addMessage("Galat: " + data.error, 'ai');
+                    addMessageToBoth("Galat: " + data.error, 'ai');
                 }
             } catch (e) {
-                addMessage("Link Neural tidak stabil. Koneksi terputus.", 'ai');
+                addMessageToBoth("Link Neural tidak stabil. Koneksi terputus.", 'ai');
             }
         }
 
+        let thinkingMsgCounter = 0;
+        function addMessageToBoth(text, side, isThinking = false) {
+            // 1. Tambahkan ke Sidebar Copilot
+            const containerSide = document.getElementById('copilot-messages-container');
+            const msgSide = document.createElement('div');
+            msgSide.className = `message ${side}`;
+            if (isThinking) {
+                msgSide.id = `thinking-side-${thinkingMsgCounter}`;
+                msgSide.style.opacity = '0.6';
+            }
+            msgSide.innerText = text;
+            containerSide.appendChild(msgSide);
+            containerSide.scrollTop = containerSide.scrollHeight;
+
+            // 2. Tambahkan ke Overview Dashboard Chat (jika sedang aktif)
+            const containerOverview = document.getElementById('chat-messages');
+            if (containerOverview) {
+                const msgOverview = document.createElement('div');
+                msgOverview.className = `message ${side}`;
+                if (isThinking) {
+                    msgOverview.id = `thinking-overview-${thinkingMsgCounter}`;
+                    msgOverview.style.opacity = '0.6';
+                }
+                msgOverview.innerText = text;
+                containerOverview.appendChild(msgOverview);
+                containerOverview.scrollTop = containerOverview.scrollHeight;
+            }
+            
+            return thinkingMsgCounter++;
+        }
+
+        function removeThinkingIndicator(id) {
+            const thinkingSide = document.getElementById(`thinking-side-${id}`);
+            if (thinkingSide) thinkingSide.remove();
+            
+            const thinkingOverview = document.getElementById(`thinking-overview-${id}`);
+            if (thinkingOverview) thinkingOverview.remove();
+        }
+
+        // Backward compatibility function alias
         function addMessage(text, side) {
-            const container = document.getElementById('chat-messages');
-            const msg = document.createElement('div');
-            msg.className = `message ${side}`;
-            msg.innerText = text;
-            container.appendChild(msg);
-            container.scrollTop = container.scrollHeight;
+            addMessageToBoth(text, side);
         }
 
         function useCommandPreset(cmd) {
@@ -1118,14 +1958,13 @@
 
         async function togglePcOverrideLocal() {
             try {
-                const summaryRes = await fetch('/api/summary');
+                const summaryRes = await authFetch('/api/summary');
                 const summaryData = await summaryRes.json();
                 const currentState = summaryData.pc_override || false;
                 const newState = !currentState;
                 
-                const res = await fetch('/api/pc/override', {
+                const res = await authFetch('/api/pc/override', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ state: newState })
                 });
                 const data = await res.json();
@@ -1305,9 +2144,8 @@
             logs.scrollTop = logs.scrollHeight;
 
             try {
-                const res = await fetch('/api/command', {
+                const res = await authFetch('/api/command', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ action: { type: "SYSTEM", val: "BATTLE_WAVE_INJECTION" } })
                 });
                 const data = await res.json();
@@ -1334,10 +2172,453 @@
             document.getElementById('warfare-realtime-logs').innerHTML = `<div style="color: var(--text-dim);">[SYSTEM] Cleared logs. Ready for new warfare cycles.</div>`;
         }
 
+        }
+
+        // --- BASH TERMINAL ACTIONS ---
+        async function executeTerminalCommand() {
+            const inputEl = document.getElementById('terminal-cmd-input');
+            const outputEl = document.getElementById('terminal-output-box');
+            const cmd = inputEl.value.trim();
+            if (!cmd) return;
+            
+            outputEl.innerHTML += `\n<span style="color: #9090a0;">$ ${cmd}</span>`;
+            outputEl.scrollTop = outputEl.scrollHeight;
+            inputEl.value = '';
+            
+            try {
+                const res = await authFetch('/api/terminal', {
+                    method: 'POST',
+                    body: JSON.stringify({ command: cmd })
+                });
+                const data = await res.json();
+                
+                if (data.stdout) {
+                    outputEl.innerHTML += `\n<span style="color: #05ffa1;">${data.stdout}</span>`;
+                }
+                if (data.stderr) {
+                    outputEl.innerHTML += `\n<span style="color: var(--accent-crimson);">${data.stderr}</span>`;
+                }
+                if (!data.stdout && !data.stderr) {
+                    outputEl.innerHTML += `\n<span style="color: var(--text-dim);">[Command returned exit code ${data.code}]</span>`;
+                }
+            } catch (e) {
+                outputEl.innerHTML += `\n<span style="color: var(--accent-crimson);">[Error] Gagal berkomunikasi dengan terminal: ${e.message}</span>`;
+            }
+            outputEl.scrollTop = outputEl.scrollHeight;
+        }
+
+        // --- FILE MANAGER ACTIONS ---
+        let currentFilePath = '.';
+
+        async function loadFileDirectory(path) {
+            currentFilePath = path;
+            document.getElementById('file-breadcrumbs-box').innerText = path;
+            const bodyEl = document.getElementById('file-list-body');
+            bodyEl.innerHTML = `<tr><td colspan="4" style="color: var(--text-dim);">Loading files...</td></tr>`;
+            
+            try {
+                const res = await authFetch(`/api/files/list?path=${encodeURIComponent(path)}`);
+                const data = await res.json();
+                
+                if (data.status === 'success') {
+                    currentFilePath = data.current_path;
+                    document.getElementById('file-breadcrumbs-box').innerText = currentFilePath;
+                    
+                    bodyEl.innerHTML = '';
+                    
+                    const isWin = currentFilePath.includes('\\');
+                    const separator = isWin ? '\\' : '/';
+                    const parts = currentFilePath.split(separator).filter(Boolean);
+                    
+                    if (parts.length > 1 || (isWin && parts.length === 1 && !currentFilePath.endsWith(':\\'))) {
+                        const parentPath = currentFilePath.substring(0, currentFilePath.lastIndexOf(separator)) || separator;
+                        bodyEl.innerHTML += `
+                            <tr>
+                                <td><span class="file-item-icon">📁</span> <a href="#" style="color: var(--accent-cyan);" onclick="loadFileDirectory('${parentPath.replace(/\\/g, '\\\\')}')">.. (Parent Directory)</a></td>
+                                <td>--</td>
+                                <td>--</td>
+                                <td style="text-align: right;">--</td>
+                            </tr>
+                        `;
+                    }
+                    
+                    data.items.forEach(item => {
+                        const fullPath = (currentFilePath.endsWith('/') || currentFilePath.endsWith('\\')) ? 
+                            currentFilePath + item.name : 
+                            currentFilePath + separator + item.name;
+                        
+                        const sizeStr = item.is_dir ? 'DIR' : (item.size / 1024).toFixed(1) + ' KB';
+                        const dateStr = new Date(item.modified * 1000).toLocaleString();
+                        
+                        const actionBtn = item.is_dir ? 
+                            `<button class="btn" style="padding: 2px 8px; font-size: 0.75rem; border: 1px solid rgba(0,242,255,0.3); color: var(--accent-cyan);" onclick="loadFileDirectory('${fullPath.replace(/\\/g, '\\\\')}')">BUKA</button>` : 
+                            `<div style="display: flex; gap: 5px; justify-content: flex-end;">
+                                <button class="btn" style="padding: 2px 8px; font-size: 0.75rem; border: 1px solid rgba(188,19,254,0.3); color: var(--accent-purple);" onclick="openFileEditor('${fullPath.replace(/\\/g, '\\\\')}')">EDIT</button>
+                                <button class="btn" style="padding: 2px 8px; font-size: 0.75rem; border: 1px solid rgba(255,42,109,0.3); color: var(--accent-crimson);" onclick="deleteFileItem('${fullPath.replace(/\\/g, '\\\\')}')">HAPUS</button>
+                             </div>`;
+                             
+                        const nameLink = item.is_dir ? 
+                            `<a href="#" style="color: var(--accent-cyan);" onclick="loadFileDirectory('${fullPath.replace(/\\/g, '\\\\')}')">${item.name}</a>` : 
+                            `<span style="color: #fff;">${item.name}</span>`;
+
+                        bodyEl.innerHTML += `
+                            <tr>
+                                <td><span class="file-item-icon">${item.is_dir ? '📁' : '📄'}</span> ${nameLink}</td>
+                                <td style="font-family: 'JetBrains Mono'; color: var(--text-dim);">${sizeStr}</td>
+                                <td style="font-family: 'JetBrains Mono'; color: var(--text-dim);">${dateStr}</td>
+                                <td style="text-align: right;">${actionBtn}</td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    bodyEl.innerHTML = `<tr><td colspan="4" style="color: var(--accent-crimson);">Error: ${data.message}</td></tr>`;
+                }
+            } catch (e) {
+                bodyEl.innerHTML = `<tr><td colspan="4" style="color: var(--accent-crimson);">Failed to load directory: ${e.message}</td></tr>`;
+            }
+        }
+
+        async function openFileEditor(path) {
+            document.getElementById('editor-title').innerText = "Edit File";
+            document.getElementById('editor-file-path').value = path;
+            const textarea = document.getElementById('editor-textarea-content');
+            textarea.value = "Loading file content...";
+            document.getElementById('file-editor-modal').style.display = 'flex';
+            
+            try {
+                const res = await authFetch(`/api/files/read?path=${encodeURIComponent(path)}`);
+                const data = await res.json();
+                if (data.status === 'success') {
+                    textarea.value = data.content;
+                } else {
+                    textarea.value = "Error: " + data.message;
+                }
+            } catch (e) {
+                textarea.value = "Failed to load content: " + e.message;
+            }
+        }
+
+        function openNewFileCreator() {
+            document.getElementById('editor-title').innerText = "Buat File Baru";
+            const separator = currentFilePath.includes('\\') ? '\\' : '/';
+            const defaultNewPath = currentFilePath + separator + 'new_file.txt';
+            document.getElementById('editor-file-path').value = defaultNewPath;
+            document.getElementById('editor-textarea-content').value = "";
+            document.getElementById('file-editor-modal').style.display = 'flex';
+        }
+
+        function closeFileEditor() {
+            document.getElementById('file-editor-modal').style.display = 'none';
+        }
+
+        async function saveFileContent() {
+            const path = document.getElementById('editor-file-path').value;
+            const content = document.getElementById('editor-textarea-content').value;
+            
+            try {
+                const res = await authFetch('/api/files/write', {
+                    method: 'POST',
+                    body: JSON.stringify({ path, content })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    alert("File berhasil disimpan!");
+                    closeFileEditor();
+                    loadFileDirectory(currentFilePath);
+                } else {
+                    alert("Error saving: " + data.message);
+                }
+            } catch (e) {
+                alert("Failed to save: " + e.message);
+            }
+        }
+
+        async function deleteFileItem(path) {
+            if (!confirm(`Apakah Anda yakin ingin menghapus '${path}'? Tindakan ini tidak dapat dibatalkan.`)) return;
+            
+            try {
+                const res = await authFetch(`/api/files/delete?path=${encodeURIComponent(path)}`, {
+                    method: 'DELETE'
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    alert("Item berhasil dihapus!");
+                    loadFileDirectory(currentFilePath);
+                } else {
+                    alert("Error deleting: " + data.message);
+                }
+            } catch (e) {
+                alert("Failed to delete: " + e.message);
+            }
+        }
+
+        // --- TASK PLANNER ACTIONS ---
+        async function createNewTaskPlan() {
+            const titleEl = document.getElementById('new-plan-title');
+            const stepsEl = document.getElementById('new-plan-steps');
+            const title = titleEl.value.trim();
+            const stepsText = stepsEl.value.trim();
+            
+            if (!title || !stepsText) {
+                alert("Judul rencana dan langkah-langkah harus diisi!");
+                return;
+            }
+            
+            const steps = stepsText.split('\n').map(s => s.trim()).filter(Boolean);
+            
+            try {
+                const res = await authFetch('/api/tasks/create', {
+                    method: 'POST',
+                    body: JSON.stringify({ title, steps })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    titleEl.value = '';
+                    stepsEl.value = '';
+                    loadAllTaskPlans();
+                    alert("Rencana tugas berhasil dibuat!");
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (e) {
+                alert("Failed to create plan: " + e.message);
+            }
+        }
+
+        async function loadAllTaskPlans() {
+            const container = document.getElementById('plans-container-box');
+            container.innerHTML = `<p style="color: var(--text-dim);">Loading plans...</p>`;
+            
+            try {
+                const res = await authFetch('/api/tasks/list');
+                const data = await res.json();
+                
+                if (data.status === 'success' && data.plans.length > 0) {
+                    container.innerHTML = '';
+                    data.plans.forEach(plan => {
+                        const totalSteps = plan.steps.length;
+                        const doneSteps = plan.steps.filter(s => s.status === 'done').length;
+                        const progressPercent = totalSteps ? Math.round((doneSteps / totalSteps) * 100) : 0;
+                        
+                        let planStatusColor = 'var(--accent-purple)';
+                        if (plan.status === 'done') planStatusColor = 'var(--accent-green)';
+                        else if (plan.status === 'failed') planStatusColor = 'var(--accent-crimson)';
+                        else if (plan.status === 'in_progress') planStatusColor = 'var(--accent-cyan)';
+                        
+                        let stepsHtml = '';
+                        plan.steps.forEach(step => {
+                            stepsHtml += `
+                                <div class="step-item">
+                                    <span>${step.id + 1}. ${step.title}</span>
+                                    <div style="display: flex; gap: 5px;">
+                                        <button class="step-status-btn step-status-pending" onclick="updateStepStatus('${plan.id}', ${step.id}, 'pending')">P</button>
+                                        <button class="step-status-btn step-status-in_progress" onclick="updateStepStatus('${plan.id}', ${step.id}, 'in_progress')">IP</button>
+                                        <button class="step-status-btn step-status-done" onclick="updateStepStatus('${plan.id}', ${step.id}, 'done')">D</button>
+                                        <button class="step-status-btn step-status-failed" onclick="updateStepStatus('${plan.id}', ${step.id}, 'failed')">F</button>
+                                        <span style="margin-left: 8px; font-weight: bold;" class="step-status-${step.status}">${step.status.toUpperCase()}</span>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        container.innerHTML += `
+                            <div class="plan-card">
+                                <div class="plan-header">
+                                    <h4 style="color: #fff; font-family: 'JetBrains Mono';">${plan.title}</h4>
+                                    <span style="color: ${planStatusColor}; font-weight: bold; font-size: 0.8rem;">[${plan.status.toUpperCase()}]</span>
+                                </div>
+                                <div class="stat-label">Progress: ${doneSteps}/${totalSteps} langkah (${progressPercent}%)</div>
+                                <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.05); margin-top: 5px; border-radius: 2px; overflow: hidden;">
+                                    <div style="width: ${progressPercent}%; height: 100%; background: ${planStatusColor}; transition: width 0.3s;"></div>
+                                </div>
+                                <div class="plan-steps">
+                                    ${stepsHtml}
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    container.innerHTML = `<p style="color: var(--text-dim); text-align: center; margin-top: 50px;">Belum ada rencana tugas aktif.</p>`;
+                }
+            } catch (e) {
+                container.innerHTML = `<p style="color: var(--accent-crimson);">Failed to load plans: ${e.message}</p>`;
+            }
+        }
+
+        async function updateStepStatus(planId, stepId, status) {
+            try {
+                const res = await authFetch('/api/tasks/update', {
+                    method: 'POST',
+                    body: JSON.stringify({ plan_id: planId, step_id: stepId, status })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    loadAllTaskPlans();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (e) {
+                alert("Failed to update status: " + e.message);
+            }
+        }
+
+        // --- AGENT HUB ACTIONS ---
+        async function spawnNewAgent() {
+            const nameEl = document.getElementById('agent-task-name');
+            const providerEl = document.getElementById('agent-provider');
+            const promptEl = document.getElementById('agent-prompt');
+            
+            const task_name = nameEl.value.trim();
+            const provider = providerEl.value;
+            const prompt = promptEl.value.trim();
+            
+            if (!task_name || !prompt) {
+                alert("Nama tugas dan instruksi harus diisi!");
+                return;
+            }
+            
+            try {
+                const res = await authFetch('/api/agents/spawn', {
+                    method: 'POST',
+                    body: JSON.stringify({ task_name, provider, prompt })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    nameEl.value = '';
+                    promptEl.value = '';
+                    loadAllAgents();
+                    alert(`Subagent '${task_name}' berhasil dipicu di background!`);
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (e) {
+                alert("Failed to spawn agent: " + e.message);
+            }
+        }
+
+        async function loadAllAgents() {
+            const listEl = document.getElementById('active-agents-list-box');
+            listEl.innerHTML = `<p style="color: var(--text-dim);">Loading subagents...</p>`;
+            
+            try {
+                const res = await authFetch('/api/agents/list');
+                const data = await res.json();
+                
+                if (data.status === 'success' && data.agents.length > 0) {
+                    listEl.innerHTML = '';
+                    data.agents.forEach(agent => {
+                        let statusColor = 'var(--accent-cyan)';
+                        if (agent.status === 'completed') statusColor = 'var(--accent-green)';
+                        else if (agent.status === 'failed' || agent.status === 'killed') statusColor = 'var(--accent-crimson)';
+                        
+                        listEl.innerHTML += `
+                            <div class="agent-item" onclick="viewAgentLogs('${agent.id}')" id="agent-card-${agent.id}">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="color: #fff; font-weight: bold; font-family: 'JetBrains Mono';">${agent.task_name}</span>
+                                    <span style="color: ${statusColor}; font-size: 0.75rem;">[${agent.status.toUpperCase()}]</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-dim); margin-top: 5px;">
+                                    <span>ID: ${agent.id} | Provider: ${agent.provider}</span>
+                                    <span>${new Date(agent.created_at * 1000).toLocaleTimeString()}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    listEl.innerHTML = `<p style="color: var(--text-dim); text-align: center; margin-top: 50px;">Belum ada subagent yang di-spawn.</p>`;
+                }
+            } catch (e) {
+                listEl.innerHTML = `<p style="color: var(--accent-crimson);">Failed to load agents: ${e.message}</p>`;
+            }
+        }
+
+        async function viewAgentLogs(agentId) {
+            document.querySelectorAll('.agent-item').forEach(c => c.classList.remove('active'));
+            const card = document.getElementById(`agent-card-${agentId}`);
+            if (card) card.classList.add('active');
+            
+            const outputBox = document.getElementById('agent-output-box');
+            outputBox.innerHTML = `<p style="color: var(--text-dim);">Loading logs...</p>`;
+            
+            try {
+                const res = await authFetch('/api/agents/list');
+                const data = await res.json();
+                if (data.status === 'success') {
+                    const agent = data.agents.find(a => a.id === agentId);
+                    if (agent) {
+                        let logsText = agent.logs.join('\n');
+                        let outputHtml = `
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+                                <h4 style="color: var(--accent-cyan); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 10px;">Subagent: ${agent.task_name} (${agent.status.toUpperCase()})</h4>
+                                <div style="margin-bottom: 15px;">
+                                    <div class="stat-label">Prompt Asli:</div>
+                                    <div style="color: #fff; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 4px; margin-top: 5px;">${agent.prompt}</div>
+                                </div>
+                                <div style="margin-bottom: 15px;">
+                                    <div class="stat-label">System Logs:</div>
+                                    <pre style="color: #9090a0; white-space: pre-wrap; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 4px; margin-top: 5px;">${logsText}</pre>
+                                </div>
+                        `;
+                        
+                        if (agent.output) {
+                            outputHtml += `
+                                <div>
+                                    <div class="stat-label">AI Output / Response:</div>
+                                    <div style="color: #05ffa1; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 4px; margin-top: 5px; white-space: pre-wrap; border: 1px solid rgba(5,255,161,0.2); max-height: 250px; overflow-y: auto;">${agent.output}</div>
+                                </div>
+                            `;
+                        }
+                        
+                        if (agent.status === 'running') {
+                            outputHtml += `
+                                <div style="margin-top: 15px; display: flex; justify-content: flex-end;">
+                                    <button class="btn btn-purple" style="background: var(--accent-crimson); border-color: var(--accent-crimson);" onclick="killAgentJob('${agent.id}')">KILL SUBAGENT</button>
+                                </div>
+                            `;
+                        }
+                        
+                        outputHtml += `</div>`;
+                        outputBox.innerHTML = outputHtml;
+                    }
+                }
+            } catch (e) {
+                outputBox.innerHTML = `<p style="color: var(--accent-crimson);">Failed to load agent detail: ${e.message}</p>`;
+            }
+        }
+
+        async function killAgentJob(agentId) {
+            if (!confirm("Apakah Anda yakin ingin menghentikan subagent ini?")) return;
+            try {
+                const res = await authFetch('/api/agents/kill', {
+                    method: 'POST',
+                    body: JSON.stringify({ agent_id: agentId })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    loadAllAgents();
+                    viewAgentLogs(agentId);
+                    alert("Subagent berhasil dihentikan.");
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (e) {
+                alert("Failed to kill agent: " + e.message);
+            }
+        }
+
+        const originalSwitchTab = switchTab;
+        switchTab = function(id, el) {
+            originalSwitchTab(id, el);
+            if (id === 'tab-filemanager') {
+                loadFileDirectory('.');
+            } else if (id === 'tab-taskplanner') {
+                loadAllTaskPlans();
+            } else if (id === 'tab-agenthub') {
+                loadAllAgents();
+            }
+        };
+
         setInterval(updateDashboard, 5000);
-        updateDashboard();
-        loadBadUSBScenarios();
+        checkAuth();
         setInterval(() => document.getElementById('clock').innerText = new Date().toLocaleTimeString(), 1000);
     </script>
-</body>
-</html>

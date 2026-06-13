@@ -19,7 +19,8 @@ STDLIB = {
     'dataclasses','attrs','pprint','reprlib','numbers','decimal','fractions',
     'cmath','statistics','random','secrets','ssl','select','selectors',
     'asyncio','http','email','html','xml','csv','configparser','argparse',
-    'getopt','atexit','sched','calendar','locale','gettext','codecs'
+    'getopt','atexit','sched','calendar','locale','gettext','codecs',
+    'zipfile','sqlite3','zlib','importlib'
 }
 
 KNOWN_THIRD_PARTY = {
@@ -122,19 +123,19 @@ print(f"\n{'='*60}")
 print(f" CRITICAL ({len(issues['CRITICAL'])} issues)")
 print(f"{'='*60}")
 for i in issues["CRITICAL"]:
-    print(f"  ✗ {i}")
+    print(f"  [CRITICAL] {i}")
 
 print(f"\n{'='*60}")
 print(f" WARNINGS ({len(issues['WARNING'])} issues)")
 print(f"{'='*60}")
 for i in issues["WARNING"]:
-    print(f"  ⚠ {i}")
+    print(f"  [WARNING] {i}")
 
 print(f"\n{'='*60}")
 print(f" INFO ({len(issues['INFO'])} notices)")
 print(f"{'='*60}")
 for i in issues["INFO"]:
-    print(f"  ℹ {i}")
+    print(f"  [INFO] {i}")
 
 print(f"\n{'='*60}")
 total = sum(len(v) for v in issues.values())

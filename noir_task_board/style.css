@@ -1,0 +1,319 @@
+/* Noir Task Board Styles */
+:root {
+    --bg-dark: #0a0a0f;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #ffffff;
+    --text-secondary: #8a8a9e;
+    --accent: #6b4cff;
+    --accent-hover: #8066ff;
+    --danger: #ff4c4c;
+    --success: #00e676;
+    
+    --glow: 0 0 20px rgba(107, 76, 255, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Background Orbs (Aesthetics) */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+    animation: float 20s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(107,76,255,0.4) 0%, rgba(107,76,255,0) 70%);
+    top: -100px;
+    left: -100px;
+}
+
+.orb-2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(0,230,118,0.3) 0%, rgba(0,230,118,0) 70%);
+    bottom: 50px;
+    right: -50px;
+    animation-delay: -5s;
+}
+
+.orb-3 {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,76,76,0.3) 0%, rgba(255,76,76,0) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+/* Main Container */
+.app-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    z-index: 10;
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+header {
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 5px;
+}
+
+header h1 span {
+    color: var(--accent);
+    text-shadow: var(--glow);
+}
+
+header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+/* Input Section */
+.task-input-section form {
+    display: flex;
+    gap: 15px;
+}
+
+#task-input {
+    flex: 1;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 15px 20px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#task-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(107, 76, 255, 0.3);
+}
+
+#task-input::placeholder {
+    color: #555566;
+}
+
+#add-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--glow);
+}
+
+#add-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px) scale(1.05);
+}
+
+#add-btn:active {
+    transform: translateY(1px) scale(0.95);
+}
+
+/* Task List */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.list-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.badge {
+    background: rgba(107, 76, 255, 0.2);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    border: 1px solid rgba(107, 76, 255, 0.3);
+}
+
+#task-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Custom Scrollbar */
+#task-list::-webkit-scrollbar {
+    width: 6px;
+}
+#task-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+#task-list::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}
+
+/* Task Item */
+.task-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    transform-origin: top;
+}
+
+.task-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+}
+
+.task-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.custom-checkbox {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.custom-checkbox.checked {
+    background: var(--success);
+    border-color: var(--success);
+    box-shadow: 0 0 10px rgba(0, 230, 118, 0.4);
+}
+
+.custom-checkbox svg {
+    color: var(--bg-dark);
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s;
+}
+
+.custom-checkbox.checked svg {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.task-text {
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+    opacity: 0.6;
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    opacity: 0;
+}
+
+.task-item:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    color: var(--danger);
+    background: rgba(255, 76, 76, 0.1);
+}
+
+@keyframes slideIn {
+    0% { opacity: 0; transform: translateY(-20px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.9); }
+}
+
+.task-item.removing {
+    animation: fadeOut 0.3s ease forwards;
+}

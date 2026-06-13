@@ -14,6 +14,11 @@ Build EXE:
 
 import os, sys, time, json, subprocess, logging, threading
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load .env from root
+ENV_PATH = Path(__file__).resolve().parent / ".env"
+load_dotenv(ENV_PATH)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [NOIR] %(message)s")
 log = logging.getLogger("NoirLauncher")
@@ -21,6 +26,7 @@ log = logging.getLogger("NoirLauncher")
 # ─── KONFIGURASI ──────────────────────────────────────────────────────────────
 VPS_IP   = os.environ.get("NOIR_VPS_IP", "8.215.23.17")
 VPS_URL  = os.environ.get("NOIR_GATEWAY_URL", f"http://{VPS_IP}").rstrip("/")
+CF_KEY   = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
 
 # ─── EDGE APP MODE PATHS (Windows 10/11) ─────────────────────────────────────
 EDGE_PATHS = [
@@ -119,23 +125,24 @@ def _show_splash_and_open():
 def _open_dashboard(root_window):
     """Buka VPS dashboard di Edge/Chrome App Mode atau browser default."""
     browser_path, browser_type = _find_browser()
+    launch_url = f"{VPS_URL}/?token={CF_KEY}"
 
     if browser_path:
         # App mode = window native tanpa browser bar (persis seperti desktop app)
         app_args = [
             browser_path,
-            f"--app={VPS_URL}",
+            f"--app={launch_url}",
             "--window-size=1400,860",
             "--disable-extensions",
             "--no-first-run",
         ]
-        log.info(f"Membuka dengan {browser_type} App Mode: {VPS_URL}")
+        log.info(f"Membuka dengan {browser_type} App Mode: {launch_url[:40]}...")
         subprocess.Popen(app_args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     else:
         # Ultimate fallback: browser default
         import webbrowser
-        log.info(f"Membuka dengan browser default: {VPS_URL}")
-        webbrowser.open(VPS_URL)
+        log.info(f"Membuka dengan browser default: {launch_url[:40]}...")
+        webbrowser.open(launch_url)
 
     if root_window:
         root_window.after(500, root_window.destroy)
@@ -143,7 +150,7 @@ def _open_dashboard(root_window):
 # ─── ENTRY POINT ──────────────────────────────────────────────────────────────
 def main():
     print("=" * 55)
-    print("  NOIR SOVEREIGN — PC COMMANDER v21.4")
+    print("  NOIR SOVEREIGN — PC COMMANDER v30.1")
     print(f"  VPS Alibaba: {VPS_URL}")
     print("=" * 55)
     _show_splash_and_open()

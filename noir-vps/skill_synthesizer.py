@@ -38,8 +38,9 @@ SYARAT TEKNIS:
 3. Class HARUS memiliki method instance 'execute(self)' yang menjalankan logika utama dan mengembalikan string hasil.
 4. Kode harus bersih, efisien, dan memiliki error handling.
 5. Gunakan library standar (os, sys, time, json, subprocess) atau requests/psutil jika perlu.
-6. Berikan HANYA kode Python lengkap dalam blok markdown ```python ... ```.
-7. Nama file akan dibuat otomatis dari nama class (snake_case).
+6. WAJIB MENYERTAKAN BLOCK `if __name__ == '__main__':` di bawah class yang berisi unit test menggunakan `unittest` untuk memvalidasi fungsi utama class tersebut.
+7. Berikan HANYA kode Python lengkap dalam blok markdown ```python ... ```.
+8. Nama file akan dibuat otomatis dari nama class (snake_case).
 """
         try:
             code_response = OmniRouter.smart_query(prompt)
@@ -78,11 +79,25 @@ SYARAT TEKNIS:
         except ImportError:
             pass
 
-        # Phase 3: Validation Run
+        # Phase 3: Validation Run (TDD Unit Testing)
         try:
-            # Syntax Check
-            compile(code, temp_path, 'exec')
-            log.info(f"Validasi Sintaks: BERHASIL.")
+            # Jalankan script sebagai subprocess, yang akan memicu blok `if __name__ == '__main__':`
+            # dan mengeksekusi unit tests yang dibuat oleh LLM
+            log.info(f"Menjalankan Unit Tests (TDD) untuk {class_name}...")
+            test_proc = subprocess.run(
+                ["python", temp_path],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            
+            if test_proc.returncode != 0:
+                log.warning(f"Validasi Test GAGAL:\n{test_proc.stderr}")
+                return {"success": False, "reason": f"Unit Test Gagal:\n{test_proc.stderr[:500]}"}
+            
+            log.info(f"Validasi Unit Test BERHASIL:\n{test_proc.stderr}")
+        except subprocess.TimeoutExpired:
+            return {"success": False, "reason": "Validasi Kode Gagal: Timeout (Mungkin Infinite Loop)"}
         except Exception as e:
             return {"success": False, "reason": f"Validasi Kode Gagal: {e}"}
 

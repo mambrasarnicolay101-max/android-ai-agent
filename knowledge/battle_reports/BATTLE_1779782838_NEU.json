@@ -1,0 +1,43 @@
+{
+    "id": "BATTLE_1779782838_NEU",
+    "timestamp": "2026-05-26T20:07:18.116236",
+    "event_type": "SIMULATION",
+    "participants": {
+        "attacker": "Neural_Red_Team",
+        "defender": "Sovereign_Blue_Team",
+        "target": "Arena_Dummy_System"
+    },
+    "metrics": {
+        "methods_tried": [
+            "Dynamic Vulnerability Exploitation"
+        ],
+        "success": true,
+        "penetration_rate": 1.0,
+        "vulnerabilities_found": 3
+    },
+    "raw_findings": [
+        {
+            "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\.sandbox\\arena\\dummy_app.py",
+            "line": 23,
+            "severity": "HIGH",
+            "message": "Deserialisasi pickle tidak aman - risiko RCE",
+            "snippet": "user_data = pickle.loads(data['user_data'])"
+        },
+        {
+            "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\.sandbox\\arena\\dummy_app.py",
+            "line": 52,
+            "severity": "HIGH",
+            "message": "Deserialisasi pickle tidak aman - risiko RCE",
+            "snippet": "1.  **Insecure Deserialization**: The `/login` endpoint uses `pickle.loads()` to"
+        },
+        {
+            "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\.sandbox\\arena\\dummy_app.py",
+            "line": 48,
+            "severity": "MEDIUM",
+            "message": "Debug mode aktif di production",
+            "snippet": "app.run(debug=True)"
+        }
+    ],
+    "evaluation": "Simulasi otonom untuk melatih logika penambalan kode (Blue) vs eksploitasi (Red).",
+    "status": "COMPLETED"
+}

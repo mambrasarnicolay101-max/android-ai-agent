@@ -14,12 +14,18 @@ DEVICE_SERIAL = f"{DEVICE_IP}:5555"
 def log(msg):
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [GUARDIAN] {msg}")
 
+import shlex
+
 def run_adb(cmd):
-    full_cmd = f'"{ADB_PATH}" -s {DEVICE_SERIAL} {cmd}'
     try:
-        result = subprocess.run(full_cmd, shell=True, capture_output=True, text=True, timeout=10)
+        # Menghindari command injection dengan menggunakan list of arguments
+        base_cmd = [ADB_PATH, "-s", DEVICE_SERIAL]
+        args = shlex.split(cmd)
+        full_cmd = base_cmd + args
+        result = subprocess.run(full_cmd, shell=False, capture_output=True, text=True, timeout=10)
         return result.stdout.strip()
     except Exception as e:
+        log(f"ERROR executing adb: {str(e)}")
         return f"ERROR: {str(e)}"
 
 def check_device_online():

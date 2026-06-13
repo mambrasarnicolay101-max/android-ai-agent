@@ -13,9 +13,20 @@ from dotenv import load_dotenv
 # Find .env at root
 ENV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env")
 load_dotenv(ENV_PATH)
+import logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+log = logging.getLogger("noir_server")
 
-app = FastAPI(title="Noir Sovereign ELITE V21.2 AEGIS")
+app = FastAPI(title="Noir Sovereign ELITE V30.0 AEGIS (Grand Singularity)")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+
+# --- OBSERVABILITY: PROMETHEUS METRICS ---
+from prometheus_client import make_asgi_app, Counter, Histogram
+metrics_app = make_asgi_app()
+app.mount("/metrics", metrics_app)
+
+HTTP_REQUESTS = Counter("http_requests_total", "Total HTTP Requests", ["method", "endpoint"])
+REQUEST_TIME = Histogram("http_request_duration_seconds", "HTTP Request Duration", ["endpoint"])
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # BRAIN-01: Integrasi Jalur Otak AI
@@ -60,6 +71,9 @@ local_state = {
 }
 
 active_websockets = {}  # device_id -> WebSocket
+active_pc_websockets = {}  # device_id -> WebSocket untuk PC Executor
+pc_tool_requests = {}      # req_id -> asyncio.Future untuk menunggu respon PC
+
 # VPS-04 FIX: Lock untuk mencegah race condition pada commands list
 _commands_lock = threading.Lock()
 
@@ -133,7 +147,7 @@ async def mesh_pair(request: Request):
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "version": "21.2-ELITE-AEGIS-SINGULARITY", "mode": "direct_vps", "mesh": "ACTIVE"}
+    return {"status": "ok", "version": "30.1-ZERO-TRUST-GRAND-SINGULARITY", "mode": "direct_vps", "mesh": "ACTIVE"}
 
 @app.post("/agent/register")
 async def agent_register(request: Request):
@@ -161,8 +175,66 @@ async def agent_register(request: Request):
     except Exception as e:
         return {"status": "ok", "error": str(e)}
 
+@app.websocket("/ws/pc_agent")
+async def websocket_pc_agent(websocket: WebSocket, device_id: str = "LAPTOP_MASTER"):
+    await websocket.accept()
+    active_pc_websockets[device_id] = websocket
+    print(f"[WS-PC] PC Agent {device_id} connected")
+    try:
+        while True:
+            data = await websocket.receive_text()
+            try:
+                payload = json.loads(data)
+                if payload.get("type") == "tool_result":
+                    req_id = payload.get("req_id")
+                    if req_id in pc_tool_requests:
+                        if not pc_tool_requests[req_id].done():
+                            pc_tool_requests[req_id].set_result(payload.get("result", ""))
+            except Exception as e:
+                print(f"[WS-PC] Error processing msg from {device_id}: {e}")
+    except WebSocketDisconnect:
+        print(f"[WS-PC] PC Agent {device_id} disconnected")
+        if device_id in active_pc_websockets:
+            del active_pc_websockets[device_id]
+
+async def dispatch_pc_tool_call(tool_name: str, kwargs: dict, timeout: float = 60.0):
+    import uuid
+    device_id = "LAPTOP_MASTER"
+    if device_id not in active_pc_websockets:
+        return "[Error] Klien PC (LAPTOP_MASTER) belum terhubung ke WebSocket VPS."
+        
+    req_id = str(uuid.uuid4())
+    loop = asyncio.get_event_loop()
+    future = loop.create_future()
+    pc_tool_requests[req_id] = future
+    
+    payload = {
+        "type": "tool_call",
+        "req_id": req_id,
+        "tool": tool_name,
+        "kwargs": kwargs
+    }
+    
+    try:
+        ws = active_pc_websockets[device_id]
+        await ws.send_text(json.dumps(payload))
+        result = await asyncio.wait_for(future, timeout=timeout)
+        return result
+    except asyncio.TimeoutError:
+        return "[Error] Execution timeout pada PC Client (melebihi batas waktu)."
+    except Exception as e:
+        return f"[Error] Gagal mengirim/menerima dari PC Client: {e}"
+    finally:
+        if req_id in pc_tool_requests:
+            del pc_tool_requests[req_id]
+
 @app.websocket("/ws/agent")
-async def websocket_agent(websocket: WebSocket, device_id: str = "REDMI_NOTE_14"):
+async def websocket_agent(websocket: WebSocket, device_id: str = "REDMI_NOTE_14", token: str = ""):
+    expected_token = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
+    if token != expected_token:
+        await websocket.close(code=1008)
+        return
+        
     await websocket.accept()
     active_websockets[device_id] = websocket
     if device_id not in local_state["agents"]:
@@ -340,7 +412,12 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 @app.websocket("/ws/telemetry")
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_endpoint(websocket: WebSocket, token: str = ""):
+    expected_token = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
+    if token != expected_token:
+        await websocket.close(code=1008)
+        return
+        
     await manager.connect(websocket)
     try:
         while True:
@@ -352,6 +429,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
 @app.post("/api/logs")
 async def api_logs(request: Request):
+    _verify_dashboard_auth(request)
     try:
         data = await request.json()
         log_entry = {
@@ -385,6 +463,8 @@ async def api_logs(request: Request):
 
 @app.post("/agent/log")
 async def agent_log(request: Request):
+    if not _verify_api_key(request):
+        return Response(status_code=401, content="Unauthorized")
     try:
         data = await request.json()
         local_state["logs"].append({**data, "ts": time.time()})
@@ -403,9 +483,29 @@ async def api_chat(request: Request):
     """
     Neural Chat Endpoint: Handles direct communication and command routing.
     If message starts with '/', it's treated as a Sovereign Command.
+    Mendukung enkripsi payload ganda AES-256 (V30.0).
     """
+    import time
+    start_time = time.time()
+    
+    _verify_dashboard_auth(request)
     try:
-        data = await request.json()
+        raw_data = await request.body()
+        data_str = raw_data.decode('utf-8')
+        
+        # Keamanan Lapis Tiga: Dekripsi Jika Tersandi
+        if request.headers.get("X-Encrypted") == "true":
+            try:
+                import sys as _sys
+                _sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "noir-vps")))
+                from security_cipher import aegis_cipher
+                data = aegis_cipher.decrypt_payload(data_str)
+            except Exception as enc_err:
+                return {"ok": False, "error": f"Encryption Layer Error: {enc_err}"}
+        else:
+            import json
+            data = json.loads(data_str)
+
         message = data.get("message", "").strip()
         if not message: return {"ok": False, "error": "Empty message"}
 
@@ -445,6 +545,105 @@ async def api_chat(request: Request):
                 except Exception as e:
                     return {"ok": True, "reply": f"⚠️ Apex query gagal: {e}", "is_command": True}
 
+            # ─ WARFARE ARENA: Simulate High-Intensity Wave ─
+            elif action_type == "simulate_wave":
+                intensity = cmd_parts[1].upper() if len(cmd_parts) > 1 else "HIGH"
+                try:
+                    def _run_wave():
+                        try:
+                            import sys as _s
+                            _s.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "noir-vps")))
+                            from red_blue_arena import RedBlueArena
+                            from battle_logger import BattleLogger
+                            arena = RedBlueArena()
+                            result = arena.run_simulation(intensity=intensity)
+                            BattleLogger.log_battle(
+                                attacker="RED_TEAM_SIM",
+                                target="BLUE_SOVEREIGN",
+                                tactic=f"WAVE_{intensity}",
+                                success=result.get("blue_wins", False),
+                                notes=f"Simulated wave intensity={intensity} | rounds={result.get('rounds',0)}"
+                            )
+                        except Exception as e:
+                            print(f"[WARFARE] Simulasi error: {e}")
+                    import threading as _th
+                    _th.Thread(target=_run_wave, daemon=True).start()
+                    return {
+                        "ok": True,
+                        "reply": (
+                            f"⚔️ **WARFARE ARENA AKTIF — GELOMBANG {intensity}**\n"
+                            f"Simulasi serangan siber intensitas `{intensity}` telah diinisiasi.\n"
+                            f"RedTeam vs BlueTeam sedang bertempur di Arena Noir...\n"
+                            f"📊 Statistik akan diperbarui di tab **BATTLE** dalam beberapa detik."
+                        ),
+                        "is_command": True
+                    }
+                except Exception as e:
+                    return {"ok": True, "reply": f"⚠️ simulate_wave gagal: {e}", "is_command": True}
+
+            # ─ PANDUAN PERINTAH BAKU (Help / Menu) ─
+            elif action_type in ("help", "menu", "perintah", "bantuan"):
+                help_text = """
+🛡️ **NOIR SOVEREIGN V30.1 — PANDUAN PERINTAH BAKU**
+═══════════════════════════════════════════════════════
+
+📌 **PERINTAH INTELIJEN & STATUS**
+  `/status`          — Laporan status sistem lengkap
+  `/apex`            — Level Apex Evolution Engine terkini
+  `/menu` / `/help`  — Tampilkan panduan ini
+
+⚔️ **PERINTAH WARFARE & SIMULASI**
+  `/simulate_wave`          — Simulasi gelombang serangan intensitas HIGH
+  `/simulate_wave MEDIUM`   — Simulasi intensitas MEDIUM
+  `/simulate_wave LOW`      — Simulasi intensitas rendah (latihan)
+
+🔧 **PERINTAH ANDROID AGENT**
+  `/screenshot`      — Ambil tangkapan layar perangkat
+  `/battery`         — Cek level baterai Android
+  `/reboot`          — Reboot perangkat Android
+  `/wifi`            — Toggle koneksi WiFi
+  `/bluetooth`       — Toggle Bluetooth
+
+🏗️ **PERINTAH BUILDER & EVOLUSI**
+  `/build app <spesifikasi>` — Bangun aplikasi baru
+  `/build script <spesifikasi>` — Buat skrip otomasi
+  `/evolve`          — Jalankan siklus evolusi otonom
+
+🤖 **JALUR PROMPT BEBAS (Direct AI)**
+  `/prompt <pertanyaan>` — Kirim pertanyaan langsung ke AI
+  `/ask <pertanyaan>`    — Alias untuk /prompt
+
+  Atau cukup ketik pesan Anda **tanpa awalan /** untuk
+  berkomunikasi langsung dengan Neural Core AI.
+
+═══════════════════════════════════════════════════════
+💡 Tip: Semua perintah bisa dikombinasikan. Sistem akan
+   merespons dalam Bahasa Indonesia secara otonom.
+""".strip()
+                return {"ok": True, "reply": help_text, "is_command": True}
+
+            # ─ JALUR PROMPT BEBAS (/prompt atau /ask) ─
+            elif action_type in ("prompt", "ask", "tanya", "ai"):
+                free_query = " ".join(cmd_parts[1:]).strip()
+                if not free_query:
+                    return {
+                        "ok": True,
+                        "reply": "⚠️ Gunakan format: `/prompt <pertanyaan Anda>`\nContoh: `/prompt Jelaskan cara kerja iptables`",
+                        "is_command": True
+                    }
+                try:
+                    import sys as _sys
+                    _sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "noir-vps")))
+                    from ai_router import OmniRouter
+                    ai_resp = OmniRouter.query(free_query, task_type="general")
+                    return {
+                        "ok": True,
+                        "reply": f"🤖 **NOIR AI:**\n{ai_resp}",
+                        "is_command": True
+                    }
+                except Exception as e:
+                    return {"ok": True, "reply": f"⚠️ AI tidak tersedia: {e}", "is_command": True}
+
             # ─ Generic Command Dispatch ─
             else:
                 with _commands_lock:
@@ -467,6 +666,47 @@ async def api_chat(request: Request):
             _sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "noir-vps")))
             from ai_router import OmniRouter
             
+            # Smart NLU Intent Router (Fase 5 - No prefix requirement)
+            lower_msg = message.lower()
+            if any(k in lower_msg for k in ["cari info", "cari berita", "search web", "pencarian web", "cari tentang", "temukan informasi"]):
+                q = message
+                for k in ["cari info tentang", "cari berita tentang", "search web tentang", "pencarian web tentang", "cari tentang", "temukan informasi tentang", "cari info", "cari berita", "search web", "pencarian web", "cari", "temukan"]:
+                    if lower_msg.startswith(k):
+                        q = message[len(k):].strip()
+                        break
+                try:
+                    search_res = search_web_ddg(q)
+                    reply_text = f"🌐 **HASIL PENCARIAN WEB UNTUK: '{q}'**\n\n"
+                    for idx, r in enumerate(search_res):
+                        reply_text += f"{idx+1}. [{r['title']}]({r['link']})\n   *{r['snippet']}*\n\n"
+                    return {"ok": True, "reply": reply_text, "is_command": True}
+                except Exception as e:
+                    return {"ok": True, "reply": f"⚠️ Pencarian gagal: {e}", "is_command": True}
+            
+            elif any(k in lower_msg for k in ["riset mendalam tentang", "riset tentang", "lakukan riset tentang", "analisis mendalam tentang"]):
+                q = message
+                for k in ["riset mendalam tentang", "riset tentang", "lakukan riset tentang", "analisis mendalam tentang"]:
+                    if lower_msg.startswith(k):
+                        q = message[len(k):].strip()
+                        break
+                try:
+                    search_results = search_web_ddg(q)
+                    context = ""
+                    for idx, r in enumerate(search_results):
+                        context += f"[{idx+1}] Source: {r['link']}\nTitle: {r['title']}\nSnippet: {r['snippet']}\n\n"
+                    
+                    prompt = f"""Anda adalah Agen Riset Noir Sovereign. Lakukan analisis dan riset mendalam berdasarkan hasil pencarian web berikut tentang topik: "{q}".
+                    
+Hasil Pencarian Web:
+{context}
+
+Buatlah laporan riset yang komprehensif, informatif, dan terstruktur dengan format Markdown. Sebutkan nomor referensi [1], [2] di bagian yang relevan dan cantumkan daftar referensi di akhir laporan."""
+                    
+                    ai_resp = OmniRouter.query(prompt, task_type="reasoning")
+                    return {"ok": True, "reply": ai_resp, "is_command": True}
+                except Exception as e:
+                    return {"ok": True, "reply": f"⚠️ Riset gagal: {e}", "is_command": True}
+            
             smi_score = local_state.get("smi_score", 100)
             security_mode = local_state.get("security_mode", "SOVEREIGN_MASTER")
             
@@ -487,6 +727,19 @@ Aturan:
 - Jika diminta status, berikan laporan berdasarkan konteks sistem di atas
 - Jika diminta perintah operasional, konfirmasi dan berikan langkah teknis
 """
+            # --- PHASE 5: REACT AGENT LOOP (PC EXECUTOR) ---
+            if any(k in lower_msg for k in ["di pc", "jalankan perintah", "buat file", "bikin file", "tulis kode", "bikin web", "buat aplikasi", "di laptop", "kelola pc", "cek pc", "instal", "install"]):
+                try:
+                    import sys as _sys
+                    _sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "noir-vps")))
+                    from react_agent import PCReActAgent
+                    ai_resp = await PCReActAgent.run(message, system_context, dispatch_pc_tool_call)
+                    return {"ok": True, "reply": ai_resp, "is_command": True}
+                except Exception as e:
+                    import traceback
+                    err_msg = traceback.format_exc()
+                    return {"ok": True, "reply": f"⚠️ PC ReAct Agent gagal: {e}\n{err_msg}", "is_command": True}
+
             full_prompt = f"{system_context}\n\nPertanyaan/Perintah: {message}"
             ai_response = OmniRouter.query(full_prompt, task_type="general")
             
@@ -507,9 +760,14 @@ Aturan:
             }
     except Exception as e:
         return {"ok": False, "error": str(e)}
+    finally:
+        REQUEST_TIME.labels(endpoint="/api/chat").observe(time.time() - start_time)
+        HTTP_REQUESTS.labels(method="POST", endpoint="/api/chat").inc()
 
 @app.post("/agent/result")
 async def agent_result(request: Request):
+    if not _verify_api_key(request):
+        return Response(status_code=401, content="Unauthorized")
     try:
         data = await request.json()
         # Store result locally
@@ -538,7 +796,13 @@ async def agent_upload(request: Request):
     - BUG#3 FIX: Manual multipart parsing — zero extra dependencies
     - BUG#1 FIX: Detect file type and save metadata properly
     - BUG#4 FIX: Auto-update _latest_mirror_frame on every image upload
+    - SECURITY FIX V30.1: Added zero-trust authentication via token
     """
+    token = request.query_params.get("token", "")
+    expected_token = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
+    if token != expected_token and not _verify_api_key(request):
+        return Response(status_code=401, content="Unauthorized")
+
     device_id = request.query_params.get("device_id", "REDMI_NOTE_14")
     ss_dir = os.path.join(BASE_DIR, "screenshots")
     os.makedirs(ss_dir, exist_ok=True)
@@ -600,10 +864,19 @@ async def agent_upload(request: Request):
 # =============================================================================
 # DASHBOARD API ENDPOINTS
 # =============================================================================
+from fastapi import HTTPException
+
+def _verify_dashboard_auth(request: Request):
+    """Zero-Trust: Validasi otentikasi Bearer Token untuk REST API Dashboard."""
+    auth = request.headers.get("Authorization", "")
+    expected_token = os.environ.get("NOIR_API_KEY", "NOIR_AGENT_KEY_V6_SI_UMKM_PBD_2026")
+    if auth != f"Bearer {expected_token}":
+        raise HTTPException(status_code=401, detail="Unauthorized")
 
 @app.get("/api/status")
-async def api_status():
+async def api_status(request: Request):
     """Smart status: Cloudflare primary, local state fallback."""
+    _verify_dashboard_auth(request)
     cf_up = _cf_is_reachable()
     if cf_up:
         try:
@@ -650,16 +923,21 @@ async def api_status():
     }
 
 @app.get("/api/battle/stats")
-async def battle_stats():
+async def battle_stats(request: Request):
     """Mengembalikan statistik pertempuran (Red vs Blue)."""
+    _verify_dashboard_auth(request)
     try:
+        import sys
+        sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "noir-vps")))
+        from battle_logger import BattleLogger
         stats = BattleLogger.get_statistics()
         return {"success": True, "data": stats}
     except Exception as e:
         return {"success": False, "error": str(e)}
 
 @app.get("/api/summary")
-async def api_summary():
+async def api_summary(request: Request):
+    _verify_dashboard_auth(request)
     try:
         from sovereign_maturity_index import SovereignMaturityIndex
         smi_report = SovereignMaturityIndex().calculate_index()
@@ -889,13 +1167,13 @@ async def api_summary():
             }
         }
     except Exception as e:
-        return {"status": "degraded", "error": str(e)}
-    except Exception as e:
+        log.error(f"Error in api_summary: {e}")
         return {"status": "degraded", "error": str(e)}
 
 @app.post("/api/command")
 async def api_command(request: Request):
     """Sovereign Command Execution: Routes orders to local queue or Cloudflare."""
+    _verify_dashboard_auth(request)
     try:
         data = await request.json()
         action = data.get("action", {})
@@ -1028,8 +1306,9 @@ async def get_memory():
         return {"success": False, "error": str(e)}
 
 @app.get("/api/badusb/scenarios")
-async def get_badusb_scenarios():
+async def get_badusb_scenarios(request: Request):
     """U-11: Pull real scenarios from the Advanced HID Payload Library."""
+    _verify_dashboard_auth(request)
     path = os.path.join(BASE_DIR, "..", "knowledge", "badusb_payloads.json")
     try:
         if os.path.exists(path):
@@ -1044,6 +1323,7 @@ async def get_badusb_scenarios():
 
 @app.post("/api/badusb/trigger")
 async def trigger_badusb(request: Request):
+    _verify_dashboard_auth(request)
     try:
         data = await request.json()
         device_id = data.get("device_id", "REDMI_NOTE_14")
@@ -1118,19 +1398,95 @@ async def api_ghost_toggle(request: Request):
 
 @app.get("/api/skills")
 async def get_skills():
-    """Neural Skill Matrix: Real-time capability visualization."""
-    return {
-        "active": [
-            "🛡️ Aegis Interception v2.0",
-            "👁️ Vision Sentinel v18.5",
-            "🔊 Voice Link v19.5",
-            "🧬 Neural Mesh Handshake v19.6",
-            "🧩 Local AI Reasoning (TinyLlama)"
-        ],
-        "learning": ["Autonomous Multi-Device Orchestration", "Dynamic Skill Integration"],
-        "growth": "99.8%",
-        "status": "ELITE_SOVEREIGN"
+    """Neural Skill Matrix LIVE V30.1: Reads real-time data from knowledge files on VPS."""
+    skill_data = {
+        "status": "SOVEREIGN_MASTER",
+        "overall_score": 0,
+        "skill_count": 0,
+        "knowledge_kb": 0,
+        "evolutions_total": 0,
+        "pillars": [],
+        "categories": [],
+        "blocked_ips_count": 0,
+        "battle_reports_count": 0,
+        "last_updated": time.strftime("%Y-%m-%dT%H:%M:%S")
     }
+
+    try:
+        knowledge_dir = os.path.join(BASE_DIR, "..", "knowledge")
+
+        # 1. Read maturity index for SMI + skill count
+        smi_path = os.path.join(knowledge_dir, "maturity_index.json")
+        if os.path.exists(smi_path):
+            with open(smi_path, "r", encoding="utf-8") as f:
+                smi = json.load(f)
+            skill_data["overall_score"] = smi.get("overall_score", 0)
+            skill_data["status"] = smi.get("status", "ACTIVE")
+            metrics = smi.get("metrics", {})
+            skill_data["skill_count"] = metrics.get("capacity", {}).get("skill_count", 0)
+            skill_data["knowledge_kb"] = metrics.get("capacity", {}).get("knowledge_kb", 0)
+            skill_data["evolutions_total"] = metrics.get("autonomy", {}).get("evolutions_total", 0)
+
+        # 2. Count battle reports
+        battle_dir = os.path.join(knowledge_dir, "battle_reports")
+        if os.path.exists(battle_dir):
+            skill_data["battle_reports_count"] = len([f for f in os.listdir(battle_dir) if f.endswith(".json")])
+
+        # 3. Count blocked IPs
+        blocked_path = os.path.join(knowledge_dir, "blocked_ips.json")
+        if os.path.exists(blocked_path):
+            with open(blocked_path, "r", encoding="utf-8") as f:
+                blocked_data = json.load(f)
+            skill_data["blocked_ips_count"] = len(blocked_data.get("blocked", []))
+
+        # 4. Count skill files in noir-vps/skills/
+        skills_dir = os.path.join(BASE_DIR, "..", "noir-vps", "skills")
+        file_skill_count = 0
+        if os.path.exists(skills_dir):
+            file_skill_count = len([f for f in os.listdir(skills_dir) if f.endswith(".py") or f.endswith(".json")])
+
+        # 5. Build pillar live status data
+        pillar_scores = [
+            {"id": "P1", "name": "Neural Code Synthesis", "category": "governance", "score": min(100, skill_data["evolutions_total"] // 4 + 40)},
+            {"id": "P3", "name": "Pentester Engine", "category": "offensive", "score": min(95, skill_data["battle_reports_count"] // 10 + 50)},
+            {"id": "P4", "name": "Knowledge Absorber (RAG)", "category": "offensive", "score": min(95, int(skill_data["knowledge_kb"] / 1000) + 30)},
+            {"id": "P6", "name": "Network Traffic Sentinel", "category": "defense", "score": min(95, skill_data["blocked_ips_count"] // 2 + 60)},
+            {"id": "P7", "name": "Aegis Auto-Healer", "category": "defense", "score": 100},
+            {"id": "P8", "name": "Memory Consolidation", "category": "governance", "score": min(98, int(skill_data["knowledge_kb"] / 900) + 20)},
+            {"id": "P23", "name": "Sovereign UI Builder", "category": "governance", "score": min(97, skill_data["evolutions_total"] // 5 + 50)},
+            {"id": "P24", "name": "APEX Evolutionary Model", "category": "offensive", "score": min(100, skill_data["evolutions_total"] // 4 + 50)},
+            {"id": "P25", "name": "Defense Fortress (FW)", "category": "defense", "score": min(98, skill_data["blocked_ips_count"] // 3 + 65)},
+        ]
+        skill_data["pillars"] = pillar_scores
+
+        # 6. Build category summaries
+        skill_data["categories"] = [
+            {
+                "name": "System Governance",
+                "icon": "governance",
+                "badge": "MASTER",
+                "pillars": [p for p in pillar_scores if p["category"] == "governance"]
+            },
+            {
+                "name": "Cyber Defense Mesh",
+                "icon": "defense",
+                "badge": "ELITE",
+                "pillars": [p for p in pillar_scores if p["category"] == "defense"]
+            },
+            {
+                "name": "Offensive & OSINT",
+                "icon": "offensive",
+                "badge": "ADVANCED",
+                "pillars": [p for p in pillar_scores if p["category"] == "offensive"]
+            }
+        ]
+
+    except Exception as e:
+        skill_data["error"] = str(e)
+
+    return skill_data
+
+
 
 @app.get("/api/neural-map/data")
 async def get_neural_map_data():
@@ -1229,13 +1585,15 @@ async def download_apk():
 # =============================================================================
 
 @app.get("/api/pc/stats")
-async def get_pc_stats():
+async def get_pc_stats(request: Request):
+    _verify_dashboard_auth(request)
     if not PCExecutor:
         return {"success": False, "error": "PC Executor not initialized."}
     return PCExecutor.get_system_stats()
 
 @app.post("/api/pc/command")
 async def pc_command(request: Request):
+    _verify_dashboard_auth(request)
     if not PCExecutor:
         return {"success": False, "error": "PC Executor not initialized."}
     data = await request.json()
@@ -1245,19 +1603,22 @@ async def pc_command(request: Request):
     return PCExecutor.run_shell(cmd)
 
 @app.get("/api/pc/knowledge")
-async def get_pc_knowledge(category: str = "general"):
+async def get_pc_knowledge(request: Request, category: str = "general"):
+    _verify_dashboard_auth(request)
     if not PCExecutor:
         return {"success": False, "error": "PC Executor not initialized."}
     return PCExecutor.read_knowledge(category=category)
 
 @app.get("/api/pc/logs")
-async def get_pc_logs():
+async def get_pc_logs(request: Request):
+    _verify_dashboard_auth(request)
     if not PCExecutor:
         return []
     return PCExecutor.get_logs()
 
 @app.post("/api/pc/override")
 async def set_pc_override(request: Request):
+    _verify_dashboard_auth(request)
     if not PCExecutor:
         return {"success": False, "error": "PC Executor not initialized."}
     data = await request.json()
@@ -1305,11 +1666,11 @@ _chat_history = []
 
 # ── MULTI-PROVIDER AI ENGINE (V21.0 AEGIS) ──────────────
 _SYSTEM_PROMPT = (
-    "You are Noir Sovereign, an ELITE AI ARCHITECT and Master Programmer controlling an Android device (Redmi Note 14). "
-    "You possess advanced knowledge in Clean Code, SOLID principles, and System Security. "
-    "Your capabilities: screenshot, GPS tracking, shell commands, camera, audio recording, app control, and autonomous system evolution. "
-    "Answer concisely. If the user asks you to perform a device action, mention it clearly. "
-    "Always respond in the same language as the user (Indonesian or English)."
+    "You are Noir Sovereign, an ELITE AI ARCHITECT and Master Programmer controlling both an Android device and the local PC Desktop. "
+    "To execute a terminal command on the local Windows PC, you MUST wrap it in <EXEC_PC>your command here</EXEC_PC>. "
+    "For example: <EXEC_PC>dir</EXEC_PC> or <EXEC_PC>start notepad</EXEC_PC>. The system will execute it and append the output to your response. "
+    "Your capabilities: PC desktop control, Windows shell execution, Python execution, screenshot, Android GPS/camera/audio. "
+    "Answer concisely. Always respond in the same language as the user."
 )
 
 async def _try_groq(prompt: str, history: list) -> str | None:
@@ -1415,6 +1776,7 @@ async def brain_chat_v2(request: Request):
     """AI Chat Relay — Multi-Provider Fallback Chain V21.0 AEGIS.
     Priority: Groq → Gemini-Flash → Gemini-Pro → OpenRouter → Local
     """
+    _verify_dashboard_auth(request)
     global _active_provider
     try:
         data = await request.json()
@@ -1491,6 +1853,21 @@ async def brain_chat_v2(request: Request):
                     })
                 break
 
+        # ── Autonomous PC Action Detection ──
+        if response_text and "<EXEC_PC>" in response_text and "</EXEC_PC>" in response_text:
+            try:
+                start_idx = response_text.find("<EXEC_PC>") + len("<EXEC_PC>")
+                end_idx = response_text.find("</EXEC_PC>")
+                cmd = response_text[start_idx:end_idx].strip()
+                if PCExecutor:
+                    pc_res = PCExecutor.run_shell(cmd, timeout=15)
+                    output_snippet = pc_res.get("output", "No output")[:1000]
+                    response_text += f"\n\n[PC EXECUTOR: {cmd}]\nStatus: {'Success' if pc_res.get('success') else 'Failed'}\nOutput: {output_snippet}"
+                else:
+                    response_text += f"\n\n[PC EXECUTOR: {cmd}]\nError: PCExecutor module offline."
+            except Exception as e:
+                response_text += f"\n\n[PC EXECUTOR] Parsing error: {e}"
+
         return {
             "response": response_text,
             "status": "success",
@@ -1513,13 +1890,15 @@ async def get_chat_history():
 
 # ── NEW: Evolution Proposals ──────────────────────────
 @app.get("/api/evolutions")
-async def get_evolutions():
+async def get_evolutions(request: Request):
     """Return all evolution proposals and history."""
+    _verify_dashboard_auth(request)
     from evolution_engine import evolution_engine
     return evolution_engine.get_all_evolutions()
 
 @app.post("/api/evolution/approve")
 async def approve_evolution(request: Request):
+    _verify_dashboard_auth(request)
     data = await request.json()
     eid = data.get("id")
     from evolution_engine import evolution_engine
@@ -1528,6 +1907,7 @@ async def approve_evolution(request: Request):
 
 @app.post("/api/evolution/reject")
 async def reject_evolution(request: Request):
+    _verify_dashboard_auth(request)
     data = await request.json()
     eid = data.get("id")
     from evolution_engine import evolution_engine
@@ -1886,7 +2266,813 @@ async def serve_assets(filename: str):
         return FileResponse(path)
     return Response(status_code=404)
 
+# =============================================================================
+# ANTIGRAVITY PENYETARAAN ENDPOINTS (TERMINAL, FILE MANAGER, TASK PLANNER, AGENT HUB)
+# =============================================================================
+import subprocess
+import shutil
+
+@app.post("/api/terminal")
+async def api_terminal(request: Request):
+    _verify_dashboard_auth(request)
+    try:
+        body = await request.json()
+        cmd = body.get("command", "").strip()
+        if not cmd:
+            return {"stdout": "", "stderr": "Command empty", "code": 1}
+        
+        if sys.platform == "win32":
+            process = subprocess.run(["powershell.exe", "-Command", cmd], capture_output=True, text=True, timeout=30)
+        else:
+            process = subprocess.run(["/bin/bash", "-c", cmd], capture_output=True, text=True, timeout=30)
+            
+        return {
+            "stdout": process.stdout,
+            "stderr": process.stderr,
+            "code": process.returncode
+        }
+    except subprocess.TimeoutExpired:
+        return {"stdout": "", "stderr": "Execution timeout (30s)", "code": -1}
+    except Exception as e:
+        return {"stdout": "", "stderr": str(e), "code": -1}
+
+@app.get("/api/files/list")
+async def api_files_list(request: Request, path: str = "."):
+    _verify_dashboard_auth(request)
+    try:
+        abs_path = os.path.abspath(path)
+        if not os.path.exists(abs_path):
+            return {"status": "error", "message": "Path does not exist"}
+        if not os.path.isdir(abs_path):
+            return {"status": "error", "message": "Path is not a directory"}
+        
+        items = []
+        for item in os.listdir(abs_path):
+            item_path = os.path.join(abs_path, item)
+            is_dir = os.path.isdir(item_path)
+            try:
+                size = os.path.getsize(item_path) if not is_dir else 0
+            except:
+                size = 0
+            items.append({
+                "name": item,
+                "is_dir": is_dir,
+                "size": size,
+                "modified": os.path.getmtime(item_path)
+            })
+        items.sort(key=lambda x: (not x["is_dir"], x["name"].lower()))
+        return {"status": "success", "current_path": abs_path, "items": items}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.get("/api/files/read")
+async def api_files_read(request: Request, path: str):
+    _verify_dashboard_auth(request)
+    try:
+        abs_path = os.path.abspath(path)
+        if not os.path.exists(abs_path):
+            raise HTTPException(status_code=404, detail="File not found")
+        if os.path.isdir(abs_path):
+            raise HTTPException(status_code=400, detail="Path is a directory")
+        
+        with open(abs_path, "r", encoding="utf-8", errors="replace") as f:
+            content = f.read()
+        return {"status": "success", "path": abs_path, "content": content}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/files/write")
+async def api_files_write(request: Request):
+    _verify_dashboard_auth(request)
+    try:
+        body = await request.json()
+        path = body.get("path")
+        content = body.get("content", "")
+        if not path:
+            return {"status": "error", "message": "Path is required"}
+        
+        abs_path = os.path.abspath(path)
+        os.makedirs(os.path.dirname(abs_path), exist_ok=True)
+        with open(abs_path, "w", encoding="utf-8") as f:
+            f.write(content)
+        return {"status": "success", "path": abs_path, "message": "File written successfully"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.delete("/api/files/delete")
+async def api_files_delete(request: Request, path: str):
+    _verify_dashboard_auth(request)
+    try:
+        abs_path = os.path.abspath(path)
+        if not os.path.exists(abs_path):
+            return {"status": "error", "message": "Path not found"}
+        
+        if os.path.isdir(abs_path):
+            shutil.rmtree(abs_path)
+        else:
+            os.remove(abs_path)
+        return {"status": "success", "message": f"Successfully deleted {path}"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+# --- TASK PLANNER ENDPOINTS ---
+try:
+    from task_planner import TaskPlanner
+except ImportError:
+    TaskPlanner = None
+
+@app.post("/api/tasks/create")
+async def api_tasks_create(request: Request):
+    _verify_dashboard_auth(request)
+    if not TaskPlanner:
+        return {"status": "error", "message": "TaskPlanner module not available"}
+    try:
+        body = await request.json()
+        title = body.get("title", "Plan Baru")
+        steps = body.get("steps", [])
+        plan = TaskPlanner.create_plan(title, steps)
+        return {"status": "success", "plan": plan}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.get("/api/tasks/list")
+async def api_tasks_list(request: Request):
+    _verify_dashboard_auth(request)
+    if not TaskPlanner:
+        return {"status": "error", "message": "TaskPlanner module not available"}
+    try:
+        plans = TaskPlanner.get_all_plans()
+        return {"status": "success", "plans": plans}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.post("/api/tasks/update")
+async def api_tasks_update(request: Request):
+    _verify_dashboard_auth(request)
+    if not TaskPlanner:
+        return {"status": "error", "message": "TaskPlanner module not available"}
+    try:
+        body = await request.json()
+        plan_id = body.get("plan_id")
+        step_id = body.get("step_id")
+        status = body.get("status")
+        plan = TaskPlanner.update_step(plan_id, step_id, status)
+        if not plan:
+            return {"status": "error", "message": "Plan or step not found"}
+        return {"status": "success", "plan": plan}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+# --- AGENT SPAWNER ENDPOINTS ---
+try:
+    from agent_spawner import AgentSpawner
+except ImportError:
+    AgentSpawner = None
+
+@app.post("/api/agents/spawn")
+async def api_agents_spawn(request: Request):
+    _verify_dashboard_auth(request)
+    if not AgentSpawner:
+        return {"status": "error", "message": "AgentSpawner module not available"}
+    try:
+        body = await request.json()
+        task_name = body.get("task_name", "Subagent Task")
+        prompt = body.get("prompt", "")
+        provider = body.get("provider", "gemini")
+        agent = AgentSpawner.spawn(task_name, prompt, provider)
+        return {"status": "success", "agent": agent}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.get("/api/agents/list")
+async def api_agents_list(request: Request):
+    _verify_dashboard_auth(request)
+    if not AgentSpawner:
+        return {"status": "error", "message": "AgentSpawner module not available"}
+    try:
+        agents = AgentSpawner.get_all_agents()
+        return {"status": "success", "agents": agents}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.post("/api/agents/kill")
+async def api_agents_kill(request: Request):
+    _verify_dashboard_auth(request)
+    if not AgentSpawner:
+        return {"status": "error", "message": "AgentSpawner module not available"}
+    try:
+        body = await request.json()
+        agent_id = body.get("agent_id")
+        agent = AgentSpawner.kill_agent(agent_id)
+        if not agent:
+            return {"status": "error", "message": "Agent not found"}
+        return {"status": "success", "agent": agent}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+# --- WEB SEARCH & RESEARCH ENDPOINTS ---
+def search_web_ddg(query: str):
+    import urllib.parse
+    import urllib.request
+    import re
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
+        url = f"https://html.duckduckgo.com/html/?q={urllib.parse.quote(query)}"
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=10) as response:
+            html = response.read().decode('utf-8', errors='ignore')
+            
+        snippets = re.findall(r'<a class="result__snippet"[^>]*>(.*?)</a>', html, re.DOTALL)
+        links_titles = re.findall(r'<a class="result__url"[^>]*href="([^"]+)"[^>]*>(.*?)</a>', html, re.DOTALL)
+        
+        results = []
+        for i in range(min(len(snippets), len(links_titles), 5)):
+            link, title = links_titles[i]
+            title_clean = re.sub(r'<[^>]+>', '', title).strip()
+            snippet_clean = re.sub(r'<[^>]+>', '', snippets[i]).strip()
+            if "uddg=" in link:
+                link = urllib.parse.unquote(link.split("uddg=")[1].split("&")[0])
+            results.append({
+                "title": title_clean,
+                "link": link,
+                "snippet": snippet_clean
+            })
+        return results
+    except Exception as e:
+        return [{"title": "Search Failed", "link": "", "snippet": str(e)}]
+
+@app.post("/api/search")
+async def api_search(request: Request):
+    _verify_dashboard_auth(request)
+    try:
+        body = await request.json()
+        query = body.get("query", "").strip()
+        if not query:
+            return {"status": "error", "message": "Query is required"}
+        results = search_web_ddg(query)
+        return {"status": "success", "results": results}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.post("/api/research")
+async def api_research(request: Request):
+    _verify_dashboard_auth(request)
+    try:
+        body = await request.json()
+        query = body.get("query", "").strip()
+        if not query:
+            return {"status": "error", "message": "Query is required"}
+        
+        search_results = search_web_ddg(query)
+        
+        context = ""
+        for idx, r in enumerate(search_results):
+            context += f"[{idx+1}] Source: {r['link']}\nTitle: {r['title']}\nSnippet: {r['snippet']}\n\n"
+            
+        prompt = f"""Anda adalah Agen Riset Noir Sovereign. Lakukan analisis dan riset mendalam berdasarkan hasil pencarian web berikut tentang topik: "{query}".
+        
+Hasil Pencarian Web:
+{context}
+
+Buatlah laporan riset yang komprehensif, informatif, dan terstruktur dengan format Markdown. Sebutkan nomor referensi [1], [2] di bagian yang relevan dan cantumkan daftar referensi di akhir laporan."""
+        
+        sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "noir-vps")))
+        from ai_router import OmniRouter
+        res = OmniRouter.query(prompt, task_type="reasoning")
+        
+        return {
+            "status": "success",
+            "query": query,
+            "results": search_results,
+            "synthesis": res
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+# ─── NATIVE DASHBOARD ENDPOINTS ─────────────────────────────────────────────
+@app.get("/health")
+async def health_check():
+    return {"status": "ok", "timestamp": time.time()}
+
+@app.get("/api/budget")
+async def get_budget():
+    try:
+        sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "noir-vps")))
+        from ai_router import get_budget_status
+        return get_budget_status()
+    except Exception as e:
+        return {"total_calls": 0, "budget": 500, "remaining": 500, "error": str(e)}
+
+@app.get("/api/maturity")
+async def get_maturity():
+    try:
+        maturity_path = os.path.join(os.path.dirname(__file__), "..", "knowledge", "maturity_index.json")
+        if os.path.exists(maturity_path):
+            with open(maturity_path, "r") as f:
+                return json.load(f)
+    except:
+        pass
+    return {"score": 0.0, "status": "EMBRYONIC", "pillars": {}}
+
+@app.get("/api/nodes")
+async def get_nodes():
+    nodes = []
+    for k, v in local_state["agents"].items():
+        nodes.append({
+            "id": k,
+            "online": v.get("status") == "connected",
+            "platform": v.get("platform", "Unknown"),
+            "last_seen": v.get("last_seen", "Unknown")
+        })
+    return {"count": len(nodes), "nodes": nodes}
+
+@app.get("/api/singularity_state")
+async def get_singularity_state():
+    try:
+        state_path = os.path.join(os.path.dirname(__file__), "..", "knowledge", "singularity_state.json")
+        if os.path.exists(state_path):
+            with open(state_path, "r") as f:
+                return json.load(f)
+    except:
+        pass
+    return {"cycle": 0}
+
+@app.get("/api/state")
+async def get_state():
+    """Endpoint utama dashboard — menggabungkan semua state sistem."""
+    agents_list = []
+    for k, v in local_state["agents"].items():
+        agents_list.append({
+            "id": k,
+            "online": (time.time() - v.get("last_seen", 0)) < 90,
+            "platform": v.get("platform", "Unknown"),
+            "last_seen": v.get("last_seen", 0),
+            "stats": v.get("stats", {}),
+            "mesh_status": v.get("mesh_status", "UNKNOWN"),
+        })
+    # PC WebSocket connection status
+    pc_connected = "LAPTOP_MASTER" in active_pc_websockets
+
+    recent_logs = list(local_state["logs"])[-30:]
+
+    # Singularity state
+    singularity = {"cycle": 0}
+    try:
+        state_path = os.path.join(os.path.dirname(__file__), "..", "knowledge", "singularity_state.json")
+        if os.path.exists(state_path):
+            with open(state_path, "r") as f:
+                singularity = json.load(f)
+    except Exception:
+        pass
+
+    return {
+        "status": "ok",
+        "timestamp": time.time(),
+        "agents": agents_list,
+        "agent_count": len(agents_list),
+        "pc_connected": pc_connected,
+        "logs": recent_logs,
+        "commands_pending": len([c for c in local_state["commands"] if c.get("status") == "queued"]),
+        "current_learning": local_state.get("current_learning", ""),
+        "loot_count": len(local_state.get("loot", [])),
+        "singularity": singularity,
+        "server_version": "30.1-ZERO-TRUST-GRAND-SINGULARITY",
+    }
+
+@app.get("/api/logs")
+async def get_logs(n: int = 50):
+    try:
+        log_path = os.path.join(os.path.dirname(__file__), "..", "logs", "noir_core.log")
+        if os.path.exists(log_path):
+            with open(log_path, "r") as f:
+                lines = f.readlines()
+                return json.dumps([l.strip() for l in lines[-n:]])
+    except:
+        pass
+    return "[]"
+
+# --- ANDROID GHOST BRIDGE ENDPOINTS ---
+@app.post("/api/node_ping")
+async def api_node_ping(request: Request):
+    if not _verify_api_key(request): return Response(status_code=401)
+    try:
+        data = await request.json()
+        did = data.get("device_id")
+        if did:
+            local_state["agents"][did] = {"last_seen": time.time(), "platform": data.get("platform", "android")}
+        return {"status": "ok"}
+    except:
+        return {"status": "error"}
+
+@app.get("/api/node_commands")
+async def api_node_commands(request: Request, device_id: str):
+    if not _verify_api_key(request): return Response(status_code=401)
+    with _commands_lock:
+        cmds = [c for c in local_state["commands"] if c.get("target") == device_id and c.get("status") == "queued"]
+        for c in cmds:
+            c["status"] = "dispatched"
+    return cmds
+
+@app.post("/api/node_result")
+async def api_node_result(request: Request):
+    if not _verify_api_key(request): return Response(status_code=401)
+    try:
+        data = await request.json()
+        req_id = data.get("req_id")
+        if req_id and req_id in pc_tool_requests:
+            fut = pc_tool_requests.pop(req_id)
+            if not fut.done():
+                fut.set_result(data)
+        return {"status": "ok"}
+    except:
+        return {"status": "error"}
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# BLOK V32.0 — SCREEN CONTROL, CVE ARENA, VOICE, WINDOWS SERVICE
+# ══════════════════════════════════════════════════════════════════════════
+
+# ── Lazy-load modul baru (agar tidak crash jika belum terpasang) ──────────
+_vps_dir = os.path.join(os.path.dirname(__file__), "..", "noir-vps")
+sys.path.insert(0, _vps_dir)
+
+try:
+    from noir_screen_controller import NoirScreenController
+    _screen = NoirScreenController
+except Exception:
+    _screen = None
+
+try:
+    from sovereign_sandbox import SovereignSandbox
+except Exception:
+    SovereignSandbox = None
+
+# ── /api/screen/capture — Ambil screenshot PC ────────────────────────────
+@app.get("/api/screen/capture")
+async def screen_capture():
+    """Ambil screenshot layar PC dan kembalikan sebagai base64."""
+    if not _screen:
+        return {"success": False, "message": "NoirScreenController tidak tersedia. pip install pyautogui Pillow"}
+    result = _screen.screenshot(save=True)
+    if result.get("success"):
+        result.pop("base64_full", None)  # hapus field besar dari response log
+    return result
+
+@app.get("/api/screen/capture/full")
+async def screen_capture_full():
+    """Ambil screenshot dan kembalikan base64 penuh untuk dashboard."""
+    if not _screen:
+        return {"success": False, "message": "NoirScreenController tidak tersedia."}
+    return _screen.screenshot(save=False)
+
+# ── /api/screen/click — Klik mouse ───────────────────────────────────────
+@app.post("/api/screen/click")
+async def screen_click(request: Request):
+    _verify_dashboard_auth(request)
+    data = await request.json()
+    x, y = data.get("x", 0), data.get("y", 0)
+    btn  = data.get("button", "left")
+    n    = data.get("clicks", 1)
+    if not _screen:
+        return {"success": False, "message": "Controller tidak tersedia."}
+    return _screen.click(x, y, button=btn, clicks=n)
+
+# ── /api/screen/type — Ketik teks ────────────────────────────────────────
+@app.post("/api/screen/type")
+async def screen_type(request: Request):
+    _verify_dashboard_auth(request)
+    data = await request.json()
+    text = data.get("text", "")
+    if not _screen or not text:
+        return {"success": False, "message": "Teks kosong atau controller tidak tersedia."}
+    return _screen.type_text(text)
+
+# ── /api/screen/hotkey — Tekan tombol kombinasi ──────────────────────────
+@app.post("/api/screen/hotkey")
+async def screen_hotkey(request: Request):
+    _verify_dashboard_auth(request)
+    data = await request.json()
+    keys = data.get("keys", [])
+    if not _screen or not keys:
+        return {"success": False, "message": "Keys kosong atau controller tidak tersedia."}
+    return _screen.hotkey(*keys)
+
+# ── /api/screen/open — Buka aplikasi ─────────────────────────────────────
+@app.post("/api/screen/open")
+async def screen_open_app(request: Request):
+    _verify_dashboard_auth(request)
+    data = await request.json()
+    app_name = data.get("app", "")
+    if not _screen or not app_name:
+        return {"success": False, "message": "Nama aplikasi kosong."}
+    return _screen.open_application(app_name)
+
+# ── /api/screen/ocr — Baca teks dari layar ───────────────────────────────
+@app.get("/api/screen/ocr")
+async def screen_ocr():
+    if not _screen:
+        return {"success": False, "message": "Controller tidak tersedia."}
+    return _screen.read_screen_text()
+
+# ── /api/screen/log — Log aksi layar ─────────────────────────────────────
+@app.get("/api/screen/log")
+async def screen_log():
+    if not _screen:
+        return []
+    return _screen.get_action_log(limit=50)
+
+# ── /api/pc/exec — Eksekusi shell via SovereignSandbox ───────────────────
+@app.post("/api/pc/exec")
+async def pc_exec(request: Request):
+    _verify_dashboard_auth(request)
+    data = await request.json()
+    cmd  = data.get("cmd", "").strip()
+    if not cmd:
+        return {"success": False, "message": "Perintah kosong."}
+    if SovereignSandbox:
+        return SovereignSandbox.execute_shell(cmd, timeout=20)
+    # Fallback ke PCExecutor lama
+    if PCExecutor:
+        return PCExecutor.run_shell(cmd, timeout=20)
+    return {"success": False, "message": "Executor tidak tersedia."}
+
+# ── /api/pc/python — Eksekusi Python sandbox ─────────────────────────────
+@app.post("/api/pc/python")
+async def pc_python(request: Request):
+    _verify_dashboard_auth(request)
+    data = await request.json()
+    code = data.get("code", "").strip()
+    if not code:
+        return {"success": False, "message": "Kode kosong."}
+    if SovereignSandbox:
+        return SovereignSandbox.execute_python(code, timeout=25)
+    if PCExecutor:
+        return PCExecutor.run_python(code, timeout=25)
+    return {"success": False, "message": "Sandbox tidak tersedia."}
+
+# ── /api/cve/run — Jalankan CVE Arena satu siklus ────────────────────────
+@app.post("/api/cve/run")
+async def cve_run(request: Request):
+    _verify_dashboard_auth(request)
+    data = await request.json()
+    days     = data.get("days", 7)
+    max_cves = data.get("max_cves", 2)
+
+    def _run():
+        try:
+            from noir_cve_arena import NoirCVEArena
+            arena = NoirCVEArena()
+            arena.run_full_cycle(days=days, max_cves=max_cves)
+        except Exception as e:
+            print(f"[CVE-ARENA] Error: {e}")
+
+    import threading
+    threading.Thread(target=_run, daemon=True).start()
+    return {"status": "started", "message": f"CVE Arena dimulai: {max_cves} CVE dari {days} hari terakhir."}
+
+# ── /api/voice/speak — TTS langsung dari dashboard ───────────────────────
+@app.post("/api/voice/speak")
+async def voice_speak(request: Request):
+    _verify_dashboard_auth(request)
+    data = await request.json()
+    text = data.get("text", "").strip()
+    if not text:
+        return {"success": False, "message": "Teks kosong."}
+    try:
+        from noir_voice_interface import speak
+        import threading
+        threading.Thread(target=speak, args=(text, True), daemon=True).start()
+        return {"success": True, "message": f"TTS: {text[:60]}"}
+    except Exception as e:
+        return {"success": False, "message": str(e)}
+
+# ── /api/voice/listen — STT sekali dengarkna ─────────────────────────────
+@app.get("/api/voice/listen")
+async def voice_listen():
+    try:
+        from noir_voice_interface import listen_once
+        return listen_once(timeout=6)
+    except Exception as e:
+        return {"success": False, "message": str(e)}
+
+# ── /api/service/install — Install Windows Task Scheduler ────────────────
+@app.post("/api/service/install")
+async def service_install(request: Request):
+    _verify_dashboard_auth(request)
+    try:
+        svc_script = os.path.join(os.path.dirname(__file__), "..", "noir_windows_service.py")
+        import subprocess
+        result = subprocess.run(
+            [sys.executable, svc_script],
+            capture_output=True, text=True, timeout=60
+        )
+        return {
+            "success": result.returncode == 0,
+            "output": result.stdout + result.stderr
+        }
+    except Exception as e:
+        return {"success": False, "message": str(e)}
+
+# ── /api/service/status — Status task scheduler ───────────────────────────
+@app.get("/api/service/status")
+async def service_status():
+    try:
+        import subprocess
+        tasks = ["NoirSovereign_WebServer", "NoirSovereign_SingularityDaemon", "NoirSovereign_Watchdog"]
+        results = {}
+        for t in tasks:
+            r = subprocess.run(["schtasks", "/Query", "/TN", t, "/FO", "LIST"],
+                               capture_output=True, text=True, timeout=10)
+            results[t] = "ACTIVE" if r.returncode == 0 else "NOT_REGISTERED"
+        return {"tasks": results}
+    except Exception as e:
+        return {"error": str(e)}
+
+# ── /api/sandbox/audit — Audit kode sebelum eksekusi ──────────────────────
+@app.post("/api/sandbox/audit")
+async def sandbox_audit(request: Request):
+    _verify_dashboard_auth(request)
+    data = await request.json()
+    code = data.get("code", "")
+    if not code:
+        return {"safe": False, "violations": ["Kode kosong"]}
+    if SovereignSandbox:
+        from sovereign_sandbox import _audit_ast
+        return _audit_ast(code)
+    return {"safe": True, "violations": [], "warnings": ["SovereignSandbox tidak tersedia"]}
+
+# ══════════════════════════════════════════════════════════════════════════
+# BLOK V33.0 — GRAND EVOLUTION LOOP ENDPOINTS
+# ══════════════════════════════════════════════════════════════════════════
+
+try:
+    from noir_grand_evolution_loop import (
+        get_loop, start_loop_background, stop_loop, get_loop_status
+    )
+    _evolution_available = True
+except Exception as _evo_err:
+    _evolution_available = False
+    log.warning(f"[V33] Grand Evolution Loop tidak tersedia: {_evo_err}")
+
+try:
+    from noir_meta_judge import NoirMetaJudge as _MetaJudge
+    _judge_instance = _MetaJudge()
+except Exception:
+    _judge_instance = None
+
+try:
+    from noir_external_injector import NoirExternalInjector as _ExternalInjector
+    _injector_instance = _ExternalInjector()
+except Exception:
+    _injector_instance = None
+
+
+# ── /api/evolution/start — Mulai Grand Evolution Loop ──────────────────
+@app.post("/api/evolution/start")
+async def evolution_start(request: Request):
+    _verify_dashboard_auth(request)
+    if not _evolution_available:
+        return {"success": False, "message": "Grand Evolution Loop tidak tersedia."}
+    try:
+        start_loop_background()
+        return {"success": True, "message": "Grand Evolution Loop dimulai di background."}
+    except Exception as e:
+        return {"success": False, "message": str(e)}
+
+
+# ── /api/evolution/stop — Hentikan Grand Evolution Loop ────────────────
+@app.post("/api/evolution/stop")
+async def evolution_stop(request: Request):
+    _verify_dashboard_auth(request)
+    if not _evolution_available:
+        return {"success": False, "message": "Grand Evolution Loop tidak tersedia."}
+    try:
+        stop_loop()
+        return {"success": True, "message": "Grand Evolution Loop dihentikan."}
+    except Exception as e:
+        return {"success": False, "message": str(e)}
+
+
+# ── /api/evolution/status — Status loop evolusi ─────────────────────────
+@app.get("/api/evolution/status")
+async def evolution_status():
+    if not _evolution_available:
+        return {"available": False, "message": "Modul tidak tersedia."}
+    try:
+        status = get_loop_status()
+        status["available"] = True
+        return status
+    except Exception as e:
+        return {"available": False, "error": str(e)}
+
+
+# ── /api/evolution/run_once — Jalankan 1 siklus sekarang ───────────────
+@app.post("/api/evolution/run_once")
+async def evolution_run_once(request: Request):
+    _verify_dashboard_auth(request)
+    if not _evolution_available:
+        return {"success": False, "message": "Grand Evolution Loop tidak tersedia."}
+
+    def _run():
+        try:
+            loop = get_loop()
+            loop.run_single_cycle()
+        except Exception as e:
+            log.error(f"[V33] run_once error: {e}")
+
+    import threading
+    threading.Thread(target=_run, daemon=True).start()
+    return {"success": True, "message": "Satu siklus evolusi dimulai di background. Cek /api/evolution/status untuk progress."}
+
+
+# ── /api/evolution/report — Laporan evolusi keseluruhan ────────────────
+@app.get("/api/evolution/report")
+async def evolution_report():
+    if _judge_instance:
+        return _judge_instance.get_evolution_report()
+    return {"error": "MetaJudge tidak tersedia."}
+
+
+# ── /api/evolution/scores — Semua skor historis ─────────────────────────
+@app.get("/api/evolution/scores")
+async def evolution_scores():
+    import json
+    from pathlib import Path
+    scores_file = Path(_vps_dir).parent / "knowledge" / "evolution_scores.json"
+    if scores_file.exists():
+        try:
+            return json.loads(scores_file.read_text(encoding="utf-8"))
+        except Exception as e:
+            return {"error": str(e)}
+    return []
+
+
+# ── /api/evolution/history — History siklus lengkap ─────────────────────
+@app.get("/api/evolution/history")
+async def evolution_history():
+    import json
+    from pathlib import Path
+    hist_file = Path(_vps_dir).parent / "knowledge" / "evolution" / "grand_evolution_history.json"
+    if hist_file.exists():
+        try:
+            return json.loads(hist_file.read_text(encoding="utf-8"))
+        except Exception as e:
+            return {"error": str(e)}
+    return []
+
+
+# ── /api/evolution/inject — Ambil intelligence eksternal sekarang ───────
+@app.post("/api/evolution/inject")
+async def evolution_inject(request: Request):
+    _verify_dashboard_auth(request)
+    if not _injector_instance:
+        return {"success": False, "message": "External Injector tidak tersedia."}
+
+    def _run():
+        _injector_instance.collect_all()
+
+    import threading
+    threading.Thread(target=_run, daemon=True).start()
+    return {"success": True, "message": "External injection dimulai. Data akan tersedia dalam 30-60 detik."}
+
+
+# ── /api/evolution/intelligence — Baca snapshot injeksi terbaru ─────────
+@app.get("/api/evolution/intelligence")
+async def evolution_intelligence():
+    import json
+    from pathlib import Path
+    inject_dir = Path(_vps_dir).parent / "knowledge" / "external_feed"
+    snaps = sorted(inject_dir.glob("snapshot_*.json"), reverse=True) if inject_dir.exists() else []
+    if snaps:
+        try:
+            return json.loads(snaps[0].read_text(encoding="utf-8"))
+        except Exception as e:
+            return {"error": str(e)}
+    return {"message": "Belum ada snapshot. Jalankan /api/evolution/inject terlebih dahulu."}
+
+
+# ── /api/evolution/benchmark — Benchmark OWASP dari siklus terakhir ─────
+@app.get("/api/evolution/benchmark")
+async def evolution_benchmark():
+    import json
+    from pathlib import Path
+    sandbox_dir = Path(_vps_dir).parent / ".sandbox" / "grand_loop"
+    if not sandbox_dir.exists():
+        return {"message": "Belum ada siklus yang berjalan."}
+    reports = sorted(sandbox_dir.glob("*_ops2_attack_report.md"), reverse=True)
+    if not reports:
+        return {"message": "Belum ada laporan serangan."}
+    if _judge_instance:
+        content = reports[0].read_text(encoding="utf-8", errors="ignore")
+        return _judge_instance.benchmark_vs_owasp(content)
+    return {"error": "MetaJudge tidak tersedia."}
+
+
+# ══════════════════════════════════════════════════════════════════════════
+
 if __name__ == "__main__":
+
+
     import uvicorn, argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, help="Port to run the server on")

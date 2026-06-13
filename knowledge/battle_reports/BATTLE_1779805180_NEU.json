@@ -1,0 +1,29 @@
+{
+    "id": "BATTLE_1779805180_NEU",
+    "timestamp": "2026-05-27T02:19:40.191178",
+    "event_type": "SIMULATION",
+    "participants": {
+        "attacker": "Neural_Red_Team",
+        "defender": "Sovereign_Blue_Team",
+        "target": "Arena_Dummy_System"
+    },
+    "metrics": {
+        "methods_tried": [
+            "Dynamic Vulnerability Exploitation"
+        ],
+        "success": true,
+        "penetration_rate": 1.0,
+        "vulnerabilities_found": 1
+    },
+    "raw_findings": [
+        {
+            "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\.sandbox\\arena\\dummy_app.py",
+            "line": 37,
+            "severity": "MEDIUM",
+            "message": "Debug mode aktif di production",
+            "snippet": "app.run(debug=True)"
+        }
+    ],
+    "evaluation": "Simulasi otonom untuk melatih logika penambalan kode (Blue) vs eksploitasi (Red).",
+    "status": "COMPLETED"
+}

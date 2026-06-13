@@ -1,0 +1,21 @@
+{
+    "id": "BATTLE_1779787418_NEU",
+    "timestamp": "2026-05-26T21:23:38.413201",
+    "event_type": "SIMULATION",
+    "participants": {
+        "attacker": "Neural_Red_Team",
+        "defender": "Sovereign_Blue_Team",
+        "target": "Arena_Dummy_System"
+    },
+    "metrics": {
+        "methods_tried": [
+            "Dynamic Vulnerability Exploitation"
+        ],
+        "success": false,
+        "penetration_rate": 0.0,
+        "vulnerabilities_found": 0
+    },
+    "raw_findings": [],
+    "evaluation": "Simulasi otonom untuk melatih logika penambalan kode (Blue) vs eksploitasi (Red).",
+    "status": "COMPLETED"
+}

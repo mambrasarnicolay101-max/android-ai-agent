@@ -1,0 +1,50 @@
+{
+    "id": "BATTLE_1779798667_NEU",
+    "timestamp": "2026-05-27T00:31:07.444252",
+    "event_type": "SIMULATION",
+    "participants": {
+        "attacker": "Neural_Red_Team",
+        "defender": "Sovereign_Blue_Team",
+        "target": "Arena_Dummy_System"
+    },
+    "metrics": {
+        "methods_tried": [
+            "Dynamic Vulnerability Exploitation"
+        ],
+        "success": true,
+        "penetration_rate": 1.0,
+        "vulnerabilities_found": 4
+    },
+    "raw_findings": [
+        {
+            "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\.sandbox\\arena\\dummy_app.py",
+            "line": 46,
+            "severity": "LOW",
+            "message": "HTTP tidak terenkripsi - gunakan HTTPS",
+            "snippet": "* IDOR: Visit `http://localhost:5000/user/1` to access user data."
+        },
+        {
+            "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\.sandbox\\arena\\dummy_app.py",
+            "line": 47,
+            "severity": "LOW",
+            "message": "HTTP tidak terenkripsi - gunakan HTTPS",
+            "snippet": "* XSS: Visit `http://localhost:5000/hello?name=<script>alert('XSS')</script>` to"
+        },
+        {
+            "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\.sandbox\\arena\\dummy_app.py",
+            "line": 48,
+            "severity": "LOW",
+            "message": "HTTP tidak terenkripsi - gunakan HTTPS",
+            "snippet": "* SQLi: Visit `http://localhost:5000/search?query=\" OR 1=1 --` to retrieve all u"
+        },
+        {
+            "file": "C:\\Users\\ASUS\\.gemini\\antigravity\\scratch\\android-ai-agent\\noir-vps\\.sandbox\\arena\\dummy_app.py",
+            "line": 40,
+            "severity": "MEDIUM",
+            "message": "Debug mode aktif di production",
+            "snippet": "app.run(debug=True)"
+        }
+    ],
+    "evaluation": "Simulasi otonom untuk melatih logika penambalan kode (Blue) vs eksploitasi (Red).",
+    "status": "COMPLETED"
+}

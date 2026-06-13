@@ -1,0 +1,142 @@
+{
+  "timestamp": "2026-05-30T05:42:00.093177",
+  "github_trending": [],
+  "critical_cves": [
+    {
+      "id": "CVE-2026-8376",
+      "description": "Perl versions through 5.43.10 have a heap buffer overflow when compiling regular expressions with a repeated fixed string on 32-bit builds.\n\nPerl_study_chunk in regcomp_study.c checked the size of the joined substring buffer in characters rather than bytes. For a quantified fixed substring with a large minimum count, the byte length mincount * l could overflow SSize_t, producing an undersized SvGROW allocation; the subsequent copy writes past the end of the buffer.\n\nA caller that compiles an att",
+      "cvss": 9.8,
+      "published": "2026-05-26T00:16:57.150"
+    },
+    {
+      "id": "CVE-2026-42496",
+      "description": "Archive::Tar versions before 3.08 for Perl extract symlinks with attacker controlled targets outside the extraction directory.\n\n_make_special_file() passes the tar header's linkname to symlink() without validating it against absolute paths or .. segments. The secure-extract mode check that guards regular file extraction does not cover the symlink target.\n\nA subsequent open through the extracted name reads or writes the attacker chosen path.",
+      "cvss": 9.1,
+      "published": "2026-05-26T02:16:40.130"
+    },
+    {
+      "id": "CVE-2026-45247",
+      "description": "Mirasvit Full Page Cache Warmer for Magento 2 before version 1.11.12 contains a PHP object injection vulnerability that allows unauthenticated attackers to achieve remote code execution by supplying a crafted serialized PHP object in the CacheWarmer cookie. Attackers can exploit the unrestricted call to PHP's native unserialize() function combined with gadget chains available in Magento and its dependencies to execute arbitrary code on the server.",
+      "cvss": 9.8,
+      "published": "2026-05-26T15:16:39.263"
+    },
+    {
+      "id": "CVE-2026-48686",
+      "description": "FastNetMon Community Edition through 1.2.9 contains a stack-based buffer overflow in the BGP NLRI (Network Layer Reachability Information) decoder. The function decode_bgp_subnet_encoding_ipv4_raw() in src/bgp_protocol.cpp reads prefix_bit_length directly from the BGP packet (line 99) without validating it is <= 32 for IPv4 prefixes. This value is passed to how_much_bytes_we_need_for_storing_certain_subnet_mask() which computes ceil(prefix_bit_length / 8), returning up to 32 bytes for a prefix_b",
+      "cvss": 9.8,
+      "published": "2026-05-26T16:16:26.693"
+    },
+    {
+      "id": "CVE-2026-48687",
+      "description": "FastNetMon Community Edition through 1.2.9 contains an OS command injection vulnerability in the Juniper router integration plugin. The _log() function in src/juniper_plugin/fastnetmon_juniper.php (lines 117-118) constructs shell commands by concatenating the $msg parameter directly into exec() calls: exec(\"echo `date` \\\"- {FASTNETMON] - \" . $msg . \" \\\" >> \" . $FILE_LOG_TMP). The $msg variable contains unsanitized data derived from command-line arguments argv[1] through argv[3], which represent ",
+      "cvss": 9.8,
+      "published": "2026-05-26T16:16:26.800"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Physics Is All You Need? A Case Study in Physicist-Supervised AI Development of Scientific Software",
+      "summary": "Are AI agents tools, co-authors, or researchers? We present a quantified case study ($N=1$): a physicist supervising an AI coding agent (Claude Code, Sonnet and Opus models) over 12 work days and 57 sessions to build CLAX-PT, a differentiable one-loop perturbation theory module in JAX. We documented",
+      "url": "http://arxiv.org/abs/2605.30353v1"
+    },
+    {
+      "title": "SchGen: PCB Schematic Generation with Semantic-Grounded Code Representations",
+      "summary": "Printed circuit board (PCB) schematic design defines nearly all electronic hardware, but it remains manual and expertise-intensive. While generative AI has advanced digital and analog IC design, PCB schematic generation from natural-language intent is largely unexplored. This paper presents SchGen, ",
+      "url": "http://arxiv.org/abs/2605.30345v1"
+    },
+    {
+      "title": "REST3D: Reconstructing Physically Stable 3D Scenes from a Single Image",
+      "summary": "Reconstructing physically stable 3D scenes from a single RGB image enables casual images to be converted into simulation-ready digital assets for applications such as immersive interaction and content creation. However, existing single-image reconstruction methods fall short in capturing the physica",
+      "url": "http://arxiv.org/abs/2605.30338v1"
+    },
+    {
+      "title": "Locally Coherent, Globally Incoherent: Bounding Compositional Incoherence in Multi-Component LLM Agents",
+      "summary": "Multi-component LLM agents assemble probabilistic claims from components that each see only part of a joint problem; the composition can violate basic probability axioms even when every component is locally coherent. We formalise this locally coherent, globally incoherent failure via the composition",
+      "url": "http://arxiv.org/abs/2605.30335v1"
+    },
+    {
+      "title": "SoundnessBench: Can Your AI Scientist Really Tell Good Research Ideas from Bad Ones?",
+      "summary": "Autonomous AI research agents aim to accelerate scientific discovery by automating the research pipeline, from hypothesis generation to peer review. However, existing benchmarks rarely test a fundamental bottleneck: whether Large Language Models can judge the methodological viability of a research i",
+      "url": "http://arxiv.org/abs/2605.30329v1"
+    }
+  ],
+  "security_news": [
+    {
+      "cve": "CVE-2026-48027",
+      "vendor": "Nx",
+      "product": "Nx Console",
+      "description": "Nx Console contains an embedded malicious code vulnerability that allowed a malicious version of Nx Console to be published. The compromised extension fetched an obfuscated payload that could harvested credentials from multiple sources on disk and in memory.",
+      "action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+      "date_added": "2026-05-27"
+    },
+    {
+      "cve": "CVE-2026-45321",
+      "vendor": "TanStack",
+      "product": "TanStack",
+      "description": "TanStack contains an unspecified vulnerability that allowed malicious versions of the product to be published to the npm registry to publish credential-stealing malware under a trusted identity.",
+      "action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+      "date_added": "2026-05-27"
+    },
+    {
+      "cve": "CVE-2026-8398",
+      "vendor": "Daemon",
+      "product": "Daemon Tools Lite",
+      "description": "Daemon Tools contains an unspecified vulnerability that has a high impact on confidentiality, integrity, and availability.",
+      "action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+      "date_added": "2026-05-27"
+    },
+    {
+      "cve": "CVE-2026-48172",
+      "vendor": "LiteSpeed",
+      "product": "cPanel Plugin",
+      "description": "LiteSpeed cPanel Plugin contains privilege escalation vulnerability that is exposed via the user-end cPanel plugin, which can be abused by any cPanel user account to execute arbitrary scripts with root privileges.",
+      "action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+      "date_added": "2026-05-26"
+    },
+    {
+      "cve": "CVE-2026-9082",
+      "vendor": "Drupal",
+      "product": "Core",
+      "description": "Drupal Core contains a SQL injection vulnerability that could allow for privilege escalation and remote code execution via specially crafted requests sent with the database abstraction API.",
+      "action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+      "date_added": "2026-05-22"
+    }
+  ],
+  "ctf_events": [
+    {
+      "name": "THEM?!CTF 2026",
+      "format": "Jeopardy",
+      "start": "2026-05-29T18:00:00+00:00",
+      "url": "https://themctf.com/",
+      "weight": 0.0
+    },
+    {
+      "name": "BYUCTF 2026",
+      "format": "Jeopardy",
+      "start": "2026-05-30T00:00:00+00:00",
+      "url": "https://ctfd.cyberjousting.com/",
+      "weight": 53.29
+    },
+    {
+      "name": "Grey Cat The Flag 2026 Qualifiers",
+      "format": "Jeopardy",
+      "start": "2026-05-30T02:00:00+00:00",
+      "url": "https://ctf.nusgreyhats.org/",
+      "weight": 47.5
+    },
+    {
+      "name": "HSE CTF 2026",
+      "format": "Jeopardy",
+      "start": "2026-05-30T07:00:00+00:00",
+      "url": "https://ctf.miem.hse.ru/",
+      "weight": 0.0
+    },
+    {
+      "name": "Pwn2Play Open CTF",
+      "format": "Jeopardy",
+      "start": "2026-05-30T09:00:00+00:00",
+      "url": "https://pwn2play.biterra.co/",
+      "weight": 0
+    }
+  ]
+}

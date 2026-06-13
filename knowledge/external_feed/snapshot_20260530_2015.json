@@ -1,0 +1,128 @@
+{
+  "timestamp": "2026-05-30T20:15:56.498300",
+  "github_trending": [],
+  "critical_cves": [
+    {
+      "id": "CVE-2026-8760",
+      "description": "The Login with OTP plugin for WordPress is vulnerable to authentication bypass in all versions up to, and including, 1.6. This is due to an incomplete fix for CVE-2024-11178: the rate-limit/lockout check added to `otpl_login_action()` was placed only inside the OTP-generation branch and is never evaluated on the OTP-validation branch, and the generated 6-digit OTP additionally has no expiration. This makes it possible for unauthenticated attackers to brute-force the 900,000-value OTP space for a",
+      "cvss": 9.8,
+      "published": "2026-05-27T07:16:14.927"
+    },
+    {
+      "id": "CVE-2026-7524",
+      "description": "IBM Langflow OSS 1.0.0 through 1.9.1 could allow remote code execution due to improper validation of symbolic links during archive extraction.",
+      "cvss": 9.8,
+      "published": "2026-05-27T14:17:35.443"
+    },
+    {
+      "id": "CVE-2026-7876",
+      "description": "IBM Aspera HSTS for CP4I 1.5.1 through 1.5.19",
+      "cvss": 9.1,
+      "published": "2026-05-27T14:17:35.727"
+    },
+    {
+      "id": "CVE-2026-8175",
+      "description": "IBM Aspera High-Speed Transfer Endpoint 3.7.4 through 4.4.7 Fix Pack 1 and IBM Aspera High-Speed Transfer Server 3.7.4 through 4.4.7 Fix Pack 1 and IBM Aspera High-Speed Transfer Endpoint are affected by a buffer overflow in the asperahttpd component. This vulnerability could be exploited to cause a denial of service and potentially lead to authentication bypass or remote code execution.",
+      "cvss": 9.8,
+      "published": "2026-05-27T14:17:35.970"
+    },
+    {
+      "id": "CVE-2026-48027",
+      "description": "Nx Console is the user interface for Nx & Lerna. On 19 May 2026, a malicious version of Nx Console, 18.95.0, was published at 12:30 PM UTC and removed soon after at 12:48 PM UTC, leaving it available for ~18 minutes in Visual Studio Marketplace. For OpenVSX, the problem was detected later, and the compromised version was available from 12:33 UTC to 13:09 UTC (~36 minutes). Version 18.100.0 of Nx Console is not compromised and users may remediate by upgrading to that version.",
+      "cvss": 9.8,
+      "published": "2026-05-27T17:16:41.787"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Physics Is All You Need? A Case Study in Physicist-Supervised AI Development of Scientific Software",
+      "summary": "Are AI agents tools, co-authors, or researchers? We present a quantified case study ($N=1$): a physicist supervising an AI coding agent (Claude Code, Sonnet and Opus models) over 12 work days and 57 sessions to build CLAX-PT, a differentiable one-loop perturbation theory module in JAX. We documented",
+      "url": "http://arxiv.org/abs/2605.30353v1"
+    },
+    {
+      "title": "SchGen: PCB Schematic Generation with Semantic-Grounded Code Representations",
+      "summary": "Printed circuit board (PCB) schematic design defines nearly all electronic hardware, but it remains manual and expertise-intensive. While generative AI has advanced digital and analog IC design, PCB schematic generation from natural-language intent is largely unexplored. This paper presents SchGen, ",
+      "url": "http://arxiv.org/abs/2605.30345v1"
+    },
+    {
+      "title": "REST3D: Reconstructing Physically Stable 3D Scenes from a Single Image",
+      "summary": "Reconstructing physically stable 3D scenes from a single RGB image enables casual images to be converted into simulation-ready digital assets for applications such as immersive interaction and content creation. However, existing single-image reconstruction methods fall short in capturing the physica",
+      "url": "http://arxiv.org/abs/2605.30338v1"
+    },
+    {
+      "title": "Locally Coherent, Globally Incoherent: Bounding Compositional Incoherence in Multi-Component LLM Agents",
+      "summary": "Multi-component LLM agents assemble probabilistic claims from components that each see only part of a joint problem; the composition can violate basic probability axioms even when every component is locally coherent. We formalise this locally coherent, globally incoherent failure via the composition",
+      "url": "http://arxiv.org/abs/2605.30335v1"
+    },
+    {
+      "title": "SoundnessBench: Can Your AI Scientist Really Tell Good Research Ideas from Bad Ones?",
+      "summary": "Autonomous AI research agents aim to accelerate scientific discovery by automating the research pipeline, from hypothesis generation to peer review. However, existing benchmarks rarely test a fundamental bottleneck: whether Large Language Models can judge the methodological viability of a research i",
+      "url": "http://arxiv.org/abs/2605.30329v1"
+    }
+  ],
+  "security_news": [
+    {
+      "cve": "CVE-2026-0257",
+      "vendor": "Palo Alto Networks",
+      "product": "PAN-OS",
+      "description": "Palo Alto Networks PAN-OS contains an authentication bypass vulnerability that allows attackers to bypass security restrictions and establish an unauthorized VPN connection.",
+      "action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+      "date_added": "2026-05-29"
+    },
+    {
+      "cve": "CVE-2026-48027",
+      "vendor": "Nx",
+      "product": "Nx Console",
+      "description": "Nx Console contains an embedded malicious code vulnerability that allowed a malicious version of Nx Console to be published. The compromised extension fetched an obfuscated payload that could harvested credentials from multiple sources on disk and in memory.",
+      "action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+      "date_added": "2026-05-27"
+    },
+    {
+      "cve": "CVE-2026-45321",
+      "vendor": "TanStack",
+      "product": "TanStack",
+      "description": "TanStack contains an unspecified vulnerability that allowed malicious versions of the product to be published to the npm registry to publish credential-stealing malware under a trusted identity.",
+      "action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+      "date_added": "2026-05-27"
+    },
+    {
+      "cve": "CVE-2026-8398",
+      "vendor": "Daemon",
+      "product": "Daemon Tools Lite",
+      "description": "Daemon Tools contains an unspecified vulnerability that has a high impact on confidentiality, integrity, and availability.",
+      "action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+      "date_added": "2026-05-27"
+    },
+    {
+      "cve": "CVE-2026-48172",
+      "vendor": "LiteSpeed",
+      "product": "cPanel Plugin",
+      "description": "LiteSpeed cPanel Plugin contains privilege escalation vulnerability that is exposed via the user-end cPanel plugin, which can be abused by any cPanel user account to execute arbitrary scripts with root privileges.",
+      "action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+      "date_added": "2026-05-26"
+    }
+  ],
+  "ctf_events": [
+    {
+      "name": "Pwn2Play Open CTF",
+      "format": "Jeopardy",
+      "start": "2026-05-30T09:00:00+00:00",
+      "url": "https://pwn2play.biterra.co/",
+      "weight": 0
+    },
+    {
+      "name": "WhiteHats TrojanCTF 2026",
+      "format": "Jeopardy",
+      "start": "2026-05-30T09:00:00+00:00",
+      "url": "https://eshatrojan.nl/trojanctf",
+      "weight": 0.0
+    },
+    {
+      "name": "bhackari CTF 2026",
+      "format": "Jeopardy",
+      "start": "2026-05-30T10:00:00+00:00",
+      "url": "https://ctf.bhackari.it/",
+      "weight": 0
+    }
+  ]
+}
