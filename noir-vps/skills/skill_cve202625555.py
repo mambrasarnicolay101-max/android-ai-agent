@@ -1,7 +1,7 @@
 """
 SkillCve202625555 -- Noir Sovereign Security Skill
 Auto-generated from blueprint: CVE-2026-25555
-Source: NVD_CISA | Generated: 2026-06-13T19:17:13.011297
+Source: NVD_CISA | Generated: 2026-06-14T00:13:32.934382
 
 Detects: injection (CVE-2026-25555)
 Description: OpenBullet2 through version 0.3.2 contains an authentication bypass vulnerability in the API key authentication middleware that allows unauthenticated attackers to gain admin access by supplying an em
@@ -102,7 +102,7 @@ class SkillCve202625555:
             "cve_id": self.CVE_ID,
             "vuln_class": self.VULN_CLASS,
             "target": self.target_url,
-            "scanned_at": "2026-06-13T19:17:13.011297",
+            "scanned_at": "2026-06-14T00:13:32.934382",
             "total_endpoints": len(self.results),
             "vulnerable_endpoints": vulnerable_count,
             "risk_level": "HIGH" if vulnerable_count > 0 else "LOW",

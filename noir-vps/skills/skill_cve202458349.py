@@ -1,7 +1,7 @@
 """
 SkillCve202458349 -- Noir Sovereign Security Skill
 Auto-generated from blueprint: CVE-2024-58349
-Source: NVD_CISA | Generated: 2026-06-13T19:17:11.432522
+Source: NVD_CISA | Generated: 2026-06-14T00:13:32.083247
 
 Detects: injection (CVE-2024-58349)
 Description: WordPress Theme Travelscape 1.0.3 contains an arbitrary file upload vulnerability that allows unauthenticated attackers to upload malicious files by exploiting insufficient validation in the theme's u
@@ -102,7 +102,7 @@ class SkillCve202458349:
             "cve_id": self.CVE_ID,
             "vuln_class": self.VULN_CLASS,
             "target": self.target_url,
-            "scanned_at": "2026-06-13T19:17:11.432522",
+            "scanned_at": "2026-06-14T00:13:32.083247",
             "total_endpoints": len(self.results),
             "vulnerable_endpoints": vulnerable_count,
             "risk_level": "HIGH" if vulnerable_count > 0 else "LOW",

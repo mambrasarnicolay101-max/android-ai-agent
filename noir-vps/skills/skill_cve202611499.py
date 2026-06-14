@@ -1,7 +1,7 @@
 """
 SkillCve202611499 -- Noir Sovereign Security Skill
 Auto-generated from blueprint: CVE-2026-11499
-Source: NVD_CISA | Generated: 2026-06-13T19:17:12.165214
+Source: NVD_CISA | Generated: 2026-06-14T00:13:32.520916
 
 Detects: injection (CVE-2026-11499)
 Description: A vulnerability was determined in Tenda HG7HG9 and HG10 300001138_en_xpon. This affects the function formDOMAINBLK of the file /boaform/formDOMAINBLK. Executing a manipulation of the argument blkDomai
@@ -102,7 +102,7 @@ class SkillCve202611499:
             "cve_id": self.CVE_ID,
             "vuln_class": self.VULN_CLASS,
             "target": self.target_url,
-            "scanned_at": "2026-06-13T19:17:12.165214",
+            "scanned_at": "2026-06-14T00:13:32.520916",
             "total_endpoints": len(self.results),
             "vulnerable_endpoints": vulnerable_count,
             "risk_level": "HIGH" if vulnerable_count > 0 else "LOW",

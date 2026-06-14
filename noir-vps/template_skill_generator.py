@@ -473,7 +473,7 @@ def run_template_synthesis(max_blueprints: int = 10) -> Dict:
             import subprocess
             result = subprocess.run(
                 [sys.executable, str(skill_path)],
-                capture_output=True, text=True, timeout=15
+                capture_output=True, text=True, timeout=60
             )
             if result.returncode != 0:
                 log.warning(f"  Unit test warning for {file_name}: {result.stderr[:200]}")

@@ -1,7 +1,7 @@
 """
 SkillCve202639910 -- Noir Sovereign Security Skill
 Auto-generated from blueprint: CVE-2026-39910
-Source: NVD_CISA | Generated: 2026-06-13T19:17:14.814133
+Source: NVD_CISA | Generated: 2026-06-14T00:13:34.416275
 
 Detects: injection (CVE-2026-39910)
 Description: STACKIT IaaS API contains a missing authorization check vulnerability that allows authenticated, low-privileged attackers to escalate privileges to full organization compromise by attaching arbitrary 
@@ -102,7 +102,7 @@ class SkillCve202639910:
             "cve_id": self.CVE_ID,
             "vuln_class": self.VULN_CLASS,
             "target": self.target_url,
-            "scanned_at": "2026-06-13T19:17:14.814133",
+            "scanned_at": "2026-06-14T00:13:34.416275",
             "total_endpoints": len(self.results),
             "vulnerable_endpoints": vulnerable_count,
             "risk_level": "HIGH" if vulnerable_count > 0 else "LOW",

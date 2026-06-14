@@ -1,7 +1,7 @@
 """
 SkillCve202354352 -- Noir Sovereign Security Skill
 Auto-generated from blueprint: CVE-2023-54352
-Source: NVD_CISA | Generated: 2026-06-13T19:17:10.379376
+Source: NVD_CISA | Generated: 2026-06-14T00:13:31.304554
 
 Detects: injection (CVE-2023-54352)
 Description: WordPress Seotheme contains a remote code execution vulnerability that allows unauthenticated attackers to execute arbitrary PHP code by uploading malicious files to the theme directory. Attackers can
@@ -102,7 +102,7 @@ class SkillCve202354352:
             "cve_id": self.CVE_ID,
             "vuln_class": self.VULN_CLASS,
             "target": self.target_url,
-            "scanned_at": "2026-06-13T19:17:10.379376",
+            "scanned_at": "2026-06-14T00:13:31.304929",
             "total_endpoints": len(self.results),
             "vulnerable_endpoints": vulnerable_count,
             "risk_level": "HIGH" if vulnerable_count > 0 else "LOW",

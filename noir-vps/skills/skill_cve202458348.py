@@ -1,7 +1,7 @@
 """
 SkillCve202458348 -- Noir Sovereign Security Skill
 Auto-generated from blueprint: CVE-2024-58348
-Source: NVD_CISA | Generated: 2026-06-13T19:17:10.913312
+Source: NVD_CISA | Generated: 2026-06-14T00:13:31.708276
 
 Detects: injection (CVE-2024-58348)
 Description: WordPress Background Image Cropper version 1.2 contains a remote code execution vulnerability that allows unauthenticated attackers to upload arbitrary files by accessing the ups.php endpoint. Attacke
@@ -102,7 +102,7 @@ class SkillCve202458348:
             "cve_id": self.CVE_ID,
             "vuln_class": self.VULN_CLASS,
             "target": self.target_url,
-            "scanned_at": "2026-06-13T19:17:10.913312",
+            "scanned_at": "2026-06-14T00:13:31.709281",
             "total_endpoints": len(self.results),
             "vulnerable_endpoints": vulnerable_count,
             "risk_level": "HIGH" if vulnerable_count > 0 else "LOW",

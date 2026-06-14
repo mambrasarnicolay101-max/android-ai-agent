@@ -1,7 +1,7 @@
 """
 SkillCve202644083 -- Noir Sovereign Security Skill
 Auto-generated from blueprint: CVE-2026-44083
-Source: NVD_CISA | Generated: 2026-06-13T19:17:16.144476
+Source: NVD_CISA | Generated: 2026-06-14T00:13:35.521154
 
 Detects: injection (CVE-2026-44083)
 Description: An authorization bypass through user-controlled key vulnerability has been reported to affect QuMagie. The remote attackers can then exploit the vulnerability to gain unintended privileges.
@@ -104,7 +104,7 @@ class SkillCve202644083:
             "cve_id": self.CVE_ID,
             "vuln_class": self.VULN_CLASS,
             "target": self.target_url,
-            "scanned_at": "2026-06-13T19:17:16.144476",
+            "scanned_at": "2026-06-14T00:13:35.521154",
             "total_endpoints": len(self.results),
             "vulnerable_endpoints": vulnerable_count,
             "risk_level": "HIGH" if vulnerable_count > 0 else "LOW",
