@@ -124,9 +124,87 @@ class AutonomousBrowser:
             return []
 
     @staticmethod
-    def explore_topic(topic: str):
-        """Metode sinkron untuk dipanggil oleh Brain PC."""
-        return asyncio.run(AutonomousBrowser._search_and_absorb(topic))
+    async def deep_crawl(start_url: str, max_depth: int = 1, current_depth: int = 0, visited: set = None):
+        """
+        [THE SPIDER]
+        Merayapi sebuah website secara otonom dari link ke link (DFS/BFS), 
+        mengekstrak teksnya, dan menyimpannya di NoirSearchEngine.
+        Murni menggunakan requests agar sangat ringan dan cepat (fallback Playwright).
+        """
+        import requests
+        if visited is None:
+            visited = set()
+
+        # Normalisasi URL (hilangkan fragment)
+        base_url = start_url.split('#')[0]
+        if base_url in visited or current_depth > max_depth:
+            return
+            
+        visited.add(base_url)
+        log.info(f"[Spider] Mengunjungi (Depth {current_depth}/{max_depth}): {base_url}")
+        
+        try:
+            # Gunakan requests biasa yang stabil di semua env Windows
+            headers = {'User-Agent': 'Noir-Sovereign-Spider/1.0'}
+            # Jalankan di thread executor agar tidak memblokir async loop
+            loop = asyncio.get_event_loop()
+            import functools
+            resp = await loop.run_in_executor(None, functools.partial(requests.get, base_url, headers=headers, timeout=10))
+            
+            if resp.status_code != 200:
+                log.warning(f"[Spider] HTTP {resp.status_code} pada {base_url}")
+                return
+                
+            html_content = resp.text
+            soup = BeautifulSoup(html_content, 'html.parser')
+            
+            title = soup.title.string if soup.title else base_url
+            
+            # Hapus tag script, style, dll
+            for script in soup(["script", "style", "header", "footer", "nav"]):
+                script.extract()
+            content = soup.get_text(separator=' ', strip=True)
+            
+            # Simpan ke Search Engine Internal
+            from noir_search_engine import NoirSearchEngine
+            engine = NoirSearchEngine()
+            engine.add_document(url=base_url, title=title, content=content)
+            log.info(f"[Spider] Disimpan ke indeks: {title}")
+            
+            # Jika masih ada kedalaman tersisa, ekstrak link
+            if current_depth < max_depth:
+                links = []
+                for a in soup.find_all('a', href=True):
+                    href = a['href']
+                    if href.startswith('http'):
+                        links.append(href)
+                    elif href.startswith('/'):
+                        # Bangun URL absolut
+                        from urllib.parse import urlparse
+                        parsed_uri = urlparse(base_url)
+                        root = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_uri)
+                        links.append(root + href)
+                        
+                # Batasi jumlah cabang per halaman agar tidak eksponensial meledak
+                import random
+                if len(links) > 5:
+                    links = random.sample(links, 5)
+                
+                for link in links:
+                    await AutonomousBrowser.deep_crawl(link, max_depth, current_depth + 1, visited)
+                     
+        except Exception as e:
+            log.warning(f"[Spider] Gagal merayapi {base_url}: {e}")
+
+    @staticmethod
+    def start_crawl_job(seed_url: str, depth: int = 1):
+        """Metode sinkron untuk dipanggil oleh The Trinity."""
+        log.info(f"\n======================================")
+        log.info(f"[SPIDER] MEMULAI MISI CRAWLING MASIF")
+        log.info(f"Target: {seed_url} | Depth: {depth}")
+        log.info(f"======================================")
+        asyncio.run(AutonomousBrowser.deep_crawl(seed_url, depth))
 
 if __name__ == "__main__":
-    AutonomousBrowser.explore_topic("Advanced Python optimization techniques")
+    # Test crawler
+    AutonomousBrowser.start_crawl_job("https://en.wikipedia.org/wiki/Artificial_intelligence", depth=1)
