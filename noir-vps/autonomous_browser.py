@@ -55,72 +55,71 @@ class AutonomousBrowser:
             "title": AutonomousBrowser._last_title,
             "screenshot": AutonomousBrowser._last_screenshot
         }
-    @staticmethod
-    async def _search_and_absorb(query: str):
-        log.info(f"[Browser] Memulai ekspedisi pencarian: {query}")
-        try:
-            async with async_playwright() as p:
-                browser = await p.chromium.launch(headless=True)
-                page = await browser.new_page()
-                
-                # Gunakan DuckDuckGo untuk mencari literatur tanpa blokir Google
-                search_url = f"https://html.duckduckgo.com/html/?q={query}"
-                await page.goto(search_url, timeout=15000)
-                
-                content = await page.content()
-                soup = BeautifulSoup(content, 'html.parser')
-                
-                results = []
-                # Ambil hasil pencarian teratas
-                for a in soup.find_all('a', class_='result__url', limit=3):
-                    url = a.get('href')
-                    if url and url.startswith("http"):
-                        results.append(url)
-                
-                import transformers
-                import warnings
-                warnings.filterwarnings("ignore")
-                
-                # Menggunakan AI Lokal Sendiri (Local SLM) untuk memproses literatur secara mandiri & cepat
-                log.info("[Local AI] Memuat model pemahaman teks lokal (CPU-Optimized)...")
-                try:
-                    summarizer = transformers.pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
-                except Exception as e:
-                    summarizer = None
-                    log.warning(f"Gagal memuat Local AI: {e}")
 
-                learned_content = []
-                for url in results:
-                    log.info(f"[Browser] Membaca literatur: {url}")
-                    try:
-                        await page.goto(url, timeout=15000)
-                        text = await page.evaluate("() => document.body.innerText")
-                        
-                        # AI Murni Kita Sendiri yang Memahami (Bukan Gemini/Groq)
-                        if summarizer and len(text) > 100:
-                            # Potong teks agar muat di model lokal
-                            chunk = text[:3000]
-                            log.info("[Local AI] Menganalisis dan menyarikan makna literatur...")
-                            summary_out = summarizer(chunk, max_length=150, min_length=30, do_sample=False)
-                            summary = summary_out[0]['summary_text']
-                        else:
-                            summary = text[:2000] 
-                            
-                        learned_content.append({"url": url, "text": summary})
-                        
-                        # Simpan ke Vector DB
-                        vector_memory.add_experience(
-                            text=f"Learned from {url}: {summary}",
-                            metadata={"source": "browser_exploration", "topic": query, "ai_processed": "local_slm"}
-                        )
-                    except Exception as e:
-                        log.warning(f"[Browser] Gagal membaca {url}: {e}")
+    @staticmethod
+    def explore_topic(topic: str):
+        """
+        Mencari literatur di internet publik secara otonom lalu merayapinya 
+        agar masuk ke dalam NoirSearchEngine.
+        """
+        import requests
+        import urllib.parse
+        
+        # Ekstrak kata kunci inti jika topik terlalu panjang (untuk mempermudah mesin pencari)
+        search_query = topic.split(':')[0] if ':' in topic else topic
+        if len(search_query) > 50:
+            search_query = search_query[:50]
+            
+        log.info(f"\n[Browser] Memulai ekspedisi pencarian publik: '{search_query}'")
+        
+        # Header Chrome standar untuk menghindari blokir anti-bot/SSL
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Connection': 'keep-alive'
+        }
+        
+        try:
+            urls = []
+            
+            # 1. Coba Wikipedia API (Paling stabil, tanpa blokir SSL)
+            search_url = f"https://en.wikipedia.org/w/api.php?action=opensearch&search={urllib.parse.quote(search_query)}&limit=3&namespace=0&format=json"
+            resp = requests.get(search_url, headers=headers, timeout=10)
+            
+            if resp.status_code == 200:
+                data = resp.json()
+                if len(data) > 3 and data[3]:
+                    urls = data[3]
+                    log.info(f"[Browser] Ditemukan via Wikipedia: {len(urls)} URL")
+            
+            # 2. Jika Wikipedia kosong, Fallback ke Bing HTML Lite
+            if not urls:
+                log.info("[Browser] Wikipedia tidak menemukan hasil yang cocok, mencoba Bing HTML...")
+                bing_url = f"https://www.bing.com/search?q={urllib.parse.quote(search_query)}"
+                resp_bing = requests.get(bing_url, headers=headers, timeout=15)
                 
-                await browser.close()
-                log.info(f"[Browser] Selesai menyerap {len(learned_content)} sumber web.")
-                return learned_content
+                if resp_bing.status_code == 200:
+                    from bs4 import BeautifulSoup
+                    soup = BeautifulSoup(resp_bing.text, 'html.parser')
+                    for h2 in soup.find_all('h2'):
+                        a = h2.find('a', href=True)
+                        if a and a['href'].startswith("http") and "microsoft.com" not in a['href']:
+                            urls.append(a['href'])
+                            if len(urls) >= 3:
+                                break
+                                
+            log.info(f"[Browser] Total {len(urls)} target seed URL siap dirayapi.")
+            
+            # Eksekusi Deep Crawl secara masif pada hasil pencarian (Kedalaman 1)
+            for target_url in urls:
+                AutonomousBrowser.start_crawl_job(target_url, depth=1)
+                
+            log.info(f"[Browser] Selesai menyerap kluster pengetahuan untuk topik '{search_query}'.")
+            return urls
+            
         except Exception as e:
-            log.error(f"[Browser] Kerusakan Navigasi Otonom: {e}")
+            log.error(f"[Browser] Kegagalan eksplorasi publik: {e}")
             return []
 
     @staticmethod

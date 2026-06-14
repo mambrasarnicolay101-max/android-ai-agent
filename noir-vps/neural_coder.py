@@ -83,7 +83,7 @@ class NeuralCoder:
 
     @staticmethod
     def synthesize_algorithm():
-        """Mengembangkan algoritma baru berdasarkan kebutuhan otonom menggunakan OmniRouter."""
+        """Mengembangkan algoritma baru berdasarkan kebutuhan otonom menggunakan OmniRouter dan Search Engine Internal."""
         log.info("[NeuralCoder] Mensintesis algoritma logika baru...")
         
         # Skenario kebutuhan algoritma acak
@@ -91,12 +91,27 @@ class NeuralCoder:
             "Optimasi pencarian path dalam graf besar",
             "Enkripsi stream data asinkron",
             "Deteksi anomali pada log sistem real-time",
-            "Kompresi data tanpa kehilangan (lossless) untuk memori terbatas"
+            "Kompresi data tanpa kehilangan (lossless) untuk memori terbatas",
+            "Sistem deteksi rootkit pada level kernel",
+            "Implementasi zero-knowledge proofs sederhana"
         ]
         scenario = random.choice(scenarios)
+        log.info(f"[NeuralCoder] Topik sintesis: {scenario}")
         
+        # Ekstrak ilmu dari Noir Search Engine (Internal Brain)
+        try:
+            from noir_search_engine import NoirSearchEngine
+            engine = NoirSearchEngine()
+            search_results = engine.search(scenario, limit=3)
+            context = ""
+            for r in search_results:
+                context += f"\n--- Source: {r['title']} ---\n{r['snippet']}\n"
+        except Exception as e:
+            log.warning(f"[NeuralCoder] Gagal mengambil konteks dari Search Engine: {e}")
+            context = "Gunakan pengetahuan internal."
+            
         # Panggil OmniRouter untuk sintesis nyata
-        prompt = f"Write a high-performance Python implementation for the following scenario: {scenario}. Focus on time/space complexity and absolute efficiency. Provide ONLY the code."
+        prompt = f"Write a high-performance Python implementation for the following scenario: {scenario}.\n\nContext gathered from internal crawling:\n{context}\n\nFocus on time/space complexity and absolute efficiency. Provide ONLY the code."
         logic_code = OmniRouter.query(prompt, task_type="coding")
 
         # FASE 1: Autonomous Sandbox Verification
